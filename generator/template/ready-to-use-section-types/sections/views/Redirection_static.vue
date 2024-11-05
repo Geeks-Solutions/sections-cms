@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name: 'WysiwygUrlStatic',
+  name: 'RedirectionStatic',
   props: {
     section: {
       type: Object,

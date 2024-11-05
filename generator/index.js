@@ -144,67 +144,7 @@ module.exports.hooks = (api, options) => {
 
         api.onCreateComplete(async () => {
 
-            const sectionsServerUrl = 'https://sections.geeks.solutions'
-            const sectionTypeNames = ['TermsPolicy', 'TextButtonRow', 'nftSection', 'WysiwygUrl']
-
             if(options.addReadyToUseSectionTypes) {
-                await axios.post(`${sectionsServerUrl}/api/v1/login`,
-                    {
-                        email: options.email,
-                        password: options.password
-                    }
-                    , {
-                    headers: {
-                        'project-id-1': '1',
-                        'access-control-request-headers': 'project-id-1',
-                        origin: sectionsServerUrl
-                    }
-                }).then( async (res) => {
-                    await axios.get(`${sectionsServerUrl}/api/v1/project/${res.data.projects[0].saas_project_id}/generate_auth_code`
-                        , {
-                            headers: {
-                                'project-id-1': '1',
-                                'access-control-request-headers': 'project-id-1',
-                                origin: sectionsServerUrl,
-                                token: res.data.token.token
-                            }
-                        }).then(async (res) => {
-                        const authCode = res.data.url.substring(res.data.url.indexOf('auth_code=') +10, res.data.url.length)
-                        await axios.get(`${sectionsServerUrl}/api/v1/project/${options.projectId}/token/${authCode}`
-                            , {
-                                headers: {
-                                    'project-id-1': '1',
-                                    'access-control-request-headers': 'project-id-1',
-                                    origin: sectionsServerUrl
-                                }
-                            }).then(async (res) => {
-                            for (const typeName of sectionTypeNames) {
-                                await axios.post(`${sectionsServerUrl}/api/v1/project/${options.projectId}/section-types/${typeName}`
-                                    , typeName === 'nftSection' ? {
-                                    "fields": [
-                                        {
-                                            "type": "image",
-                                            "name": "image"
-                                        }
-                                    ]
-                                } : {},
-                                    {
-                                        headers: {
-                                            'project-id-1': '1',
-                                            'access-control-request-headers': 'project-id-1',
-                                            origin: sectionsServerUrl,
-                                            token: res.data.token
-                                        }
-                                    }).then((res) => {
-                                }).catch((e) => {
-                                })
-                            }
-                        }).catch((e) => {
-                        })
-                    }).catch((e) => {
-                    })
-                }).catch((e) => {
-                })
 
                 const enTranslations = `export default {
   "contractAddr": "Contract Address*: ",
