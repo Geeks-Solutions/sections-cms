@@ -1,6 +1,6 @@
 <template>
   <div v-if="settings">
-    <div class="ql-editor ql-snow mobileTitleStyle mt-4 md:mx-4 title w-full" v-html="settings[lang].message"></div>
+    <p class="ql-editor ql-snow mobileTitleStyle mt-4 md:mx-4 title w-full" v-html="settings[lang].message"></p>
   </div>
 </template>
 
