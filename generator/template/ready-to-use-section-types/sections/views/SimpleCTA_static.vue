@@ -7,9 +7,9 @@
 	<div class="wrapper">
 	  <div class="wrapper">
 		<div class="wrapper-question">
-		  <h2>
+		  <h1>
 			{{ getCurrentTranslation(settings, lang, 'title', 'title') }}
-		  </h2>
+		  </h1>
 		  <div class="flex buttonsRow items-center mb-4">
 			<global-link :link="{en: getCurrentTranslation(settings, 'en', 'link', 'link'), fr: getCurrentTranslation(settings, 'fr', 'link', 'link')}" :lang="lang">
 			  <p>
