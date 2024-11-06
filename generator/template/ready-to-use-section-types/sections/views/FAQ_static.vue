@@ -82,7 +82,6 @@ export default {
   min-height: auto !important;
 }
 .section-wrapper .title {
-  font-family: 'Courier New', Courier, monospace;
   height: 100px;
   display: flex;
   justify-content: center;
@@ -106,9 +105,6 @@ export default {
   margin-bottom: 20px;
   border-radius: 0;
   padding: 20px;
-}
-.section-wrapper #faq .question.expanded {
-  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%2303B1C7' stroke-width='5' stroke-dasharray='14%2c 15' stroke-dashoffset='0' stroke-linecap='butt'/%3e%3c/svg%3e");
 }
 .section-wrapper #faq .question:hover {
   cursor: pointer;
