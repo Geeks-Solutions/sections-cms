@@ -6,7 +6,7 @@
 		<div v-for="(qa, index) in settings.QAs" :key="`qa-${index}`" class="question" :class="[`question-${sectionWeight}`, answerShowing[index] === true ? 'expanded' : 'collapsed']">
 		  <div class="flex flex-row justify-between" :class="`question-title-${index}-${sectionWeight}`" @click="toggleAnswer(index)">
 			<div class="question-title">{{ qa[lang].question }}</div>
-			<img :src="answerShowing[index] === true ? require('@/assets/icons/arrowUp.svg') : require('@/assets/icons/arrowDown.svg')" alt="arrow" class="w-6" loading="lazy" />
+			<img :src="answerShowing[index] === true ? require('@/assets/icons/arrowUp.svg') : require('@/assets/icons/arrowDown.svg')" alt="arrow" class="arrow w-6" loading="lazy" />
 		  </div>
 		  <div v-if="answerShowing[index] === true" class="answer" :class="[index === 0 ? 'show' : '', `answer-${index}-${sectionWeight}`]">
 			<div class="flex w-full justify-start">
@@ -108,6 +108,9 @@ export default {
 }
 .section-wrapper #faq .question:hover {
   cursor: pointer;
+}
+.section-wrapper #faq .arrow {
+  filter: invert(1);
 }
 
 .section-wrapper #faq .question .answer {

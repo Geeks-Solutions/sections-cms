@@ -98,3 +98,39 @@ export default {
   }
 };
 </script>
+
+<style>
+.interactive-display .carousel-container {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.interactive-display .carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.interactive-display .carousel-slide {
+  width: 100%;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.interactive-display .carousel-slide.active {
+  flex: 0 0 auto;
+  opacity: 1;
+}
+
+.interactive-display .carousel-dots .carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ddd;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.interactive-display .carousel-dots .carousel-dot.active {
+  background-color: #333;
+}
+</style>
