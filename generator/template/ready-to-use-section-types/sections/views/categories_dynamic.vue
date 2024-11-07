@@ -3,9 +3,7 @@
 </template>
 
 <script>
-
 import {updateQueryStringValue,BLOGS_LIST_SIZE} from "@/utils/constants";
-
 
 export default {
   name: 'CategoriesDynamic',
@@ -17,7 +15,81 @@ export default {
     lang: {
       type: String,
       default: "en"
-    }
+    },
+	viewStructure: {
+	  render_data: [
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		},
+		{
+		  "title": "string",
+		  "id": "integer",
+		  "count": "integer"
+		}
+	  ]
+	}
   },
   methods: {
     categoryClicked(item) {

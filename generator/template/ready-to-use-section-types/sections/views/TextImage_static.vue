@@ -38,6 +38,22 @@ export default {
 	lang: {
 	  type: String,
 	  default: "en"
+	},
+	viewStructure: {
+	  settings: [
+		{
+		  title: {
+			en: 'string',
+			fr: 'string'
+		  },
+		  text: {
+			en: 'wysiwyg',
+			fr: 'wysiwyg'
+		  },
+		  media: 'image',
+		  imagePosition: "right"
+		}
+	  ]
 	}
   },
   data() {

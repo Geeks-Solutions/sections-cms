@@ -22,7 +22,241 @@ export default {
     lang: {
       type: String,
       default: "en"
-    }
+    },
+	viewStructure: {
+	  render_data: [
+		{
+		  "settings": {
+			"article_page_path": "string"
+		  },
+		  "data": {
+			"total": 'integer',
+			"count": 'integer',
+			"articles": [
+			  {
+				"views": "integer",
+				"viewing_time": "integer",
+				"updated_at": "integer",
+				"title": "string",
+				"suggested": [
+				  {
+					"views": "integer",
+					"viewing_time": "integer",
+					"updated_at": "integer",
+					"title": "string",
+					"suggested": {
+					  "title": "string"
+					},
+					"published": "boolean",
+					"path": "string",
+					"medias": [
+					  "image"
+					],
+					"inserted_at": "integer",
+					"id": "integer",
+					"edited": "string",
+					"description": "text",
+					"created": "string",
+					"categories": {
+					  "title": "string"
+					},
+					"body": "text",
+					"author_id": "string"
+				  },
+				  {
+					"views": "integer",
+					"viewing_time": "integer",
+					"updated_at": "integer",
+					"title": "string",
+					"suggested": {
+					  "title": "string"
+					},
+					"published": "boolean",
+					"path": "string",
+					"medias": "array",
+					"inserted_at": "integer",
+					"id": "integer",
+					"edited": "string",
+					"description": "text",
+					"created": "string",
+					"categories": {
+					  "title": "string"
+					},
+					"body": "text",
+					"author_id": "string"
+				  }
+				],
+				"published": "boolean",
+				"path": "string",
+				"medias": [
+				  "image"
+				],
+				"inserted_at": "integer",
+				"id": "integer",
+				"edited": "string",
+				"description": "text",
+				"created": "string",
+				"categories": [
+				  {
+					"title": "string",
+					"id": "integer",
+					"count": "integer"
+				  }
+				],
+				"body": "text",
+				"author_id": "string"
+			  },
+			  {
+				"views": "integer",
+				"viewing_time": "integer",
+				"updated_at": "integer",
+				"title": "string",
+				"suggested": [
+				  {
+					"views": "integer",
+					"viewing_time": "integer",
+					"updated_at": "integer",
+					"title": "string",
+					"suggested": {
+					  "title": "string"
+					},
+					"published": "boolean",
+					"path": "string",
+					"medias": [
+					  "image"
+					],
+					"inserted_at": "integer",
+					"id": "integer",
+					"edited": "string",
+					"description": "text",
+					"created": "string",
+					"categories": {
+					  "title": "string"
+					},
+					"body": "text",
+					"author_id": "string"
+				  },
+				  {
+					"views": "integer",
+					"viewing_time": "integer",
+					"updated_at": "integer",
+					"title": "string",
+					"suggested": {
+					  "title": "string"
+					},
+					"published": "boolean",
+					"path": "string",
+					"medias": "array",
+					"inserted_at": "integer",
+					"id": "integer",
+					"edited": "string",
+					"description": "text",
+					"created": "string",
+					"categories": {
+					  "title": "string"
+					},
+					"body": "text",
+					"author_id": "string"
+				  }
+				],
+				"published": "boolean",
+				"path": "string",
+				"medias": [
+				  "image"
+				],
+				"inserted_at": "integer",
+				"id": "integer",
+				"edited": "string",
+				"description": "text",
+				"created": "string",
+				"categories": [
+				  {
+					"title": "string",
+					"id": "integer",
+					"count": "integer"
+				  }
+				],
+				"body": "text",
+				"author_id": "string"
+			  },
+			  {
+				"views": "integer",
+				"viewing_time": "integer",
+				"updated_at": "integer",
+				"title": "string",
+				"suggested": [
+				  {
+					"views": "integer",
+					"viewing_time": "integer",
+					"updated_at": "integer",
+					"title": "string",
+					"suggested": {
+					  "title": "string"
+					},
+					"published": "boolean",
+					"path": "string",
+					"medias": [
+					  "image"
+					],
+					"inserted_at": "integer",
+					"id": "integer",
+					"edited": "string",
+					"description": "text",
+					"created": "string",
+					"categories": {
+					  "title": "string"
+					},
+					"body": "text",
+					"author_id": "string"
+				  },
+				  {
+					"views": "integer",
+					"viewing_time": "integer",
+					"updated_at": "integer",
+					"title": "string",
+					"suggested": {
+					  "title": "string"
+					},
+					"published": "boolean",
+					"path": "string",
+					"medias": "array",
+					"inserted_at": "integer",
+					"id": "integer",
+					"edited": "string",
+					"description": "text",
+					"created": "string",
+					"categories": {
+					  "title": "string"
+					},
+					"body": "text",
+					"author_id": "string"
+				  }
+				],
+				"published": "boolean",
+				"path": "string",
+				"medias": [
+				  "image"
+				],
+				"inserted_at": "integer",
+				"id": "integer",
+				"edited": "string",
+				"description": "text",
+				"created": "string",
+				"categories": [
+				  {
+					"title": "string",
+					"id": "integer",
+					"count": "integer"
+				  }
+				],
+				"body": "text",
+				"author_id": "string"
+			  }
+			]
+		  }
+		}
+	  ]
+	}
   },
   data() {
     return {

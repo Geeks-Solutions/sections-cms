@@ -16,7 +16,22 @@ export default {
     lang: {
       type: String,
       default: "en"
-    }
+    },
+	viewStructure: {
+	  settings: [
+		{
+		  en: {
+			message: 'text',
+			redirectionUrl: 'string'
+		  },
+		  fr: {
+			message: 'text',
+			redirectionUrl: 'string'
+		  },
+		  timeToRedirect: ''
+		}
+	  ],
+	}
   },
   computed: {
     settings() {

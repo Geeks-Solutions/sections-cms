@@ -1,6 +1,6 @@
 <template>
   <div v-if="sectionRenderData" class="author-view flex flex-col">
-	<div class="flex flex-col items-center bg-white px-4 md:px-20 pb-24">
+	<div class="flex flex-col items-center px-4 md:px-20 pb-24">
 	  <div class="flex flex-col md:flex-row justify-between wrapper pt-6 w-full md:w-720px">
 		<div v-if="sectionRenderData.profile_image || sectionRenderData.full_name || sectionRenderData.biography" class="flex flex-row gap-4">
 		  <img v-if="sectionRenderData.profile_image && sectionRenderData.profile_image.files && sectionRenderData.profile_image.files[0] && sectionRenderData.profile_image.files[0].thumbnail_url" :src="sectionRenderData.profile_image.files[0].thumbnail_url" alt="Author profile" class="min-w-[56px] w-56px h-56px rounded-full object-cover" />
@@ -11,6 +11,19 @@
 		</div>
 		<div v-else></div>
 		<div class="flex flex-row gap-3 md:pb-4">
+		  <div class="flex flex-row rounded-lg py-2.5 px-4 gap-2 md:cursor-pointer" @click="copyArticleLink">
+			<div class="copy min-w-20px w-20px h-20px"></div>
+			<p>{{ $t('Copy link') }}</p>
+		  </div>
+		  <div class="flex flex-row rounded-lg p-2.5 gap-2 md:cursor-pointer" @click="shareSocial('twitter')">
+			<div class="twitter min-w-20px w-20px h-20px"></div>
+		  </div>
+		  <div class="flex flex-row rounded-lg p-2.5 gap-2 md:cursor-pointer" @click="shareSocial('facebook')">
+			<div class="facebook min-w-20px w-20px h-20px"></div>
+		  </div>
+		  <div class="flex flex-row rounded-lg p-2.5 gap-2 md:cursor-pointer" @click="shareSocial('linkedin')">
+			<div class="linkedin min-w-20px w-20px h-20px"></div>
+		  </div>
 		</div>
 	  </div>
 	</div>

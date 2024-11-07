@@ -1,5 +1,5 @@
 <template>
-  <div class="simple-menu p-8" v-if="settings">
+  <div class="simple-menu w-max p-8" v-if="settings">
 	<ul>
 	  <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`">
 		<global-link :link="menuItem.link[lang] ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }" :lang="lang">
@@ -24,7 +24,113 @@ export default {
     lang: {
       type: String,
       default: "en"
-    }
+    },
+	viewStructure: {
+	  settings: [
+		{
+		  menu: [
+			{
+			  label: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  link: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  page: {
+				en: 'title',
+				fr: 'title'
+			  }
+			},
+			{
+			  label: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  link: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  page: {
+				en: 'title',
+				fr: 'title'
+			  }
+			},
+			{
+			  label: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  link: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  page: {
+				en: 'title',
+				fr: 'title'
+			  }
+			},
+			{
+			  label: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  link: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  page: {
+				en: 'title',
+				fr: 'title'
+			  }
+			},
+			{
+			  label: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  link: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  page: {
+				en: 'title',
+				fr: 'title'
+			  }
+			},
+			{
+			  label: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  link: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  page: {
+				en: 'title',
+				fr: 'title'
+			  }
+			},
+			{
+			  label: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  link: {
+				en: 'title',
+				fr: 'title'
+			  },
+			  page: {
+				en: 'title',
+				fr: 'title'
+			  }
+			}
+		  ]
+		}
+	  ]
+	}
   },
   computed: {
 	settings() {
