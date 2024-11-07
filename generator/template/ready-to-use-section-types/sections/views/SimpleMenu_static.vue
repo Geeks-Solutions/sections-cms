@@ -1,5 +1,5 @@
 <template>
-  <div class="simple-menu w-max p-8" v-if="settings">
+  <div v-if="settings" class="simple-menu w-max p-8">
 	<ul>
 	  <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`">
 		<global-link :link="menuItem.link[lang] ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }" :lang="lang">

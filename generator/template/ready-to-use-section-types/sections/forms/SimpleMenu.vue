@@ -58,10 +58,9 @@
 </template>
 
 <script>
-import {getSectionsPages, sectionsStyle} from "@/utils/constants";
-import 'vue-select/dist/vue-select.css';
-import {scrollToFirstError} from "@/utils/constants";
 import {sectionHeader} from "@geeks.solutions/nuxt-sections/lib/src/utils";
+import {getSectionsPages, sectionsStyle,scrollToFirstError} from "@/utils/constants";
+import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'SimpleMenu',
