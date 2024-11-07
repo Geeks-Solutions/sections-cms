@@ -18,11 +18,6 @@ export default {
       default: "en"
     }
   },
-  data() {
-    return {
-
-    }
-  },
   computed: {
     settings() {
       if(Array.isArray(this.section.settings)) {

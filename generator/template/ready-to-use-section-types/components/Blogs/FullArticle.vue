@@ -1,17 +1,17 @@
 <template>
-  <div v-if="sectionRenderData" class="flex flex-col">
-    <div class="flex flex-col bg-white gap-16 px-4 md:px-20 py-10 md:py-24">
+  <div v-if="sectionRenderData" class="full-article flex flex-col">
+    <div class="flex flex-col gap-16 px-4 md:px-20 py-10 md:py-24">
       <div class="flex flex-col items-center gap-6">
         <div class="flex flex-col items-center gap-3">
-          <div class="text-center text-sm md:text-base font-semibold text-Primary_Color_700">{{ $t('blogs.published', {time: parseTime(sectionRenderData.updated_at)}) }}</div>
-          <div class="text-center text-2xl md:text-5xl font-bold text-Gray_900">{{ sectionRenderData.title }}</div>
+          <h4 class="text-center">{{ $t('blogs.published', {time: parseTime(sectionRenderData.updated_at)}) }}</h4>
+          <h1 class="text-center">{{ sectionRenderData.title }}</h1>
         </div>
-        <div class="text-center text-base md:text-xl text-Gray_600" v-html="sectionRenderData.description"></div>
+        <p class="text-center" v-html="sectionRenderData.description"></p>
       </div>
       <img v-if="articleImage" :src="articleImage" :alt="articleImageAlt ? articleImageAlt : ''" class="h-227px md:h-560px object-cover md:px-8" />
     </div>
-    <div class="flex flex-col items-center bg-white px-4 md:px-20">
-      <div class="text-base md:text-lg text-Gray_600 md:w-720px" v-html="sectionRenderData.body"></div>
+    <div class="flex flex-col items-center px-4 md:px-20">
+      <p class="md:w-720px" v-html="sectionRenderData.body"></p>
     </div>
   </div>
 </template>

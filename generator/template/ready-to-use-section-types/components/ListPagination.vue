@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row w-full border-t border-Gray_200 justify-between py-3 px-2 xs:px-6">
 
-    <div class="flex flex-row items-center border border-Gray_300 rounded-lg gap-2 py-2 md:py-2.5 px-3.5 md:px-4 bg-white shadow text-xs xs:text-sm text-Gray_700 font-semibold" :class="currentPage > 1 ? 'md:cursor-pointer' : ''" @click="currentPage > 1 ? $emit('page-changed', currentPage - 1) : null">
+    <div class="flex flex-row items-center button-selector gap-2 py-2 md:py-2.5 px-3.5 md:px-4" :class="currentPage > 1 ? 'md:cursor-pointer' : ''" @click="currentPage > 1 ? $emit('page-changed', currentPage - 1) : null">
       <img src="@/assets/icons/previous.svg" alt="previous" class="w-14px h-auto" />
       <div>
         {{ $t('Previous') }}
@@ -16,7 +16,7 @@
         'bg-white text-Gray_800': currentPage === page,
         'text-Gray_600 cursor-pointer': currentPage !== page
       }"
-          class="text-xs xs:text-sm font-semibold w-25px xs:w-40px h-25px xs:h-40px text-center content-center rounded-full"
+          class="pagination w-25px xs:w-40px h-25px xs:h-40px text-center content-center rounded-full"
           @click="page !== '...' ? $emit('page-changed', page) : null"
       >
         {{ page }}
@@ -31,14 +31,14 @@
         'bg-Gray_50 text-Gray_800': currentPage === page,
         'text-Gray_600': currentPage !== page
       }"
-          class="text-xs xs:text-sm font-semibold w-25px xs:w-40px h-25px xs:h-40px text-center content-center rounded-full"
+          class="pagination-m w-25px xs:w-40px h-25px xs:h-40px text-center content-center"
           @click="page !== '...' ? $emit('page-changed', page) : null"
       >
         {{ page }}
       </div>
     </div>
 
-    <div class="flex flex-row items-center border border-Gray_300 rounded-lg gap-2 py-2 md:py-2.5 px-3.5 md:px-4 bg-white shadow text-xs xs:text-sm text-Gray_700 font-semibold" :class="currentPage < totalPages ? 'md:cursor-pointer' : ''" @click="currentPage < totalPages ? $emit('page-changed', currentPage + 1) : null">
+    <div class="flex flex-row items-center button-selector gap-2 py-2 md:py-2.5 px-3.5 md:px-4" :class="currentPage < totalPages ? 'md:cursor-pointer' : ''" @click="currentPage < totalPages ? $emit('page-changed', currentPage + 1) : null">
       <div>
         {{ $t('Next') }}
       </div>

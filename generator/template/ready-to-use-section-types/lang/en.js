@@ -182,5 +182,18 @@ export default {
     invalidInput: "Invalid {label} format",
     defaultLimit: "Default limit",
     sectionsPages: "Sections pages"
-  }
+  },
+  "Free Start Label": "Free package Start Label",
+  "Free Start Link": "Free package Start Link",
+  "standardStartLabel": "Standard CTA Label",
+  "standardStartLink": "Standard CTA Link",
+  "corporateStartLabel": "Corporate CTA Label",
+  "corporateStartLink": "Corporate CTA Link",
+  "Entreprise Price": "Entreprise package Price",
+  "Entreprise Date": "Entreprise package Date",
+  "Entreprise Pages Number": "Entreprise package Pages Number",
+  "Entreprise Custom Feature": "Entreprise package Custom Feature",
+  "entrepriseStartLabel": "Entreprise CTA Label",
+  "entrepriseStartLink": "Entreprise CTA Link",
+  "mostPopular": "Most popular"
 }
