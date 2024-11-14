@@ -32,7 +32,7 @@
 			
 			<div class="flex justify-center mt-1">
 			  <div class="pt-6 " :class="freeHovered || settings.freeMostPopular === true ? ' text-4xl' : 'text-2xl'">€</div>
-			  <h1>{{ settings.freePrice }}</h1>
+			  <h2>{{ settings.freePrice }}</h2>
 			</div>
 			
 			<p :class="freeHovered || settings.freeMostPopular === true ? 'flex justify-center pt-1 text-sm  text-grayText' : 'flex justify-center pt-1 text-sm  text-grayText'">{{ getCurrentTranslation(settings, lang, 'freeDate', 'freeDate_fr') }}</p>
@@ -96,7 +96,7 @@
 			
 			<div class="flex justify-center mt-1">
 			  <div class="pt-6 " :class="standardHovered || settings.standardMostPopular === true ? ' text-4xl' : 'text-2xl'">€</div>
-			  <h1>{{ settings.standardPrice }}</h1>
+			  <h2>{{ settings.standardPrice }}</h2>
 			</div>
 			
 			<p :class="standardHovered || settings.standardMostPopular === true ? 'flex justify-center pt-1 text-sm  text-grayText' : 'flex justify-center pt-1 text-sm  text-grayText'">{{ getCurrentTranslation(settings, lang, 'standardDate', 'standardDate_fr') }}</p>
@@ -158,7 +158,7 @@
 			
 			<div class="flex justify-center mt-1">
 			  <div class="pt-6 " :class="corporateHovered || settings.corporateMostPopular === true ? ' text-4xl' : 'text-2xl'">€</div>
-			  <h1>{{ settings.corporatePrice }}</h1>
+			  <h2>{{ settings.corporatePrice }}</h2>
 			</div>
 			
 			<p :class="corporateHovered || settings.corporateMostPopular === true ? 'flex justify-center pt-1 text-sm  text-grayText' : 'flex justify-center pt-1 text-sm  text-grayText'">{{ getCurrentTranslation(settings, lang, 'corporateDate', 'corporateDate_fr') }}</p>
@@ -223,7 +223,7 @@
 			<!--            </div>-->
 			<div class="flex justify-center mt-1">
 			  <div class="pt-6 " :class="entrepriseHovered || settings.entrepriseMostPopular === true ? ' text-4xl' : 'text-2xl'">€</div>
-			  <h1>{{ settings.entreprisePrice }}</h1>
+			  <h2>{{ settings.entreprisePrice }}</h2>
 			</div>
 			
 			<p :class="entrepriseHovered || settings.entrepriseMostPopular === true ? 'flex justify-center pt-1 text-sm  text-grayText' : 'flex justify-center pt-1 text-sm  text-grayText'">{{ getCurrentTranslation(settings, lang, 'entrepriseDate', 'entrepriseDate_fr') }}</p>

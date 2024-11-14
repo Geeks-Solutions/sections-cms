@@ -11,8 +11,7 @@
         </div>
         <div v-else></div>
         <div class="flex flex-row gap-3 md:pb-4">
-		  <div class="flex flex-row rounded-lg py-2.5 px-4 gap-2 md:cursor-pointer" @click="copyArticleLink">
-			<div class="copy min-w-20px w-20px h-20px"></div>
+		  <div class="flex flex-row py-2.5 px-4 gap-2 md:cursor-pointer button-selector" @click="copyArticleLink">
 			<p>{{ $t('Copy link') }}</p>
 		  </div>
 		  <div class="flex flex-row rounded-lg p-2.5 gap-2 md:cursor-pointer" @click="shareSocial('twitter')">
@@ -31,7 +30,7 @@
 </template>
 
 <script>
-import {copyText, parseTime} from "@/utils/constants";
+import {copyText} from "@/utils/constants";
 
 export default {
   name: "AuthorView",
@@ -53,7 +52,6 @@ export default {
     }
   },
   methods: {
-    parseTime,
     copyArticleLink() {
       copyText(window.location)
     },

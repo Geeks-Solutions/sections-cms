@@ -182,7 +182,14 @@ export default {
     isCartItem: "Avec compteur de panier",
     invalidInput: "Format invalide pour {label}",
     defaultLimit: "Limite par défaut",
-    sectionsPages: "Pages des sections"
+    sectionsPages: "Pages des sections",
+    linksDescription1: "* English translation is used as a fallback in case other languages doesn't have values.",
+    linksDescription2: "* Internal and Anchor links can be set in one language and they automatically work for the others ex.: /store or #section_name.",
+    linksDescription3: "* External links will open in a separate tab and should be set per language ex.: https://external_link.xyz.",
+    menuLabel: "Menu label",
+    cssClasses: "CSS classes",
+    cssClassesDesc: "(used to add one or more css class to style the whole menu)",
+    menuCssClassesDesc: "(used to add one or more css class to style the menu items)"
   },
   "Free Start Label": "Label de démarrage pour le package Gratuit",
   "Free Start Link": "Lien de démarrage pour le package Gratuit",

@@ -1,6 +1,29 @@
 <template>
   <div class="p-4">
-
+	
+	<div class="flex flex-col items-start justify-start mt-8">
+	  <label class="mr-4 font-medium">{{ $t("forms.menuLabel") }}</label>
+	  <input
+		   v-model="settings[0].menuLabel[selectedLang]"
+		   type="text"
+		   value=""
+		   :placeholder="$t('forms.menuLabel')"
+		   :class="sectionsStyle.input"
+	  />
+	</div>
+	
+	<div class="flex flex-col items-start justify-start mt-8">
+	  <label class="mr-4 font-medium">{{ $t("forms.cssClasses") }}</label>
+	  <span class="text-xs text-Gray_800">{{ $t("forms.cssClassesDesc") }}</span>
+	  <input
+		   v-model="settings[0].classes"
+		   type="text"
+		   value=""
+		   :placeholder="$t('forms.cssClasses')"
+		   :class="sectionsStyle.input"
+	  />
+	</div>
+	
     <div id="menu" class="flex flex-col mt-4">
       <div v-for="(object, idx) in settings[0].menu" :key="`menu-${idx}`" class="flex flex-col">
 
@@ -20,28 +43,61 @@
           </div>
 		  
 		  <div class="flex flex-col items-start justify-start mt-8">
-			<label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.link") + '*' : $t("forms.link") }}</label>
-			<label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
-			<div>
-			  <div class="selectMultipleOptions">
-				<div v-for="(item, pageIdx) in sectionsPages" :key="`${item.page}-${pageIdx}`" class="multiple-options-wrapper">
-				  <div class="single-multiple-option" :class="isSelected(item.path, idx) ? 'multiple-options-selected' : ''" @click="selectOption(item.path, idx)">{{ item.page }}</div>
+			<label class="mr-4 font-medium">{{ $t("forms.cssClasses") }}</label>
+			<span class="text-xs text-Gray_800">{{ $t("forms.menuCssClassesDesc") }}</span>
+			<input
+				 v-model="object.menuItemClasses"
+				 type="text"
+				 value=""
+				 :placeholder="$t('forms.cssClasses')"
+				 :class="sectionsStyle.input"
+			/>
+		  </div>
+		  
+		  <div class="flex flex-col items-start justify-start mt-8">
+			<label class="mr-4 pb-2 font-bold">{{ $t("Language menu") }}</label>
+			<input
+				 v-model="object.languageMenu"
+				 type="checkbox"
+				 value=""
+				 :placeholder="$t('Language menu')"
+				 class="
+            h-25px
+            w-25px
+            pl-6
+            border border-FieldGray
+            rounded-xl
+            focus:outline-none
+          "
+			/>
+		  </div>
+		  
+		  <div v-if="object.languageMenu !== true">
+			<div class="flex flex-col items-start justify-start mt-8">
+			  <label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.link") + '*' : $t("forms.link") }}</label>
+			  <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
+			  <div>
+				<div class="selectMultipleOptions">
+				  <div v-for="(item, pageIdx) in [...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]" :key="`${item.page}-${pageIdx}`" class="multiple-options-wrapper">
+					<div class="single-multiple-option" :class="isSelected(item.path, idx) ? 'multiple-options-selected' : ''" @click="selectOption(item.path, idx)">{{ item.page }}</div>
+				  </div>
 				</div>
 			  </div>
 			</div>
+			
+			<div v-if="object.page[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
+			  <label class="mr-4 font-medium">{{ $t("Other") }}</label>
+			  <link-description class="pb-1" />
+			  <input
+				   v-model="object.link[selectedLang]"
+				   type="text"
+				   value=""
+				   :placeholder="$t('forms.link')"
+				   :class="sectionsStyle.input"
+			  />
+			</div>
+			<span v-show="idx === 0 && errors.menu[idx].link === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
 		  </div>
-		  
-          <div class="flex flex-col items-start justify-start mt-8">
-            <label class="mr-4 font-medium">{{ $t("Other (If this is set, selected page above will be ignored)") }}</label>
-			<input
-                v-model="object.link[selectedLang]"
-                type="text"
-                value=""
-                :placeholder="$t('forms.link')"
-                :class="sectionsStyle.input"
-            />
-            <span v-show="idx === 0 && errors.menu[idx].link === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
-          </div>
 
         </fieldset>
 
@@ -80,11 +136,15 @@ export default {
     return {
       settings: [
         {
+		  menuLabel: {},
+		  classes: '',
           menu: [
             {
               label: {},
               link: {},
-			  page: {}
+			  page: {},
+			  menuItemClasses: '',
+			  languageMenu: false
             }
           ]
         }
@@ -109,7 +169,14 @@ export default {
       },
       deep: true,
       immediate: true
-    }
+    },
+	settings(v) {
+	  this.locales.forEach(locale => {
+		if (!v[0].menuLabel) {
+		  v[0].menuLabel = {}
+		}
+	  })
+	}
   },
   async mounted() {
 	this.$nuxt.$emit('initLoading', true)
@@ -121,15 +188,23 @@ export default {
 	  return this.settings[0].menu[idx].page[this.selectedLang] === path
 	},
 	selectOption(value, idx) {
-	  this.locales.forEach(locale => {
-		this.$set(this.settings[0].menu[idx].page, locale, value)
-	  })
+	  if (this.isSelected(value, idx) === true) {
+		this.locales.forEach(locale => {
+		  this.$set(this.settings[0].menu[idx].page, locale, '')
+		})
+	  } else {
+		this.locales.forEach(locale => {
+		  this.$set(this.settings[0].menu[idx].page, locale, value)
+		})
+	  }
 	},
     addMenuItem() {
       const menuItem = {
         label: {},
         link: {},
-		page: {}
+		page: {},
+		menuItemClasses: '',
+		languageMenu: false
       }
       this.locales.forEach(locale => {
         menuItem.label[locale] = ''
@@ -145,7 +220,7 @@ export default {
       let valid = true;
       this.errors.menu[0].link = false;
       this.errors.menu[0].label = false;
-      if (!this.settings[0].menu[0].link.en && !this.settings[0].menu[0].page.en) {
+      if (this.settings[0].menu[0].languageMenu !== true && !this.settings[0].menu[0].link.en && !this.settings[0].menu[0].page.en) {
         this.errors.menu[0].link = true;
         valid = false;
       }
@@ -188,6 +263,7 @@ export default {
   padding: 0.5rem;
   cursor: pointer;
   width: 100%;
+  text-align: start;
 }
 
 .multiple-options-wrapper {

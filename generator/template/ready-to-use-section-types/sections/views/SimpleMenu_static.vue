@@ -1,12 +1,19 @@
 <template>
-  <div v-if="settings" class="simple-menu w-max p-8">
+  <div v-if="settings" class="simple-menu p-8" :class="settings.classes">
+	<h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>
 	<ul>
-	  <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`">
-		<global-link :link="menuItem.link[lang] ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }" :lang="lang">
+	  <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="menuItem.menuItemClasses">
+		<global-link v-if="menuItem.languageMenu !== true" :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }" :lang="lang">
 		  <p>
 			{{ menuItem.label[lang] }}
 		  </p>
 		</global-link>
+		<nuxt-link v-else
+			 :to="switchLocalePath(lang === 'fr' ? 'en' : 'fr')"
+		>
+		  {{ lang === "fr" ? "en" : "fr" }}
+		</nuxt-link>
+	  
 	  </li>
 	</ul>
   </div>
@@ -25,6 +32,10 @@ export default {
       type: String,
       default: "en"
     },
+	locales: {
+	  type: Array,
+	  default: () => [],
+	},
 	viewStructure: {
 	  settings: [
 		{

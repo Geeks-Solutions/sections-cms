@@ -181,7 +181,14 @@ export default {
     isCartItem: "With shopping cart counter",
     invalidInput: "Invalid {label} format",
     defaultLimit: "Default limit",
-    sectionsPages: "Sections pages"
+    sectionsPages: "Sections pages",
+    linksDescription1: "* English translation is used as a fallback in case other languages doesn't have values.",
+    linksDescription2: "* Internal and Anchor links can be set in one language and they automatically work for the others ex.: /store or #section_name.",
+    linksDescription3: "* External links will open in a separate tab and should be set per language ex.: https://external_link.xyz.",
+    menuLabel: "Menu label",
+    cssClasses: "CSS classes",
+    cssClassesDesc: "(used to add one or more css class to style the whole menu)",
+    menuCssClassesDesc: "(used to add one or more css class to style the menu items)"
   },
   "Free Start Label": "Free package Start Label",
   "Free Start Link": "Free package Start Link",
