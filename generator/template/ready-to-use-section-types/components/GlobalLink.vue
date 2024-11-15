@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isGlobalEvent(finalLink) || isAnchorOrExternalLink(finalLink)" @click="emitGlobalEvent(finalLink)">
+  <div v-if="isGlobalEvent(finalLink) || isAnchorOrExternalLink(finalLink)" @click="emitGlobalEvent(finalLink)" class="md:cursor-pointer">
     <slot/>
   </div>
   <nuxt-link v-else :to="localePath(finalLink)+inlineParams" :target="linkTarget(finalLink)">

@@ -2,29 +2,35 @@
   <div>
 	
 	<div id="title" class="flex flex-col items-start justify-start mt-8">
-	  <label class="mr-4 font-bold">{{ $t("Title") }}</label>
-	  <wysiwyg :html="settings[0][siteLang].title" @settingsUpdate="updateTitle"/>
+	  <label class="mr-4 font-bold">{{ $t("boxTitle") }}</label>
+	  <wysiwyg :html="settings[0][siteLang].title" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateTitle"/>
 	  <span v-show="errors.title === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	</div>
 	
 	<div id="subTitle" class="flex flex-col items-start justify-start mt-8">
 	  <label class="mr-4 font-bold">{{ $t("SubTitle") }}</label>
-	  <wysiwyg :html="settings[0][siteLang].subTitle" @settingsUpdate="updateSubTitle"/>
+	  <wysiwyg :html="settings[0][siteLang].subTitle" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateSubTitle"/>
 	  <span v-show="errors.subTitle === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	</div>
 	
 	
+	<div class="w-full text-start">
+	  <label class="flex w-full my-2 mt-3 mr-4 mb-3 font-bold" style="text-align: start;">{{ $t("plansNote1") }}</label>
+	  <label class="flex w-full my-2 mr-4 font-bold" style="text-align: start;"><span class="text-xs mr-2 pt-1">⚫</span>{{ $t("plansNote2") }}</label>
+	  <label class="flex w-full my-2 mr-4 mb-3 font-bold" style="text-align: start;"><span class="text-xs mr-2 pt-1">⚫</span>{{ $t("plansNote3") }}</label>
+	</div>
+	
 	<!--    Free-->
 	<fieldset class="fieldSetStyle border border-solid border-gray-300 p-3 mt-2">
-	  <legend class="w-auto px-16">{{ $t("freeBlock") }}</legend>
+	  <legend class="w-auto px-16">{{ $t("box") + ' 1' }}</legend>
 	  <!--  EN-->
 	  <div id="freeTitle" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Free Title") }}</label>
+		<label class="mr-4 font-bold">{{ $t("boxTitle") }}</label>
 		<input
 			 v-model="settings[0][siteLang].freeTitle"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Free Title')"
+			 :placeholder="$t('boxTitle')"
 			 class="
             py-4
             pl-6
@@ -40,20 +46,20 @@
 	  
 	  <!--  EN-->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Free Description") }}</label>
-		<wysiwyg :html="settings[0][siteLang].freeDescription" @settingsUpdate="updateFreeDescription"/>
+		<label class="mr-4 font-bold">{{ $t("boxDescription") }}</label>
+		<wysiwyg :html="settings[0][siteLang].freeDescription" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateFreeDescription"/>
 		<span v-show="errors.freeDescription === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
 	  
 	  <!--  EN-->
 	  <div id="freePrice" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Free Price") }}</label>
+		<label class="mr-4 font-bold">{{ $t("price") }}</label>
 		<input
-			 v-model="settings[0].freePrice"
+			 v-model="settings[0][siteLang].freePrice"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Free Price')"
+			 :placeholder="$t('price')"
 			 class="
             py-4
             pl-6
@@ -67,14 +73,33 @@
 		<span v-show="errors.freePrice === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
+	  <div id="freeCurrency" class="flex flex-col items-start justify-start mt-8">
+		<label class="mr-4 font-bold">{{ $t("currency") }}</label>
+		<input
+			 v-model="settings[0][siteLang].freeCurrency"
+			 type="text"
+			 value=""
+			 :placeholder="$t('currency')"
+			 class="
+            py-4
+            pl-6
+            border border-FieldGray
+            rounded-xl
+            h-48px
+            w-344px
+            focus:outline-none
+          "
+		/>
+	  </div>
+	  
 	  <!--  EN-->
 	  <div id="freeDate" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Free Date") }}</label>
+		<label class="mr-4 font-bold">{{ $t("paymentFrequency") }}</label>
 		<input
 			 v-model="settings[0][siteLang].freeDate"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Free Date')"
+			 :placeholder="$t('paymentFrequency')"
 			 class="
             py-4
             pl-6
@@ -89,34 +114,34 @@
 	  </div>
 	  
 	  <!--  EN-->
-	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Free Pages Number") }}</label>
-		<input
-			 v-model="settings[0].freePagesNumber"
-			 type="text"
-			 value=""
-			 :placeholder="$t('Free Pages Number')"
-			 class="
-            py-4
-            pl-6
-            border border-FieldGray
-            rounded-xl
-            h-48px
-            w-344px
-            focus:outline-none
-          "
-		/>
-		<span v-show="errors.freePagesNumber === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
-	  </div>
+	  <!--      <div class="flex flex-col items-start justify-start mt-8">-->
+	  <!--        <label class="mr-4 font-bold">{{ $t("Free Pages Number") }}</label>-->
+	  <!--        <input-->
+	  <!--          v-model="settings[0].freePagesNumber"-->
+	  <!--          type="text"-->
+	  <!--          value=""-->
+	  <!--          :placeholder="$t('Free Pages Number')"-->
+	  <!--          class="-->
+	  <!--            py-4-->
+	  <!--            pl-6-->
+	  <!--            border border-FieldGray-->
+	  <!--            rounded-xl-->
+	  <!--            h-48px-->
+	  <!--            w-344px-->
+	  <!--            focus:outline-none-->
+	  <!--          "-->
+	  <!--        />-->
+	  <!--        <span v-show="errors.freePagesNumber === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>-->
+	  <!--      </div>-->
 	  
 	  <!--  EN-->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Free Link") }}</label>
+		<label class="mr-4 font-bold">{{ $t("link") }}</label>
 		<input
 			 v-model="settings[0][siteLang].freeLink"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Free Link')"
+			 :placeholder="$t('link')"
 			 class="
             py-4
             pl-6
@@ -132,10 +157,10 @@
 	  
 	  <!--  EN-->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Free Features (separated by -)") }}</label>
+		<label class="mr-4 font-bold">{{ $t("Features (separated by -)") }}</label>
 		<textarea
 			 v-model="settings[0][siteLang].freeFeatures"
-			 :placeholder="$t('Free Features')"
+			 :placeholder="$t('Features')"
 			 class="
             py-4
             pl-6
@@ -149,12 +174,12 @@
 	  </div>
 	  
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Free Start Label") }}</label>
+		<label class="mr-4 font-bold">{{ $t("startLabel") }}</label>
 		<input
 			 v-model="settings[0][siteLang].freeStartLabel"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Free Start Label')"
+			 :placeholder="$t('startLabel')"
 			 class="
             py-4
             pl-6
@@ -168,12 +193,12 @@
 	  </div>
 	  
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Free Start Link") }}</label>
+		<label class="mr-4 font-bold">{{ $t("startLink") }}</label>
 		<input
 			 v-model="settings[0][siteLang].freeStartLink"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Free Start Link')"
+			 :placeholder="$t('startLink')"
 			 class="
             py-4
             pl-6
@@ -188,7 +213,7 @@
 	  </div>
 	  
 	  <div id="freeMedia" class="mt-8">
-		<UploadMedia :media-label="$t('Free Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="Object.keys(settings[0].freeMedia).length > 0 ? [settings[0].freeMedia] : []" @uploadContainerClicked="mediaFieldKey = 'freeMedia'; $emit('openMediaModal', Object.keys(settings[0].freeMedia).length > 0 ? settings[0].freeMedia.media_id : null)" @removeUploadedImage="mediaFieldKey = 'freeMedia'; removeMedia()" />
+		<UploadMedia :media-label="$t('Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="Object.keys(settings[0].freeMedia).length > 0 ? [settings[0].freeMedia] : []" @uploadContainerClicked="mediaFieldKey = 'freeMedia'; $emit('openMediaModal', Object.keys(settings[0].freeMedia).length > 0 ? settings[0].freeMedia.media_id : null)" @removeUploadedImage="mediaFieldKey = 'freeMedia'; removeMedia()" />
 		<span v-if="errors.freeMedia === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
@@ -215,15 +240,15 @@
 	
 	<!--    Standard-->
 	<fieldset class="fieldSetStyle border border-solid border-gray-300 p-3 mt-2">
-	  <legend class="w-auto px-16">{{ $t("standardBlock") }}</legend>
+	  <legend class="w-auto px-16">{{ $t("box") + ' 2' }}</legend>
 	  <!--  EN    -->
 	  <div id="standardTitle" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Standard Title") }}</label>
+		<label class="mr-4 font-bold">{{ $t("boxTitle") }}</label>
 		<input
 			 v-model="settings[0][siteLang].standardTitle"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Standard Title')"
+			 :placeholder="$t('boxTitle')"
 			 class="
             py-4
             pl-6
@@ -239,33 +264,19 @@
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Standard Description") }}</label>
-		<input
-			 v-model="settings[0][siteLang].standardDescription"
-			 type="text"
-			 value=""
-			 :placeholder="$t('Standard Description')"
-			 class="
-            py-4
-            pl-6
-            border border-FieldGray
-            rounded-xl
-            h-48px
-            w-344px
-            focus:outline-none
-          "
-		/>
+		<label class="mr-4 font-bold">{{ $t("boxDescription") }}</label>
+		<wysiwyg :html="settings[0][siteLang].standardDescription" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateStandardDescription"/>
 		<span v-show="errors.standardDescription === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
 	  <!--  EN    -->
 	  <div id="standardPrice" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Standard Price") }}</label>
+		<label class="mr-4 font-bold">{{ $t("price") }}</label>
 		<input
-			 v-model="settings[0].standardPrice"
+			 v-model="settings[0][siteLang].standardPrice"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Standard Price')"
+			 :placeholder="$t('price')"
 			 class="
             py-4
             pl-6
@@ -279,14 +290,33 @@
 		<span v-show="errors.standardPrice === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
+	  <div id="standardCurrency" class="flex flex-col items-start justify-start mt-8">
+		<label class="mr-4 font-bold">{{ $t("currency") }}</label>
+		<input
+			 v-model="settings[0][siteLang].standardCurrency"
+			 type="text"
+			 value=""
+			 :placeholder="$t('currency')"
+			 class="
+            py-4
+            pl-6
+            border border-FieldGray
+            rounded-xl
+            h-48px
+            w-344px
+            focus:outline-none
+          "
+		/>
+	  </div>
+	  
 	  <!--  EN    -->
 	  <div id="standardDate" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Standard Date") }}</label>
+		<label class="mr-4 font-bold">{{ $t("paymentFrequency") }}</label>
 		<input
 			 v-model="settings[0][siteLang].standardDate"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Standard Date')"
+			 :placeholder="$t('paymentFrequency')"
 			 class="
             py-4
             pl-6
@@ -301,34 +331,34 @@
 	  </div>
 	  
 	  <!--  EN    -->
-	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Standard Pages Number") }}</label>
-		<input
-			 v-model="settings[0].standardPagesNumber"
-			 type="text"
-			 value=""
-			 :placeholder="$t('Standard Pages Number')"
-			 class="
-            py-4
-            pl-6
-            border border-FieldGray
-            rounded-xl
-            h-48px
-            w-344px
-            focus:outline-none
-          "
-		/>
-		<span v-show="errors.standardPagesNumber === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
-	  </div>
+	  <!--      <div class="flex flex-col items-start justify-start mt-8">-->
+	  <!--        <label class="mr-4 font-bold">{{ $t("Standard Pages Number") }}</label>-->
+	  <!--        <input-->
+	  <!--          v-model="settings[0].standardPagesNumber"-->
+	  <!--          type="text"-->
+	  <!--          value=""-->
+	  <!--          :placeholder="$t('Standard Pages Number')"-->
+	  <!--          class="-->
+	  <!--            py-4-->
+	  <!--            pl-6-->
+	  <!--            border border-FieldGray-->
+	  <!--            rounded-xl-->
+	  <!--            h-48px-->
+	  <!--            w-344px-->
+	  <!--            focus:outline-none-->
+	  <!--          "-->
+	  <!--        />-->
+	  <!--        <span v-show="errors.standardPagesNumber === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>-->
+	  <!--      </div>-->
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Standard Link") }}</label>
+		<label class="mr-4 font-bold">{{ $t("link") }}</label>
 		<input
 			 v-model="settings[0][siteLang].standardLink"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Standard Link')"
+			 :placeholder="$t('link')"
 			 class="
             py-4
             pl-6
@@ -344,10 +374,10 @@
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Standard Features (separated by -)") }}</label>
+		<label class="mr-4 font-bold">{{ $t("Features (separated by -)") }}</label>
 		<textarea
 			 v-model="settings[0][siteLang].standardFeatures"
-			 :placeholder="$t('Standard Features')"
+			 :placeholder="$t('Features')"
 			 class="
             py-4
             pl-6
@@ -361,12 +391,12 @@
 	  </div>
 	  
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("standardStartLabel") }}</label>
+		<label class="mr-4 font-bold">{{ $t("startLabel") }}</label>
 		<input
 			 v-model="settings[0][siteLang].standardStartLabel"
 			 type="text"
 			 value=""
-			 :placeholder="$t('standardStartLabel')"
+			 :placeholder="$t('startLabel')"
 			 class="
             py-4
             pl-6
@@ -380,12 +410,12 @@
 	  </div>
 	  
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("standardStartLink") }}</label>
+		<label class="mr-4 font-bold">{{ $t("startLink") }}</label>
 		<input
 			 v-model="settings[0][siteLang].standardStartLink"
 			 type="text"
 			 value=""
-			 :placeholder="$t('standardStartLink')"
+			 :placeholder="$t('startLink')"
 			 class="
             py-4
             pl-6
@@ -400,7 +430,7 @@
 	  </div>
 	  
 	  <div id="standardMedia" class="mt-8">
-		<UploadMedia :media-label="$t('Standard Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="Object.keys(settings[0].standardMedia).length > 0 ? [settings[0].standardMedia] : []" @uploadContainerClicked="mediaFieldKey = 'standardMedia'; $emit('openMediaModal', Object.keys(settings[0].standardMedia).length > 0 ? settings[0].standardMedia.media_id : null)" @removeUploadedImage="mediaFieldKey = 'standardMedia'; removeMedia()" />
+		<UploadMedia :media-label="$t('Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="Object.keys(settings[0].standardMedia).length > 0 ? [settings[0].standardMedia] : []" @uploadContainerClicked="mediaFieldKey = 'standardMedia'; $emit('openMediaModal', Object.keys(settings[0].standardMedia).length > 0 ? settings[0].standardMedia.media_id : null)" @removeUploadedImage="mediaFieldKey = 'standardMedia'; removeMedia()" />
 		<span v-if="errors.standardMedia === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
@@ -427,15 +457,15 @@
 	
 	<!--    Corporate-->
 	<fieldset class="fieldSetStyle border border-solid border-gray-300 p-3 mt-2">
-	  <legend class="w-auto px-16">{{ $t("corporateBlock") }}</legend>
+	  <legend class="w-auto px-16">{{ $t("box") + ' 3' }}</legend>
 	  <!--  EN    -->
 	  <div id="corporateTitle" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Corporate Title") }}</label>
+		<label class="mr-4 font-bold">{{ $t("boxTitle") }}</label>
 		<input
 			 v-model="settings[0][siteLang].corporateTitle"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Corporate Title')"
+			 :placeholder="$t('boxTitle')"
 			 class="
             py-4
             pl-6
@@ -451,33 +481,19 @@
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Corporate Description") }}</label>
-		<input
-			 v-model="settings[0][siteLang].corporateDescription"
-			 type="text"
-			 value=""
-			 :placeholder="$t('Corporate Description')"
-			 class="
-            py-4
-            pl-6
-            border border-FieldGray
-            rounded-xl
-            h-48px
-            w-344px
-            focus:outline-none
-          "
-		/>
+		<label class="mr-4 font-bold">{{ $t("boxDescription") }}</label>
+		<wysiwyg :html="settings[0][siteLang].corporateDescription" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateCorporateDescription"/>
 		<span v-show="errors.corporateDescription === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
 	  <!--  EN    -->
 	  <div id="corporatePrice" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Corporate Price") }}</label>
+		<label class="mr-4 font-bold">{{ $t("price") }}</label>
 		<input
-			 v-model="settings[0].corporatePrice"
+			 v-model="settings[0][siteLang].corporatePrice"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Corporate Price')"
+			 :placeholder="$t('price')"
 			 class="
             py-4
             pl-6
@@ -491,14 +507,33 @@
 		<span v-show="errors.corporatePrice === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
+	  <div id="corporateCurrency" class="flex flex-col items-start justify-start mt-8">
+		<label class="mr-4 font-bold">{{ $t("currency") }}</label>
+		<input
+			 v-model="settings[0][siteLang].corporateCurrency"
+			 type="text"
+			 value=""
+			 :placeholder="$t('currency')"
+			 class="
+            py-4
+            pl-6
+            border border-FieldGray
+            rounded-xl
+            h-48px
+            w-344px
+            focus:outline-none
+          "
+		/>
+	  </div>
+	  
 	  <!--  EN    -->
 	  <div id="corporateDate" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Corporate Date") }}</label>
+		<label class="mr-4 font-bold">{{ $t("paymentFrequency") }}</label>
 		<input
 			 v-model="settings[0][siteLang].corporateDate"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Corporate Date')"
+			 :placeholder="$t('paymentFrequency')"
 			 class="
             py-4
             pl-6
@@ -513,34 +548,34 @@
 	  </div>
 	  
 	  <!--  EN    -->
-	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Corporate Pages Number") }}</label>
-		<input
-			 v-model="settings[0].corporatePagesNumber"
-			 type="text"
-			 value=""
-			 :placeholder="$t('Corporate Pages Number')"
-			 class="
-            py-4
-            pl-6
-            border border-FieldGray
-            rounded-xl
-            h-48px
-            w-344px
-            focus:outline-none
-          "
-		/>
-		<span v-show="errors.corporatePagesNumber === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
-	  </div>
+	  <!--      <div class="flex flex-col items-start justify-start mt-8">-->
+	  <!--        <label class="mr-4 font-bold">{{ $t("Corporate Pages Number") }}</label>-->
+	  <!--        <input-->
+	  <!--          v-model="settings[0].corporatePagesNumber"-->
+	  <!--          type="text"-->
+	  <!--          value=""-->
+	  <!--          :placeholder="$t('Corporate Pages Number')"-->
+	  <!--          class="-->
+	  <!--            py-4-->
+	  <!--            pl-6-->
+	  <!--            border border-FieldGray-->
+	  <!--            rounded-xl-->
+	  <!--            h-48px-->
+	  <!--            w-344px-->
+	  <!--            focus:outline-none-->
+	  <!--          "-->
+	  <!--        />-->
+	  <!--        <span v-show="errors.corporatePagesNumber === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>-->
+	  <!--      </div>-->
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Corporate Link") }}</label>
+		<label class="mr-4 font-bold">{{ $t("link") }}</label>
 		<input
 			 v-model="settings[0][siteLang].corporateLink"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Corporate Link')"
+			 :placeholder="$t('link')"
 			 class="
             py-4
             pl-6
@@ -556,10 +591,10 @@
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Corporate Features (separated by -)") }}</label>
+		<label class="mr-4 font-bold">{{ $t("Features (separated by -)") }}</label>
 		<textarea
 			 v-model="settings[0][siteLang].corporateFeatures"
-			 :placeholder="$t('Corporate Features')"
+			 :placeholder="$t('Features')"
 			 class="
             py-4
             pl-6
@@ -573,12 +608,12 @@
 	  </div>
 	  
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("corporateStartLabel") }}</label>
+		<label class="mr-4 font-bold">{{ $t("startLabel") }}</label>
 		<input
 			 v-model="settings[0][siteLang].corporateStartLabel"
 			 type="text"
 			 value=""
-			 :placeholder="$t('corporateStartLabel')"
+			 :placeholder="$t('startLabel')"
 			 class="
             py-4
             pl-6
@@ -592,12 +627,12 @@
 	  </div>
 	  
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("corporateStartLink") }}</label>
+		<label class="mr-4 font-bold">{{ $t("startLink") }}</label>
 		<input
 			 v-model="settings[0][siteLang].corporateStartLink"
 			 type="text"
 			 value=""
-			 :placeholder="$t('corporateStartLink')"
+			 :placeholder="$t('startLink')"
 			 class="
             py-4
             pl-6
@@ -612,7 +647,7 @@
 	  </div>
 	  
 	  <div id="corporateMedia" class="mt-8">
-		<UploadMedia :media-label="$t('Corporate Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="Object.keys(settings[0].corporateMedia).length > 0 ? [settings[0].corporateMedia] : []" @uploadContainerClicked="mediaFieldKey = 'corporateMedia'; $emit('openMediaModal', Object.keys(settings[0].corporateMedia).length > 0 ? settings[0].corporateMedia.media_id : null)" @removeUploadedImage="mediaFieldKey = 'corporateMedia'; removeMedia()" />
+		<UploadMedia :media-label="$t('Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="Object.keys(settings[0].corporateMedia).length > 0 ? [settings[0].corporateMedia] : []" @uploadContainerClicked="mediaFieldKey = 'corporateMedia'; $emit('openMediaModal', Object.keys(settings[0].corporateMedia).length > 0 ? settings[0].corporateMedia.media_id : null)" @removeUploadedImage="mediaFieldKey = 'corporateMedia'; removeMedia()" />
 		<span v-if="errors.corporateMedia === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
@@ -639,15 +674,15 @@
 	
 	<!--    Entreprise-->
 	<fieldset class="fieldSetStyle border border-solid border-gray-300 p-3 mt-2">
-	  <legend class="w-auto px-16">{{ $t("entrepriseBlock") }}</legend>
+	  <legend class="w-auto px-16">{{ $t("box") + ' 4' }}</legend>
 	  <!--  EN    -->
 	  <div id="entrepriseTitle" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Entreprise Title") }}</label>
+		<label class="mr-4 font-bold">{{ $t("boxTitle") }}</label>
 		<input
 			 v-model="settings[0][siteLang].entrepriseTitle"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Entreprise Title')"
+			 :placeholder="$t('boxTitle')"
 			 class="
             py-4
             pl-6
@@ -663,33 +698,19 @@
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Entreprise Description") }}</label>
-		<input
-			 v-model="settings[0][siteLang].entrepriseDescription"
-			 type="text"
-			 value=""
-			 :placeholder="$t('Entreprise Description')"
-			 class="
-            py-4
-            pl-6
-            border border-FieldGray
-            rounded-xl
-            h-48px
-            w-344px
-            focus:outline-none
-          "
-		/>
+		<label class="mr-4 font-bold">{{ $t("boxDescription") }}</label>
+		<wysiwyg :html="settings[0][siteLang].entrepriseDescription" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateEntrepriseDescription"/>
 		<span v-show="errors.entrepriseDescription === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Entreprise Price") }}</label>
+		<label class="mr-4 font-bold">{{ $t("price") }}</label>
 		<input
 			 v-model="settings[0][siteLang].entreprisePrice"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Entreprise Price')"
+			 :placeholder="$t('price')"
 			 class="
             py-4
             pl-6
@@ -703,14 +724,33 @@
 		<span v-show="errors.entreprisePrice === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
+	  <div id="entrepriseCurrency" class="flex flex-col items-start justify-start mt-8">
+		<label class="mr-4 font-bold">{{ $t("currency") }}</label>
+		<input
+			 v-model="settings[0][siteLang].entrepriseCurrency"
+			 type="text"
+			 value=""
+			 :placeholder="$t('currency')"
+			 class="
+            py-4
+            pl-6
+            border border-FieldGray
+            rounded-xl
+            h-48px
+            w-344px
+            focus:outline-none
+          "
+		/>
+	  </div>
+	  
 	  <!--  EN    -->
 	  <div id="entrepriseDate" class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Entreprise Date") }}</label>
+		<label class="mr-4 font-bold">{{ $t("paymentFrequency") }}</label>
 		<input
 			 v-model="settings[0][siteLang].entrepriseDate"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Entreprise Date')"
+			 :placeholder="$t('paymentFrequency')"
 			 class="
             py-4
             pl-6
@@ -724,35 +764,35 @@
 		<span v-show="errors.entrepriseDate === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
-	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Entreprise Pages Number") }}</label>
-		<input
-			 v-model="settings[0].entreprisePagesNumber"
-			 type="text"
-			 value=""
-			 :placeholder="$t('Entreprise Pages Number')"
-			 class="
-            py-4
-            pl-6
-            border border-FieldGray
-            rounded-xl
-            h-48px
-            w-344px
-            focus:outline-none
-          "
-		/>
-		<span v-show="errors.entreprisePagesNumber === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
-	  </div>
+	  <!--      <div class="flex flex-col items-start justify-start mt-8">-->
+	  <!--        <label class="mr-4 font-bold">{{ $t("Entreprise Pages Number") }}</label>-->
+	  <!--        <input-->
+	  <!--          v-model="settings[0].entreprisePagesNumber"-->
+	  <!--          type="text"-->
+	  <!--          value=""-->
+	  <!--          :placeholder="$t('Entreprise Pages Number')"-->
+	  <!--          class="-->
+	  <!--            py-4-->
+	  <!--            pl-6-->
+	  <!--            border border-FieldGray-->
+	  <!--            rounded-xl-->
+	  <!--            h-48px-->
+	  <!--            w-344px-->
+	  <!--            focus:outline-none-->
+	  <!--          "-->
+	  <!--        />-->
+	  <!--        <span v-show="errors.entreprisePagesNumber === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>-->
+	  <!--      </div>-->
 	  
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Entreprise Link") }}</label>
+		<label class="mr-4 font-bold">{{ $t("link") }}</label>
 		<input
 			 v-model="settings[0][siteLang].entrepriseLink"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Entreprise Link')"
+			 :placeholder="$t('link')"
 			 class="
             py-4
             pl-6
@@ -768,12 +808,12 @@
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Entreprise Custom Feature") }}</label>
+		<label class="mr-4 font-bold">{{ $t("Custom Feature") }}</label>
 		<input
 			 v-model="settings[0][siteLang].entrepriseCustomFeature"
 			 type="text"
 			 value=""
-			 :placeholder="$t('Entreprise Custom Feature')"
+			 :placeholder="$t('Custom Feature')"
 			 class="
             py-4
             pl-6
@@ -788,10 +828,10 @@
 	  
 	  <!--  EN    -->
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("Entreprise Features (separated by -)") }}</label>
+		<label class="mr-4 font-bold">{{ $t("Features (separated by -)") }}</label>
 		<textarea
 			 v-model="settings[0][siteLang].entrepriseFeatures"
-			 :placeholder="$t('Entreprise Features')"
+			 :placeholder="$t('Features')"
 			 class="
             py-4
             pl-6
@@ -805,12 +845,12 @@
 	  </div>
 	  
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("entrepriseStartLabel") }}</label>
+		<label class="mr-4 font-bold">{{ $t("startLabel") }}</label>
 		<input
 			 v-model="settings[0][siteLang].entrepriseStartLabel"
 			 type="text"
 			 value=""
-			 :placeholder="$t('entrepriseStartLabel')"
+			 :placeholder="$t('startLabel')"
 			 class="
             py-4
             pl-6
@@ -824,12 +864,12 @@
 	  </div>
 	  
 	  <div class="flex flex-col items-start justify-start mt-8">
-		<label class="mr-4 font-bold">{{ $t("entrepriseStartLink") }}</label>
+		<label class="mr-4 font-bold">{{ $t("startLink") }}</label>
 		<input
 			 v-model="settings[0][siteLang].entrepriseStartLink"
 			 type="text"
 			 value=""
-			 :placeholder="$t('entrepriseStartLink')"
+			 :placeholder="$t('startLink')"
 			 class="
             py-4
             pl-6
@@ -844,7 +884,7 @@
 	  </div>
 	  
 	  <div id="entrepriseMedia" class="mt-8">
-		<UploadMedia :media-label="$t('Entreprise Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="Object.keys(settings[0].entrepriseMedia).length > 0 ? [settings[0].entrepriseMedia] : []" @uploadContainerClicked="mediaFieldKey = 'entrepriseMedia'; $emit('openMediaModal', Object.keys(settings[0].entrepriseMedia).length > 0 ? settings[0].entrepriseMedia.media_id : null)" @removeUploadedImage="mediaFieldKey = 'entrepriseMedia'; removeMedia()" />
+		<UploadMedia :media-label="$t('Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="settings[0].entrepriseMedia && Object.keys(settings[0].entrepriseMedia).length > 0 ? [settings[0].entrepriseMedia] : []" @uploadContainerClicked="uploadEntrepriseMedia" @removeUploadedImage="mediaFieldKey = 'entrepriseMedia'; removeMedia()" />
 		<span v-if="errors.entrepriseMedia === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
 	  </div>
 	  
@@ -921,7 +961,7 @@ import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wy
 import {getFormsKeysTranslation, scrollToFirstError} from "@/utils/constants";
 
 export default {
-  name: 'TitleTextMedia',
+  name: 'Pans',
   components: {
 	UploadMedia,
 	wysiwyg
@@ -937,7 +977,29 @@ export default {
 	  default() {
 		return []
 	  }
-	}
+	},
+	mediaFields: [
+	  {
+		type: 'image',
+		name: 'freeMedia'
+	  },
+	  {
+		type: 'image',
+		name: 'standardMedia'
+	  },
+	  {
+		type: 'image',
+		name: 'corporateMedia'
+	  },
+	  {
+		type: 'image',
+		name: 'entrepriseMedia'
+	  },
+	  {
+		type: 'image',
+		name: 'wysiwygMedia'
+	  }
+	]
   },
   data() {
 	return {
@@ -952,25 +1014,32 @@ export default {
 			freeLink: "",
 			freeStartLabel: "",
 			freeStartLink: "",
+			freePrice: "",
+			freeCurrency: "",
 			standardTitle: "",
 			standardDescription: "",
 			standardDate: "",
 			standardLink: "",
 			standardStartLabel: "",
 			standardStartLink: "",
+			standardPrice: "",
+			standardCurrency: "",
 			corporateTitle: "",
 			corporateDescription: "",
 			corporateDate: "",
 			corporateLink: "",
 			corporateStartLabel: "",
 			corporateStartLink: "",
+			corporatePrice: "",
+			corporateCurrency: "",
 			entrepriseTitle: "",
 			entrepriseDescription: "",
-			entreprisePrice: "",
 			entrepriseDate: "",
 			entrepriseLink: "",
 			entrepriseStartLabel: "",
 			entrepriseStartLink: "",
+			entreprisePrice: "",
+			entrepriseCurrency: "",
 			freeFeatures: "",
 			standardFeatures: "",
 			corporateFeatures: "",
@@ -988,25 +1057,32 @@ export default {
 			freeLink: "",
 			freeStartLabel: "",
 			freeStartLink: "",
+			freePrice: "",
+			freeCurrency: "",
 			standardTitle: "",
 			standardDescription: "",
 			standardDate: "",
 			standardLink: "",
 			standardStartLabel: "",
 			standardStartLink: "",
+			standardPrice: "",
+			standardCurrency: "",
 			corporateTitle: "",
 			corporateDescription: "",
 			corporateDate: "",
 			corporateLink: "",
 			corporateStartLabel: "",
 			corporateStartLink: "",
+			corporatePrice: "",
+			corporateCurrency: "",
 			entrepriseTitle: "",
 			entrepriseDescription: "",
-			entreprisePrice: "",
 			entrepriseDate: "",
 			entrepriseLink: "",
 			entrepriseStartLabel: "",
 			entrepriseStartLink: "",
+			entreprisePrice: "",
+			entrepriseCurrency: "",
 			freeFeatures: "",
 			standardFeatures: "",
 			corporateFeatures: "",
@@ -1070,7 +1146,8 @@ export default {
 				url: ""
 			  }
 			]
-		  }
+		  },
+		  currency: ""
 		}
 	  ],
 	  file: "",
@@ -1122,11 +1199,11 @@ export default {
 		this.settings = [val]
 	  }
 	  for(const mediaKey of ['freeMedia', 'standardMedia', 'corporateMedia', 'entrepriseMedia']) {
-		if (!this.settings[0][mediaKey].media_id && !this.settings[0][mediaKey].error) {
+		if (this.settings[0][mediaKey] && !this.settings[0][mediaKey].media_id && !this.settings[0][mediaKey].error) {
 		  this.settings[0][mediaKey].media_id = this.settings[0][mediaKey].id
 		  delete this.settings[0][mediaKey].id
 		  this.settings[0][mediaKey].url = this.settings[0][mediaKey].files[0].url
-		} else if (this.settings[0][mediaKey].error) {
+		} else if (this.settings[0][mediaKey] && this.settings[0][mediaKey].error) {
 		  this.settings[0][mediaKey] = {}
 		}
 	  }
@@ -1141,25 +1218,32 @@ export default {
 			freeLink: "",
 			freeStartLabel: "",
 			freeStartLink: "",
+			freePrice: "",
+			freeCurrency: "",
 			standardTitle: "",
 			standardDescription: "",
 			standardDate: "",
 			standardLink: "",
 			standardStartLabel: "",
 			standardStartLink: "",
+			standardPrice: "",
+			standardCurrency: "",
 			corporateTitle: "",
 			corporateDescription: "",
 			corporateDate: "",
 			corporateLink: "",
 			corporateStartLabel: "",
 			corporateStartLink: "",
+			corporatePrice: "",
+			corporateCurrency: "",
 			entrepriseTitle: "",
 			entrepriseDescription: "",
-			entreprisePrice: "",
 			entrepriseDate: "",
 			entrepriseLink: "",
 			entrepriseStartLabel: "",
 			entrepriseStartLink: "",
+			entreprisePrice: "",
+			entrepriseCurrency: "",
 			freeFeatures: "",
 			standardFeatures: "",
 			corporateFeatures: "",
@@ -1193,7 +1277,8 @@ export default {
 	  if (mediaObject.files[0].headers) {
 		media.headers = mediaObject.files[0].headers
 	  }
-	  this.settings[0][this.mediaFieldKey] = media;
+	  this.$set(this.settings[0], this.mediaFieldKey, media);
+	  // this.settings[0][this.mediaFieldKey] = media;
 	  this.$emit('closeMediaModal')
 	}
   },
@@ -1208,25 +1293,32 @@ export default {
 		freeLink: "",
 		freeStartLabel: "",
 		freeStartLink: "",
+		freePrice: "",
+		freeCurrency: "",
 		standardTitle: "",
 		standardDescription: "",
 		standardDate: "",
 		standardLink: "",
 		standardStartLabel: "",
 		standardStartLink: "",
+		standardPrice: "",
+		standardCurrency: "",
 		corporateTitle: "",
 		corporateDescription: "",
 		corporateDate: "",
 		corporateLink: "",
 		corporateStartLabel: "",
 		corporateStartLink: "",
+		corporatePrice: "",
+		corporateCurrency: "",
 		entrepriseTitle: "",
 		entrepriseDescription: "",
-		entreprisePrice: "",
 		entrepriseDate: "",
 		entrepriseLink: "",
 		entrepriseStartLabel: "",
 		entrepriseStartLink: "",
+		entreprisePrice: "",
+		entrepriseCurrency: "",
 		freeFeatures: "",
 		standardFeatures: "",
 		corporateFeatures: "",
@@ -1247,10 +1339,42 @@ export default {
 	updateFreeDescription(content) {
 	  this.settings[0][this.siteLang].freeDescription = content
 	},
+	updateStandardDescription(content) {
+	  this.settings[0][this.siteLang].standardDescription = content
+	},
+	updateCorporateDescription(content) {
+	  this.settings[0][this.siteLang].corporateDescription = content
+	},
+	updateEntrepriseDescription(content) {
+	  this.settings[0][this.siteLang].entrepriseDescription = content
+	},
+	wysiwygMediaAdded(media) {
+	  this.settings.push({
+		wysiwygMedia: media,
+		wysiwygLang: this.siteLang
+	  })
+	},
+	uploadEntrepriseMedia() {
+	  if (!this.settings[0].entrepriseMedia) {
+		this.$set(this.settings[0], 'entrepriseMedia', {media_id: '',url: '',seo_tag: '',files: [{filename: '',url: ''}]})
+		// this.settings[0].entrepriseMedia = {media_id: '',url: '',seo_tag: '',files: [{filename: '',url: ''}]}
+	  }
+	  this.mediaFieldKey = 'entrepriseMedia';
+	  this.$emit('openMediaModal', Object.keys(this.settings[0].entrepriseMedia).length > 0 ? this.settings[0].entrepriseMedia.media_id : null)
+	},
 	removeMedia() {
 	  this.settings[0][this.mediaFieldKey] = {}
 	},
 	validate() {
+	  if (Array.isArray(this.settings)) {
+		this.settings.forEach((ob, index) => {
+		  if (ob.wysiwygLang && this.settings[0][ob.wysiwygLang] !== undefined) {
+			if (!JSON.stringify(this.settings[0][ob.wysiwygLang]).includes(ob.wysiwygMedia.url)) {
+			  this.settings.splice(index, 1)
+			}
+		  }
+		})
+	  }
 	  let valid = true;
 	  this.errors.title = false;
 	  this.errors.subTitle = false;
@@ -1279,6 +1403,9 @@ export default {
 	  this.errors.entrepriseDescription = false;
 	  this.errors.entrepriseMedia = false;
 	  this.errors.pagesLabel = false;
+	  if(this.settings[0].entrepriseMedia && !this.settings[0].entrepriseMedia.url){
+		delete this.settings[0].entrepriseMedia;
+	  }
 	  if (!this.settings[0].en.title) {
 		this.errors.title = true;
 		valid = false;
@@ -1291,28 +1418,12 @@ export default {
 		this.errors.freeTitle = true;
 		valid = false;
 	  }
-	  if(!this.settings[0].freePrice.trim()){
-		this.errors.freePrice = true;
-		valid = false;
-	  }
-	  if(!this.settings[0].en.freeDate.trim()){
-		this.errors.freeDate = true;
-		valid = false;
-	  }
 	  if(!this.settings[0].freeMedia.url){
 		this.errors.freeMedia = true;
 		valid = false;
 	  }
 	  if(!this.settings[0].en.standardTitle.trim()){
 		this.errors.standardTitle = true;
-		valid = false;
-	  }
-	  if(!this.settings[0].standardPrice.trim()){
-		this.errors.standardPrice = true;
-		valid = false;
-	  }
-	  if(!this.settings[0].en.standardDate.trim()){
-		this.errors.standardDate = true;
 		valid = false;
 	  }
 	  if(!this.settings[0].standardMedia.url){
@@ -1323,25 +1434,19 @@ export default {
 		this.errors.corporateTitle = true;
 		valid = false;
 	  }
-	  if(!this.settings[0].corporatePrice.trim()){
-		this.errors.corporatePrice = true;
-		valid = false;
-	  }
-	  if(!this.settings[0].en.corporateDate.trim()){
-		this.errors.corporateDate = true;
-		valid = false;
-	  }
 	  if(!this.settings[0].corporateMedia.url){
 		this.errors.corporateMedia = true;
 		valid = false;
 	  }
-	  if(!this.settings[0].en.entrepriseTitle.trim()){
-		this.errors.entrepriseTitle = true;
-		valid = false;
-	  }
-	  if(!this.settings[0].entrepriseMedia.url){
-		this.errors.entrepriseMedia = true;
-		valid = false;
+	  if (this.settings[0].en.entrepriseTitle) {
+		if(!this.settings[0].en.entrepriseTitle.trim()){
+		  this.errors.entrepriseTitle = true;
+		  valid = false;
+		}
+		if(!this.settings[0].entrepriseMedia || !this.settings[0].entrepriseMedia.url){
+		  this.errors.entrepriseMedia = true;
+		  valid = false;
+		}
 	  }
 	  if (!valid) {
 		setTimeout(() => document.getElementById('required-fields').scrollIntoView(), 1000)

@@ -11,9 +11,8 @@
 		<nuxt-link v-else
 			 :to="switchLocalePath(lang === 'fr' ? 'en' : 'fr')"
 		>
-		  {{ lang === "fr" ? "en" : "fr" }}
+		  {{ menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : '' }}
 		</nuxt-link>
-	  
 	  </li>
 	</ul>
   </div>
