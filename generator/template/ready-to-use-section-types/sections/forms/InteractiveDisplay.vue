@@ -62,6 +62,7 @@
                 :placeholder="$t('forms.ctaLink')"
                 :class="sectionsStyle.input"
             />
+			<link-description />
           </div>
         </fieldset>
       </div>

@@ -203,5 +203,19 @@ export default {
   "Entreprise Custom Feature": "Caractéristique personnalisée du package Entreprise",
   "entrepriseStartLabel": "Label du CTA Entreprise",
   "entrepriseStartLink": "Lien du CTA Entreprise",
-  "mostPopular": "Le plus populaire"
+  "mostPopular": "Le plus populaire",
+  "boxTitle": "Titre",
+  "boxDescription": "Description",
+  "price": "Prix",
+  "paymentFrequency": "Fréquence de paiement",
+  "link": "Lien",
+  "Features (separated by -)": "Fonctionalité (séparée par -)",
+  "Features": "Fonctionalité",
+  "startLabel": "Label de démarrage",
+  "startLink": "Lien de démarrage",
+  "Custom Feature": "Caractéristique personnalisée",
+  "currency": "Devise",
+  "plansNote1": "Note : En ce qui concerne les liens, cela fonctionne comme décrit ci-dessous:\n",
+  "plansNote2": "Si aucune fonctionnalité n'est ajoutée, c'est le \"Label pour en savoir plus\" qui sera affichée et le \"Lien\" qui sera utilisé.",
+  "plansNote3": "Si des fonctionnalités sont ajoutées, c'est le \"Label de Démarrage\" qui sera affichée et le\"Lien de démarrage\" qui sera utilisé."
 }

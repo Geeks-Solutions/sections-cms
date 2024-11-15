@@ -202,5 +202,19 @@ export default {
   "Entreprise Custom Feature": "Entreprise package Custom Feature",
   "entrepriseStartLabel": "Entreprise CTA Label",
   "entrepriseStartLink": "Entreprise CTA Link",
-  "mostPopular": "Most popular"
+  "mostPopular": "Most popular",
+  "boxTitle": "Title",
+  "boxDescription": "Description",
+  "price": "Price",
+  "paymentFrequency": "Payment frequency",
+  "link": "Link",
+  "Features (separated by -)": "Features (separated by -)",
+  "Features": "Features",
+  "startLabel": "Start Label",
+  "startLink": "Start Link",
+  "Custom Feature": "Custom Feature",
+  "currency": "Currency",
+  "plansNote1": "Note: Regarding the links it works like described below:\n",
+  "plansNote2": "If no features are added, this is the \"Know more Label\" that will be displayed and the \"Link\" field that will be used.\n",
+  "plansNote3": "If features are added, this is the \"Start label\"  that will be displayed and the \"Start link\" that will be used."
 }

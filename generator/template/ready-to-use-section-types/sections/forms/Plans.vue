@@ -153,6 +153,7 @@
           "
 		/>
 		<span v-show="errors.freeLink === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
+		<link-description />
 	  </div>
 	  
 	  <!--  EN-->
@@ -210,6 +211,7 @@
           "
 		/>
 		<span v-show="errors.freeStartLink === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
+		<link-description />
 	  </div>
 	  
 	  <div id="freeMedia" class="mt-8">
@@ -370,6 +372,7 @@
           "
 		/>
 		<span v-show="errors.standardLink === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
+		<link-description />
 	  </div>
 	  
 	  <!--  EN    -->
@@ -427,6 +430,7 @@
           "
 		/>
 		<span v-show="errors.standardStartLink === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
+		<link-description />
 	  </div>
 	  
 	  <div id="standardMedia" class="mt-8">
@@ -587,6 +591,7 @@
           "
 		/>
 		<span v-show="errors.corporateLink === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
+		<link-description />
 	  </div>
 	  
 	  <!--  EN    -->
@@ -644,6 +649,7 @@
           "
 		/>
 		<span v-show="errors.corporateStartLink === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
+		<link-description />
 	  </div>
 	  
 	  <div id="corporateMedia" class="mt-8">
@@ -804,6 +810,7 @@
           "
 		/>
 		<span v-show="errors.entrepriseLink === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
+		<link-description />
 	  </div>
 	  
 	  <!--  EN    -->
@@ -881,6 +888,7 @@
           "
 		/>
 		<span v-show="errors.entrepriseStartLink === true && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
+		<link-description />
 	  </div>
 	  
 	  <div id="entrepriseMedia" class="mt-8">

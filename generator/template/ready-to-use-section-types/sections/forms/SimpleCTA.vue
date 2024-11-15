@@ -50,6 +50,7 @@
 		   :placeholder="$t('Link')"
 		   :class="['py-4 pl-6 border rounded-xl h-48px w-344px focus:outline-none', errors.link ? 'border-error' : 'border-FieldGray']"
 	  />
+	  <link-description />
 	</div>
   
   </div>
@@ -93,8 +94,7 @@ export default {
         subTitle: false,
         link: false
       },
-      isInProgress: false,
-      selectedLang: 'en'
+      isInProgress: false
     };
   },
   watch: {
