@@ -1,5 +1,6 @@
 <template>
   <div v-if="settings" class="simple-menu p-8" :class="settings.classes">
+	<div class="icon"></div>
 	<h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>
 	<ul>
 	  <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="menuItem.menuItemClasses">

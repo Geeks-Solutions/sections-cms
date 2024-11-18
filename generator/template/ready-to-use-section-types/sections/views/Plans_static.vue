@@ -8,7 +8,7 @@
 	  </div>
 	  
 	  <div class="flex w-full justify-center">
-		<div class="ql-editor ql-snow md:w-full mt-2 px-8 md:px-0 font-light subtitle" v-html="getCurrentTranslation(settings, lang, 'subTitle', 'subTitle_fr')"></div>
+		<div class="ql-editor ql-snow md:w-full mt-2 px-8 md:px-0 subtitle" v-html="getCurrentTranslation(settings, lang, 'subTitle', 'subTitle_fr')"></div>
 	  </div>
 	  
 	  <div :class="['flex flex-wrap justify-center gap-7 items-center mt-16', (settings[lang] && settings[lang].freeFeatures && settings[lang].freeFeatures !== '') || (settings.freeFeatures && settings.freeFeatures !== '') ? 'md:h-full' : 'md:h-400px']">
