@@ -92,11 +92,186 @@ export default {
 	  type: String,
 	  default: "en"
 	},
-	// viewStructure: {
-	//   settings: [
-	//
-	//   ]
-	// }
+	viewStructure: {
+	  settings: [
+		{
+		  "title": {
+			"fr": "string",
+			"en": "string"
+		  },
+		  "subTitle": {
+			"fr": "string",
+			"en": "string"
+		  },
+		  "globalCtaLabel": {
+			"fr": "string",
+			"en": "string"
+		  },
+		  "plans": [
+			{
+			  "description": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "media": "image",
+			  "title": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "features": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "currency": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "price": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "ctaLink": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "ctaLabel": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "customFeatures": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "frequency": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "mostPopular": "boolean"
+			},
+			{
+			  "description": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "media": "image",
+			  "title": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "features": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "currency": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "price": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "ctaLink": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "ctaLabel": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "customFeatures": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "frequency": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "mostPopular": "boolean"
+			},
+			{
+			  "description": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "media": "image",
+			  "title": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "features": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "currency": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "price": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "ctaLink": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "ctaLabel": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "customFeatures": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "frequency": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "mostPopular": "boolean"
+			},
+			{
+			  "description": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "media": "image",
+			  "title": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "features": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "currency": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "price": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "ctaLink": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "ctaLabel": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "customFeatures": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "frequency": {
+				"fr": "string",
+				"en": "string"
+			  },
+			  "mostPopular": "boolean"
+			}
+		  ]
+		}
+	  ]
+	}
   },
   data() {
 	return {

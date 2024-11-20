@@ -230,7 +230,7 @@ import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wy
 import {getFormsKeysTranslation, scrollToFirstError} from "@/utils/constants";
 
 export default {
-  name: 'Pans',
+  name: 'Plans',
   components: {
 	UploadMedia,
 	wysiwyg
