@@ -38,7 +38,7 @@
 			  </div>
 			  
 			  <div class="flex justify-center mt-1">
-				<div v-if="plan.currency[lang]" class="pt-6 currency" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.currency[lang] }}</div>
+				<div v-if="plan.currency[lang]" class="currency" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.currency[lang] }}</div>
 				<div v-if="plan.price[lang]" class="price">{{ plan.price[lang] }}</div>
 			  </div>
 			  

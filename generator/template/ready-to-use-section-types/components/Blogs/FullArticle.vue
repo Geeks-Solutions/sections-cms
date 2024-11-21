@@ -4,7 +4,7 @@
       <div class="flex flex-col items-center gap-6">
         <div class="flex flex-col items-center gap-3">
           <h4 class="text-center">{{ $t('blogs.published', {time: parseTime(sectionRenderData.updated_at)}) }}</h4>
-          <h2 class="text-center">{{ sectionRenderData.title }}</h2>
+          <h1 class="text-center">{{ sectionRenderData.title }}</h1>
         </div>
         <p class="text-center" v-html="sectionRenderData.description"></p>
       </div>
