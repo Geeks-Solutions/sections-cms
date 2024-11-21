@@ -13,50 +13,51 @@
 	  
 	  <div :class="['flex flex-wrap justify-center gap-7 items-center mt-16', (settings.features && settings.features[lang] !== '') ? 'md:h-full' : 'md:h-400px']">
 
-		<div v-for="(plan, idx) in settings.plans" :key="`plans-${idx}`" class="flex justify-between relative plansBox md:w-312px rounded-md" :class="[{'mostPopular' : plan.mostPopular === true}, `plan-${idx}`]">
-		  <div class="flex flex-col z-10 w-max justify-between py-4 rounded-md mx-4 px-4 wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
-			<div v-if="plan.mostPopular === true" class="absolute top-0 left-0 transform w-2/3 border-transparent">
-			  <span class="absolute popPad" />
-			  <div class="absolute popText">
-				<div class="relative" :class="$i18n.locale === 'fr' ? 'pl-2' : ''">
+		<div v-for="(plan, idx) in settings.plans" :key="`plans-${idx}`">
+		  <div v-if="plan.title && plan.title[lang]" class="flex justify-between relative plansBox md:w-312px rounded-md" :class="[{'mostPopular' : plan.mostPopular === true}, `plan-${idx}`]">
+			<div class="flex flex-col z-10 w-max justify-between py-4 rounded-md mx-4 px-4 wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
+			  <div v-if="plan.mostPopular === true" class="absolute top-0 left-0 transform w-2/3 border-transparent">
+				<span class="absolute popPad" />
+				<div class="absolute popText">
+				  <div class="relative" :class="$i18n.locale === 'fr' ? 'pl-2' : ''">
                   <span class="absolute text-white w-max transform -rotate-45  p-2">
                     {{ $t('plans.mostPopular') }}
                   </span>
+				  </div>
 				</div>
 			  </div>
-			</div>
-			<div class="flex items-center border-b border-FieldGray pb-4">
-			  <div class="flex justify-center border border-Dark rounded-full w-100px h-100px mr-6 img-wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
-				<img v-if="plan.media && (plan.media.files && plan.media.files[0].url) || (plan.media && plan.media.url && plan.media.url !== '')" format="webp" loading="lazy" :src="plan.media.url && plan.media.url !== '' ? plan.media.url : plan.media.files[0].url" :alt="plan.media.seo_tag" class="p-2" />
+			  <div class="flex items-center border-b border-FieldGray pb-4">
+				<div class="flex justify-center border border-Dark rounded-full w-100px h-100px mr-6 img-wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
+				  <img v-if="plan.media && (plan.media.files && plan.media.files[0].url) || (plan.media && plan.media.url && plan.media.url !== '')" format="webp" loading="lazy" :src="plan.media.url && plan.media.url !== '' ? plan.media.url : plan.media.files[0].url" :alt="plan.media.seo_tag" class="p-2" />
+				</div>
+				<div class="w-140px plansTitleBox">
+				  <div class="title w-80px" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.title[lang] }}</div>
+				  <div v-if="plan.description[lang] !== ''" class="ql-editor ql-snow pt-2 pb-0 pl-0 desc" v-html="plan.description[lang]"></div>
+				</div>
+			  
 			  </div>
-			  <div class="w-140px plansTitleBox">
-				<div class="title w-80px" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.title[lang] }}</div>
-				<div v-if="plan.description[lang] !== ''" class="ql-editor ql-snow pt-2 pb-0 pl-0 desc" v-html="plan.description[lang]"></div>
+			  
+			  <div class="flex justify-center mt-1">
+				<div v-if="plan.currency[lang]" class="pt-6 currency" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.currency[lang] }}</div>
+				<div v-if="plan.price[lang]" class="price">{{ plan.price[lang] }}</div>
 			  </div>
-			
-			</div>
-			
-			<div class="flex justify-center mt-1">
-			  <div v-if="plan.currency[lang]" class="pt-6 currency" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.currency[lang] }}</div>
-			  <div v-if="plan.price[lang]" class="price">{{ plan.price[lang] }}</div>
-			</div>
-			
-			<div v-if="plan.frequency[lang]" class="flex justify-center pt-1 date" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.frequency[lang] }}</div>
-			
-			<div class="flex justify-center pt-6 pb-6">
-			  <div class="pr-2 customFeatures" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.customFeatures[lang] }}</div>
-			</div>
-			
-			<div class="pt-6 flex flex-col h-full justify-between">
-			  <div class="pb-4 features">
-				<ul v-for="(item, index) in plan.features[lang] && plan.features[lang].includes('-') ? plan.features[lang].split('-') : []" :key="`plan-${item}-${index}`" class="flex justify-start items-start md:w-full w-320px pt-1 ">
-				  <li class="bp" :class="{'mostPopular' : plan.mostPopular === true}">{{ item }}</li>
-				</ul>
+			  
+			  <div v-if="plan.frequency[lang]" class="flex justify-center pt-1 date" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.frequency[lang] }}</div>
+			  
+			  <div class="flex justify-center pt-6 pb-6">
+				<div class="pr-2 customFeatures" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.customFeatures[lang] }}</div>
 			  </div>
-			  <div class="flex justify-center cursor-pointer">
+			  
+			  <div class="pt-6 flex flex-col h-full justify-between">
+				<div class="pb-4 features">
+				  <ul v-for="(item, index) in plan.features[lang] && plan.features[lang].includes('-') ? plan.features[lang].split('-') : []" :key="`plan-${item}-${index}`" class="flex justify-start items-start md:w-full w-320px pt-1 ">
+					<li class="bp" :class="{'mostPopular' : plan.mostPopular === true}">{{ item }}</li>
+				  </ul>
+				</div>
+				<div class="flex justify-center cursor-pointer">
 				  <global-link :link="plan.ctaLink" :lang="lang">
 					<div class="flex">
-					  <div class="pr-2 cta-arrow" :class="{'mostPopular' : plan.mostPopular === true}">
+					  <div v-if="(plan.ctaLabel && plan.ctaLabel[lang]) || (settings.globalCtaLabel && settings.globalCtaLabel[lang])" class="pr-2 cta-arrow" :class="{'mostPopular' : plan.mostPopular === true}">
 						=>
 					  </div>
 					  <div class="cta">
@@ -64,11 +65,12 @@
 					  </div>
 					</div>
 				  </global-link>
+				</div>
 			  </div>
+			
 			</div>
 		  
 		  </div>
-		
 		</div>
 	  
 	  

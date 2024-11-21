@@ -227,7 +227,7 @@
 <script>
 import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
 import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wysiwyg.vue";
-import {getFormsKeysTranslation, scrollToFirstError} from "@/utils/constants";
+import {scrollToFirstError} from "@/utils/constants";
 
 export default {
   name: 'Plans',
@@ -288,10 +288,6 @@ export default {
   watch: {
 	selectedLang(val) {
 	  this.siteLang = val
-	},
-	settings(val) {
-	  console.log(val)
-	  console.log(val[0].plans && val[0].plans.length === 0)
 	},
 	selectedMedia(mediaObject) {
 	  const media = {
@@ -422,12 +418,6 @@ export default {
 	  }
 	  this.errors = {}
 	  let valid = true;
-	  this.settings[0].plans.forEach((plan, idx) => {
-		if (!plan.title.en) {
-		  this.errors[`title-${idx}`] = true
-		  valid = false
-		}
-	  })
 	  if (!valid) {
 		setTimeout(() => document.getElementById('required-fields').scrollIntoView(), 1000)
 		this.$root.$emit("toast", {
