@@ -64,13 +64,13 @@
 	  </div>
 	  
 	  <div class="flex flex-row gap-4">
-		<div class="flex flex-col items-start justify-start mt-8">
-		  <label class="mr-4 font-bold">{{ $t("plans.price") }}</label>
+		<div :id="`currency-${idx}`" class="flex flex-col items-start justify-start mt-8">
+		  <label class="mr-4 font-bold">{{ $t("plans.currency") }}</label>
 		  <input
-			   v-model="plan.price[siteLang]"
+			   v-model="plan.currency[siteLang]"
 			   type="text"
 			   value=""
-			   :placeholder="$t('plans.price')"
+			   :placeholder="$t('currency')"
 			   class="
             py-4
             pl-6
@@ -83,13 +83,13 @@
 		  />
 		</div>
 		
-		<div :id="`currency-${idx}`" class="flex flex-col items-start justify-start mt-8">
-		  <label class="mr-4 font-bold">{{ $t("plans.currency") }}</label>
+		<div class="flex flex-col items-start justify-start mt-8">
+		  <label class="mr-4 font-bold">{{ $t("plans.price") }}</label>
 		  <input
-			   v-model="plan.currency[siteLang]"
+			   v-model="plan.price[siteLang]"
 			   type="text"
 			   value=""
-			   :placeholder="$t('currency')"
+			   :placeholder="$t('plans.price')"
 			   class="
             py-4
             pl-6
@@ -417,7 +417,7 @@ export default {
 		})
 	  }
 	  this.errors = {}
-	  let valid = true;
+	  const valid = true;
 	  if (!valid) {
 		setTimeout(() => document.getElementById('required-fields').scrollIntoView(), 1000)
 		this.$root.$emit("toast", {
