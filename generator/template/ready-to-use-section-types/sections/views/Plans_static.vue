@@ -11,7 +11,7 @@
 		<div class="ql-editor ql-snow md:w-full mt-2 px-8 md:px-0 subtitle" v-html="settings.subTitle[lang]"></div>
 	  </div>
 	  
-	  <div :class="['flex flex-wrap justify-center gap-7 items-center mt-16', (settings.features && settings.features[lang] !== '') ? 'md:h-full' : 'md:h-400px']">
+	  <div :class="['flex flex-wrap justify-center gap-7 items-center mt-16', (settings.features && settings.features[lang] !== '') ? 'md:h-full' : 'md:h-full']">
 
 		<div v-for="(plan, idx) in settings.plans" :key="`plans-${idx}`">
 		  <div v-if="plan.title && plan.title[lang]" class="flex justify-between relative plansBox md:w-312px rounded-md" :class="[{'mostPopular' : plan.mostPopular === true}, `plan-${idx}`]">
@@ -117,20 +117,20 @@ export default {
 			  },
 			  "media": "image",
 			  "title": {
-				"fr": "string",
-				"en": "string"
+				"fr": "plan",
+				"en": "plan"
 			  },
 			  "features": {
 				"fr": "string",
 				"en": "string"
 			  },
 			  "currency": {
-				"fr": "string",
-				"en": "string"
+				"fr": "$",
+				"en": "$"
 			  },
 			  "price": {
-				"fr": "string",
-				"en": "string"
+				"fr": "number",
+				"en": "number"
 			  },
 			  "ctaLink": {
 				"fr": "string",
@@ -157,20 +157,20 @@ export default {
 			  },
 			  "media": "image",
 			  "title": {
-				"fr": "string",
-				"en": "string"
+				"fr": "plan",
+				"en": "plan"
 			  },
 			  "features": {
 				"fr": "string",
 				"en": "string"
 			  },
 			  "currency": {
-				"fr": "string",
-				"en": "string"
+				"fr": "$",
+				"en": "$"
 			  },
 			  "price": {
-				"fr": "string",
-				"en": "string"
+				"fr": "number",
+				"en": "number"
 			  },
 			  "ctaLink": {
 				"fr": "string",
@@ -197,20 +197,20 @@ export default {
 			  },
 			  "media": "image",
 			  "title": {
-				"fr": "string",
-				"en": "string"
+				"fr": "plan",
+				"en": "plan"
 			  },
 			  "features": {
 				"fr": "string",
 				"en": "string"
 			  },
 			  "currency": {
-				"fr": "string",
-				"en": "string"
+				"fr": "$",
+				"en": "$"
 			  },
 			  "price": {
-				"fr": "string",
-				"en": "string"
+				"fr": "number",
+				"en": "number"
 			  },
 			  "ctaLink": {
 				"fr": "string",
@@ -237,20 +237,20 @@ export default {
 			  },
 			  "media": "image",
 			  "title": {
-				"fr": "string",
-				"en": "string"
+				"fr": "plan",
+				"en": "plan"
 			  },
 			  "features": {
 				"fr": "string",
 				"en": "string"
 			  },
 			  "currency": {
-				"fr": "string",
-				"en": "string"
+				"fr": "$",
+				"en": "$"
 			  },
 			  "price": {
-				"fr": "string",
-				"en": "string"
+				"fr": "number",
+				"en": "number"
 			  },
 			  "ctaLink": {
 				"fr": "string",

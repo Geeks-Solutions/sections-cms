@@ -20,12 +20,12 @@
 	  
 	  <div class="flex flex-row gap-4">
 		<div :id="`title-${idx}`" class="flex flex-col items-start justify-start mt-8">
-		  <label class="mr-4 font-bold">{{ $t("plans.title") + ' *' }}</label>
+		  <label class="mr-4 font-bold">{{ $t("plans.title") }}</label>
 		  <input
 			   v-model="plan.title[siteLang]"
 			   type="text"
 			   value=""
-			   :placeholder="$t('plans.title') + ' *'"
+			   :placeholder="$t('plans.title')"
 			   class="
             py-4
             pl-6
