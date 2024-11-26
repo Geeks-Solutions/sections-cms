@@ -91,7 +91,11 @@ export default {
     beautifulIdeas: "Beautiful Ideas",
     discoverFavorites: "Discover our favorites - the blog",
     allCategories: "All categories",
-    published: "Published {time}"
+    published: "Published {time}",
+    readPost: "Read post",
+    next: "Next",
+    previous: "Previous",
+    copyLink: "Copy link"
   },
   forms: {
     title: "Title",

@@ -92,7 +92,11 @@ export default {
     beautifulIdeas: "Belles Idées",
     discoverFavorites: "Découvrir nos coups de coeur - le blog",
     allCategories: "Toutes les catégories",
-    published: "Publié {time}"
+    published: "Publié {time}",
+    readPost: "Lire l'article",
+    next: "Suivant",
+    previous: "Précédent",
+    copyLink: "Copier le lien"
   },
   forms: {
     title: "Titre",
