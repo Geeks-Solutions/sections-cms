@@ -14,19 +14,6 @@
       <span v-if="errors.websiteId === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
-    <div id="sequenceName" class="flex flex-col items-start justify-start mt-8 mb-4">
-      <label class="mr-4 font-medium">{{ $t("zaq.sequenceName") }}</label>
-      <span class="text-xs text-Gray_800"></span>
-      <input
-        v-model="settings[0].sequenceName"
-        type="text"
-        value=""
-        :placeholder="$t('zaq.sequenceName')"
-        :class="sectionsStyle.input"
-      />
-      <span v-if="errors.sequenceName === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
-    </div>
-
     <div id="sequence" class="mb-4">
       <UploadMedia :is-document="true" :media-label="$t('zaq.sequence')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].sequence && Object.keys(settings[0].sequence).length > 0 ? [settings[0].sequence] : []" @uploadContainerClicked="selectedMediaKey = 'sequence'; $emit('openMediaModal', settings[0].sequence && Object.keys(settings[0].sequence).length > 0 ? settings[0].sequence.media_id : null)" @removeUploadedImage="removeMedia('sequence')" />
       <span v-if="errors.sequence === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
@@ -108,7 +95,6 @@ export default {
       settings: [
         {
           websiteId: '',
-          sequenceName: '',
           sequence: {
             media_id: "",
             url: "",
@@ -134,7 +120,6 @@ export default {
       ],
       errors: {
         websiteId: false,
-        sequenceName: false,
         sequence: false
       },
       siteLang: 'en',
@@ -177,14 +162,9 @@ export default {
       }
       let valid = true;
       this.errors.websiteId = false;
-      this.errors.sequenceName = false;
       this.errors.sequence = false;
       if (!this.settings[0].websiteId) {
         this.errors.websiteId = true;
-        valid = false;
-      }
-      if (!this.settings[0].sequenceName) {
-        this.errors.sequenceName = true;
         valid = false;
       }
       if (!this.settings[0].sequence || !this.settings[0].sequence.url) {

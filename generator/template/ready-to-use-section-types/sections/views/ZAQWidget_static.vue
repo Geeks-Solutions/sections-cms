@@ -44,13 +44,13 @@ export default {
   },
   watch: {
     "section.settings"(v) {
-      if (v && v[0] && v[0].websiteId && v[0].sequenceName && v[0].sequence && v[0].sequence.url) {
+      if (v && v[0] && v[0].websiteId && v[0].sequence && v[0].sequence.url) {
         this.initializeWidget()
       }
     }
   },
   mounted() {
-    if (this.settings[0].websiteId && this.settings[0].sequenceName && this.settings[0].sequence && this.settings[0].sequence.url) {
+    if (this.settings[0].websiteId && this.settings[0].sequence && this.settings[0].sequence.url) {
       this.initializeWidget(true)
     }
   },
@@ -73,17 +73,6 @@ export default {
           )
 
           document.head.appendChild(recaptchaScript)
-          const self = this
-          window.addEventListener(
-            'zaqWidget',
-            function (e) {
-              window.zaq.$emit('changeLang', `${self.lang}`)
-              if (e.detail.sequenceDone) {
-                window.zaq.$emit('initSequence', self.settings[0].sequenceName)
-              }
-            },
-            false
-          )
         } else {
           this.scriptLoaded = scriptLoaded
         }
