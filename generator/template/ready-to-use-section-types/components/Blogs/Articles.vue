@@ -21,7 +21,7 @@
           <nuxt-link :to="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : ''" class="w-full">
             <div class="flex flex-row w-full gap-2">
               <div class="button-selector">
-                {{ $t('Read post') }}
+                {{ $t('blogs.readPost') }}
               </div>
             </div>
           </nuxt-link>

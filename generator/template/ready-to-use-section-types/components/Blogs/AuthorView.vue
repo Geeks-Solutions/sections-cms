@@ -12,7 +12,7 @@
         <div v-else></div>
         <div class="flex flex-row gap-3 md:pb-4">
 		  <div class="flex flex-row py-2.5 px-4 gap-2 md:cursor-pointer button-selector" @click="copyArticleLink">
-			<p>{{ $t('Copy link') }}</p>
+			<p>{{ $t('blogs.copyLink') }}</p>
 		  </div>
 		  <div class="flex flex-row rounded-lg p-2.5 gap-2 md:cursor-pointer" @click="shareSocial('twitter')">
 			<div class="twitter min-w-20px w-20px h-20px"></div>
