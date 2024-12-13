@@ -208,5 +208,15 @@ export default {
     features: "Features (separated by -)",
     customFeatures: "Custom features",
     mostPopular: "Most popular"
+  },
+  zaq: {
+    websiteId: "Website ID",
+    sequenceName: "Sequence name",
+    sequence: "Sequence",
+    css: "Widget CSS",
+    sendbtnIcon: "Send button icon",
+    typingIcon: "Typing button icon",
+    hideBadge: "Hide badge",
+    recommendedSize: "Recommended size (width: 35px, height: 35px)"
   }
 }

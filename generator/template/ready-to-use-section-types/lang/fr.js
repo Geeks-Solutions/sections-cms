@@ -209,5 +209,15 @@ export default {
     features: "Caractéristiques (séparées par -)",
     customFeatures: "Caractéristiques personnalisées",
     mostPopular: "Populaire"
+  },
+  zaq: {
+    websiteId: "ID du site web",
+    sequenceName: "Nom de la séquence",
+    sequence: "Séquence",
+    css: "CSS du widget",
+    sendbtnIcon: "Icône du bouton envoyer",
+    typingIcon: "Icône du bouton de saisie",
+    hideBadge: "Masquer l'indicateur",
+    recommendedSize: "Taille recommandée (largeur : 35px, hauteur : 35px)"
   }
 }
