@@ -218,6 +218,9 @@ export default {
     sendbtnIcon: "Icône du bouton envoyer",
     typingIcon: "Icône du bouton de saisie",
     hideBadge: "Masquer l'indicateur",
-    recommendedSize: "Taille recommandée (largeur : 35px, hauteur : 35px)"
+    recommendedSize: "Taille recommandée (largeur : 35px, hauteur : 35px)",
+    registerFirst: "Vous avez besoin d'un projet sur ZAQ pour utiliser cette section. Inscrivez-vous ",
+    here: "ici",
+    autoStart: "Démarrage automatique"
   }
 }

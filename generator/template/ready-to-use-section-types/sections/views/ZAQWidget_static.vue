@@ -46,13 +46,13 @@ export default {
   },
   watch: {
     "section.settings"(v) {
-      if (v && v[0] && v[0].websiteId && v[0].sequence && v[0].sequence.url) {
+      if (v && v[0] && v[0].websiteId) {
         this.initializeWidget()
       }
     }
   },
   mounted() {
-    if (this.settings[0].websiteId && this.settings[0].sequence && this.settings[0].sequence.url) {
+    if (this.settings && this.settings[0].websiteId) {
       this.initializeWidget(true)
     }
   },
@@ -76,8 +76,13 @@ export default {
 
           document.head.appendChild(recaptchaScript)
 
-          if (this.$route.query.runSequence) {
-            this.sequenceRun = this.$route.query.runSequence
+          if (this.$route.query.runSequence || (this.settings && this.settings[0] && this.settings[0].autoStart && this.settings[0].autoStart !== 'None')) {
+            if (this.settings && this.settings[0] && this.settings[0].autoStart && this.settings[0].autoStart !== 'None') {
+              this.sequenceRun = this.settings[0].autoStart
+            }
+            if (this.$route.query.runSequence) {
+              this.sequenceRun = this.$route.query.runSequence
+            }
             const self = this
             window.addEventListener(
               'zaqWidget',

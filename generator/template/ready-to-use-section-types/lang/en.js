@@ -217,6 +217,9 @@ export default {
     sendbtnIcon: "Send button icon",
     typingIcon: "Typing button icon",
     hideBadge: "Hide badge",
-    recommendedSize: "Recommended size (width: 35px, height: 35px)"
+    recommendedSize: "Recommended size (width: 35px, height: 35px)",
+    registerFirst: "You need a project on ZAQ to use this section. Register ",
+    here: "here",
+    autoStart: "Auto start"
   }
 }
