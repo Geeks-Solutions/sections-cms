@@ -167,10 +167,6 @@ export default {
         this.errors.websiteId = true;
         valid = false;
       }
-      if (!this.settings[0].sequence || !this.settings[0].sequence.url) {
-        this.errors.sequence = true;
-        valid = false;
-      }
       if (!valid) {
         this.$root.$emit("toast", {
           type: "Error",
