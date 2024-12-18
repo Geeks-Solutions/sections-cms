@@ -115,8 +115,12 @@ export default {
     }
   },
   watch: {
-    selectedLang(val) {
-      this.siteLang = val
+    selectedLang: {
+      handler(val) {
+        this.siteLang = val
+      },
+      deep: true,
+      immediate: true
     },
     settings(val) {
       if (Array.isArray(val) === false ) {
