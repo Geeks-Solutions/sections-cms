@@ -25,7 +25,7 @@
       <label class="flex section-module-upload-media-label">{{ $t('zaq.autoStart') }}</label>
       <div class="select-style-chooser w-344px">
         <gAutoComplete
-          v-model="settings[0].autoStart"
+          :main-filter="settings[0].autoStart"
           :placeholder="$t('zaq.autoStart')"
           :filter-label-prop="'value'"
           :reduce="(option) => option.key"
@@ -199,6 +199,14 @@ export default {
       this.settings[0][mediaKey] = {}
     },
     validate() {
+      try {
+        const allCookies = this.$cookies.getAll();
+        Object.keys(allCookies).forEach((cookieName) => {
+          if (cookieName.startsWith('zaq_')) {
+            this.$cookies.remove(cookieName);
+          }
+        });
+      } catch {}
       for(const mediaKey of ['sendBtnMedia', 'typingIconMedia']) {
         if (this.settings[0][mediaKey] && (Object.keys(this.settings[0][mediaKey]).length === 0 || !this.settings[0][mediaKey].media_id || !this.settings[0][mediaKey].url)) {
           delete this.settings[0][mediaKey]
