@@ -6,6 +6,8 @@
         :hide-badge="settings[0].hideBadge.toString()"
         :widget-open="true"
         :lang="$i18n.locale"
+        :server-url="$route.query.zaq_api ? `https://${$route.query.zaq_api}` : ''"
+        :websocket-url="$route.query.zaq_api ? `wss://${$route.query.zaq_api}/socket` : ''"
         :load-sequence="settings[0].sequence && settings[0].sequence.url ? settings[0].sequence.url : ''"
         :css="settings[0].css && settings[0].css.url ? settings[0].css.url : ''"
         :icons='JSON.stringify({
@@ -65,7 +67,11 @@ export default {
   methods: {
     initializeWidget(scriptLoaded = false) {
       if (process.browser) {
-        const scriptSrc = 'https://zaq-ai.s3.eu-west-2.amazonaws.com/widget/zaq-widget-vue.min.js';
+        let bucketName = `zaq-ai`
+        if (this.$route.query.zaq_dev === 'true') {
+          bucketName = `zaq-ai-dev`
+        }
+        const scriptSrc = `https://${bucketName}.s3.eu-west-2.amazonaws.com/widget/zaq-widget-vue.min.js`;
         if (!document.querySelector(`head script[src="${scriptSrc}"]`)) {
           const recaptchaScript = document.createElement('script')
           this.scriptElement = recaptchaScript
