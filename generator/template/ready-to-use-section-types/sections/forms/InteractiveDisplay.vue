@@ -330,7 +330,7 @@ export default {
   transition: background-color 0.2s;
 }
 .toggle-checkbox:checked {
-  background: #4caf50;
+  background: #31a9db;
 }
 .toggle-checkbox:before {
   content: "";
