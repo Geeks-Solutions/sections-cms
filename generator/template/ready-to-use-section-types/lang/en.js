@@ -192,7 +192,11 @@ export default {
     menuLabel: "Menu label",
     cssClasses: "CSS classes",
     cssClassesDesc: "(used to add one or more css class to style the whole menu)",
-    menuCssClassesDesc: "(used to add one or more css class to style the menu items)"
+    menuCssClassesDesc: "(used to add one or more css class to style the menu items)",
+    autoPlay: "Autoplay",
+    loop: "Loop",
+    removeControls: "Remove controls",
+    whiteProgress: "White progress"
   },
   plans: {
     plan: "Plan",

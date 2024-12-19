@@ -38,7 +38,7 @@
     </div>
     <div v-else class="w-full relative h-700px">
 <!--  For youtube videos, the following must be added to the end of the embedded url `?autoplay=1&mute=1` for the video to autoplay -->
-      <iframe :src="settings[0].videoLink" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" allow="autoplay;" />
+      <iframe :src="computedVideoUrl" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" allow="autoplay;" />
     </div>
   </div>
 </template>
@@ -87,12 +87,62 @@ export default {
     return {
       currentIndex: 0,
       autoplayInterval: null,
-      sectionsStyle
+      sectionsStyle,
+      videoUrl: ''
     }
   },
   computed: {
     settings() {
       return this.section.settings
+    },
+    computedVideoUrl() {
+      if (this.settings && this.settings[0] && this.settings[0].videoLink && this.isYouTubeLink(this.settings[0].videoLink)) {
+        const v = this.settings[0]
+        try {
+          const url = new URL(v.videoLink);
+          const params = url.searchParams;
+
+          params.set("hl", this.$i18n.locale);
+          params.set("rel", "0");
+
+          if (v.autoplay) {
+            params.set("autoplay", "1");
+            params.set("mute", "1");
+          } else {
+            params.delete("autoplay");
+            params.delete("mute");
+          }
+
+          if (v.loop) {
+            const videoId = this.extractVideoId(url.href);
+            if (videoId) {
+              params.set("loop", "1");
+              params.set("playlist", videoId);
+            }
+          } else {
+            params.delete("loop");
+            params.delete("playlist");
+          }
+
+          if (v.controls) {
+            params.set("controls", "0");
+            params.set("disablekb", "1");
+          } else {
+            params.delete("controls");
+            params.delete("disablekb");
+          }
+
+          if (v.whiteProgress) {
+            params.set("color", "white");
+          } else {
+            params.delete("color");
+          }
+
+          return url.toString();
+        } catch {
+          return ''
+        }
+      } else return this.settings[0].videoLink
     }
   },
   mounted() {
@@ -119,6 +169,19 @@ export default {
     resetAutoplay() {
       clearInterval(this.autoplayInterval);
       this.startAutoplay();
+    },
+    extractVideoId(url) {
+      const regex = /(?:youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    },
+    isYouTubeLink(url) {
+      try {
+        const regex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)(\/.*)?$/;
+        return regex.test(url);
+      } catch {
+        return false
+      }
     }
   }
 };

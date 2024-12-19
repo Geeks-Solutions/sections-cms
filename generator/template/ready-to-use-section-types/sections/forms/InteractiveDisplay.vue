@@ -12,6 +12,49 @@
       <span v-if="errors.videoLink === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
+    <div v-if="settings[0].videoLink" class="flex flex-wrap pt-4 pl-6">
+      <div class="pr-4">
+        <label class="flex items-center space-x-2">
+          <span>{{ $t('forms.autoPlay') }}</span>
+          <input
+            v-model="settings[0].autoplay"
+            type="checkbox"
+            class="toggle-checkbox"
+          />
+        </label>
+      </div>
+      <div class="pr-4">
+        <label class="flex items-center space-x-2">
+          <span>{{ $t('forms.loop') }}</span>
+          <input
+            v-model="settings[0].loop"
+            type="checkbox"
+            class="toggle-checkbox"
+          />
+        </label>
+      </div>
+      <div class="pr-4">
+        <label class="flex items-center space-x-2">
+          <span>{{ $t('forms.removeControls') }}</span>
+          <input
+            v-model="settings[0].controls"
+            type="checkbox"
+            class="toggle-checkbox"
+          />
+        </label>
+      </div>
+      <div class="pr-4">
+        <label class="flex items-center space-x-2">
+          <span>{{ $t('forms.whiteProgress') }}</span>
+          <input
+            v-model="settings[0].whiteProgress"
+            type="checkbox"
+            class="toggle-checkbox"
+          />
+        </label>
+      </div>
+    </div>
+
     <div class="flex flex-row justify-center mt-8">
       <h3 :class="sectionsStyle.fieldLabel">{{ $t("forms.carousel") }}</h3>
     </div>
@@ -132,6 +175,10 @@ export default {
             fr: ''
           },
           videoLink: '',
+          autoplay: false,
+          loop: false,
+          controls: false,
+          whiteProgress: false,
           media: {
             media_id: "",
             url: "",
@@ -270,5 +317,33 @@ export default {
 <style>
 .content-wrapper {
   overflow-x: hidden;
+}
+.toggle-checkbox {
+  width: 40px;
+  height: 20px;
+  appearance: none;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.toggle-checkbox:checked {
+  background: #4caf50;
+}
+.toggle-checkbox:before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.toggle-checkbox:checked:before {
+  transform: translateX(20px);
 }
 </style>
