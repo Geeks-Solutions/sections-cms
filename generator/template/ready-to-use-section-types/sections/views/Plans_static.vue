@@ -1,16 +1,16 @@
 <template>
   <div v-if="settings" class="plans plans-wrapper">
-	
+
 	<div class="mt-18 pb-20 sectionsPack">
-	  
+
 	  <div class="flex w-full justify-center">
 		<div class="ql-editor ql-snow mt-14 md:w-full w-fit px-16 md:px-0 title" style="letter-spacing: 4px" v-html="settings.title[lang]"></div>
 	  </div>
-	  
+
 	  <div class="flex w-full justify-center">
 		<div class="ql-editor ql-snow md:w-full mt-2 px-8 md:px-0 subtitle" v-html="settings.subTitle[lang]"></div>
 	  </div>
-	  
+
 	  <div :class="['flex flex-wrap justify-center gap-7 items-center mt-16', (settings.features && settings.features[lang] !== '') ? 'md:h-full' : 'md:h-full']">
 
 		<div v-for="(plan, idx) in settings.plans" :key="`plans-${idx}`">
@@ -31,23 +31,23 @@
 				  <img v-if="plan.media && (plan.media.files && plan.media.files[0].url) || (plan.media && plan.media.url && plan.media.url !== '')" format="webp" loading="lazy" :src="plan.media.url && plan.media.url !== '' ? plan.media.url : plan.media.files[0].url" :alt="plan.media.seo_tag" class="p-2" />
 				</div>
 				<div class="w-140px plansTitleBox">
-				  <div class="title w-80px" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.title[lang] }}</div>
+				  <div class="title w-80px" :class="{'mostPopular' : plan.mostPopular === true}" :title="plan.title[lang]">{{ plan.title[lang] }}</div>
 				  <div v-if="plan.description[lang] !== ''" class="ql-editor ql-snow pt-2 pb-0 pl-0 desc" v-html="plan.description[lang]"></div>
 				</div>
-			  
+
 			  </div>
-			  
+
 			  <div class="flex justify-center mt-1">
 				<div v-if="plan.currency[lang]" class="currency" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.currency[lang] }}</div>
 				<div v-if="plan.price[lang]" class="price">{{ plan.price[lang] }}</div>
 			  </div>
-			  
+
 			  <div v-if="plan.frequency[lang]" class="flex justify-center pt-1 date" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.frequency[lang] }}</div>
-			  
+
 			  <div class="flex justify-center pt-6 pb-6">
 				<div class="pr-2 customFeatures" :class="{'mostPopular' : plan.mostPopular === true}">{{ plan.customFeatures[lang] }}</div>
 			  </div>
-			  
+
 			  <div class="pt-6 flex flex-col h-full justify-between">
 				<div class="pb-4 features">
 				  <ul v-for="(item, index) in plan.features[lang] && plan.features[lang].includes('-') ? plan.features[lang].split('-') : []" :key="`plan-${item}-${index}`" class="flex justify-start items-start md:w-full w-320px pt-1 ">
@@ -67,17 +67,17 @@
 				  </global-link>
 				</div>
 			  </div>
-			
+
 			</div>
-		  
+
 		  </div>
 		</div>
-	  
-	  
+
+
 	  </div>
-	
+
 	</div>
-  
+
   </div>
 </template>
 
@@ -307,35 +307,35 @@ export default {
   methods: {
 	adjustBoxesHeight() {
 	  const boxes = document.querySelectorAll('.plansBox');
-	  
+
 	  let maxHeight = 0;
-	  
+
 	  boxes.forEach(box => {
 		box.style.height = `auto`;
 	  });
-	  
+
 	  boxes.forEach(box => {
 		const boxHeight = box.getBoundingClientRect().height;
 		maxHeight = Math.max(maxHeight, boxHeight);
 	  });
-	  
+
 	  boxes.forEach(box => {
 		box.style.height = `${maxHeight}px`;
 	  });
-	  
+
 	  const titleBoxes = document.querySelectorAll('.plansTitleBox');
-	  
+
 	  let titleMaxHeight = 0;
-	  
+
 	  titleBoxes.forEach(box => {
 		box.style.height = `auto`;
 	  });
-	  
+
 	  titleBoxes.forEach(box => {
 		const boxHeight = box.getBoundingClientRect().height;
 		titleMaxHeight = Math.max(titleMaxHeight, boxHeight);
 	  });
-	  
+
 	  titleBoxes.forEach(box => {
 		box.style.height = `${titleMaxHeight}px`;
 	  });
