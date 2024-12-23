@@ -6,7 +6,7 @@
     </div>
     <div v-if="sectionRenderData && sectionRenderData.articles"
          :class="[listTypeStyle.listStyle, {'md:justify-center': sectionRenderData.articles.length <= 3}]">
-      <div v-for="object in sectionRenderData.articles" :key="object.id" class="flex flex-col gap-6 justify-between py-5 px-4 wrapper">
+      <div v-for="(object, idx) in sectionRenderData.articles" :key="`article-${object.id}-${idx}`" class="flex flex-col gap-6 justify-between py-5 px-4 wrapper">
         <div class="flex" :class="listTypeStyle.image">
           <div v-if="object.medias && object.medias.length > 0" class="w-full">
             <img :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" class="object-cover w-full md:w-352px h-full" />
