@@ -108,7 +108,6 @@ export default {
           limit_ca: BLOGS_LIST_SIZE
         }
       }
-      this.$store.commit('setCategoriesTitles', categoriesTitles)
       this.$nuxt.$emit('clearOffset')
       updateQueryStringValue(this.$route.path, {
         'categories_titles[]': null
