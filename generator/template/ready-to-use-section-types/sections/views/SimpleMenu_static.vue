@@ -1,21 +1,23 @@
 <template>
   <div v-if="settings" class="simple-menu p-8" :class="settings.classes">
-	<div class="icon"></div>
-	<h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>
-	<ul>
-	  <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="menuItem.menuItemClasses">
-		<global-link v-if="menuItem.languageMenu !== true" :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }" :lang="lang">
-		  <p>
-			{{ menuItem.label[lang] }}
-		  </p>
-		</global-link>
-		<nuxt-link v-else
-			 :to="switchLocalePath(lang === 'fr' ? 'en' : 'fr')"
-		>
-		  {{ menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : '' }}
-		</nuxt-link>
-	  </li>
-	</ul>
+    <div class="icon"></div>
+    <h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>
+    <ul>
+      <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'logo': idx === 0}]">
+        <global-link v-if="menuItem.languageMenu !== true"
+                     :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
+                     :lang="lang">
+          <p>
+            {{ menuItem.label[lang] }}
+          </p>
+        </global-link>
+        <nuxt-link v-else
+                   :to="switchLocalePath(lang === 'fr' ? 'en' : 'fr')"
+        >
+          {{ menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : '' }}
+        </nuxt-link>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -26,129 +28,130 @@ export default {
   props: {
     section: {
       type: Object,
-      default: () => {},
+      default: () => {
+      },
     },
     lang: {
       type: String,
       default: "en"
     },
-	locales: {
-	  type: Array,
-	  default: () => [],
-	},
-	viewStructure: {
-	  settings: [
-		{
-		  menu: [
-			{
-			  label: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  link: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  page: {
-				en: 'title',
-				fr: 'title'
-			  }
-			},
-			{
-			  label: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  link: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  page: {
-				en: 'title',
-				fr: 'title'
-			  }
-			},
-			{
-			  label: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  link: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  page: {
-				en: 'title',
-				fr: 'title'
-			  }
-			},
-			{
-			  label: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  link: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  page: {
-				en: 'title',
-				fr: 'title'
-			  }
-			},
-			{
-			  label: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  link: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  page: {
-				en: 'title',
-				fr: 'title'
-			  }
-			},
-			{
-			  label: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  link: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  page: {
-				en: 'title',
-				fr: 'title'
-			  }
-			},
-			{
-			  label: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  link: {
-				en: 'title',
-				fr: 'title'
-			  },
-			  page: {
-				en: 'title',
-				fr: 'title'
-			  }
-			}
-		  ]
-		}
-	  ]
-	}
+    locales: {
+      type: Array,
+      default: () => [],
+    },
+    viewStructure: {
+      settings: [
+        {
+          menu: [
+            {
+              label: {
+                en: 'title',
+                fr: 'title'
+              },
+              link: {
+                en: 'title',
+                fr: 'title'
+              },
+              page: {
+                en: 'title',
+                fr: 'title'
+              }
+            },
+            {
+              label: {
+                en: 'title',
+                fr: 'title'
+              },
+              link: {
+                en: 'title',
+                fr: 'title'
+              },
+              page: {
+                en: 'title',
+                fr: 'title'
+              }
+            },
+            {
+              label: {
+                en: 'title',
+                fr: 'title'
+              },
+              link: {
+                en: 'title',
+                fr: 'title'
+              },
+              page: {
+                en: 'title',
+                fr: 'title'
+              }
+            },
+            {
+              label: {
+                en: 'title',
+                fr: 'title'
+              },
+              link: {
+                en: 'title',
+                fr: 'title'
+              },
+              page: {
+                en: 'title',
+                fr: 'title'
+              }
+            },
+            {
+              label: {
+                en: 'title',
+                fr: 'title'
+              },
+              link: {
+                en: 'title',
+                fr: 'title'
+              },
+              page: {
+                en: 'title',
+                fr: 'title'
+              }
+            },
+            {
+              label: {
+                en: 'title',
+                fr: 'title'
+              },
+              link: {
+                en: 'title',
+                fr: 'title'
+              },
+              page: {
+                en: 'title',
+                fr: 'title'
+              }
+            },
+            {
+              label: {
+                en: 'title',
+                fr: 'title'
+              },
+              link: {
+                en: 'title',
+                fr: 'title'
+              },
+              page: {
+                en: 'title',
+                fr: 'title'
+              }
+            }
+          ]
+        }
+      ]
+    }
   },
   computed: {
-	settings() {
-	  if(Array.isArray(this.section.settings)) {
-		return this.section.settings[0];
-	  } else return this.section.settings
-	},
+    settings() {
+      if (Array.isArray(this.section.settings)) {
+        return this.section.settings[0];
+      } else return this.section.settings
+    },
   }
 };
 </script>

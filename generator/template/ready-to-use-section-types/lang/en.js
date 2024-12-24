@@ -196,7 +196,10 @@ export default {
     autoPlay: "Autoplay",
     loop: "Loop",
     removeControls: "Remove controls",
-    whiteProgress: "White progress"
+    whiteProgress: "White progress",
+    logoLink: "Logo Link",
+    logoIconDesc: "Use the default class `logo` to customize your logo display with CSS",
+    languageDesc: "Use the default class `lang` to customize your language display with CSS"
   },
   plans: {
     plan: "Plan",

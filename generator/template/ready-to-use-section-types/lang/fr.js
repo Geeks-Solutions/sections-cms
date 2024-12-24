@@ -197,7 +197,10 @@ export default {
     autoPlay: "Lecture automatique",
     loop: "Boucle",
     removeControls: "Supprimer les contrôles",
-    whiteProgress: "Barre de progression blanche"
+    whiteProgress: "Barre de progression blanche",
+    logoLink: "Lien du logo",
+    logoIconDesc: "Utilisez la classe par défaut `logo` pour personnaliser l'affichage de votre logo avec CSS",
+    languageDesc: "Utilisez la classe par défaut `lang` pour personnaliser l'affichage de votre langue avec CSS"
   },
   plans: {
     plan: "Plan",

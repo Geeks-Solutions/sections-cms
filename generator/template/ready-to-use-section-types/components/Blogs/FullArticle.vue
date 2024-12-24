@@ -8,7 +8,7 @@
         </div>
         <p class="text-center" v-html="sectionRenderData.description"></p>
       </div>
-      <img v-if="articleImage" :src="articleImage" :alt="articleImageAlt ? articleImageAlt : ''" class="h-227px md:h-560px object-cover md:px-8" />
+      <img v-if="articleImage" :src="articleImage" :alt="articleImageAlt ? articleImageAlt : ''" class="w-fit max-w-full self-center object-contain" />
     </div>
     <div class="flex flex-col items-center px-4 md:px-20">
       <p class="md:w-720px" v-html="sectionRenderData.body"></p>
