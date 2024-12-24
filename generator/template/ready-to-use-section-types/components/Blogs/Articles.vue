@@ -1,8 +1,8 @@
 <template>
   <div class="articles flex flex-col w-full items-center justify-center px-5 md:px-20 py-14 md:py-24 gap-9" :class="listTypeStyle.bg">
     <div v-if="title || description" class="flex flex-col items-center gap-2">
-      <h2 v-if="title">{{ title }}</h2>
-      <p v-if="description">{{ description }}</p>
+      <h2 v-if="title" v-html="title"></h2>
+      <p v-if="description" v-html="description"></p>
     </div>
     <div v-if="sectionRenderData && sectionRenderData.articles"
          :class="[listTypeStyle.listStyle, {'md:justify-center': sectionRenderData.articles.length <= 3}]">

@@ -1,5 +1,5 @@
 <template>
-  <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="section.render_data && section.render_data[0] && section.render_data[0].settings ? section.render_data[0].settings : {}" :lang="lang" :title="$t('blogs.beautifulIdeas')" :description="$t('blogs.discoverFavorites')" />
+  <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="section.render_data && section.render_data[0] && section.render_data[0].settings ? section.render_data[0].settings : {}" :lang="lang" :title="sectionRenderSettings.title ? sectionRenderSettings.title : ''" :description="sectionRenderSettings.description ? sectionRenderSettings.description : ''" />
 </template>
 
 <script>
@@ -254,6 +254,11 @@ export default {
     sectionRenderData() {
       if (this.section.render_data && this.section.render_data[0] && this.section.render_data[0].data) {
         return this.section.render_data && this.section.render_data[0] && this.section.render_data[0].data
+      } else return null
+    },
+    sectionRenderSettings() {
+      if (this.section.render_data && this.section.render_data[0] && this.section.render_data[0].settings) {
+        return this.section.render_data[0].settings
       } else return null
     }
   }
