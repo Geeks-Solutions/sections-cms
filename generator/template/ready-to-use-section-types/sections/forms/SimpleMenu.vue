@@ -23,6 +23,8 @@
         :class="sectionsStyle.input"
       />
     </div>
+    <span class="flex text-start text-xs text-Gray_800 mt-4">{{ $t("forms.iconDesc") }}</span>
+    <span class="flex text-start text-xs text-Gray_800 mt-4">{{ $t("forms.iconCloseDesc") }}</span>
 
     <div id="menu" class="flex flex-col mt-4">
       <div v-for="(object, idx) in settings[0].menu" :key="`menu-${idx}`" class="flex flex-col">
@@ -49,7 +51,8 @@
 
           <div class="flex flex-col items-start justify-start mt-8">
             <label class="mr-4 font-medium">{{ $t("forms.cssClasses") }}</label>
-            <span class="text-xs text-Gray_800">{{ $t("forms.menuCssClassesDesc") }}</span>
+            <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.menuCssClassesDesc") }}</span>
+            <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.addedToTopDesc") }}</span>
             <span v-if="idx === 0" class="text-xs text-Gray_800">{{ $t("forms.logoIconDesc") }}</span>
             <input
               v-model="object.menuItemClasses"

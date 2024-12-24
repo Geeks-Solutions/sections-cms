@@ -1,9 +1,11 @@
 <template>
   <div v-if="settings" class="simple-menu p-8" :class="settings.classes">
-    <div class="icon"></div>
+    <div class="icon-wrapper md:hidden" @click="mobileMenu = !mobileMenu">
+      <div class="icon"></div>
+    </div>
     <h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>
     <ul>
-      <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'logo': idx === 0}]">
+      <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'logo': idx === 0}, {'lang': menuItem.languageMenu === true}, {'mobileHidden': idx !== 0}]">
         <global-link v-if="menuItem.languageMenu !== true"
                      :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
                      :lang="lang">
@@ -18,6 +20,29 @@
         </nuxt-link>
       </li>
     </ul>
+    <div v-if="mobileMenu" class="fixed inset-0 mobile-menu-main-wrapper bg-white">
+      <div class="mobile-menu-main-wrapper">
+        <div class="mobile-menu-close-wrapper" @click="mobileMenu = false">
+          <div class="mobile-menu-close"></div>
+        </div>
+        <ul>
+          <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'logo': idx === 0}, {'lang': menuItem.languageMenu === true}]">
+            <global-link v-if="menuItem.languageMenu !== true"
+                         :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
+                         :lang="lang">
+              <p>
+                {{ menuItem.label[lang] }}
+              </p>
+            </global-link>
+            <nuxt-link v-else
+                       :to="switchLocalePath(lang === 'fr' ? 'en' : 'fr')"
+            >
+              {{ menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : '' }}
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -146,6 +171,11 @@ export default {
       ]
     }
   },
+  data() {
+    return {
+      mobileMenu: false
+    }
+  },
   computed: {
     settings() {
       if (Array.isArray(this.section.settings)) {
@@ -159,5 +189,13 @@ export default {
 <style>
 .simple-menu li {
   list-style: disc;
+}
+.simple-menu ul li.mobile-top {
+  display: flex !important;
+}
+@media screen and (max-width: 768px) {
+  .mobileHidden {
+    display: none !important;
+  }
 }
 </style>

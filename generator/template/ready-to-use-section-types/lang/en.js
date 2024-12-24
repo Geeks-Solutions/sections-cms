@@ -199,7 +199,10 @@ export default {
     whiteProgress: "White progress",
     logoLink: "Logo Link",
     logoIconDesc: "Use the default class `logo` to customize your logo display with CSS",
-    languageDesc: "Use the default class `lang` to customize your language display with CSS"
+    languageDesc: "Use the default class `lang` to customize your language display with CSS",
+    iconDesc: "Use the default class `icon` to add/customize your burger menu display on mobile with CSS",
+    iconCloseDesc: "Use the default class `mobile-menu-close` to add/customize a close icon for the burger menu on mobile with CSS",
+    addedToTopDesc: "Use the class `mobile-top` for the menu item to show in the header menu on mobile"
   },
   plans: {
     plan: "Plan",

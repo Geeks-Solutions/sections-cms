@@ -200,7 +200,10 @@ export default {
     whiteProgress: "Barre de progression blanche",
     logoLink: "Lien du logo",
     logoIconDesc: "Utilisez la classe par défaut `logo` pour personnaliser l'affichage de votre logo avec CSS",
-    languageDesc: "Utilisez la classe par défaut `lang` pour personnaliser l'affichage de votre langue avec CSS"
+    languageDesc: "Utilisez la classe par défaut `lang` pour personnaliser l'affichage de votre langue avec CSS",
+    iconDesc: "Utilisez la classe par défaut `icon` pour ajouter/personnaliser l'affichage de votre menu burger sur mobile avec CSS",
+    iconCloseDesc: "Utilisez la classe par défaut `mobile-menu-close` pour ajouter/personnaliser une icône de fermeture pour le menu burger sur mobile avec CSS",
+    addedToTopDesc: "Utilisez la classe `mobile-top` pour que l'élément de menu s'affiche dans le menu d'en-tête sur mobile"
   },
   plans: {
     plan: "Plan",
