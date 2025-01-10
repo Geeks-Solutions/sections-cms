@@ -1,8 +1,8 @@
 <template>
-  <div class="articles flex flex-col w-full items-center justify-center px-5 md:px-20 py-14 md:py-24 gap-9" :class="listTypeStyle.bg">
+  <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length > 0" class="articles flex flex-col w-full items-center justify-center px-5 md:px-20 py-2 gap-9" :class="listTypeStyle.bg">
     <div v-if="title || description" class="flex flex-col items-center gap-2">
-      <h2 v-if="title" v-html="title"></h2>
-      <p v-if="description" v-html="description"></p>
+      <h2 v-if="title" class="html-content" v-html="title"></h2>
+      <p v-if="description" class="html-content" v-html="description"></p>
     </div>
     <div v-if="sectionRenderData && sectionRenderData.articles"
          :class="[listTypeStyle.listStyle, {'md:justify-center': sectionRenderData.articles.length <= 3}]">
@@ -18,6 +18,8 @@
           <h2 class="max-h-[56px] overflow-hidden" :class="listTypeStyle.title">
             {{ object.title }}
           </h2>
+          <h4 class="max-h-[56px] overflow-hidden" :class="listTypeStyle.title" v-html="object.description">
+          </h4>
           <nuxt-link :to="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : ''" class="w-full">
             <div class="flex flex-row w-full gap-2">
               <div class="button-selector">

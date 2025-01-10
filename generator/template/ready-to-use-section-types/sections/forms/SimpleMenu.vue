@@ -1,6 +1,51 @@
 <template>
   <div class="p-4">
 
+    <div class="mb-4">
+      <UploadMedia :media-label="$t('forms.logo')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="$emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia()" />
+      <span class="flex text-xs text-Gray_800">{{ $t("forms.logoIconDesc") }}</span>
+    </div>
+
+    <div class="flex flex-col items-start justify-start mt-8">
+      <label class="mr-4 font-medium">{{ $t("forms.logoLink") }}</label>
+      <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
+      <div>
+        <div class="selectMultipleOptions">
+          <div v-for="(item, pageIdx) in [...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
+               :key="`${item.page}-${pageIdx}`" class="multiple-options-wrapper">
+            <div class="single-multiple-option"
+                 :class="isSelected(item.path, 0, true) ? 'multiple-options-selected' : ''"
+                 @click="selectOption(item.path, 0, true)">{{ item.page }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="settings[0].logoPage[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
+      <label class="mr-4 font-medium">{{ $t("Other") }}</label>
+      <link-description class="pb-1"/>
+      <input
+        v-model="settings[0].logoLink[selectedLang]"
+        type="text"
+        value=""
+        :placeholder="$t('forms.link')"
+        :class="sectionsStyle.input"
+      />
+    </div>
+
+    <div class="flex flex-col items-start justify-start mt-8">
+      <label class="mr-4 font-medium">{{ $t("forms.logoCssClasses") }}</label>
+      <span class="text-xs text-Gray_800">{{ $t("forms.logoCssClassesDesc") }}</span>
+      <input
+        v-model="settings[0].logoClasses"
+        type="text"
+        value=""
+        :placeholder="$t('forms.logoCssClasses')"
+        :class="sectionsStyle.input"
+      />
+    </div>
+
     <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-medium">{{ $t("forms.menuLabel") }}</label>
       <input
@@ -53,7 +98,6 @@
             <label class="mr-4 font-medium">{{ $t("forms.cssClasses") }}</label>
             <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.menuCssClassesDesc") }}</span>
             <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.addedToTopDesc") }}</span>
-            <span v-if="idx === 0" class="text-xs text-Gray_800">{{ $t("forms.logoIconDesc") }}</span>
             <input
               v-model="object.menuItemClasses"
               type="text"
@@ -129,30 +173,46 @@
 </template>
 
 <script>
+import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
 import {sectionHeader} from "@geeks.solutions/nuxt-sections/lib/src/utils";
 import {getSectionsPages, sectionsStyle, scrollToFirstError} from "@/utils/constants";
 import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'SimpleMenu',
+  components: { UploadMedia },
   props: {
     selectedLang: {
       type: String,
       default: 'fr'
     },
+    selectedMedia: {},
     locales: {
       type: Array,
       default() {
         return []
       }
-    }
+    },
+    mediaFields: [
+      {
+        type: 'image',
+        name: 'media'
+      }
+    ]
   },
   data() {
     return {
       settings: [
         {
-          menuLabel: {},
+          media: {
+            media_id: "",
+            url: "",
+            seo_tag: ""
+          },
           logoLink: {},
+          logoPage: {},
+          logoClasses: '',
+          menuLabel: {},
           classes: '',
           menu: [
             {
@@ -187,11 +247,41 @@ export default {
       immediate: true
     },
     settings(v) {
+      if (!v[0].logoLink) {
+        v[0].logoLink = {}
+      }
+      if (!v[0].logoPage) {
+        v[0].logoPage = {}
+      }
       this.locales.forEach(locale => {
         if (!v[0].menuLabel) {
           v[0].menuLabel = {}
         }
+        if (!v[0].logoLink[locale]) {
+          v[0].logoLink[locale] = ''
+        }
+        if (!v[0].logoPage[locale]) {
+          v[0].logoLink[locale] = ''
+        }
       })
+    },
+    selectedMedia(mediaObject) {
+      const media = {
+        media_id: "",
+        url: "",
+        seo_tag: "",
+        filename: "",
+        headers: {}
+      };
+      media.media_id = mediaObject.id;
+      media.url = mediaObject.files[0].url;
+      media.seo_tag = mediaObject.seo_tag;
+      media.filename = mediaObject.files[0].filename;
+      if (mediaObject.files[0].headers) {
+        media.headers = mediaObject.files[0].headers
+      }
+      this.$set(this.settings[0], 'media', media);
+      this.$emit('closeMediaModal')
     }
   },
   async mounted() {
@@ -200,17 +290,29 @@ export default {
     this.$nuxt.$emit('initLoading', false)
   },
   methods: {
-    isSelected(path, idx) {
-      return this.settings[0].menu[idx].page[this.selectedLang] === path
+    isSelected(path, idx, logo) {
+      if (logo) {
+        return this.settings[0].logoPage[this.selectedLang] === path
+      } else {
+        return this.settings[0].menu[idx].page[this.selectedLang] === path
+      }
     },
-    selectOption(value, idx) {
+    selectOption(value, idx, logo) {
       if (this.isSelected(value, idx) === true) {
         this.locales.forEach(locale => {
-          this.$set(this.settings[0].menu[idx].page, locale, '')
+          if (logo) {
+            this.$set(this.settings[0].logoPage, locale, '')
+          } else {
+            this.$set(this.settings[0].menu[idx].page, locale, '')
+          }
         })
       } else {
         this.locales.forEach(locale => {
-          this.$set(this.settings[0].menu[idx].page, locale, value)
+          if (logo) {
+            this.$set(this.settings[0].logoPage, locale, value)
+          } else {
+            this.$set(this.settings[0].menu[idx].page, locale, value)
+          }
         })
       }
     },
@@ -232,7 +334,15 @@ export default {
     removeMenuItem(idx) {
       this.$set(this.settings[0], 'menu', this.settings[0].menu.filter((ct, i) => idx !== i))
     },
+    removeMedia() {
+      this.settings[0].media = {}
+    },
     validate() {
+      for(let i = 0; i < this.settings.length; i++) {
+        if (this.settings[i].media && (Object.keys(this.settings[i].media).length === 0 || !this.settings[i].media.media_id || !this.settings[i].media.url)) {
+          delete this.settings[i].media
+        }
+      }
       let valid = true;
       this.errors.menu[0].link = false;
       this.errors.menu[0].label = false;

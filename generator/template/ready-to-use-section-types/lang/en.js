@@ -95,7 +95,8 @@ export default {
     readPost: "Read post",
     next: "Next",
     previous: "Previous",
-    copyLink: "Copy link"
+    copyLink: "Copy link",
+    copied: "The article link was successfully copied"
   },
   forms: {
     title: "Title",
@@ -192,6 +193,8 @@ export default {
     menuLabel: "Menu label",
     cssClasses: "CSS classes",
     cssClassesDesc: "(used to add one or more css class to style the whole menu)",
+    logoCssClasses: "Logo CSS classes",
+    logoCssClassesDesc: "(used to add one or more css class to style the logo)",
     menuCssClassesDesc: "(used to add one or more css class to style the menu items)",
     autoPlay: "Autoplay",
     loop: "Loop",

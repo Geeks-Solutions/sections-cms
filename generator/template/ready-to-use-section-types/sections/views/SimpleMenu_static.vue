@@ -3,9 +3,20 @@
     <div class="icon-wrapper md:hidden" @click="mobileMenu = !mobileMenu">
       <div class="icon"></div>
     </div>
+    <global-link v-if="settings.media && settings.media.url"
+                 :link="settings.logoPage[lang] === 'other' ? settings.logoLink : settings.logoPage && settings.logoPage[lang] ? { ...settings.logoPage, en: '/' + settings.logoPage.en, fr: '/' + settings.logoPage.fr } : '#'"
+                 :lang="lang"
+                 class="logo-wrapper">
+      <img
+        :src="settings.media.url"
+        :alt="settings.media.seo_tag ? settings.media.seo_tag : ''"
+        loading="lazy"
+        class="logo"
+      />
+    </global-link>
     <h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>
     <ul>
-      <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'logo': idx === 0}, {'lang': menuItem.languageMenu === true}, {'mobileHidden': idx !== 0}]">
+      <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'lang': menuItem.languageMenu === true}, {'mobileHidden': idx >= 0}]">
         <global-link v-if="menuItem.languageMenu !== true"
                      :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
                      :lang="lang">
