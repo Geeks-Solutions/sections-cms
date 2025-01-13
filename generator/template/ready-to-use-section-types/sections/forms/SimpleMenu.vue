@@ -315,6 +315,7 @@ export default {
           }
         })
       }
+      this.sectionsPages = [...this.sectionsPages]
     },
     addMenuItem() {
       const menuItem = {
