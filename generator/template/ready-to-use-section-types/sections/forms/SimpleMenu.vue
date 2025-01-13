@@ -298,7 +298,7 @@ export default {
       }
     },
     selectOption(value, idx, logo) {
-      if (this.isSelected(value, idx) === true) {
+      if (this.isSelected(value, idx, logo) === true) {
         this.locales.forEach(locale => {
           if (logo) {
             this.$set(this.settings[0].logoPage, locale, '')

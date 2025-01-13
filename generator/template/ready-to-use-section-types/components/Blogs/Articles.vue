@@ -9,16 +9,16 @@
       <div v-for="(object, idx) in sectionRenderData.articles" :key="`article-${object.id}-${idx}`" class="flex flex-col gap-6 justify-between py-5 px-4 wrapper">
         <div class="flex" :class="listTypeStyle.image">
           <div v-if="object.medias && object.medias.length > 0" class="w-full self-center">
-            <img :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" class="object-contain w-full md:w-352px h-auto max-h-[300px] object-left" />
+            <img :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" />
           </div>
           <div v-else class="animate-pulse w-full md:w-352px">
           </div>
         </div>
-        <div class="flex flex-col gap-4">
-          <h2 class="max-h-[56px] overflow-hidden" :class="listTypeStyle.title">
+        <div class="flex flex-col gap-4 article-content-wrapper">
+          <h2 class="overflow-hidden" :class="listTypeStyle.title">
             {{ object.title }}
           </h2>
-          <h4 class="max-h-[56px] overflow-hidden" :class="listTypeStyle.title" v-html="object.description">
+          <h4 class="overflow-hidden" :class="listTypeStyle.title" v-html="object.description">
           </h4>
           <nuxt-link :to="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : ''" class="w-full">
             <div class="flex flex-row w-full gap-2">
@@ -92,14 +92,14 @@ export default {
         case 'carousel':
           return {
             listStyle: 'flex flex-row gap-4 md:px-2 pb-2 w-full overflow-x-auto',
-            image: 'w-266px h-300px',
+            image: 'h-full',
             title: 'w-266px',
             bg: 'bg'
           }
         case 'listing':
           return {
             listStyle: 'grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8',
-            image: 'h-300px',
+            image: 'h-full',
             title: '',
             bg: 'bg'
           }
