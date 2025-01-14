@@ -34,6 +34,25 @@
       />
     </div>
 
+    <div class="my-4">
+      <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
+      <div class="select-style-chooser w-344px">
+        <gAutoComplete
+          :main-filter="settings[0].logoLinkTarget"
+          :placeholder="$t('forms.linkTarget')"
+          :filter-label-prop="'value'"
+          :reduce="(option) => option.key"
+          :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
+          :filter-searchable="false"
+          :close-on-select="true"
+          :filter-clearable="true"
+          :track-by="'key'"
+          @itemSelected="(val) => {settings[0].logoLinkTarget = val;}"
+        >
+        </gAutoComplete>
+      </div>
+    </div>
+
     <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-medium">{{ $t("forms.logoCssClasses") }}</label>
       <span class="text-xs text-Gray_800">{{ $t("forms.logoCssClassesDesc") }}</span>
@@ -158,6 +177,27 @@
                   class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
           </div>
 
+          <div v-if="object.languageMenu !== true">
+            <div class="my-4">
+              <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
+              <div class="select-style-chooser w-344px">
+                <gAutoComplete
+                  :main-filter="object.linkTarget"
+                  :placeholder="$t('forms.linkTarget')"
+                  :filter-label-prop="'value'"
+                  :reduce="(option) => option.key"
+                  :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
+                  :filter-searchable="false"
+                  :close-on-select="true"
+                  :filter-clearable="true"
+                  :track-by="'key'"
+                  @itemSelected="(val) => {object.linkTarget = val;}"
+                >
+                </gAutoComplete>
+              </div>
+            </div>
+          </div>
+
         </fieldset>
 
       </div>
@@ -211,6 +251,7 @@ export default {
           },
           logoLink: {},
           logoPage: {},
+          logoLinkTarget: '',
           logoClasses: '',
           menuLabel: {},
           classes: '',
@@ -219,6 +260,7 @@ export default {
               label: {},
               link: {},
               page: {},
+              linkTarget: '',
               menuItemClasses: '',
               languageMenu: false
             }
@@ -322,6 +364,7 @@ export default {
         label: {},
         link: {},
         page: {},
+        linkTarget: '',
         menuItemClasses: '',
         languageMenu: false
       }
@@ -400,5 +443,9 @@ export default {
 
 .multiple-options-selected {
   background: #C2C2C2;
+}
+.vs__actions svg {
+  height: auto;
+  width: auto;
 }
 </style>

@@ -173,14 +173,14 @@ export function isAnchorOrExternalLink(link) {
     } else return (link && link.includes('http'));
 }
 
-export function emitGlobalEvent(link) {
+export function emitGlobalEvent(link, target) {
     if (isGlobalEvent(link)) {
         if (link === '#loginRegister') {
             window.$nuxt.$emit(link)
         } else {
             window.$nuxt.$emit(link)
         }
-    } else window.open(link, linkTarget(link))
+    } else window.open(link, target || linkTarget(link))
 }
 
 export function isGlobalEvent(link) {

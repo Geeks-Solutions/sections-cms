@@ -205,7 +205,10 @@ export default {
     languageDesc: "Use the default class `lang` to customize your language display with CSS",
     iconDesc: "Use the default class `icon` to add/customize your burger menu display on mobile with CSS",
     iconCloseDesc: "Use the default class `mobile-menu-close` to add/customize a close icon for the burger menu on mobile with CSS",
-    addedToTopDesc: "Use the class `mobile-top` for the menu item to show in the header menu on mobile"
+    addedToTopDesc: "Use the class `mobile-top` for the menu item to show in the header menu on mobile",
+    linkTarget: "Link target",
+    blankTarget: "Open in a new tab",
+    selfTarget: "Open in the same tab"
   },
   plans: {
     plan: "Plan",
