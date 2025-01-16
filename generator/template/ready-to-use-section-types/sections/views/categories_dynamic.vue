@@ -96,13 +96,13 @@ export default {
       let qs
       let categoriesTitles
       if (Array.isArray(item)) {
-        categoriesTitles = item.map(c => c.title).join(',')
+        categoriesTitles = item.map(c => c.original_title).join(',')
         qs = {
           offset_ca: 0,
           limit_ca: BLOGS_LIST_SIZE
         }
       } else {
-        categoriesTitles = item.title
+        categoriesTitles = item.original_title
         qs = {
           offset_ca: 0,
           limit_ca: BLOGS_LIST_SIZE
