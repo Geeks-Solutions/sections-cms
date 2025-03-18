@@ -1,18 +1,32 @@
 <template>
   <div v-if="settings" class="faq">
-    <div class="section-wrapper QASec">
-      <h2 class="title">{{ settings[lang].title }}</h2>
-      <div id="faq">
-        <div v-for="(qa, index) in settings.QAs" :key="`qa-${index}`" class="question" :class="[`question-${sectionWeight}`, answerShowing[index] === true ? 'expanded' : 'collapsed']">
-          <div class="flex flex-row justify-between" :class="`question-title-${index}-${sectionWeight}`" @click="toggleAnswer(index)">
-            <div class="question-title">{{ qa[lang].question }}</div>
-            <img :src="answerShowing[index] === true ? require('@/assets/icons/arrowUp.svg') : require('@/assets/icons/arrowDown.svg')" alt="arrow" class="arrow w-6" loading="lazy" />
-          </div>
-          <div v-if="answerShowing[index] === true" class="answer" :class="[index === 0 ? 'show' : '', `answer-${index}-${sectionWeight}`]">
-            <div class="flex w-full justify-start">
-              <div class="ql-editor ql-snow tracking-tight w-fit md:mx-0" style="padding: 0 !important;" v-html="qa[lang].answer"></div>
+    <div class="faq-row-wrapper" :class="settings.imagePosition === 'right' ? 'image-right' : 'image-left'">
+      <div class="section-wrapper QASec">
+        <h2 class="title">{{ settings[lang].title }}</h2>
+        <div id="faq">
+          <div v-for="(qa, index) in settings.QAs" :key="`qa-${index}`" class="question" :class="[`question-${sectionWeight}`, answerShowing[index] === true ? 'expanded' : 'collapsed']">
+            <div class="flex flex-row justify-between" :class="`question-title-${index}-${sectionWeight}`" @click="toggleAnswer(index)">
+              <h3 class="question-title">{{ qa[lang].question }}</h3>
+              <img :src="answerShowing[index] === true ? require('@/assets/icons/arrowUp.svg') : require('@/assets/icons/arrowDown.svg')" alt="arrow" class="arrow w-6" loading="lazy" />
+            </div>
+            <div v-if="answerShowing[index] === true" class="answer" :class="[index === 0 ? 'show' : '', `answer-${index}-${sectionWeight}`]">
+              <div class="flex w-full justify-start ql-snow">
+                <p class="ql-editor ql-snow tracking-tight w-fit md:mx-0" :class="qa.classes" style="padding: 0 !important;" v-html="qa[lang].answer"></p>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div v-if="settings.imagePosition !== 'none'" class="w-full md:w-auto gap-4 imageWrapper">
+        <div :class="'flex h-240px md:h-360px md:row-span-2 md:mt-6'">
+          <img
+            v-if="settings.media && settings.media.url"
+            :src="settings.media.url"
+            :alt="settings.media.seo_tag ? settings.media.seo_tag : ''"
+            loading="lazy"
+            class="w-full"
+            :class="'h-full object-contain'"
+          />
         </div>
       </div>
     </div>
@@ -144,6 +158,7 @@ export default {
 .faq .section-wrapper {
   padding-bottom: 20px;
   min-height: 100vh;
+  width: 100%;
 }
 .section-wrapper #faq {
   width: 90%;
@@ -175,6 +190,31 @@ export default {
 @media only screen and (min-width: 1024px) {
   .section-wrapper .title {
     height: 100px;
+  }
+}
+.faq-row-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 3.5rem 1.25rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+.faq-row-wrapper.image-right {
+  flex-direction: column
+}
+.faq-row-wrapper.image-left {
+  flex-direction: column-reverse
+}
+@media (min-width: 768px) {
+  .faq-row-wrapper {
+    padding: 5rem 5rem;
+  }
+  .faq-row-wrapper.image-right {
+    flex-direction: row
+  }
+  .faq-row-wrapper.image-left {
+    flex-direction: row-reverse
   }
 }
 </style>

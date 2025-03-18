@@ -1,13 +1,23 @@
 <template>
   <div class="w-full">
     <label class="mr-4 font-bold">{{ 'Full article page'+'*' }}</label>
-    <div>
-      <div class="selectMultipleOptions">
-        <div v-for="(item, pageIdx) in sectionsPages" :key="`${item.page}-${pageIdx}`" class="multiple-options-wrapper">
-          <div class="single-multiple-option" :class="isSelected(item.path) ? 'multiple-options-selected' : ''" @click="selectOption(item.path)">{{ item.page }}</div>
-        </div>
-      </div>
-    </div>
+    <gAutoComplete
+      :main-filter="article_page_path"
+      :placeholder="$t('forms.aspectRatio')"
+      :filter-label-prop="'page'"
+      :reduce="(option) => option.path"
+      :filter-options="[...sectionsPages]"
+      :filter-searchable="false"
+      :close-on-select="true"
+      :filter-clearable="true"
+      :track-by="'path'"
+      @itemSelected="
+                  (val) => {
+                    selectOption(val)
+                  }
+                "
+    >
+    </gAutoComplete>
   </div>
 </template>
 
@@ -55,31 +65,16 @@ export default {
 </script>
 
 <style>
-.selectMultipleOptions {
-  border-radius: 0.75rem;
-  border-width: 1px;
-  border-radius: 0.75rem;
-  overflow-y: scroll;
-  align-items: flex-start;
-  flex-direction: column;
-  max-width: 32rem;
-  height: 250px;
-  display: flex;
-  margin-top: 0.5rem;
-}
-
-.single-multiple-option {
-  padding-left: 1rem;
-  padding: 0.5rem;
+.vs__dropdown-option {
+  clear: both;
+  color: black !important; /* Overrides most CSS frameworks */
+  white-space: nowrap;
   cursor: pointer;
-  width: 100%;
 }
-
-.multiple-options-wrapper {
-  width: 100%;
+.vs__dropdown-option:hover {
+  color: white !important;
 }
-
-.multiple-options-selected {
-  background: #C2C2C2;
+.vs__dropdown-option--highlight {
+  color: white !important;
 }
 </style>

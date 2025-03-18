@@ -4,7 +4,6 @@
       <zaq-widget
         :website-id="settings[0].websiteId"
         :hide-badge="settings[0].hideBadge.toString()"
-        :widget-open="true"
         :lang="$i18n.locale"
         :server-url="$route.query.zaq_api ? `https://${$route.query.zaq_api}` : ''"
         :websocket-url="$route.query.zaq_api ? `wss://${$route.query.zaq_api}/socket` : ''"
@@ -71,6 +70,7 @@ export default {
         if (this.$route.query.zaq_dev === 'true') {
           bucketName = `zaq-ai-dev`
         }
+
         const scriptSrc = `https://${bucketName}.s3.eu-west-2.amazonaws.com/widget/zaq-widget-vue.min.js`;
         if (!document.querySelector(`head script[src="${scriptSrc}"]`)) {
           const recaptchaScript = document.createElement('script')

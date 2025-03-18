@@ -37,6 +37,7 @@
         >
         </gAutoComplete>
       </div>
+      <span class="flex flex-row text-start text-xs text-Gray_800 mt-2">{{ $t("forms.linksDescription4") }}</span>
     </div>
 
 
@@ -176,6 +177,7 @@ export default {
       }
       this.$set(this.settings[0], this.selectedMediaKey, media);
       this.$emit('closeMediaModal')
+      this.settings[0].autoStart = 'None'
       if (this.selectedMediaKey === 'sequence') {
         this.loadSequences()
       }
@@ -197,6 +199,8 @@ export default {
     },
     removeMedia(mediaKey) {
       this.settings[0][mediaKey] = {}
+      this.settings[0].autoStart = 'None'
+      this.sequences = null
     },
     validate() {
       try {

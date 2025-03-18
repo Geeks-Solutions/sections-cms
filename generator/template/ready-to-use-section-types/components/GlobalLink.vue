@@ -1,8 +1,8 @@
 <template>
-  <div v-if="isGlobalEvent(finalLink) || isAnchorOrExternalLink(finalLink)" class="md:cursor-pointer" @click="emitGlobalEvent(finalLink, formLinkTarget)">
+  <a v-if="isGlobalEvent(finalLink) || isAnchorOrExternalLink(finalLink)" :href="finalLink" :target="formLinkTarget ? formLinkTarget : linkTarget(finalLink)" class="md:cursor-pointer global-link" @click="(event) => emitGlobalEvent(finalLink, formLinkTarget, event)">
     <slot/>
-  </div>
-  <nuxt-link v-else :to="localePath(finalLink)+inlineParams" :target="formLinkTarget ? formLinkTarget : linkTarget(finalLink)">
+  </a>
+  <nuxt-link v-else :to="localePath(finalLink)+inlineParams" :target="formLinkTarget ? formLinkTarget : linkTarget(finalLink)" class="global-link">
     <slot/>
   </nuxt-link>
 </template>
@@ -29,7 +29,7 @@ export default {
     },
     formLinkTarget: {
       type: String,
-      default: "en"
+      default: ""
     }
   },
   computed: {

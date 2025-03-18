@@ -29,7 +29,7 @@ export default {
   watch: {
     reference(value) {
       this.configurableReference = value
-      if (this.configurableReference.optionsData.base_url) {
+      if (this.configurableReference.optionsData.base_url && typeof this.configurableReference.optionsData.base_url === 'string') {
         this.base_url = this.configurableReference.optionsData.base_url
       }
     }

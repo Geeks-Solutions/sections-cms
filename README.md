@@ -56,3 +56,6 @@ The plugin will prompt you to answer three questions:
  * Add 3 fully customizable and ready to use section types + the required Tailwind configurations for them only if answered yes on the fourth question
 ``? Add 3 ready to use section types to your project Yes``
 
+### Contribute
+
+To contribute and add new sections, read our [contributors guidelines](https://github.com/Geeks-Solutions/vue-cli-plugin-sections/wiki/contributors-guidelines)

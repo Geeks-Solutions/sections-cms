@@ -12,7 +12,7 @@
 		   :class="['py-4 pl-6 border rounded-xl h-48px w-344px focus:outline-none', errors.title ? 'border-error' : 'border-FieldGray']"
 	  />
 	</div>
-	
+
 	<div class="flex flex-col items-start justify-start mt-4">
 	  <div class="flex">
 		<label class="mr-4 font-bold">{{ $t("Subtitle") }}</label>
@@ -25,7 +25,7 @@
 		   :class="['py-4 pl-6 border rounded-xl h-48px w-344px focus:outline-none', errors.subTitle ? 'border-error' : 'border-FieldGray']"
 	  />
 	</div>
-	
+
 	<div class="flex flex-col items-start justify-start mt-4">
 	  <div class="flex">
 		<label class="mr-4 font-bold">{{ $t("Button Label") }}</label>
@@ -38,7 +38,7 @@
 		   :class="['py-4 pl-6 border rounded-xl h-48px w-344px focus:outline-none', errors.buttonLabel ? 'border-error' : 'border-FieldGray']"
 	  />
 	</div>
-	
+
 	<div class="flex flex-col items-start justify-start mt-4">
 	  <div class="flex">
 		<label class="mr-4 font-bold">{{ $t("Link") }}</label>
@@ -52,7 +52,26 @@
 	  />
 	  <link-description />
 	</div>
-  
+
+    <div class="my-4">
+      <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
+      <div class="select-style-chooser w-344px">
+        <gAutoComplete
+          :main-filter="settings[0].linkTarget"
+          :placeholder="$t('forms.linkTarget')"
+          :filter-label-prop="'value'"
+          :reduce="(option) => option.key"
+          :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
+          :filter-searchable="false"
+          :close-on-select="true"
+          :filter-clearable="true"
+          :track-by="'key'"
+          @itemSelected="(val) => {settings[0].linkTarget = val;}"
+        >
+        </gAutoComplete>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -86,12 +105,14 @@ export default {
             subTitle: '',
             link: '',
             buttonLabel: ''
-          }
+          },
+          linkTarget: ''
         }
       ],
       errors: {
         title: false,
         subTitle: false,
+        buttonLabel: false,
         link: false
       },
       isInProgress: false
@@ -148,12 +169,8 @@ export default {
   methods: {
     validate() {
       let valid = true;
-      if (!this.settings[0].en.title) {
-        this.errors.title = true;
-        valid = false;
-      }
-      if (!this.settings[0].en.subTitle) {
-        this.errors.subTitle = true;
+      if (!this.settings[0].en.buttonLabel) {
+        this.errors.buttonLabel = true;
         valid = false;
       }
       if (!this.settings[0].en.link) {

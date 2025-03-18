@@ -55,7 +55,7 @@ export function extractQsValue(key, path, ctTitles = false) {
     let finalPath = ''
     if (path) {
         finalPath = path
-    } else if (window.$nuxt) {
+    } else if (window && window.$nuxt) {
         finalPath = window.$nuxt.$route.path;
     }
     if (finalPath && finalPath.includes('categories_titles') && ctTitles === true) {
@@ -139,6 +139,7 @@ export function scrollToFirstError(errors) {
 
 export const sectionsStyle = {
     input: 'py-4 pl-6 border border-FieldGray rounded-xl h-48px w-full focus:outline-none',
+    textarea: 'py-4 pl-6 border border-FieldGray rounded-xl w-full focus:outline-none resize-none h-32',
     fieldLabel: 'font-bold',
     wysiwygHtml: 'ql-editor ql-snow h-auto',
     pageSectionStyle: 'md:mx-auto max-w-7xl md:px-2 sm:px-6 lg:px-8 mx-4',
@@ -173,13 +174,12 @@ export function isAnchorOrExternalLink(link) {
     } else return (link && link.includes('http'));
 }
 
-export function emitGlobalEvent(link, target) {
+export function emitGlobalEvent(link, target, event) {
+    try {
+      event.preventDefault()
+    } catch {}
     if (isGlobalEvent(link)) {
-        if (link === '#loginRegister') {
-            window.$nuxt.$emit(link)
-        } else {
-            window.$nuxt.$emit(link)
-        }
+      window.$nuxt.$emit(link)
     } else window.open(link, target || linkTarget(link))
 }
 

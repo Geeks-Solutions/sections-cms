@@ -1,14 +1,18 @@
 <template>
   <div v-if="settings" class="interactive-display">
-    <div v-if="!settings[0].videoLink" class="carousel-container relative overflow-hidden h-480px md:h-auto">
+    <div v-if="!settings[0].videoLink" class="carousel-container relative overflow-hidden" :style="settings[0].containerHeight ? `height: ${settings[0].containerHeight};` : ``"
+         @touchstart="handleTouchStart"
+         @touchmove="handleTouchMove"
+         @touchend="handleTouchEnd">
       <div class="carousel-inner h-full">
-        <div v-for="(block, index) in settings" :key="`carousel-media-block-${index}`" class="relative h-full" :class="`carousel-slide ${index === currentIndex ? 'active' : ''}`">
+        <div v-for="(block, index) in migratedSettings" :key="`carousel-media-block-${index}`" class="relative h-full" :class="`carousel-slide ${index === currentIndex ? 'active' : ''}`">
           <img
               v-if="block.media && block.media.url"
               :src="block.media.url"
               :alt="block.media.seo_tag ? block.media.seo_tag : ''"
 			  loading="lazy"
-              class="w-full h-full md:h-auto object-cover mobileHidden"
+              class="w-full h-full mobileHidden"
+              :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
           />
           <img
               v-if="block.mediaMobile && block.mediaMobile.url"
@@ -16,14 +20,19 @@
               :alt="block.mediaMobile.seo_tag ? block.mediaMobile.seo_tag : ''"
 			  loading="lazy"
               class="w-full h-full md:h-auto object-cover md:hidden"
+              :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
           />
           <div v-if="(block.title[lang] || block.text[lang] || block.cta[lang]) && index === currentIndex" class="absolute top-0 w-full h-full">
             <div class="flex flex-col h-full justify-center items-center space-y-10">
               <div class="flex flex-col gap-2 md:gap-4">
-                <h2 v-if="block.title[lang]" class="text-center overflow-hidden p-0" :class="sectionsStyle.wysiwygHtml" v-html="block.title[lang]"></h2>
-                <p v-if="block.text[lang]" class="text-center p-0" :class="sectionsStyle.wysiwygHtml" v-html="block.text[lang]"></p>
+                <h2 v-if="block.title[lang]">
+                  <span class="text-center overflow-hidden p-0" :class="[sectionsStyle.wysiwygHtml, block.titleClasses]" v-html="block.title[lang]"></span>
+                </h2>
+                <p v-if="block.text[lang]">
+                  <span class="text-center p-0" :class="[sectionsStyle.wysiwygHtml, block.textClasses]" v-html="block.text[lang]"></span>
+                </p>
               </div>
-              <global-link :link="block.ctaLink" :lang="lang">
+              <global-link v-if="block.cta && block.cta[lang]" :link="block.ctaLink" :lang="lang" :form-link-target="block.ctaLinkTarget">
                 <div class="button-selector">
 				  {{ block.cta[lang] }}
 				</div>
@@ -33,12 +42,36 @@
         </div>
       </div>
       <div class="carousel-dots absolute bottom-0 left-0 right-0 flex justify-center pb-4">
-        <span v-for="(item, index) in settings" :key="index" :class="settings.length > 1 ? `carousel-dot ${index === currentIndex ? 'active' : ''}` : ``" @click="goTo(index)"></span>
+        <span v-for="(item, index) in migratedSettings" :key="index" :class="migratedSettings.length > 1 ? `carousel-dot ${index === currentIndex ? 'active' : ''}` : ``" @click="goTo(index)"></span>
       </div>
     </div>
-    <div v-else class="w-full relative h-700px">
+    <div v-else class="w-full relative video-wrapper">
 <!--  For youtube videos, the following must be added to the end of the embedded url `?autoplay=1&mute=1` for the video to autoplay -->
-      <iframe :src="computedVideoUrl" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" allow="autoplay;" />
+
+      <div class="mobileHidden" :style="settings[0].aspectRatio ? `aspect-ratio: ${settings[0].aspectRatio}` : 'aspect-ratio: 16/9'">
+        <iframe :src="computedVideoUrl" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" allow="autoplay;" />
+      </div>
+      <div class="md:hidden" :style="settings[0].mobileAspectRatio ? `aspect-ratio: ${settings[0].mobileAspectRatio}` : 'aspect-ratio: 9/16'">
+        <iframe :src="computedMobileVideoUrl" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" allow="autoplay;" />
+      </div>
+
+      <div v-if="((settings[0].videoTitle && settings[0].videoTitle[lang]) || (settings[0].videoText && settings[0].videoText[lang]) || (settings[0].videoCta && settings[0].videoCta[lang]))" class="absolute top-0 w-full h-full pointer-events-none">
+        <div class="flex flex-col h-full justify-center items-center space-y-10">
+          <div class="flex flex-col gap-2 md:gap-4">
+            <h2 v-if="settings[0].videoTitle[lang]">
+              <span class="text-center overflow-hidden p-0" :class="[sectionsStyle.wysiwygHtml, settings[0].videoTitleClasses]" v-html="settings[0].videoTitle[lang]"></span>
+            </h2>
+            <p v-if="settings[0].videoText[lang]">
+              <span class="text-center p-0" :class="[sectionsStyle.wysiwygHtml, settings[0].videoTextClasses]" v-html="settings[0].videoText[lang]"></span>
+            </p>
+          </div>
+          <global-link v-if="settings[0].videoCta && settings[0].videoCta[lang]" :link="settings[0].videoCtaLink" :lang="lang" :form-link-target="settings[0].videoCtaLinkTarget" class="pointer-events-auto">
+            <div class="button-selector">
+              {{ settings[0].videoCta[lang] }}
+            </div>
+          </global-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -95,6 +128,13 @@ export default {
     settings() {
       return this.section.settings
     },
+    migratedSettings() {
+      if (this.settings && this.settings[0] && this.settings[0].carousels === undefined) {
+        return this.section.settings
+      } else if (this.settings) {
+        return this.section.settings[0].carousels
+      } else return []
+    },
     computedVideoUrl() {
       if (this.settings && this.settings[0] && this.settings[0].videoLink && this.isYouTubeLink(this.settings[0].videoLink)) {
         const v = this.settings[0]
@@ -143,6 +183,101 @@ export default {
           return ''
         }
       } else return this.settings[0].videoLink
+    },
+    computedMobileVideoUrl() {
+      if (this.settings && this.settings[0] && !this.settings[0].mobileVideoLink && this.settings[0].videoLink && this.isYouTubeLink(this.settings[0].videoLink)) {
+        const v = this.settings[0]
+        try {
+          const url = new URL(v.videoLink);
+          const params = url.searchParams;
+
+          params.set("hl", this.$i18n.locale);
+          params.set("rel", "0");
+
+          if (v.autoplay) {
+            params.set("autoplay", "1");
+            params.set("mute", "1");
+          } else {
+            params.delete("autoplay");
+            params.delete("mute");
+          }
+
+          if (v.loop) {
+            const videoId = this.extractVideoId(url.href);
+            if (videoId) {
+              params.set("loop", "1");
+              params.set("playlist", videoId);
+            }
+          } else {
+            params.delete("loop");
+            params.delete("playlist");
+          }
+
+          if (v.controls) {
+            params.set("controls", "0");
+            params.set("disablekb", "1");
+          } else {
+            params.delete("controls");
+            params.delete("disablekb");
+          }
+
+          if (v.whiteProgress) {
+            params.set("color", "white");
+          } else {
+            params.delete("color");
+          }
+
+          return url.toString();
+        } catch {
+          return ''
+        }
+      } else if (this.settings && this.settings[0] && this.settings[0].mobileVideoLink && this.isYouTubeLink(this.settings[0].mobileVideoLink)) {
+        const v = this.settings[0]
+        try {
+          const url = new URL(v.mobileVideoLink);
+          const params = url.searchParams;
+
+          params.set("hl", this.$i18n.locale);
+          params.set("rel", "0");
+
+          if (v.mobileAutoplay) {
+            params.set("autoplay", "1");
+            params.set("mute", "1");
+          } else {
+            params.delete("autoplay");
+            params.delete("mute");
+          }
+
+          if (v.mobileLoop) {
+            const videoId = this.extractVideoId(url.href);
+            if (videoId) {
+              params.set("loop", "1");
+              params.set("playlist", videoId);
+            }
+          } else {
+            params.delete("loop");
+            params.delete("playlist");
+          }
+
+          if (v.mobileControls) {
+            params.set("controls", "0");
+            params.set("disablekb", "1");
+          } else {
+            params.delete("controls");
+            params.delete("disablekb");
+          }
+
+          if (v.mobileWhiteProgress) {
+            params.set("color", "white");
+          } else {
+            params.delete("color");
+          }
+
+          return url.toString();
+        } catch {
+          return ''
+        }
+      } else return this.settings[0].mobileVideoLink ? this.settings[0].mobileVideoLink : this.settings[0].videoLink
     }
   },
   mounted() {
@@ -152,15 +287,39 @@ export default {
     clearInterval(this.autoplayInterval);
   },
   methods: {
+    handleTouchStart(event) {
+      this._touchStartX = event.touches[0].clientX;
+    },
+    handleTouchMove(event) {
+      this._touchEndX = event.touches[0].clientX;
+    },
+    handleTouchEnd() {
+      const swipeThreshold = 50; // Minimum swipe distance in pixels to trigger change
+      const swipeDistance = this._touchStartX - this._touchEndX;
+
+      if (swipeDistance > swipeThreshold) {
+        this.resetAutoplay()
+        this.next();
+      } else if (swipeDistance < -swipeThreshold) {
+        this.resetAutoplay()
+        this.previous();
+      }
+    },
     goTo(index) {
       this.currentIndex = index;
       this.resetAutoplay();
     },
     next() {
-      this.currentIndex = (this.currentIndex + 1) % this.settings.length;
+      this.currentIndex = (this.currentIndex + 1) % this.migratedSettings.length;
+    },
+    previous() {
+      if (this.currentIndex === 0) {
+        this.currentIndex = this.migratedSettings.length
+      }
+      this.currentIndex = (this.currentIndex - 1) % this.migratedSettings.length;
     },
     startAutoplay() {
-      if (this.settings && this.settings.length > 1) {
+      if (this.migratedSettings && this.migratedSettings.length > 1) {
         this.autoplayInterval = setInterval(() => {
           this.next();
         }, 5000);
@@ -189,6 +348,7 @@ export default {
 
 <style>
 .interactive-display .carousel-container {
+  height: 480px;
   max-width: 100%;
   overflow: hidden;
 }
@@ -220,5 +380,11 @@ export default {
 
 .interactive-display .carousel-dots .carousel-dot.active {
   background-color: #333;
+}
+
+@media screen and (max-width: 768px) {
+  .mobileHidden {
+    display: none !important;
+  }
 }
 </style>

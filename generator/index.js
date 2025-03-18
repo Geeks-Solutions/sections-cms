@@ -62,6 +62,8 @@ module.exports.hooks = (api, options) => {
         const renderIndex1 = lines.findIndex(line => line.match(/plugins:/))
         if (options.choice === 'vue') {
             lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/sections.js', ssr: false },`)
+        } else {
+            lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/vue-lazytube', ssr: false },`)
         }
 
         if(options.addReadyToUseSectionTypes) {

@@ -1,16 +1,15 @@
 <template>
-  <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length === 1 && !$route.path.includes(BLOGS_SECTION_PAGE_PATH)">
-    <BlogsArticlePreview :path="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : `/${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : sectionRenderData.articles[0].path ? `/${sectionRenderData.articles[0].path}` : '')" :image="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].thumbnail_url : ''" :image-alt="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].seo_tag : ''" :title="sectionRenderData.articles[0].title" :content="sectionRenderData.articles[0].description" />
-  </div>
-  <div v-else-if="sectionRenderData">
-    <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="sectionRenderSettings" :total-pages="totalPages" :lang="lang" list-type="listing" @page-changed="(offset) => pageChanged(offset)" />
+  <div ref="BlogsArticles">
+    <div v-if="sectionRenderData">
+      <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="sectionRenderSettings" :total-pages="totalPages" :lang="lang" list-type="listing" @page-changed="(offset) => pageChanged(offset)" />
+    </div>
   </div>
 </template>
 
 <script>
 
 import {mapGetters} from "vuex";
-import {BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH} from "@/utils/constants";
+import {BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH, extractQsValue} from "@/utils/constants";
 
 export default {
   name: 'CategoriesArticlesConfigurable',
@@ -275,13 +274,30 @@ export default {
       } else return null
     },
     totalPages() {
+      let blogsListSize = BLOGS_LIST_SIZE
+      if (this.sectionRenderSettings && this.sectionRenderSettings.default_limit) {
+        blogsListSize = this.sectionRenderSettings.default_limit
+      }
+      if (extractQsValue('limit_ca', this.$route.path)) {
+        extractQsValue('limit_ca', this.$route.path)
+        blogsListSize = extractQsValue('limit_ca', this.$route.path)
+      }
       if (this.sectionRenderData && this.sectionRenderData.articles) {
-        return Math.ceil(this.sectionRenderData.total / BLOGS_LIST_SIZE)
+        return Math.ceil(this.sectionRenderData.total / blogsListSize)
       } else return 1
     },
     ...mapGetters({
       categoriesTitles: 'getCategoriesTitles'
     })
+  },
+  watch: {
+    sectionRenderData() {
+      if (this.$refs && this.$refs.BlogsArticles) {
+        this.$nextTick(() => {
+          this.$refs.BlogsArticles.scrollIntoView({ behavior: 'smooth'})
+        })
+      }
+    }
   },
   methods: {
     pageChanged(offset) {
