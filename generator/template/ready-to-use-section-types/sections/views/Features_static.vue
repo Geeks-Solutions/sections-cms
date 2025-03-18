@@ -1,12 +1,12 @@
 <template>
-  <div v-if="settings" class="my-14 features ql-snow">
+  <div v-if="settings" class="my-14 features ql-snow" :class="`features-wrapper-${sectionWeight}`">
 
     <div v-if="settings[0].title[lang]" class="ql-editor ql-snow px-8 md:px-0 title" v-html="settings[0].title[lang]"></div>
     <div v-if="settings[0].subtitle[lang]" class="ql-editor ql-snow subtitle" v-html="settings[0].subtitle[lang]"></div>
 
     <div class="flex flex-wrap gap-4 md:gap-0 justify-center md:mt-14 items-stretch mx-4 md:mx-8 blocks-wrapper">
 
-      <div v-for="(container,idx) in migratedSettings" :key="`block-container-${idx}`" class="flex flex-col z-10 min-h-[206px] my-3 md:mx-3 items-center md:justify-center justify-start self-center w-full md:w-448px rounded-md shadow image-main-wrapper">
+      <div v-for="(container,idx) in migratedSettings" :key="`block-container-${idx}`" class="flex flex-col z-10 min-h-[206px] my-3 md:mx-3 items-center md:justify-center justify-start self-center w-full md:w-448px rounded-md shadow" :class="`image-main-wrapper-${sectionWeight}`">
 
         <div class="flex flex-col items-center image-wrapper">
           <img
@@ -108,6 +108,11 @@ export default {
     settings() {
       return this.section.settings;
     },
+    sectionWeight() {
+      if (this.section && this.section.weight) {
+        return this.section.weight;
+      } else return '0'
+    },
     migratedSettings() {
       if (this.settings && this.settings[0] && this.settings[0].features === undefined) {
         return this.section.settings
@@ -116,34 +121,82 @@ export default {
       } else return []
     }
   },
+  watch: {
+    "section.settings": {
+      handler() {
+        this.setEqualHeights()
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   mounted() {
     this.setEqualHeights()
   },
   methods: {
     setEqualHeights() {
       try {
-        if (window.innerWidth >= 768) {
+        if (window.innerWidth >= 1024 && this.$el && this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`)) {
           this.$nextTick(() => {
-            const items = this.$el.querySelectorAll('.image-main-wrapper');
-            if (items) {
-              let maxHeight = 0;
+            const containerWrapper = document.querySelector(`.features-wrapper-${this.sectionWeight}`);
+            if (containerWrapper && containerWrapper.clientWidth >= 1024) {
+              const items = this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`);
+              if (items.length) {
+                let maxHeight = 0;
 
-              items.forEach(item => {
-                item.style.height = 'auto';
-              });
+                // Reset heights before recalculating
+                items.forEach(item => {
+                  item.style.height = 'auto'
+                  return item
+                });
 
-              items.forEach(item => {
-                maxHeight = Math.max(maxHeight, item.offsetHeight + 99);
-              });
+                // Wait for images to load before setting heights
+                const images = [...containerWrapper.querySelectorAll("img")];
+                let loadedCount = 0;
 
-              items.forEach(item => {
-                item.style.height = `${maxHeight}px`;
-              });
+                const checkAllLoaded = () => {
+                  loadedCount++;
+                  if (loadedCount === images.length) {
+                    adjustHeights();
+                  }
+                };
+
+                // If no images, adjust heights immediately
+                if (images.length === 0) {
+                  adjustHeights();
+                } else {
+                  images.forEach(img => {
+                    if (img.complete) {
+                      checkAllLoaded();
+                    } else {
+                      img.onload = checkAllLoaded;
+                      img.onerror = checkAllLoaded;
+                    }
+                  });
+                }
+
+                function adjustHeights() {
+                  items.forEach(item => {
+                    maxHeight = Math.max(maxHeight, item.offsetHeight);
+                  });
+
+                  items.forEach(item => {
+                    item.style.height = `${maxHeight}px`;
+                  });
+                }
+              }
+            } else if (this.$el && this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`)) {
+              const items = this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`);
+              if (items.length) {
+                items.forEach(item => {
+                  item.style.height = 'auto';
+                });
+              }
             }
           });
-        } else {
-          const items = this.$el.querySelectorAll('.image-main-wrapper');
-          if (items) {
+        } else if (this.$el && this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`)) {
+          const items = this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`);
+          if (items.length) {
             items.forEach(item => {
               item.style.height = 'auto';
             });
