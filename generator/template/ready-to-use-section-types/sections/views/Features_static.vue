@@ -1,8 +1,8 @@
 <template>
-  <div v-if="settings" class="my-14 features ql-snow" :class="`features-wrapper-${sectionWeight}`">
+  <div v-if="settings" :ref="`features-wrapper-${sectionWeight}`" class="my-14 features">
 
-    <div v-if="settings[0].title[lang]" class="ql-editor ql-snow px-8 md:px-0 title" v-html="settings[0].title[lang]"></div>
-    <div v-if="settings[0].subtitle[lang]" class="ql-editor ql-snow subtitle" v-html="settings[0].subtitle[lang]"></div>
+    <gWysiwygContent v-if="settings[0].title[lang]" tag="div" :classes="`px-8 md:px-0 title`" :html-content="settings[0].title[lang]" />
+    <gWysiwygContent v-if="settings[0].subtitle[lang]" tag="div" :classes="`subtitle`" :html-content="settings[0].subtitle[lang]" />
 
     <div class="flex flex-wrap gap-4 md:gap-0 justify-center md:mt-14 items-stretch mx-4 md:mx-8 blocks-wrapper">
 
@@ -16,7 +16,7 @@
             loading="lazy"
             class="p-4"
           />
-          <div class="ql-editor ql-snow pb-4 px-4 p-0 text" v-html="container.text[lang]"></div>
+          <gWysiwygContent tag="div" :classes="`pb-4 px-4 p-0 text`" :html-content="container.text[lang]" />
         </div>
 
       </div>
@@ -138,7 +138,7 @@ export default {
       try {
         if (window.innerWidth >= 1024 && this.$el && this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`)) {
           this.$nextTick(() => {
-            const containerWrapper = document.querySelector(`.features-wrapper-${this.sectionWeight}`);
+            const containerWrapper = this.$refs[`features-wrapper-${this.sectionWeight}`];
             if (containerWrapper && containerWrapper.clientWidth >= 1024) {
               const items = this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`);
               if (items.length) {

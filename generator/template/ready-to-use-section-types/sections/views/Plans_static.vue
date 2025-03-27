@@ -3,12 +3,12 @@
 
 	<div class="mt-18 pb-20 sectionsPack">
 
-	  <div class="flex w-full justify-center ql-snow">
-		<div class="ql-editor ql-snow mt-14 md:w-full w-fit px-16 md:px-0 title" :class="settings.titleClasses" v-html="settings.title[lang]"></div>
+	  <div class="flex w-full ql-snow">
+      <gWysiwygContent tag="div" class="w-full" :wrapper-classes="settings.titleClasses" :classes="`mt-14 md:w-full w-fit px-16 md:px-0 title`" :html-content="settings.title[lang]" />
 	  </div>
 
-	  <div class="flex w-full justify-center ql-snow">
-		<div class="ql-editor ql-snow md:w-full mt-2 px-8 md:px-0 subtitle" :class="settings.subTitleClasses" v-html="settings.subTitle[lang]"></div>
+	  <div class="flex w-full ql-snow">
+      <gWysiwygContent tag="div" class="w-full" :wrapper-classes="settings.subTitleClasses" :classes="`md:w-full mt-2 px-8 md:px-0 subtitle`" :html-content="settings.subTitle[lang]" />
 	  </div>
 
 	  <div :class="['flex flex-wrap justify-center gap-7 items-center mt-16', (settings.features && settings.features[lang] !== '') ? 'md:h-full' : 'md:h-full']">
@@ -32,7 +32,7 @@
 				</div>
 				<div class="w-140px plansTitleBox ql-snow">
 				  <div class="title w-80px" :class="{'mostPopular' : plan.mostPopular === true}" :title="plan.title[lang]">{{ plan.title[lang] }}</div>
-				  <div v-if="plan.description[lang] !== ''" class="ql-editor ql-snow pt-2 pb-0 pl-0 desc" :class="plan.classes" v-html="plan.description[lang]"></div>
+          <gWysiwygContent v-if="plan.description[lang] !== ''" tag="div" :wrapper-classes="plan.classes" :classes="`pt-2 pb-0 pl-0 desc`" :html-content="plan.description[lang]" />
 				</div>
 
 			  </div>
