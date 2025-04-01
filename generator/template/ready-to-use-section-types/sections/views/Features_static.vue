@@ -1,0 +1,217 @@
+<template>
+  <div v-if="settings" :ref="`features-wrapper-${sectionWeight}`" class="my-14 features">
+
+    <gWysiwygContent v-if="settings[0].title[lang]" tag="div" :classes="`px-8 md:px-0 title`" :html-content="settings[0].title[lang]" />
+    <gWysiwygContent v-if="settings[0].subtitle[lang]" tag="div" :classes="`subtitle`" :html-content="settings[0].subtitle[lang]" />
+
+    <div class="flex flex-wrap gap-4 md:gap-0 justify-center md:mt-14 items-stretch mx-4 md:mx-8 blocks-wrapper">
+
+      <div v-for="(container,idx) in migratedSettings" :key="`block-container-${idx}`" class="flex flex-col z-10 min-h-[206px] my-3 md:mx-3 items-center md:justify-center justify-start self-center w-full md:w-448px rounded-md shadow" :class="`image-main-wrapper-${sectionWeight}`">
+
+        <div class="flex flex-col items-center image-wrapper">
+          <img
+            v-if="container.media && container.media.url"
+            :src="container.media.url"
+            :alt="container.media.seo_tag ? container.media.seo_tag : ''"
+            loading="lazy"
+            class="p-4"
+          />
+          <gWysiwygContent tag="div" :classes="`pb-4 px-4 p-0 text`" :html-content="container.text[lang]" />
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: 'SectionFeaturesStatic',
+  props: {
+    section: {
+      type: Object,
+      default: () => {},
+    },
+    lang: {
+      type: String,
+      default: "en"
+    },
+    viewStructure: {
+      settings: [
+        {
+          title: {
+            en: 'string',
+            fr: 'string'
+          },
+          subtitle: {
+            en: 'string',
+            fr: 'string'
+          },
+          text: {
+            en: 'string',
+            fr: 'string'
+          },
+          media: 'image'
+        },
+        {
+          title: {
+            en: 'string',
+            fr: 'string'
+          },
+          subtitle: {
+            en: 'string',
+            fr: 'string'
+          },
+          text: {
+            en: 'string',
+            fr: 'string'
+          },
+          media: 'image'
+        },
+        {
+          title: {
+            en: 'string',
+            fr: 'string'
+          },
+          subtitle: {
+            en: 'string',
+            fr: 'string'
+          },
+          text: {
+            en: 'string',
+            fr: 'string'
+          },
+          media: 'image'
+        },
+        {
+          title: {
+            en: 'string',
+            fr: 'string'
+          },
+          subtitle: {
+            en: 'string',
+            fr: 'string'
+          },
+          text: {
+            en: 'string',
+            fr: 'string'
+          },
+          media: 'image'
+        },
+      ]
+    }
+  },
+  computed: {
+    settings() {
+      return this.section.settings;
+    },
+    sectionWeight() {
+      if (this.section && this.section.weight) {
+        return this.section.weight;
+      } else return '0'
+    },
+    migratedSettings() {
+      if (this.settings && this.settings[0] && this.settings[0].features === undefined) {
+        return this.section.settings
+      } else if (this.settings) {
+        return this.section.settings[0].features
+      } else return []
+    }
+  },
+  watch: {
+    "section.settings": {
+      handler() {
+        this.setEqualHeights()
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+  mounted() {
+    this.setEqualHeights()
+  },
+  methods: {
+    setEqualHeights() {
+      try {
+        if (window.innerWidth >= 1024 && this.$el && this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`)) {
+          this.$nextTick(() => {
+            const containerWrapper = this.$refs[`features-wrapper-${this.sectionWeight}`];
+            if (containerWrapper && containerWrapper.clientWidth >= 1024) {
+              const items = this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`);
+              if (items.length) {
+                let maxHeight = 0;
+
+                // Reset heights before recalculating
+                items.forEach(item => {
+                  item.style.height = 'auto'
+                  return item
+                });
+
+                // Wait for images to load before setting heights
+                const images = [...containerWrapper.querySelectorAll("img")];
+                let loadedCount = 0;
+
+                const checkAllLoaded = () => {
+                  loadedCount++;
+                  if (loadedCount === images.length) {
+                    adjustHeights();
+                  }
+                };
+
+                // If no images, adjust heights immediately
+                if (images.length === 0) {
+                  adjustHeights();
+                } else {
+                  images.forEach(img => {
+                    if (img.complete) {
+                      checkAllLoaded();
+                    } else {
+                      img.onload = checkAllLoaded;
+                      img.onerror = checkAllLoaded;
+                    }
+                  });
+                }
+
+                function adjustHeights() {
+                  items.forEach(item => {
+                    maxHeight = Math.max(maxHeight, item.offsetHeight);
+                  });
+
+                  items.forEach(item => {
+                    item.style.height = `${maxHeight}px`;
+                  });
+                }
+              }
+            } else if (this.$el && this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`)) {
+              const items = this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`);
+              if (items.length) {
+                items.forEach(item => {
+                  item.style.height = 'auto';
+                });
+              }
+            }
+          });
+        } else if (this.$el && this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`)) {
+          const items = this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`);
+          if (items.length) {
+            items.forEach(item => {
+              item.style.height = 'auto';
+            });
+          }
+        }
+      } catch {}
+    }
+  }
+};
+</script>
+
+<style>
+@media (min-width: 768px) {
+  .md\:w-448px {
+    width: 448px !important;
+  }
+}
+</style>

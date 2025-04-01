@@ -1,0 +1,401 @@
+<template>
+  <div class="p-4">
+
+    <div class="mb-4">
+      <UploadMedia :media-label="$t('forms.logo')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="$emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia()" />
+      <span class="flex text-xs text-Gray_800">{{ $t("forms.logoIconDesc") }}</span>
+    </div>
+
+    <div class="flex flex-col items-start justify-start mt-8">
+      <label class="mr-4 font-medium">{{ $t("forms.logoLink") }}</label>
+      <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
+      <gAutoComplete
+        :main-filter="settings[0].logoPage[selectedLang]"
+        :placeholder="$t('forms.aspectRatio')"
+        :filter-label-prop="'page'"
+        :reduce="(option) => option.path"
+        :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
+        :filter-searchable="false"
+        :close-on-select="true"
+        :filter-clearable="true"
+        :track-by="'path'"
+        @itemSelected="
+                  (val) => {
+                    locales.forEach(locale => { $set(settings[0].logoPage, locale, val) })
+                  }
+                "
+      >
+      </gAutoComplete>
+    </div>
+
+    <div v-if="settings[0].logoPage[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
+      <label class="mr-4 font-medium">{{ $t("Other") }}</label>
+      <link-description class="pb-1"/>
+      <input
+        v-model="settings[0].logoLink[selectedLang]"
+        type="text"
+        value=""
+        :placeholder="$t('forms.link')"
+        :class="sectionsStyle.input"
+      />
+    </div>
+
+    <div class="my-4">
+      <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
+      <div class="select-style-chooser w-344px">
+        <gAutoComplete
+          :main-filter="settings[0].logoLinkTarget"
+          :placeholder="$t('forms.linkTarget')"
+          :filter-label-prop="'value'"
+          :reduce="(option) => option.key"
+          :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
+          :filter-searchable="false"
+          :close-on-select="true"
+          :filter-clearable="true"
+          :track-by="'key'"
+          @itemSelected="(val) => {settings[0].logoLinkTarget = val;}"
+        >
+        </gAutoComplete>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-start justify-start mt-8">
+      <label class="mr-4 font-medium">{{ $t("forms.logoCssClasses") }}</label>
+      <span class="text-xs text-Gray_800">{{ $t("forms.logoCssClassesDesc") }}</span>
+      <input
+        v-model="settings[0].logoClasses"
+        type="text"
+        value=""
+        :placeholder="$t('forms.logoCssClasses')"
+        :class="sectionsStyle.input"
+      />
+    </div>
+
+    <div class="flex flex-col items-start justify-start mt-8">
+      <label class="mr-4 font-medium">{{ $t("forms.menuLabel") }}</label>
+      <input
+        v-model="settings[0].menuLabel[selectedLang]"
+        type="text"
+        value=""
+        :placeholder="$t('forms.menuLabel')"
+        :class="sectionsStyle.input"
+      />
+    </div>
+
+    <div class="flex flex-col items-start justify-start mt-8">
+      <label class="mr-4 font-medium">{{ $t("forms.cssClasses") }}</label>
+      <span class="text-xs text-Gray_800">{{ $t("forms.cssClassesDesc") }}</span>
+      <input
+        v-model="settings[0].classes"
+        type="text"
+        value=""
+        :placeholder="$t('forms.cssClasses')"
+        :class="sectionsStyle.input"
+      />
+    </div>
+    <span class="flex text-start text-xs text-Gray_800 mt-4">{{ $t("forms.iconDesc") }}</span>
+    <span class="flex text-start text-xs text-Gray_800 mt-4">{{ $t("forms.iconCloseDesc") }}</span>
+
+    <div id="menu" class="flex flex-col mt-4">
+
+      <FieldSets :array-data-pop="settings[0].menu" :fieldset-group="'menu'" :legend-label="$t('forms.link')" @array-updated="(data) => $set(settings[0], 'menu', data)" @remove-fieldset="(object, idx) => removeMenuItem(idx)">
+        <template #default="{ object, idx }">
+          <div class="flex flex-col items-start justify-start mt-8">
+            <label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.label") + '*' : $t("forms.label") }}</label>
+            <input
+              v-model="object.label[selectedLang]"
+              type="text"
+              value=""
+              :placeholder="$t('forms.label')"
+              :class="sectionsStyle.input"
+            />
+            <span v-show="idx === 0 && errors.menu[idx].label === true && siteLang === 'en'"
+                  class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+          </div>
+
+          <div class="flex flex-col items-start justify-start mt-8">
+            <label class="mr-4 font-medium">{{ $t("forms.cssClasses") }}</label>
+            <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.menuCssClassesDesc") }}</span>
+            <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.addedToTopDesc") }}</span>
+            <input
+              v-model="settings[0].menu[idx].menuItemClasses"
+              type="text"
+              value=""
+              :placeholder="$t('forms.cssClasses')"
+              :class="sectionsStyle.input"
+            />
+          </div>
+
+          <div class="flex flex-col items-start justify-start mt-8">
+            <label class="mr-4 pb-2 font-bold">{{ $t("Language menu") }}</label>
+            <span class="text-xs text-Gray_800 pb-1">{{ $t("forms.languageDesc") }}</span>
+            <input
+              v-model="settings[0].menu[idx].languageMenu"
+              type="checkbox"
+              value=""
+              :placeholder="$t('Language menu')"
+              class="
+            h-25px
+            w-25px
+            pl-6
+            border border-FieldGray
+            rounded-xl
+            focus:outline-none
+          "
+            />
+          </div>
+
+          <div v-if="settings[0].menu[idx].languageMenu !== true">
+            <div class="flex flex-col items-start justify-start mt-8">
+              <label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.link") + '*' : $t("forms.link") }}</label>
+              <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
+              <gAutoComplete
+                :main-filter="settings[0].menu[idx].page[selectedLang]"
+                :placeholder="$t('forms.aspectRatio')"
+                :filter-label-prop="'page'"
+                :reduce="(option) => option.path"
+                :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
+                :filter-searchable="false"
+                :close-on-select="true"
+                :filter-clearable="true"
+                :track-by="'path'"
+                @itemSelected="
+                  (val) => {
+                    locales.forEach(locale => { $set(settings[0].menu[idx].page, locale, val) })
+                  }
+                "
+              >
+              </gAutoComplete>
+            </div>
+
+            <div v-if="object.page[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
+              <label class="mr-4 font-medium">{{ $t("Other") }}</label>
+              <link-description class="pb-1"/>
+              <input
+                v-model="object.link[selectedLang]"
+                type="text"
+                value=""
+                :placeholder="$t('forms.link')"
+                :class="sectionsStyle.input"
+              />
+            </div>
+            <span v-show="idx === 0 && errors.menu[idx].link === true && siteLang === 'en'"
+                  class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+          </div>
+
+          <div v-if="settings[0].menu[idx].languageMenu !== true">
+            <div class="my-4">
+              <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
+              <div class="select-style-chooser w-344px">
+                <gAutoComplete
+                  :main-filter="settings[0].menu[idx].linkTarget"
+                  :placeholder="$t('forms.linkTarget')"
+                  :filter-label-prop="'value'"
+                  :reduce="(option) => option.key"
+                  :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
+                  :filter-searchable="false"
+                  :close-on-select="true"
+                  :filter-clearable="true"
+                  :track-by="'key'"
+                  @itemSelected="(val) => {settings[0].menu[idx].linkTarget = val;}"
+                >
+                </gAutoComplete>
+              </div>
+            </div>
+          </div>
+        </template>
+      </FieldSets>
+
+      <div
+        class="add-button underline cursor-pointer mt-2"
+        @click="addMenuItem()"
+      >
+        <div class="p3 bold text">{{ $t("forms.addMenuItem") }}</div>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
+import FieldSets from "@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue";
+import {sectionHeader} from "@geeks.solutions/nuxt-sections/lib/src/utils";
+import {getSectionsPages, sectionsStyle, scrollToFirstError} from "@/utils/constants";
+import 'vue-select/dist/vue-select.css';
+
+export default {
+  name: 'SimpleMenu',
+  components: { FieldSets, UploadMedia },
+  props: {
+    selectedLang: {
+      type: String,
+      default: 'fr'
+    },
+    selectedMedia: {},
+    locales: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    mediaFields: [
+      {
+        type: 'image',
+        name: 'media'
+      }
+    ]
+  },
+  data() {
+    return {
+      settings: [
+        {
+          media: {
+            media_id: "",
+            url: "",
+            seo_tag: ""
+          },
+          logoLink: {},
+          logoPage: {},
+          logoLinkTarget: '',
+          logoClasses: '',
+          menuLabel: {},
+          classes: '',
+          menu: [
+            {
+              label: {},
+              link: {},
+              page: {},
+              linkTarget: '',
+              menuItemClasses: '',
+              languageMenu: false
+            }
+          ]
+        }
+      ],
+      errors: {
+        menu: [
+          {
+            label: false,
+            link: false
+          }
+        ]
+      },
+      siteLang: 'en',
+      sectionsStyle,
+      sectionsPages: []
+    }
+  },
+  watch: {
+    selectedLang: {
+      handler(val) {
+        this.siteLang = val
+      },
+      deep: true,
+      immediate: true
+    },
+    settings(v) {
+      if (!v[0].logoLink) {
+        v[0].logoLink = {}
+      }
+      if (!v[0].logoPage) {
+        v[0].logoPage = {}
+      }
+      this.locales.forEach(locale => {
+        if (!v[0].menuLabel) {
+          v[0].menuLabel = {}
+        }
+        if (!v[0].logoLink[locale]) {
+          v[0].logoLink[locale] = ''
+        }
+        if (!v[0].logoPage[locale]) {
+          v[0].logoLink[locale] = ''
+        }
+      })
+    },
+    selectedMedia(mediaObject) {
+      const media = {
+        media_id: "",
+        url: "",
+        seo_tag: "",
+        filename: "",
+        headers: {}
+      };
+      media.media_id = mediaObject.id;
+      media.url = mediaObject.files[0].url;
+      media.seo_tag = mediaObject.seo_tag;
+      media.filename = mediaObject.files[0].filename;
+      if (mediaObject.files[0].headers) {
+        media.headers = mediaObject.files[0].headers
+      }
+      this.$set(this.settings[0], 'media', media);
+      this.$emit('closeMediaModal')
+    }
+  },
+  async mounted() {
+    this.$nuxt.$emit('initLoading', true)
+    this.sectionsPages = await getSectionsPages(sectionHeader({token: window.$nuxt.$cookies.get('sections-auth-token')}))
+    this.$nuxt.$emit('initLoading', false)
+  },
+  methods: {
+    addMenuItem() {
+      const menuItem = {
+        label: {},
+        link: {},
+        page: {},
+        linkTarget: '',
+        menuItemClasses: '',
+        languageMenu: false
+      }
+      this.locales.forEach(locale => {
+        menuItem.label[locale] = ''
+        menuItem.link[locale] = ''
+        menuItem.page[locale] = ''
+      })
+      this.settings[0].menu.push(menuItem);
+    },
+    removeMenuItem(idx) {
+      this.$set(this.settings[0], 'menu', this.settings[0].menu.filter((ct, i) => idx !== i))
+    },
+    removeMedia() {
+      this.settings[0].media = {}
+    },
+    validate() {
+      for(let i = 0; i < this.settings.length; i++) {
+        if (this.settings[i].media && (Object.keys(this.settings[i].media).length === 0 || !this.settings[i].media.media_id || !this.settings[i].media.url)) {
+          delete this.settings[i].media
+        }
+      }
+      let valid = true;
+      this.errors.menu[0].link = false;
+      this.errors.menu[0].label = false;
+      if (this.settings[0].menu[0].languageMenu !== true && !this.settings[0].menu[0].link.en && !this.settings[0].menu[0].page.en) {
+        this.errors.menu[0].link = true;
+        valid = false;
+      }
+      if (!this.settings[0].menu[0].label.en) {
+        this.errors.menu[0].label = true;
+        valid = false;
+      }
+      if (!valid) {
+        this.$root.$emit("toast", {
+          type: "Error",
+          message: this.$t("fill-required-fields")
+        });
+        scrollToFirstError(this.errors)
+      }
+      return valid;
+    },
+  },
+}
+</script>
+
+<style>
+.content-wrapper {
+  overflow-x: hidden;
+}
+.vs__actions svg {
+  height: auto;
+  width: auto;
+}
+</style>

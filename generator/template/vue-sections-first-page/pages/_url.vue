@@ -1,22 +1,28 @@
 <template>
   <div id="app">
     <Sections
-      :admin="admin"
-      :pageName="pageName"
-      :variations="[]"
-      @finishLoad="sectionsLoaded"
+        :admin="admin"
+        :page-name="pageName"
+        :lang="lang"
+        :variations="[]"
+        @finishLoad="sectionsLoaded"
     />
   </div>
 </template>
 
 <script>
 export default {
-  name: "App",
+  name: "dynamicSectionsPage",
   data() {
     return {
       admin: false,
-      pageName: "home"
+      pageName: this.$route.params.url
     };
+  },
+  computed: {
+    lang() {
+      return this.$i18n.locale.toString()
+    }
   },
   methods: {
     sectionsLoaded() {
