@@ -1,6 +1,6 @@
 <template>
   <div v-if="settings" class="simple-menu p-8" :class="settings.classes">
-    <div class="icon-wrapper md:hidden" @click="mobileMenu = !mobileMenu">
+    <div class="icon-wrapper md:hidden" :class="{'visibleMenu': mobileMenu === true}" @click="mobileMenu = !mobileMenu">
       <div class="icon"></div>
     </div>
     <global-link v-if="settings.media && settings.media.url"
@@ -40,7 +40,7 @@
             <div class="mobile-menu-close"></div>
           </div>
           <ul>
-            <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'logo': idx === 0}, {'lang': menuItem.languageMenu === true}]">
+            <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'logo': idx === 0}, {'lang': menuItem.languageMenu === true}]" @click="mobileMenu = !mobileMenu">
               <global-link v-if="menuItem.languageMenu !== true"
                            :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
                            :lang="lang"

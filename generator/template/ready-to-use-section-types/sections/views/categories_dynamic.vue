@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {updateQueryStringValue,BLOGS_LIST_SIZE} from "@/utils/constants";
+import {updateQueryStringValue} from "@/utils/constants";
 
 export default {
   name: 'CategoriesDynamic',
@@ -98,16 +98,15 @@ export default {
       if (Array.isArray(item)) {
         categoriesTitles = item.map(c => c.original_title).join(',')
         qs = {
-          offset_ca: 0,
-          limit_ca: BLOGS_LIST_SIZE
+          offset_ca: 0
         }
       } else {
         categoriesTitles = item.original_title
         qs = {
-          offset_ca: 0,
-          limit_ca: BLOGS_LIST_SIZE
+          offset_ca: 0
         }
       }
+      this.$store.commit('setCategoriesTitles', categoriesTitles)
       this.$nuxt.$emit('clearOffset')
       updateQueryStringValue(this.$route.path, {
         'categories_titles[]': null

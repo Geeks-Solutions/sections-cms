@@ -9,17 +9,23 @@
     <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-medium">{{ $t("forms.logoLink") }}</label>
       <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
-      <div>
-        <div class="selectMultipleOptions">
-          <div v-for="(item, pageIdx) in [...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
-               :key="`${item.page}-${pageIdx}`" class="multiple-options-wrapper">
-            <div class="single-multiple-option"
-                 :class="isSelected(item.path, 0, true) ? 'multiple-options-selected' : ''"
-                 @click="selectOption(item.path, 0, true)">{{ item.page }}
-            </div>
-          </div>
-        </div>
-      </div>
+      <gAutoComplete
+        :main-filter="settings[0].logoPage[selectedLang]"
+        :placeholder="$t('forms.aspectRatio')"
+        :filter-label-prop="'page'"
+        :reduce="(option) => option.path"
+        :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
+        :filter-searchable="false"
+        :close-on-select="true"
+        :filter-clearable="true"
+        :track-by="'path'"
+        @itemSelected="
+                  (val) => {
+                    locales.forEach(locale => { $set(settings[0].logoPage, locale, val) })
+                  }
+                "
+      >
+      </gAutoComplete>
     </div>
 
     <div v-if="settings[0].logoPage[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
@@ -91,15 +97,9 @@
     <span class="flex text-start text-xs text-Gray_800 mt-4">{{ $t("forms.iconCloseDesc") }}</span>
 
     <div id="menu" class="flex flex-col mt-4">
-      <div v-for="(object, idx) in settings[0].menu" :key="`menu-${idx}`" class="flex flex-col">
 
-        <fieldset class="fieldSetStyle border border-solid border-gray-300 p-3 mt-2">
-          <legend class="w-auto px-16">{{ $t("forms.link") }} #{{ idx + 1 }}:
-            <span v-if="idx !== 0"
-                  class="cursor-pointer text-xl pl-4 text-Blue"
-                  @click="removeMenuItem(idx)">x</span>
-          </legend>
-
+      <FieldSets :array-data-pop="settings[0].menu" :fieldset-group="'menu'" :legend-label="$t('forms.link')" @array-updated="(data) => $set(settings[0], 'menu', data)" @remove-fieldset="(object, idx) => removeMenuItem(idx)">
+        <template #default="{ object, idx }">
           <div class="flex flex-col items-start justify-start mt-8">
             <label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.label") + '*' : $t("forms.label") }}</label>
             <input
@@ -118,7 +118,7 @@
             <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.menuCssClassesDesc") }}</span>
             <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.addedToTopDesc") }}</span>
             <input
-              v-model="object.menuItemClasses"
+              v-model="settings[0].menu[idx].menuItemClasses"
               type="text"
               value=""
               :placeholder="$t('forms.cssClasses')"
@@ -130,7 +130,7 @@
             <label class="mr-4 pb-2 font-bold">{{ $t("Language menu") }}</label>
             <span class="text-xs text-Gray_800 pb-1">{{ $t("forms.languageDesc") }}</span>
             <input
-              v-model="object.languageMenu"
+              v-model="settings[0].menu[idx].languageMenu"
               type="checkbox"
               value=""
               :placeholder="$t('Language menu')"
@@ -145,21 +145,27 @@
             />
           </div>
 
-          <div v-if="object.languageMenu !== true">
+          <div v-if="settings[0].menu[idx].languageMenu !== true">
             <div class="flex flex-col items-start justify-start mt-8">
               <label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.link") + '*' : $t("forms.link") }}</label>
               <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
-              <div>
-                <div class="selectMultipleOptions">
-                  <div v-for="(item, pageIdx) in [...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
-                       :key="`${item.page}-${pageIdx}`" class="multiple-options-wrapper">
-                    <div class="single-multiple-option"
-                         :class="isSelected(item.path, idx) ? 'multiple-options-selected' : ''"
-                         @click="selectOption(item.path, idx)">{{ item.page }}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <gAutoComplete
+                :main-filter="settings[0].menu[idx].page[selectedLang]"
+                :placeholder="$t('forms.aspectRatio')"
+                :filter-label-prop="'page'"
+                :reduce="(option) => option.path"
+                :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
+                :filter-searchable="false"
+                :close-on-select="true"
+                :filter-clearable="true"
+                :track-by="'path'"
+                @itemSelected="
+                  (val) => {
+                    locales.forEach(locale => { $set(settings[0].menu[idx].page, locale, val) })
+                  }
+                "
+              >
+              </gAutoComplete>
             </div>
 
             <div v-if="object.page[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
@@ -177,12 +183,12 @@
                   class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
           </div>
 
-          <div v-if="object.languageMenu !== true">
+          <div v-if="settings[0].menu[idx].languageMenu !== true">
             <div class="my-4">
               <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
               <div class="select-style-chooser w-344px">
                 <gAutoComplete
-                  :main-filter="object.linkTarget"
+                  :main-filter="settings[0].menu[idx].linkTarget"
                   :placeholder="$t('forms.linkTarget')"
                   :filter-label-prop="'value'"
                   :reduce="(option) => option.key"
@@ -191,16 +197,15 @@
                   :close-on-select="true"
                   :filter-clearable="true"
                   :track-by="'key'"
-                  @itemSelected="(val) => {object.linkTarget = val;}"
+                  @itemSelected="(val) => {settings[0].menu[idx].linkTarget = val;}"
                 >
                 </gAutoComplete>
               </div>
             </div>
           </div>
+        </template>
+      </FieldSets>
 
-        </fieldset>
-
-      </div>
       <div
         class="add-button underline cursor-pointer mt-2"
         @click="addMenuItem()"
@@ -214,13 +219,14 @@
 
 <script>
 import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
+import FieldSets from "@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue";
 import {sectionHeader} from "@geeks.solutions/nuxt-sections/lib/src/utils";
 import {getSectionsPages, sectionsStyle, scrollToFirstError} from "@/utils/constants";
 import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'SimpleMenu',
-  components: { UploadMedia },
+  components: { FieldSets, UploadMedia },
   props: {
     selectedLang: {
       type: String,
@@ -332,33 +338,6 @@ export default {
     this.$nuxt.$emit('initLoading', false)
   },
   methods: {
-    isSelected(path, idx, logo) {
-      if (logo) {
-        return this.settings[0].logoPage[this.selectedLang] === path
-      } else {
-        return this.settings[0].menu[idx].page[this.selectedLang] === path
-      }
-    },
-    selectOption(value, idx, logo) {
-      if (this.isSelected(value, idx, logo) === true) {
-        this.locales.forEach(locale => {
-          if (logo) {
-            this.$set(this.settings[0].logoPage, locale, '')
-          } else {
-            this.$set(this.settings[0].menu[idx].page, locale, '')
-          }
-        })
-      } else {
-        this.locales.forEach(locale => {
-          if (logo) {
-            this.$set(this.settings[0].logoPage, locale, value)
-          } else {
-            this.$set(this.settings[0].menu[idx].page, locale, value)
-          }
-        })
-      }
-      this.sectionsPages = [...this.sectionsPages]
-    },
     addMenuItem() {
       const menuItem = {
         label: {},
@@ -414,35 +393,6 @@ export default {
 <style>
 .content-wrapper {
   overflow-x: hidden;
-}
-
-.selectMultipleOptions {
-  border-radius: 0.75rem;
-  border-width: 1px;
-  border-radius: 0.75rem;
-  overflow-y: scroll;
-  align-items: flex-start;
-  flex-direction: column;
-  max-width: 32rem;
-  height: 250px;
-  display: flex;
-  margin-top: 0.5rem;
-}
-
-.single-multiple-option {
-  padding-left: 1rem;
-  padding: 0.5rem;
-  cursor: pointer;
-  width: 100%;
-  text-align: start;
-}
-
-.multiple-options-wrapper {
-  width: 100%;
-}
-
-.multiple-options-selected {
-  background: #C2C2C2;
 }
 .vs__actions svg {
   height: auto;

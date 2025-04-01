@@ -10,7 +10,7 @@
           </div>
         </div>
         <div v-else></div>
-        <div class="flex flex-row gap-3">
+        <div class="flex flex-row gap-3 btns-wrapper">
           <div class="relative inline-block">
             <div class="flex flex-row py-2.5 px-4 gap-2 md:cursor-pointer button-selector" @click="copyArticleLink">
               <p>{{ $t('blogs.copyLink') }}</p>

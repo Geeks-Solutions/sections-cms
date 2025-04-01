@@ -2,7 +2,7 @@
   <div>
     <div id="message" class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-bold">{{ $t("forms.message") }}</label>
-      <wysiwyg :html="settings[0][selectedLang].message" @settingsUpdate="updateMessageDescription"/>
+      <wysiwyg :html="settings[0][selectedLang].message" :css-classes-prop="settings[0].classes" @cssClassesChanged="(v) => $set(settings[0], 'classes', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateMessageDescription"/>
       <span v-show="selectedLang === 'en' && errors.message" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
     <div class="flex flex-col items-start justify-start mt-8">
@@ -69,7 +69,13 @@ export default {
       default() {
         return []
       }
-    }
+    },
+    mediaFields: [
+      {
+        type: 'image',
+        name: 'wysiwygMedia'
+      }
+    ]
   },
   data() {
     return {
@@ -83,7 +89,8 @@ export default {
             message: '',
             redirectionUrl: ''
           },
-          timeToRedirect: ''
+          timeToRedirect: '',
+          classes: ''
         }
       ],
       errors: {
@@ -118,10 +125,25 @@ export default {
     })
   },
   methods: {
+    wysiwygMediaAdded(media) {
+      this.settings.push({
+        wysiwygMedia: media,
+        wysiwygLang: this.selectedLang
+      })
+    },
     updateMessageDescription(content) {
       this.settings[0][this.selectedLang].message = content
     },
     validate() {
+      if (Array.isArray(this.settings)) {
+        this.settings.forEach((ob, index) => {
+          if (ob.wysiwygLang) {
+            if (!JSON.stringify(this.settings[0]).includes(ob.wysiwygMedia.media_id)) {
+              this.settings.splice(index, 1)
+            }
+          }
+        })
+      }
       let valid = true;
       this.errors.message = false;
       this.errors.redirectionUrl = false;

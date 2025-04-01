@@ -1,33 +1,88 @@
 <template>
   <div class="p-4">
 
-    <div class="mb-4">
+    <div id="videoLink" class="flex flex-col items-start justify-start mt-8 ml-2">
+      <label :class="sectionsStyle.fieldLabel">{{ $t("forms.video") }}</label>
+      <span class="text-xs text-Gray_800">{{ $t("forms.videoLinkDesc") }}</span>
+      <input
+        v-model="settings[0].videoLink"
+        type="text"
+        :placeholder="$t('forms.videoLink')"
+        :class="sectionsStyle.input"
+      />
+      <span v-if="errors.videoLink === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+    </div>
+
+    <div v-if="settings[0].videoLink" class="flex flex-wrap pt-4 pl-6">
+      <div class="pr-4">
+        <label class="flex items-center space-x-2">
+          <span>{{ $t('forms.autoPlay') }}</span>
+          <input
+            v-model="settings[0].autoplay"
+            type="checkbox"
+            class="toggle-checkbox"
+          />
+        </label>
+      </div>
+      <div class="pr-4">
+        <label class="flex items-center space-x-2">
+          <span>{{ $t('forms.loop') }}</span>
+          <input
+            v-model="settings[0].loop"
+            type="checkbox"
+            class="toggle-checkbox"
+          />
+        </label>
+      </div>
+      <div class="pr-4">
+        <label class="flex items-center space-x-2">
+          <span>{{ $t('forms.removeControls') }}</span>
+          <input
+            v-model="settings[0].controls"
+            type="checkbox"
+            class="toggle-checkbox"
+          />
+        </label>
+      </div>
+      <div class="pr-4">
+        <label class="flex items-center space-x-2">
+          <span>{{ $t('forms.whiteProgress') }}</span>
+          <input
+            v-model="settings[0].whiteProgress"
+            type="checkbox"
+            class="toggle-checkbox"
+          />
+        </label>
+      </div>
+    </div>
+
+    <div class="mt-4 mb-4">
       <UploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="selectedMediaIndex = 0; $emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia(0)" />
+    </div>
+
+    <div class="flex flex-col items-start justify-start mt-8">
+      <label for="dropdown" class="block mb-2 text-sm font-medium text-gray-700">{{ $t('forms.imagePosition') }}</label>
+      <select
+        id="dropdown"
+        v-model="settings[0].imagePosition"
+        class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="left">{{ $t('forms.imageLeft') }}</option>
+        <option value="right">{{ $t('forms.imageRight') }}</option>
+        <option value="none">{{ $t('forms.imageNone') }}</option>
+      </select>
     </div>
 
     <div id="title" class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.title") + '*' }}</label>
-      <wysiwyg :html="settings[0].title[selectedLang]" @settingsUpdate="(content) => updateTitleDescription(content)"/>
+      <wysiwyg :html="settings[0].title[selectedLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => $set(settings[0], 'titleClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content)"/>
       <span v-if="errors.title === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
     <div id="text" class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.text") + '*' }}</label>
-      <wysiwyg :html="settings[0].text[selectedLang]" @settingsUpdate="(content) => updateTextDescription(content)"/>
+      <wysiwyg :html="settings[0].text[selectedLang]" :css-classes-prop="settings[0].textClasses" @cssClassesChanged="(v) => $set(settings[0], 'textClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content)"/>
       <span v-if="errors.text === true " class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
-    </div>
-
-    <div class="flex flex-col items-start justify-start mt-8">
-	  <label for="dropdown" class="block mb-2 text-sm font-medium text-gray-700">Choose an option:</label>
-	  <select
-		   id="dropdown"
-		   v-model="settings[0].imagePosition"
-		   class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-	  >
-		<option value="left">Left</option>
-		<option value="right">Right</option>
-		<option value="none">None</option>
-	  </select>
     </div>
 
   </div>
@@ -60,6 +115,10 @@ export default {
       {
         type: 'image',
         name: 'media'
+      },
+      {
+        type: 'image',
+        name: 'wysiwygMedia'
       }
     ]
   },
@@ -75,12 +134,19 @@ export default {
             en: '',
             fr: ''
           },
+          titleClasses: '',
+          textClasses: '',
           media: {
             media_id: "",
             url: "",
             seo_tag: ""
           },
-          imagePosition: "none"
+          imagePosition: "none",
+          videoLink: '',
+          autoplay: false,
+          loop: false,
+          controls: false,
+          whiteProgress: false,
         }
       ],
       errors: {
@@ -117,27 +183,33 @@ export default {
     }
   },
   methods: {
+    wysiwygMediaAdded(media) {
+      this.settings.push({
+        wysiwygMedia: media,
+        wysiwygLang: this.selectedLang
+      })
+    },
     updateTitleDescription(content) {
       this.settings[0].title[this.selectedLang] = content
     },
     updateTextDescription(content) {
       this.settings[0].text[this.selectedLang] = content
     },
-    addMedia() {
-      if (this.settings.length < 4) {
-        this.settings.push({
-          media: {
-            media_id: "",
-            url: "",
-            seo_tag: ""
-          }
-        });
-      }
-    },
     removeMedia(idx) {
       this.settings[idx].media = {}
     },
     validate() {
+      try {
+        if (Array.isArray(this.settings)) {
+          this.settings.forEach((ob, index) => {
+            if (ob.wysiwygLang) {
+              if (!JSON.stringify({title: { ...this.settings[0].title }, text: { ...this.settings[0].text }}).includes(ob.wysiwygMedia.media_id)) {
+                this.settings.splice(index, 1)
+              }
+            }
+          })
+        }
+      } catch {}
       for(let i = 0; i < this.settings.length; i++) {
         if (this.settings[i].media && (Object.keys(this.settings[i].media).length === 0 || !this.settings[i].media.media_id || !this.settings[i].media.url)) {
           delete this.settings[i].media

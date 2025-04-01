@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     isSelected(title, name) {
-      return this.configurableReference.optionsData[name] !== undefined && this.configurableReference.optionsData[name].includes(title);
+      return this.configurableReference.optionsData[name] !== undefined && this.configurableReference.optionsData[name] !== null && this.configurableReference.optionsData[name].includes(title);
     },
     selectOption(value, name) {
       if (Array.isArray(this.configurableReference.optionsData[name]) && !this.configurableReference.optionsData[name].includes(value)) {
