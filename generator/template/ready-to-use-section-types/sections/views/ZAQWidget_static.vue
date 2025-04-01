@@ -58,6 +58,10 @@ export default {
     }
   },
   beforeDestroy() {
+    if (window.zaqSocket) {
+      window.zaqSocket.disconnect()
+    }
+    window.zaq = null
     // Remove the script when the component is destroyed
     if (this.scriptElement) {
       document.head.removeChild(this.scriptElement);

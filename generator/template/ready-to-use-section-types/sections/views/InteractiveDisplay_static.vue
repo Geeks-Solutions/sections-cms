@@ -26,10 +26,10 @@
             <div class="flex flex-col h-full justify-center items-center space-y-10">
               <div class="flex flex-col gap-2 md:gap-4">
                 <h2 v-if="block.title[lang]">
-                  <span class="text-center overflow-hidden p-0" :class="[sectionsStyle.wysiwygHtml, block.titleClasses]" v-html="block.title[lang]"></span>
+                  <gWysiwygContent tag="span" :wrapper-classes="block.titleClasses" :classes="`text-center overflow-hidden p-0`" :html-content="block.title[lang]" />
                 </h2>
                 <p v-if="block.text[lang]">
-                  <span class="text-center p-0" :class="[sectionsStyle.wysiwygHtml, block.textClasses]" v-html="block.text[lang]"></span>
+                  <gWysiwygContent tag="span" :wrapper-classes="block.textClasses" :classes="`text-center p-0`" :html-content="block.text[lang]" />
                 </p>
               </div>
               <global-link v-if="block.cta && block.cta[lang]" :link="block.ctaLink" :lang="lang" :form-link-target="block.ctaLinkTarget">
@@ -59,10 +59,10 @@
         <div class="flex flex-col h-full justify-center items-center space-y-10">
           <div class="flex flex-col gap-2 md:gap-4">
             <h2 v-if="settings[0].videoTitle[lang]">
-              <span class="text-center overflow-hidden p-0" :class="[sectionsStyle.wysiwygHtml, settings[0].videoTitleClasses]" v-html="settings[0].videoTitle[lang]"></span>
+              <gWysiwygContent tag="span" :wrapper-classes="settings[0].videoTitleClasses" :classes="`text-center overflow-hidden p-0`" :html-content="settings[0].videoTitle[lang]" />
             </h2>
             <p v-if="settings[0].videoText[lang]">
-              <span class="text-center p-0" :class="[sectionsStyle.wysiwygHtml, settings[0].videoTextClasses]" v-html="settings[0].videoText[lang]"></span>
+              <gWysiwygContent tag="span" :wrapper-classes="settings[0].videoTextClasses" :classes="`text-center p-0`" :html-content="settings[0].videoText[lang]" />
             </p>
           </div>
           <global-link v-if="settings[0].videoCta && settings[0].videoCta[lang]" :link="settings[0].videoCtaLink" :lang="lang" :form-link-target="settings[0].videoCtaLinkTarget" class="pointer-events-auto">

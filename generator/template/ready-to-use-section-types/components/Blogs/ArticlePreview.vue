@@ -13,7 +13,7 @@
 		<div></div>
       </div>
 
-      <p class="html-content" v-html="content"></p>
+      <gWysiwygContent tag="p" :classes="`html-content`" :html-content="content" />
 
       <nuxt-link :to="path" class="button-selector w-full">
         {{ $t('blogs.readStory') }}

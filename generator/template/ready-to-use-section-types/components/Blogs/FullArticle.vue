@@ -6,12 +6,12 @@
           <h4 class="text-center published">{{ $t('blogs.published', {time: parseTime(sectionRenderData.updated_at)}) }}</h4>
           <h1 class="text-center title">{{ sectionRenderData.title }}</h1>
         </div>
-        <p class="text-center html-content ql-editor ql-snow" v-html="sectionRenderData.description"></p>
+        <gWysiwygContent tag="p" :classes="`text-center html-content`" :html-content="sectionRenderData.description" />
       </div>
       <img v-if="articleImage" :src="articleImage" :alt="articleImageAlt ? articleImageAlt : ''" class="w-fit max-w-full self-center object-contain" />
     </div>
     <div class="flex flex-col items-center px-4 md:px-20 body-wrapper">
-      <p class="html-content ql-editor ql-snow" v-html="sectionRenderData.body"></p>
+      <gWysiwygContent tag="p" :classes="`html-content`" :html-content="sectionRenderData.body" />
     </div>
   </div>
 </template>

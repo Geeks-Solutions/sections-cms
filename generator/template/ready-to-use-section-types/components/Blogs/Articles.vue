@@ -2,31 +2,32 @@
   <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length > 0" class="articles flex flex-col w-full items-center justify-center px-5 md:px-20 py-2 gap-9" :class="listTypeStyle.bg">
     <div v-if="title || description" class="flex flex-col items-center gap-2 main-content-wrapper">
       <h2 v-if="title && title[lang]">
-        <span class="html-content title" v-html="title[lang]"></span>
+        <gWysiwygContent tag="span" :classes="`html-content title p-0`" :html-content="title[lang]" />
       </h2>
       <p v-if="description && description[lang]">
-        <span class="html-content desc" v-html="description[lang]"></span>
+        <gWysiwygContent tag="span" :classes="`html-content desc p-0`" :html-content="description[lang]" />
       </p>
     </div>
     <div v-if="sectionRenderData && sectionRenderData.articles"
          class="articles-wrapper"
          :class="[listTypeStyle.listStyle, {'md:justify-center': sectionRenderData.articles.length <= 3}]">
-      <div v-for="(object, idx) in sectionRenderData.articles" :key="`article-${object.id}-${idx}`" class="flex flex-col card-wrapper">
-        <nuxt-link :to="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : '')" class="w-full">
-          <div class="flex flex-col gap-6 justify-between py-5 px-4 wrapper">
+      <div v-for="(object, idx) in sectionRenderData.articles" :key="`article-${object.id}-${idx}`" class="flex flex-col card-wrapper" :class="{'flex-1': listType === 'carousel'}">
+        <nuxt-link :to="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : '')" class="w-full h-full">
+          <div class="flex flex-col gap-6 h-full py-5 px-4 wrapper">
             <div class="flex" :class="listTypeStyle.image">
-              <div v-if="object.medias && object.medias.length > 0" class="w-full self-center">
-                <img :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" />
+              <div v-if="object.medias && object.medias.length > 0" class="flex w-full self-start min-h-[300px] max-h-[300px]">
+                <img :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" class="object-cover w-full" />
               </div>
               <div v-else class="animate-pulse w-full md:w-352px">
               </div>
             </div>
-            <div class="flex flex-col gap-4 article-content-wrapper">
-              <h2 class="overflow-hidden title" :class="listTypeStyle.title">
-                {{ object.title }}
-              </h2>
-              <h4 class="overflow-hidden desc" :class="listTypeStyle.title" v-html="object.description">
-              </h4>
+            <div class="flex flex-col gap-4 justify-between h-full article-content-wrapper">
+              <div class="flex flex-col gap-4">
+                <h2 class="overflow-hidden title" :class="listTypeStyle.title">
+                  {{ object.title }}
+                </h2>
+                <gWysiwygContent tag="h4" :classes="`overflow-hidden desc p-0 ${listTypeStyle.title}`" :html-content="object.description" />
+              </div>
               <nuxt-link :to="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : '')" class="w-full">
                 <div class="flex flex-row w-full gap-2">
                   <div class="button-selector">
@@ -108,7 +109,7 @@ export default {
         case 'listing':
           return {
             listStyle: 'grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8',
-            image: 'h-full',
+            image: '',
             title: '',
             bg: 'bg'
           }
@@ -162,5 +163,16 @@ export default {
   .view-component {
     overflow: hidden;
   }
+}
+.article-content-wrapper .title {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+}
+.article-content-wrapper .desc {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  height: auto;
 }
 </style>

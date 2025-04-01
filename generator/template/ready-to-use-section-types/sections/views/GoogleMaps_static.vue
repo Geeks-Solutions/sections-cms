@@ -3,7 +3,7 @@
 
     <div class="flex flex-col w-full mx-auto pb-10 map-content">
 
-      <div v-if="settings.content && settings.content[lang]" class="p-0" :class="[sectionsStyle.wysiwygHtml, settings.contentClasses]" v-html="settings.content[lang]"></div>
+      <gWysiwygContent v-if="settings.content && settings.content[lang]" tag="div" :wrapper-classes="settings.contentClasses" :classes="`p-0`" :html-content="settings.content[lang]" />
 
     </div>
 

@@ -1,6 +1,6 @@
 <template>
-  <div v-if="settings" class="ql-snow">
-    <p class="ql-editor ql-snow mobileTitleStyle mt-4 md:mx-4 title w-full" :class="settings.classes" v-html="settings[lang].message"></p>
+  <div v-if="settings">
+    <gWysiwygContent tag="p" :wrapper-classes="settings.classes" :classes="`mobileTitleStyle mt-4 md:mx-4 title w-full`" :html-content="settings[lang].message" />
   </div>
 </template>
 

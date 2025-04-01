@@ -10,8 +10,8 @@
               <img :src="answerShowing[index] === true ? require('@/assets/icons/arrowUp.svg') : require('@/assets/icons/arrowDown.svg')" alt="arrow" class="arrow w-6" loading="lazy" />
             </div>
             <div v-if="answerShowing[index] === true" class="answer" :class="[index === 0 ? 'show' : '', `answer-${index}-${sectionWeight}`]">
-              <div class="flex w-full justify-start ql-snow">
-                <p class="ql-editor ql-snow tracking-tight w-fit md:mx-0" :class="qa.classes" style="padding: 0 !important;" v-html="qa[lang].answer"></p>
+              <div class="flex w-full justify-start">
+                <gWysiwygContent tag="p" :wrapper-classes="qa.classes" :classes="`tracking-tight w-fit md:mx-0`" style="padding: 0 !important;" :html-content="qa[lang].answer" />
               </div>
             </div>
           </div>

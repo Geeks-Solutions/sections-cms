@@ -3,10 +3,10 @@
 
 	<div class="flex w-full px-5 md:px-20 py-14 md:py-20 justify-between items-center gap-8 row-wrapper" :class="settings[0].imagePosition === 'right' ? 'flex-col md:flex-row image-right' : 'flex-col-reverse md:flex-row-reverse image-left'">
 	  <div class="flex flex-col space-y-6" :class="settings[0].imagePosition === 'none' ? '' : 'md:w-640px'">
-		<div class="title-wrapper">
-		  <h2 v-if="settings[0].title[lang]" class="p-0 overflow-hidden" :class="[sectionsStyle.wysiwygHtml, settings[0].titleClasses]" v-html="settings[0].title[lang]"></h2>
-		</div>
-		<p v-if="settings[0].text[lang]" class="p-0" :class="[sectionsStyle.wysiwygHtml, 'pt-4', settings[0].textClasses]" v-html="settings[0].text[lang]"></p>
+      <div class="title-wrapper">
+        <gWysiwygContent v-if="settings[0].title[lang]" tag="h2" :wrapper-classes="settings[0].titleClasses" :classes="`p-0 overflow-hidden h-auto`" :html-content="settings[0].title[lang]" />
+      </div>
+      <gWysiwygContent v-if="settings[0].text[lang]" tag="p" :wrapper-classes="settings[0].textClasses" :classes="`p-0 h-auto pt-4`" :html-content="settings[0].text[lang]" />
 	  </div>
 	  <div v-if="settings[0].imagePosition !== 'none'" class="w-full gap-4" :class="{'md:w-auto': !settings[0].videoLink}">
 		<div v-if="!settings[0].videoLink" :class="'flex h-240px md:h-360px md:row-span-2 md:mt-6'">
