@@ -653,7 +653,7 @@ padding-left: 0.5rem !important;
   background-position-x: 1.75rem;
   background-position-y: 2.75rem;
   background-repeat: no-repeat;
-  background-color: transparent;!;
+  background-color: transparent;
 }
 
 .simple-menu.main .icon-wrapper {
@@ -798,8 +798,8 @@ p.ql-snow p a:hover, div.ql-snow p a:hover, .sections-cta-link:hover {
 .text-image > div:nth-child(1) {
   position: relative;
   max-width: 1280px; /* Equivalent to max-w-screen-xl */
-  padding-left: 1rem !important;!i;!;!;!i;!; /* Equivalent to px-4 */
-  padding-right: 1rem !important;!i;!; /* Equivalent to px-4 */
+  padding-left: 1rem !important; /* Equivalent to px-4 */
+  padding-right: 1rem !important; /* Equivalent to px-4 */
   margin-left: auto; /* Equivalent to mx-auto */
   margin-right: auto; /* Equivalent to mx-auto */
   display: grid !important;
