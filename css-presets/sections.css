@@ -229,11 +229,11 @@ section a {
   font-size: 14px;
 }
 
-section .ql-editor a::before {
+section .ql-editor a:not(.ql-a-button)::before {
   content: "🔗";
 }
 
-section .html-content a::before {
+section .html-content a:not(.ql-a-button)::before {
   content: "🔗";
 }
 
@@ -251,13 +251,14 @@ section .html-content a::before {
   background: #00131F;
 }
 
-.simple-cta .button-selector {
+.simple-cta .button-selector, button.quill-button-container {
   font-size: 14px;
   border: 1px dashed white;
   border-radius: 6px;
   padding: 8px;
   color: #03B1C7;
   margin-right: 198px;
+  background: transparent;
 }
 
 @media only screen and (max-width: 1200px) {

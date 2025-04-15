@@ -754,6 +754,10 @@ p.ql-snow {
   overflow: visible;
 }
 
+button.quill-button-container {
+  border: none;
+  background: transparent;
+}
 
 p.ql-snow p a, div.ql-snow p a, .sections-cta-link {
   font-size: 0.875rem;

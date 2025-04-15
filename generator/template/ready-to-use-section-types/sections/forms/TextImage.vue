@@ -73,6 +73,16 @@
       </select>
     </div>
 
+    <div id="sectionWrapperClass" class="flex flex-col items-start justify-start mt-8 ml-2">
+      <label :class="sectionsStyle.fieldLabel">{{ $t("forms.sectionWrapperClass") }}</label>
+      <input
+        v-model="settings[0].sectionWrapperClass"
+        type="text"
+        :placeholder="$t('forms.sectionWrapperClass')"
+        :class="sectionsStyle.input"
+      />
+    </div>
+
     <div id="title" class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.title") + '*' }}</label>
       <wysiwyg :html="settings[0].title[selectedLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => $set(settings[0], 'titleClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content)"/>
@@ -141,6 +151,7 @@ export default {
             url: "",
             seo_tag: ""
           },
+          sectionWrapperClass: "",
           imagePosition: "none",
           videoLink: '',
           autoplay: false,

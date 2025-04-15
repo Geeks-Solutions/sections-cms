@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       scriptElement: null,
+      widgetEventHandler: null,
       scriptLoaded: false,
       sequenceRun: ''
     }
@@ -58,13 +59,18 @@ export default {
     }
   },
   beforeDestroy() {
-    if (window.zaqSocket) {
-      window.zaqSocket.disconnect()
+    if (window.zaq) {
+      window.zaq.removeEventListners()
+      window.zaq.disconnect()
     }
     window.zaq = null
     // Remove the script when the component is destroyed
     if (this.scriptElement) {
       document.head.removeChild(this.scriptElement);
+    }
+    if (this.widgetEventHandler) {
+      window.removeEventListener('zaqWidget', this.widgetEventHandler, false)
+      this.widgetEventHandler = null
     }
   },
   methods: {
@@ -93,18 +99,14 @@ export default {
             if (this.$route.query.runSequence) {
               this.sequenceRun = this.$route.query.runSequence
             }
-            const self = this
-            window.addEventListener(
-              'zaqWidget',
-              function (e) {
-                window.zaq.$emit('changeLang', `${self.lang}`)
-                if (e.detail.sequenceDone) {
-                  window.zaq.$emit('initSequence', self.sequenceRun)
-                  window.zaq.$emit('showPromo', true)
-                }
-              },
-              false
-            )
+            this.widgetEventHandler = (e) => {
+              window.zaq.$emit('changeLang', `${this.lang}`)
+              if (e.detail.sequenceDone) {
+                window.zaq.$emit('initSequence', this.sequenceRun)
+                window.zaq.$emit('showPromo', true)
+              }
+            }
+            window.addEventListener('zaqWidget', this.widgetEventHandler, false)
           }
         } else {
           this.scriptLoaded = scriptLoaded
