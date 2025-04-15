@@ -251,14 +251,14 @@ section .html-content a:not(.ql-a-button)::before {
   background: #00131F;
 }
 
-.simple-cta .button-selector, button.quill-button-container {
-  font-size: 14px;
-  border: 1px dashed white;
-  border-radius: 6px;
-  padding: 8px;
-  color: #03B1C7;
-  margin-right: 198px;
-  background: transparent;
+.simple-cta .button-selector, section .view-component button.quill-button-container {
+  font-size: 14px !important;
+  border: 1px dashed #03B1C7 !important;
+  border-radius: 6px !important;
+  padding: 8px 8px !important;
+  color: #000 !important;
+  margin-right: 198px !important;
+  background: transparent !important;
 }
 
 @media only screen and (max-width: 1200px) {

@@ -269,14 +269,14 @@ section p {
   box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); /* shadow-outline equivalent */
 }
 
-.button-selector {
+.button-selector, section .view-component button.quill-button-container {
   font-size: 0.875rem; /* sm */
   text-align: center;
   border-width: 1px;
-  border-radius: 9999px; /* full */
+  border-radius: 9999px !important; /* full */
   --tw-border-opacity: 1;
   border-color: var(--primary-blue);
-  padding: 1rem 2rem;
+  padding: 1rem 2rem !important;
   color: #ffffff; /* white */
   --tw-gradient-to: var(--primary-blue);
   --tw-gradient-from: var(--secondary-blue);
@@ -289,7 +289,7 @@ section p {
   max-width: 100%;
 }
 
-.button-selector:hover {
+.button-selector:hover, section .view-component button.quill-button-container:hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
@@ -754,12 +754,11 @@ p.ql-snow {
   overflow: visible;
 }
 
-button.quill-button-container {
+section .view-component button.quill-button-container {
   border: none;
-  background: transparent;
 }
 
-p.ql-snow p a, div.ql-snow p a, .sections-cta-link {
+p.ql-snow p a:not(.ql-a-button), div.ql-snow p a:not(.ql-a-button), .sections-cta-link {
   font-size: 0.875rem;
   line-height: 1.25rem;
   text-align: center;
@@ -780,7 +779,7 @@ p.ql-snow p a, div.ql-snow p a, .sections-cta-link {
   color: var(--blue-links) !important;
 }
 
-p.ql-snow p a:hover, div.ql-snow p a:hover, .sections-cta-link:hover {
+p.ql-snow p a:not(.ql-a-button):hover, div.ql-snow p a:not(.ql-a-button):hover, .sections-cta-link:hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
