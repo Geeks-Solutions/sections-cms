@@ -124,7 +124,7 @@ export default {
 [class^="region6"][class$="-wrapper"] .articles .article-content-wrapper .desc,
 [class^="region4"][class$="-wrapper"] .articles .article-content-wrapper .desc {
   text-overflow: ellipsis;
-  width: 150px;
+  display: block;
   white-space: nowrap;
 }
 
@@ -155,6 +155,16 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   width: 200px;
+}
+
+[class^="region2"][class$="-wrapper"] .articles-preview,
+[class^="region6"][class$="-wrapper"] .articles-preview,
+[class^="region4"][class$="-wrapper"] .articles-preview,
+[class^="region2"][class$="-wrapper"] .articles-preview,
+[class^="region6"][class$="-wrapper"] .articles-preview,
+[class^="region4"][class$="-wrapper"] .articles-preview {
+  flex-wrap: wrap;
+  gap: 1.5rem !important;
 }
 
 </style>

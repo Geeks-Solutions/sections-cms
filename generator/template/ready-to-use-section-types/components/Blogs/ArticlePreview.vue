@@ -3,17 +3,19 @@
     <div v-if="image">
       <img :src="image" :alt="imageAlt" class="md:min-w-[440px] md:w-440px h-180px xs:h-240px md:h-280px object-cover" />
     </div>
-    <div class="flex flex-col gap-4 w-full">
+    <div class="flex flex-col gap-4 w-full justify-between preview-block-wrapper">
 
-      <div class="flex flex-row justify-between">
-        <div class="flex flex-row gap-2 items-end">
+      <div class="flex flex-col gap-4 w-full content-block-wrapper">
+        <div class="flex flex-row justify-between">
+          <div class="flex flex-row gap-2 items-end">
+            <div></div>
+            <h2>{{ title }}</h2>
+          </div>
           <div></div>
-          <h2>{{ title }}</h2>
         </div>
-		<div></div>
-      </div>
 
-      <gWysiwygContent tag="p" :classes="`html-content`" :html-content="content" />
+        <gWysiwygContent tag="p" :classes="`html-content`" :html-content="content" />
+      </div>
 
       <nuxt-link :to="path" class="button-selector w-full">
         {{ $t('blogs.readStory') }}
