@@ -251,7 +251,11 @@ section .html-content a:not(.ql-a-button)::before {
   background: #00131F;
 }
 
-.simple-cta .button-selector, section .view-component button.quill-button-container {
+section .view-component button {
+  white-space:normal;
+}
+
+.simple-cta .button-selector, section .view-component button.quill-button-container, section .view-component button {
   font-size: 14px !important;
   border: 1px dashed #03B1C7 !important;
   border-radius: 6px !important;
@@ -259,6 +263,27 @@ section .html-content a:not(.ql-a-button)::before {
   color: #000 !important;
   margin-right: 198px !important;
   background: transparent !important;
+}
+
+input {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #03B1C7;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #03B1C7; /* Indigo-600 */
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-shadow-color: rgb(3 177 199 / 0.5);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  --tw-shadow: var(--tw-shadow-colored);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 @media only screen and (max-width: 1200px) {
