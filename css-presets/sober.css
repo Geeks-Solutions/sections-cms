@@ -332,7 +332,7 @@ input:focus {
 }
 
 .outline-button-selector {
-  font-size: 0.875rem; /* sm */
+  font-size: 0.875rem;
   text-align: center;
   border-radius: 9999px; /* full */
   padding: 1rem 2rem;
