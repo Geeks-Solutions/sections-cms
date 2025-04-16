@@ -1,6 +1,6 @@
 <template>
   <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length > 0" class="articles flex flex-col w-full items-center justify-center px-5 md:px-20 py-2 gap-9" :class="listTypeStyle.bg">
-    <div v-if="title || description" class="flex flex-col items-center gap-2 main-content-wrapper">
+    <div v-if="(title && title[lang]) || (description && description[lang])" class="flex flex-col items-center gap-2 main-content-wrapper">
       <h2 v-if="title && title[lang]">
         <gWysiwygContent tag="span" :classes="`html-content title p-0`" :html-content="title[lang]" />
       </h2>
@@ -40,7 +40,7 @@
         </nuxt-link>
       </div>
     </div>
-    <div v-if="listType === 'carousel'" class="flex flex-row justify-center w-full">
+    <div v-if="listType === 'carousel' && sectionRenderSettings && sectionRenderSettings.cta_label && sectionRenderSettings.cta_label[lang]" class="flex flex-row justify-center w-full">
       <NuxtLink :to="localePath(sectionRenderSettings ? sectionRenderSettings.cta_link : BLOGS_SECTION_PAGE_PATH)">
         <div v-if="sectionRenderSettings && sectionRenderSettings.cta_label" class="button-selector">
 		  {{ sectionRenderSettings && sectionRenderSettings.cta_label ? sectionRenderSettings.cta_label[lang] : '' }}
