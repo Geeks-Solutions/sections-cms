@@ -266,10 +266,11 @@ section .view-component button {
 }
 
 input {
-  padding: 0.75rem 1rem !important;
-  font-size: 1rem;
-  border: 1px solid #03B1C7;
-  border-radius: 0.5rem;
+  padding: 0 0 0.75rem 0 !important;
+  font-size: 1.25rem !important;
+  border: none;
+  border-bottom: 2px solid #B6B6B6;
+  line-height: 24px !important;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   width: 100%;
@@ -277,13 +278,7 @@ input {
 }
 
 input:focus {
-  border-color: #03B1C7; /* Indigo-600 */
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-shadow-color: rgb(3 177 199 / 0.5);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  --tw-shadow: var(--tw-shadow-colored);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-bottom: 2px solid #51AEC3;
 }
 
 @media only screen and (max-width: 1200px) {
