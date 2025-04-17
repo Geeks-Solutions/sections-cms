@@ -292,6 +292,10 @@ input:not(:placeholder-shown) {
   justify-content: space-between;
 }
 
+.articles-preview .button-selector {
+  align-self: start !important;
+}
+
 .button-selector {
   font-size: 14px;
   border: 1px dashed #03B1C7;
