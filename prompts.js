@@ -35,24 +35,8 @@ module.exports = [
     {
         type: 'confirm',
         name: 'addReadyToUseSectionTypes',
-        message: 'Add 3 ready to use section types to your project',
-        description: 'This will generate 3 ready to use section types',
+        message: 'Add 12 ready to use section types to your project',
+        description: 'This will generate 12 ready to use section types',
         default: false,
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: 'What is your email:',
-        when: answers => answers.addReadyToUseSectionTypes === true,
-        validate: input => !!input,
-        default: ''
-    },
-    {
-        type: 'password',
-        name: 'password',
-        message: 'What is your password:',
-        when: answers => answers.addReadyToUseSectionTypes === true,
-        validate: input => !!input,
-        default: ''
-    },
+    }
 ]

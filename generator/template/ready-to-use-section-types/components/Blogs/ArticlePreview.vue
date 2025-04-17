@@ -17,7 +17,7 @@
       </div>
 
       <nuxt-link :to="path" class="button-selector">
-        {{ $t('blogs.readStory') }}
+        {{ $t('blogs.readPost') }}
       </nuxt-link>
 
     </div>

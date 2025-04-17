@@ -1,5 +1,5 @@
 <template>
-  <div v-if="settings" :ref="`features-wrapper-${sectionWeight}`" class="my-14 features">
+  <div v-if="settings" :ref="`features-wrapper-${sectionWeight}`" class="my-2.5 features">
 
     <gWysiwygContent v-if="settings[0].title[lang]" tag="div" :classes="`px-8 md:px-0 title`" :html-content="settings[0].title[lang]" />
     <gWysiwygContent v-if="settings[0].subtitle[lang]" tag="div" :classes="`subtitle`" :html-content="settings[0].subtitle[lang]" />

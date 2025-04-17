@@ -1,14 +1,42 @@
-const axios = require('axios');
-
 module.exports = (api, options, rootOptions) => {
     if (options.choice === 'nuxt') {
         api.extendPackage({
             dependencies: {
-                "@geeks.solutions/nuxt-sections": "^1.0.0",
-                "cookie-universal-nuxt": "^2.1.4",
                 "vue-metamask": "^2.2.1",
                 "web3": "^1.7.3",
-                "js-sha256": "^0.9.0"
+                "js-sha256": "^0.9.0",
+                "@geeks.solutions/nuxt-sections": "^1.1.4",
+                "@googlemaps/js-api-loader": "^1.16.6",
+                "@nuxtjs/gtm": "^2.4.0",
+                "consola": "^3.0.1",
+                "core-js": "^3.25.3",
+                "hooper": "^0.3.4",
+                "leaflet": "^1.9.4",
+                "nuxt": "^2.15.8",
+                "nuxt-i18n": "^6.20.5",
+                "vue": "2.7.10",
+                "vue-dragscroll": "^3.0.1",
+                "vue-lazytube": "^1.1.1",
+                "vue-server-renderer": "2.7.10",
+                "vue-template-compiler": "2.7.10",
+                "vue2-leaflet": "^2.7.1"
+            },
+            "devDependencies": {
+                "@babel/eslint-parser": "^7.14.7",
+                "@nuxtjs/eslint-config": "^6.0.1",
+                "@nuxtjs/eslint-module": "^3.0.2",
+                "@nuxtjs/tailwindcss": "6.12.2",
+                "@vue/test-utils": "^1.3.0",
+                "babel-core": "7.0.0-bridge.0",
+                "babel-jest": "^27.4.4",
+                "eslint": "^7.29.0",
+                "eslint-config-prettier": "^8.3.0",
+                "eslint-plugin-nuxt": "^2.0.0",
+                "eslint-plugin-vue": "^7.12.1",
+                "jest": "^27.4.4",
+                "postcss": "^8.4.17",
+                "tailwindcss-pixel-dimensions": "^1.0.2",
+                "vue-jest": "^3.0.4"
             }
         })
         api.render('./template/nuxt-sections-first-page', {
@@ -63,7 +91,7 @@ module.exports.hooks = (api, options) => {
         if (options.choice === 'vue') {
             lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/sections.js', ssr: false },`)
         } else {
-            lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/vue-lazytube', ssr: false },`)
+            lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/vue-lazytube', ssr: false },\r{ src: '~/plugins/vue-gragscroll.js', ssr: false }`)
         }
 
         if(options.addReadyToUseSectionTypes) {
