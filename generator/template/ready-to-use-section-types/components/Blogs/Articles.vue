@@ -1,11 +1,19 @@
 <template>
-  <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length === 1">
+  <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length === 1" class="article-preview-wrapper flex flex-col gap-9">
+    <div v-if="(title && title[lang]) || (description && description[lang])" class="flex flex-col items-center gap-2 main-content-wrapper">
+      <h2 v-if="title && title[lang]">
+        <gWysiwygContent tag="span" :classes="`html-content title p-0`" :html-content="title[lang]" />
+      </h2>
+      <p v-if="description && description[lang]">
+        <gWysiwygContent tag="span" :classes="`html-content desc p-0`" :html-content="description[lang]" />
+      </p>
+    </div>
     <BlogsArticlePreview :path="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : `/${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : sectionRenderData.articles[0].path ? `/${sectionRenderData.articles[0].path}` : '')" :image="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].thumbnail_url : ''" :image-alt="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].seo_tag : ''" :title="sectionRenderData.articles[0].title" :content="sectionRenderData.articles[0].description" />
     <div v-if="listType === 'listing'" class="w-full">
       <ListPagination :current-page="currentPage" :total-pages="totalPages" @page-changed="(page) => pageChanged(page)" />
     </div>
   </div>
-  <div v-else-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length > 0" class="articles flex flex-col w-full items-center justify-center px-5 md:px-20 py-2 gap-9" :class="listTypeStyle.bg">
+  <div v-else-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length > 0" class="articles flex flex-col w-full items-center justify-center px-5 md:px-20 py-2.5 gap-9" :class="[listTypeStyle.bg, listType]">
     <div v-if="(title && title[lang]) || (description && description[lang])" class="flex flex-col items-center gap-2 main-content-wrapper">
       <h2 v-if="title && title[lang]">
         <gWysiwygContent tag="span" :classes="`html-content title p-0`" :html-content="title[lang]" />
@@ -20,7 +28,7 @@
          :class="[listTypeStyle.listStyle, {'md:justify-center': sectionRenderData.articles.length <= 3}]">
       <div v-for="(object, idx) in sectionRenderData.articles" :key="`article-${object.id}-${idx}`" class="flex flex-col card-wrapper" draggable="false" :class="{'flex-1': listType === 'carousel'}">
         <nuxt-link :to="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : '')" draggable="false" class="w-full h-full">
-          <div class="flex flex-col gap-6 h-full py-5 px-4 wrapper" :class="{'w-300px': listType === 'carousel'}" draggable="false">
+          <div class="flex flex-col gap-6 h-full py-5 px-4 wrapper" :class="{'w-300px': listType === 'carousel' && sectionRenderData.articles.length > 3}" draggable="false">
             <div class="flex" :class="listTypeStyle.image">
               <div v-if="object.medias && object.medias.length > 0" class="flex w-full self-start min-h-[300px] max-h-[300px]">
                 <img :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" draggable="false" class="object-cover w-full" />

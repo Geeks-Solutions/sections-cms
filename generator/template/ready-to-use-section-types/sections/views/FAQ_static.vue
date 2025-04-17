@@ -195,7 +195,7 @@ export default {
 .faq-row-wrapper {
   display: flex;
   width: 100%;
-  padding: 3.5rem 1.25rem;
+  padding: 0.625rem 1.25rem;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
@@ -208,7 +208,7 @@ export default {
 }
 @media (min-width: 768px) {
   .faq-row-wrapper {
-    padding: 5rem 5rem;
+    padding: 0.625rem 5rem;
   }
   .faq-row-wrapper.image-right {
     flex-direction: row

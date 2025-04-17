@@ -128,6 +128,24 @@ export default {
   white-space: nowrap;
 }
 
+[class^="region2"][class$="-wrapper"] .articles.carousel .articles-wrapper .card-wrapper .wrapper,
+[class^="region6"][class$="-wrapper"] .articles.carousel .articles-wrapper .card-wrapper .wrapper,
+[class^="region4"][class$="-wrapper"] .articles.carousel .articles-wrapper .card-wrapper .wrapper,
+[class^="region2"][class$="-wrapper"] .articles.carousel .articles-wrapper .card-wrapper .wrapper,
+[class^="region6"][class$="-wrapper"] .articles.carousel .articles-wrapper .card-wrapper .wrapper,
+[class^="region4"][class$="-wrapper"] .articles.carousel .articles-wrapper .card-wrapper .wrapper {
+  width: 300px;
+}
+
+[class^="region2"][class$="-wrapper"] .articles.carousel .articles-wrapper,
+[class^="region6"][class$="-wrapper"] .articles.carousel .articles-wrapper,
+[class^="region4"][class$="-wrapper"] .articles.carousel .articles-wrapper,
+[class^="region2"][class$="-wrapper"] .articles.carousel .articles-wrapper,
+[class^="region6"][class$="-wrapper"] .articles.carousel .articles-wrapper,
+[class^="region4"][class$="-wrapper"] .articles.carousel .articles-wrapper {
+  justify-content: start !important;
+}
+
 [class^="region2"][class$="-wrapper"] .author-view .wrapper,
 [class^="region6"][class$="-wrapper"] .author-view .wrapper,
 [class^="region2"][class$="-wrapper"] .author-view .wrapper .btns-wrapper,
@@ -159,9 +177,6 @@ export default {
 
 [class^="region2"][class$="-wrapper"] .articles-preview,
 [class^="region6"][class$="-wrapper"] .articles-preview,
-[class^="region4"][class$="-wrapper"] .articles-preview,
-[class^="region2"][class$="-wrapper"] .articles-preview,
-[class^="region6"][class$="-wrapper"] .articles-preview,
 [class^="region4"][class$="-wrapper"] .articles-preview {
   flex-wrap: wrap;
   gap: 1.5rem !important;
@@ -174,6 +189,10 @@ export default {
       height: 100% !important;
     }
   }
+}
+
+[class^="region4"][class$="-wrapper"] .articles-preview .image-wrapper, [class^="region4"][class$="-wrapper"] .articles-preview img {
+  width: 100% !important;
 }
 
 </style>

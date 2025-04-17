@@ -107,7 +107,8 @@ export default {
 
 .wrapper-question {
   margin-left: 198px;
-  padding-top: 36px;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
 }
 
 .mobileButtonLabel {
