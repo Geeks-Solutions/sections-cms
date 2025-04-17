@@ -266,19 +266,19 @@ section .view-component button {
 }
 
 input {
-  padding: 0 0 0.75rem 0 !important;
-  font-size: 1.25rem !important;
-  border: none;
-  border-bottom: 2px solid #B6B6B6;
+  font-size: 1rem !important;
+  border: 2px dashed lightgray;
+  height: 55px;
   line-height: 24px !important;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   width: 100%;
   box-sizing: border-box;
+  padding-left: 0.5rem !important;
 }
 
-input:focus {
-  border-bottom: 2px solid #51AEC3;
+input:not(:placeholder-shown) {
+  border: solid lightgrey;
 }
 
 @media only screen and (max-width: 1200px) {

@@ -165,6 +165,15 @@ export default {
 [class^="region4"][class$="-wrapper"] .articles-preview {
   flex-wrap: wrap;
   gap: 1.5rem !important;
+  padding: 1.25rem 1rem !important;
+  .image-wrapper {
+    min-height: 300px;
+    max-height: 300px;
+    img {
+      min-width: 100% !important;
+      height: 100% !important;
+    }
+  }
 }
 
 </style>
