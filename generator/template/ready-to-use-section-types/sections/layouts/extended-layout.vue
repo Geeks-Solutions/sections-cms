@@ -159,6 +159,12 @@ export default {
   width: 100% !important;
 }
 
+[class^="region2"][class$="-wrapper"] .simple-cta .wrapper-question,
+[class^="region6"][class$="-wrapper"] .simple-cta .wrapper-question,
+[class^="region4"][class$="-wrapper"] .simple-cta .wrapper-question {
+  margin-left: 0;
+}
+
 [class^="region2"][class$="-wrapper"] .full-article .full-article-wrapper,
 [class^="region6"][class$="-wrapper"] .full-article .full-article-wrapper,
 [class^="region4"][class$="-wrapper"] .full-article .full-article-wrapper,
