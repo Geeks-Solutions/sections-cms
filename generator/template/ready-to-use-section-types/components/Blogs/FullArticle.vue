@@ -1,6 +1,6 @@
 <template>
   <div v-if="sectionRenderData" class="full-article flex flex-col">
-    <div class="flex flex-col gap-16 px-4 md:px-20 py-10 md:py-8 full-article-wrapper">
+    <div class="flex flex-col gap-16 py-10 md:py-8 full-article-wrapper">
       <div class="flex flex-col items-center gap-6">
         <div class="flex flex-col items-center gap-3">
           <h4 class="text-center published">{{ $t('blogs.published', {time: parseTime(sectionRenderData.updated_at)}) }}</h4>
@@ -10,7 +10,7 @@
       </div>
       <img v-if="articleImage" :src="articleImage" :alt="articleImageAlt ? articleImageAlt : ''" class="w-fit max-w-full self-center object-contain" />
     </div>
-    <div class="flex flex-col items-center px-4 md:px-20 body-wrapper">
+    <div class="flex flex-col items-center body-wrapper">
       <gWysiwygContent tag="p" :classes="`html-content`" :html-content="sectionRenderData.body" />
     </div>
   </div>

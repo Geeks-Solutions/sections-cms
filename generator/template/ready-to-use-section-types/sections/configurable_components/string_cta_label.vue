@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div id="cta_label" class="flex flex-col items-start justify-start">
-      <label class="mr-4 font-bold">{{ $t("forms.ctaLabel")+'*' }}</label>
+      <label class="mr-4 font-bold">{{ $t("forms.ctaLabel") }}</label>
       <input
         v-model="cta_label[selectedLang]"
         type="text"

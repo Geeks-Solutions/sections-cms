@@ -1,7 +1,7 @@
 <template>
   <div v-if="settings" class="text-image">
 
-	<div class="flex w-full px-5 md:px-20 py-2.5 justify-between items-center gap-8 row-wrapper" :class="[settings[0].imagePosition === 'right' ? 'flex-col md:flex-row image-right' : 'flex-col-reverse md:flex-row-reverse image-left', settings[0].sectionWrapperClass]">
+	<div class="flex w-full py-2.5 justify-between items-center gap-8 row-wrapper" :class="[settings[0].imagePosition === 'right' ? 'flex-col md:flex-row image-right' : 'flex-col-reverse md:flex-row-reverse image-left', settings[0].sectionWrapperClass]">
 	  <div class="flex flex-col space-y-6" :class="settings[0].imagePosition === 'none' ? '' : 'md:w-640px'">
       <div class="title-wrapper">
         <gWysiwygContent v-if="settings[0].title[lang]" tag="h2" :wrapper-classes="settings[0].titleClasses" :classes="`p-0 overflow-hidden h-auto`" :html-content="settings[0].title[lang]" />

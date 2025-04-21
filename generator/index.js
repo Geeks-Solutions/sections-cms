@@ -5,7 +5,7 @@ module.exports = (api, options, rootOptions) => {
                 "vue-metamask": "^2.2.1",
                 "web3": "^1.7.3",
                 "js-sha256": "^0.9.0",
-                "@geeks.solutions/nuxt-sections": "^1.1.4",
+                "@geeks.solutions/nuxt-sections": "^1.1.5",
                 "@googlemaps/js-api-loader": "^1.16.6",
                 "@nuxtjs/gtm": "^2.4.0",
                 "consola": "^3.0.1",
@@ -85,13 +85,18 @@ module.exports.hooks = (api, options) => {
         const {EOL} = require('os')
         const fs = require('fs')
         const contentMain = fs.readFileSync(api.resolve('nuxt.config.js'), {encoding: 'utf-8'})
-        const lines = contentMain.split(/\r?\n/g)
+        let lines = contentMain.split(/\r?\n/g)
+
+        const renderIndex0 = lines.findIndex(line => line.match(/export default/))
+        if (options.choice === 'nuxt') {
+            lines[renderIndex0] = lines[renderIndex0].replace(`{`, `{\rcomponents: true,`)
+        }
 
         const renderIndex1 = lines.findIndex(line => line.match(/plugins:/))
         if (options.choice === 'vue') {
             lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/sections.js', ssr: false },`)
         } else {
-            lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/vue-lazytube', ssr: false },\r{ src: '~/plugins/vue-gragscroll.js', ssr: false }`)
+            lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/vue-lazytube', ssr: false },\r{ src: '~/plugins/vue-dragscroll.js', ssr: false }`)
         }
 
         if(options.addReadyToUseSectionTypes) {
@@ -174,103 +179,6 @@ module.exports.hooks = (api, options) => {
 
         api.onCreateComplete(async () => {
 
-            if(options.addReadyToUseSectionTypes) {
-
-                const enTranslations = `export default {
-  "contractAddr": "Contract Address*: ",
-  "contractABI": "Contract ABI*: ",
-  "tokenType": "Token type: ",
-  "imageURL": "Image: ",
-  "imageDesc": "Image Description: ",
-  "price": "Price: ",
-  "totalSupply": "Total Supply: ",
-  "maxSupply": "Max Supply: ",
-  "maxPerTx": "Max Per Transaction: ",
-  "maxBuyPerAddress": "Max Buy Per Address: ",
-  "publicSale": "Public Sale: ",
-  "contractPause": "Contract paused: ",
-  "freePerAddress": "Free per address: ",
-  "balance": "NFTs minted per wallet",
-  "balanceLabel": "Minted NFTs",
-  "amount": "Amount",
-  "total": "Total",
-  "tokenTotal": "Tokens Total",
-  "mintTitle": "Mint NFT",
-  "connect": "Connect",
-  "pay": "Extra Tip",
-  "payPriceError": "Price has to be minimum equal to the price set in the contract X the number of tokens to mint",
-  "contractSetTitle": "Contract details",
-  "imageSetTitle": "Image details",
-  "fill-required-fields": "Please fill the required fields",
-  fieldSetTitle: "Contract function names",
-  fieldSetTitle2: "Secondary contracts",
-  fieldSetDesc: "Put the name of the contract functions to be invoked in order to collect the values indicated in the field label",
-  fieldSetDesc2: "Add a new contract set",
-  contractID: "Contract ID",
-  requiredTokenType: "Token type is required",
-  privacyPolicy: "Privacy Policy",
-  termsConditions: "Terms & conditions",
-  "ADD NEW Container": "ADD NEW Container",
-  Title_FR: "Title French",
-  Title: "Title English*",
-  Text_FR: "Text French",
-  Text: "Text English",
-  SubTitle: "English Description",
-  SubTitle_FR: "English Description",
-  enTranslation: "English Translation",
-  frTranslation: "French Translation",
-  button_text_1: "Button Text 1st Row",
-  button_text_2: "Button Text 2nd Row",
-  "Terms Policy": "Terms and Policy"
-}`
-
-                const frTranslations = `export default {
-  "contractAddr": "Contract Address*: ",
-  "contractABI": "Contract ABI*: ",
-  "tokenType": "Token type: ",
-  "imageURL": "Image: ",
-  "imageDesc": "Image Description: ",
-  "price": "Price: ",
-  "totalSupply": "Total Supply: ",
-  "maxSupply": "Max Supply: ",
-  "maxPerTx": "Max Per Transaction: ",
-  "maxBuyPerAddress": "Max Buy Per Address: ",
-  "publicSale": "Public Sale: ",
-  "contractPause": "Contract paused: ",
-  "freePerAddress": "Free per address: ",
-  "balance": "NFTs minted per wallet",
-  "balanceLabel": "Minted NFTs",
-  "amount": "Amount",
-  "total": "Total",
-  "tokenTotal": "Tokens Total",
-  "mintTitle": "Mint NFT",
-  "connect": "Connect",
-  "pay": "Extra Tip",
-  "payPriceError": "Price has to be minimum equal to the price set in the contract X the number of tokens to mint",
-  "contractSetTitle": "Contract details",
-  "imageSetTitle": "Image details",
-  privacyPolicy: "Politique du site",
-  termsConditions: "Termes et conditions",
-  "ADD NEW Container": "AJOUTER UN NOUVEAU Conteneur",
-  Title_FR: "Titre Français",
-  Title: "Titre Anglais*",
-  Text_FR: "Texte Français",
-  Text: "Texte Anglais",
-  Text_EN: "Texte Anglais",
-  SubTitle: "Description en Anglais",
-  SubTitle_FR: "Description Française",
-  enTranslation: "Translation Anglaise ",
-  frTranslation: "Translation Française",
-  button_text_1: "Texte du bouton 1ère ligne",
-  button_text_2: "Texte du bouton 2ème ligne",
-  "Terms Policy": "Termes et Police"
-}`
-
-                fs.writeFileSync(api.resolve('lang/en.js'), enTranslations, {encoding: 'utf-8'})
-                fs.writeFileSync(api.resolve('lang/fr.js'), frTranslations, {encoding: 'utf-8'})
-
-            }
-
             if (options.choice === 'vue') {
                 const contentSections = fs.readFileSync(api.resolve('plugins/sections.js'), {encoding: 'utf-8'})
                 const linesSections = contentSections.split(/\r?\n/g)
@@ -284,7 +192,6 @@ module.exports.hooks = (api, options) => {
                 fs.writeFileSync(api.resolve('plugins/sections.js'), linesSections.join(EOL), {encoding: 'utf-8'})
             }
 
-            fs.renameSync(api.resolve('pages/.url.vue'), api.resolve('pages/_url.vue'));
         })
     })
 }
