@@ -1,5 +1,5 @@
 <template>
-  <div v-if="settings" class="simple-menu px-8 py-2.5" :class="settings.classes">
+  <div v-if="settings" class="simple-menu py-2.5" :class="settings.classes">
     <div class="icon-wrapper md:hidden" :class="{'visibleMenu': mobileMenu === true}" @click="mobileMenu = !mobileMenu">
       <div class="icon"></div>
     </div>

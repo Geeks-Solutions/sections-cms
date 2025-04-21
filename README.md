@@ -6,7 +6,18 @@ A Vue js plugin to install and configure [@geeks.solutions/vue-sections](https:/
 
 * Have Node version: 16.14.0 installed
 
-* Create a new nuxt js 2 app: Run `npx create-nuxt-app@2 <your-project-name>` and open it in your editor (if using Nuxt js 2)
+* Create a new nuxt js 2 app: Run `npx create-nuxt-app@2 <your-project-name>` and follow the below selection when prompted, then open it in your editor (if using Nuxt js 2)
+
+  - programming language: Javascript
+  - package manager: Npm
+  - UI framework: None
+  - custom server framework: None
+  - Nuxt.js modules: None, Press Enter to skip
+  - linting tools: None, Press Enter to skip
+  - test framework: None
+  - rendering mode: Universal (SSR)
+  - development tools: None, Press Enter to skip
+
 
 * Run `npm install @geeks.solutions/vue-cli-plugin-sections`
   Or if plugin is forked and downloaded to your local machine, add it as a dependency like `"@geeks.solutions/vue-cli-plugin-sections": "file:path-to-the-forked-library",`, and Run `npm install`

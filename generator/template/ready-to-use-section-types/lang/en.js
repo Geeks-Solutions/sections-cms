@@ -116,6 +116,7 @@ export default {
     copied: "The article link was successfully copied"
   },
   forms: {
+    sectionWrapperClass: "Section wrapper class",
     title: "Title",
     subtitle: "Subtitle",
     text: "Text",
@@ -266,7 +267,9 @@ export default {
     cover: "Cover",
     contain: "Contain",
     fill: "Fill",
-    none: "None"
+    none: "None",
+    sortDesc1: "To sort by article ID in descending order, use the following format: {\"id\":\"desc\"}.",
+    sortDesc2: "This specifies that the articles should be ordered from the highest ID to the lowest."
   },
   "Free Start Label": "Free package Start Label",
   "Free Start Link": "Free package Start Link",

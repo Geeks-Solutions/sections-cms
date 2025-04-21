@@ -1,37 +1,23 @@
 <template>
   <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length === 1" class="article-preview-wrapper flex flex-col gap-9">
-    <div v-if="(title && title[lang]) || (description && description[lang])" class="flex flex-col items-center gap-2 main-content-wrapper">
-      <h2 v-if="title && title[lang]">
-        <gWysiwygContent tag="span" :classes="`html-content title p-0`" :html-content="title[lang]" />
-      </h2>
-      <p v-if="description && description[lang]">
-        <gWysiwygContent tag="span" :classes="`html-content desc p-0`" :html-content="description[lang]" />
-      </p>
-    </div>
-    <BlogsArticlePreview :path="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : `/${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : sectionRenderData.articles[0].path ? `/${sectionRenderData.articles[0].path}` : '')" :image="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].thumbnail_url : ''" :image-alt="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].seo_tag : ''" :title="sectionRenderData.articles[0].title" :content="sectionRenderData.articles[0].description" />
+    <BlogsArticleTitleDescription :title="title" :description="description" :lang="lang" />
+    <BlogsArticlePreview :path="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : `/${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : sectionRenderData.articles[0].path ? `/${sectionRenderData.articles[0].path}` : ''" :image="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].thumbnail_url : ''" :image-alt="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].seo_tag : ''" :title="sectionRenderData.articles[0].title" :content="sectionRenderData.articles[0].description" />
     <div v-if="listType === 'listing'" class="w-full">
       <ListPagination :current-page="currentPage" :total-pages="totalPages" @page-changed="(page) => pageChanged(page)" />
     </div>
   </div>
-  <div v-else-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length > 0" class="articles flex flex-col w-full items-center justify-center px-5 md:px-20 py-2.5 gap-9" :class="[listTypeStyle.bg, listType]">
-    <div v-if="(title && title[lang]) || (description && description[lang])" class="flex flex-col items-center gap-2 main-content-wrapper">
-      <h2 v-if="title && title[lang]">
-        <gWysiwygContent tag="span" :classes="`html-content title p-0`" :html-content="title[lang]" />
-      </h2>
-      <p v-if="description && description[lang]">
-        <gWysiwygContent tag="span" :classes="`html-content desc p-0`" :html-content="description[lang]" />
-      </p>
-    </div>
+  <div v-else-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length > 0" class="articles flex flex-col w-full items-center justify-center py-2.5 gap-9" :class="[listTypeStyle.bg, listType]">
+    <BlogsArticleTitleDescription :title="title" :description="description" :lang="lang" />
     <div v-if="sectionRenderData && sectionRenderData.articles"
-         v-dragscroll
+         v-dragscroll="isDragScrollEnabled"
          class="articles-wrapper"
          :class="[listTypeStyle.listStyle, {'md:justify-center': sectionRenderData.articles.length <= 3}]">
-      <div v-for="(object, idx) in sectionRenderData.articles" :key="`article-${object.id}-${idx}`" class="flex flex-col card-wrapper" draggable="false" :class="{'flex-1': listType === 'carousel'}">
-        <nuxt-link :to="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : '')" draggable="false" class="w-full h-full">
-          <div class="flex flex-col gap-6 h-full py-5 px-4 wrapper" :class="{'w-300px': listType === 'carousel' && sectionRenderData.articles.length > 3}" draggable="false">
+      <div v-for="(object, idx) in sectionRenderData.articles" :key="`article-${object.id}-${idx}`" class="flex flex-col card-wrapper" :draggable="!isDragScrollEnabled" :class="{'flex-1': listType === 'carousel'}">
+        <nuxt-link :to="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : '')" :draggable="!isDragScrollEnabled" class="w-full h-full">
+          <div class="flex flex-col gap-6 h-full py-5 px-4 wrapper" :class="{'w-300px': listType === 'carousel' && sectionRenderData.articles.length > 3}" :draggable="!isDragScrollEnabled">
             <div class="flex" :class="listTypeStyle.image">
               <div v-if="object.medias && object.medias.length > 0" class="flex w-full self-start min-h-[300px] max-h-[300px]">
-                <img :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" draggable="false" class="object-cover w-full" />
+                <img :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" :draggable="!isDragScrollEnabled" class="object-cover w-full" />
               </div>
               <div v-else class="animate-pulse w-full md:w-352px">
               </div>
@@ -43,13 +29,7 @@
                 </h2>
                 <gWysiwygContent tag="h4" :classes="`overflow-hidden desc p-0 ${listTypeStyle.title}`" :html-content="object.description" />
               </div>
-              <nuxt-link :to="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : '')" class="w-full">
-                <div class="flex flex-row w-full gap-2">
-                  <div class="button-selector">
-                    {{ $t('blogs.readPost') }}
-                  </div>
-                </div>
-              </nuxt-link>
+              <BlogsArticleButton :path="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : ''" />
             </div>
           </div>
         </nuxt-link>
@@ -108,7 +88,8 @@ export default {
   data() {
     return {
       currentPage: 1,
-      BLOGS_SECTION_PAGE_PATH
+      BLOGS_SECTION_PAGE_PATH,
+      isDragScrollEnabled: false
     }
   },
   computed: {
@@ -136,6 +117,7 @@ export default {
     }
   },
   mounted() {
+    this.isDragScrollEnabled = this.$el && this.$el.clientWidth && this.$el.clientWidth > 768
     let blogsListSize = BLOGS_LIST_SIZE
     if (this.sectionRenderSettings && this.sectionRenderSettings.default_limit) {
       blogsListSize = this.sectionRenderSettings.default_limit
@@ -177,6 +159,16 @@ export default {
 .selective_articles {
   .view-component {
     overflow: hidden;
+  }
+}
+.article-content-wrapper .title {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+}
+@media screen and (max-width: 768px) {
+  .suggested_articles .article-content-wrapper .title {
+    width: 266px;
   }
 }
 .article-content-wrapper .title {

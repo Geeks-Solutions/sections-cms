@@ -1,5 +1,5 @@
 <template>
-  <div v-if="settings" :ref="selectedLayout === 'thumbnails' ? 'thumbsWrapper' : ''" class="p-8 image-gallery-main-wrapper">
+  <div v-if="settings" :ref="selectedLayout === 'thumbnails' ? 'thumbsWrapper' : ''" class="py-2.5 image-gallery-main-wrapper">
     <div class="max-w-7xl mx-auto image-gallery-main-inner">
       <div class="w-full image-gallery">
         <!-- Gallery Container -->

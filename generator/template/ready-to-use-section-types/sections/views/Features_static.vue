@@ -1,10 +1,10 @@
 <template>
   <div v-if="settings" :ref="`features-wrapper-${sectionWeight}`" class="my-2.5 features">
 
-    <gWysiwygContent v-if="settings[0].title[lang]" tag="div" :classes="`px-8 md:px-0 title`" :html-content="settings[0].title[lang]" />
+    <gWysiwygContent v-if="settings[0].title[lang]" tag="div" :classes="`title`" :html-content="settings[0].title[lang]" />
     <gWysiwygContent v-if="settings[0].subtitle[lang]" tag="div" :classes="`subtitle`" :html-content="settings[0].subtitle[lang]" />
 
-    <div class="flex flex-wrap gap-4 md:gap-0 justify-center md:mt-14 items-stretch mx-4 md:mx-8 blocks-wrapper" :class="settings[0].sectionWrapperClass">
+    <div class="flex flex-wrap gap-4 md:gap-0 justify-center items-stretch blocks-wrapper" :class="settings[0].sectionWrapperClass">
 
       <div v-for="(container,idx) in migratedSettings" :key="`block-container-${idx}`" class="flex flex-col z-10 min-h-[206px] my-3 md:mx-3 items-center md:justify-center justify-start self-center w-full md:w-448px rounded-md shadow image-main-wrapper" :class="`image-main-wrapper-${sectionWeight}`">
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="articles-preview flex flex-col md:flex-row gap-6 md:gap-24 px-5 md:px-24 py-2">
-    <div v-if="image" class="image-wrapper">
-      <img :src="image" :alt="imageAlt" class="md:min-w-[440px] md:w-440px h-180px xs:h-240px md:h-280px object-cover" />
+  <div class="articles-preview flex flex-col md:flex-row gap-6 md:gap-24 py-5 px-4">
+    <div v-if="image" class="flex image-wrapper min-h-[300px] max-h-[300px]">
+      <img :src="image" :alt="imageAlt" class="md:min-w-[440px] w-full md:w-440px object-cover" />
     </div>
     <div class="flex flex-col gap-4 w-full justify-between preview-block-wrapper">
 
@@ -13,12 +13,10 @@
           <div></div>
         </div>
 
-        <gWysiwygContent tag="p" :classes="`html-content desc`" :html-content="content" />
+        <gWysiwygContent tag="p" :classes="`html-content desc p-0`" :html-content="content" />
       </div>
 
-      <nuxt-link :to="path" class="button-selector">
-        {{ $t('blogs.readPost') }}
-      </nuxt-link>
+      <BlogsArticleButton :path="path" />
 
     </div>
   </div>
