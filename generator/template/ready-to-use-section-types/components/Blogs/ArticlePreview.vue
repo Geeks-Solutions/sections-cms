@@ -51,13 +51,7 @@ export default {
 </script>
 
 <style>
-.articles-preview .title {
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
-.articles-preview .desc * {
+.articles-preview .desc, .articles-preview .title {
   -webkit-box-orient: vertical;
   display: -webkit-box;
   -webkit-line-clamp: 2;

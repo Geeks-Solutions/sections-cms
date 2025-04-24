@@ -192,7 +192,6 @@ export default {
     max-height: 300px;
     img {
       min-width: 100% !important;
-      height: 100% !important;
     }
   }
 }

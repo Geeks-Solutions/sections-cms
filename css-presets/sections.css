@@ -849,6 +849,31 @@ input:not(:placeholder-shown) {
   }
 }
 
+.right-wrapper .simple-menu.main,
+.left-wrapper .simple-menu.main {
+  align-items: center;
+  ul {
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+  .logo-wrapper {
+    display: contents;
+  }
+}
+
+[class^="region2"][class$="-wrapper"] .simple-menu.main,
+[class^="region6"][class$="-wrapper"] .simple-menu.main,
+[class^="region4"][class$="-wrapper"] .simple-menu.main {
+  align-items: center;
+  ul {
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+  .logo-wrapper {
+    display: contents;
+  }
+}
+
 
 :root {
   --cookie-control-barBackground: #00131F;
