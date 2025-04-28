@@ -113,13 +113,11 @@ export default {
       }, false)
       updateQueryStringValue(this.$route.path, {
         'categories_titles[]': categoriesTitles,
-        'sort{}': JSON.stringify({}),
         ...qs
       }, false)
       this.$emit('refresh-section', {
         qs: {
           'categories_titles': Array.isArray(item) ? categoriesTitles.split(',') : [categoriesTitles],
-          sort: {},
           ...qs
         }
       })

@@ -139,4 +139,24 @@ export default {
     margin-bottom: 0.5rem;
   }
 }
+
+section .simple-cta {
+  container: simple-cta / inline-size;
+}
+
+@container simple-cta (max-width: 768px) {
+  .simple-cta .wrapper-question,
+  .simple-cta .wrapper-question,
+  .simple-cta .wrapper-question {
+    padding-left: 2vmin;
+    padding-right: 2vmin;
+    margin-left: 0;
+  }
+  .simple-cta .button-selector {
+    max-width: 100%;
+    white-space: normal;
+    margin: 0;
+    line-height: 1;
+  }
+}
 </style>

@@ -58,4 +58,20 @@ export default {
 .section-view .view-component:has(.full-article) {
   overflow: visible;
 }
+
+section .full-article {
+  container: full-article / inline-size;
+}
+
+@container full-article (max-width: 768px) {
+  .full-article .body-wrapper .html-content {
+    width: 100% !important;
+  }
+
+  .full-article .title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+  }
+}
 </style>

@@ -143,4 +143,23 @@ button.ly-button-wrapper svg {
   height: auto;
   width: auto;
 }
+
+section .text-image {
+  container: text-image / inline-size;
+}
+
+@container text-image (max-width: 768px) {
+  .text-image .row-wrapper.image-right {
+    flex-wrap: wrap !important;
+  }
+
+  .text-image .row-wrapper.image-left {
+    flex-wrap: wrap-reverse !important;
+  }
+
+  .text-image .row-wrapper .image-wrapper {
+    height: auto !important;
+  }
+}
+
 </style>
