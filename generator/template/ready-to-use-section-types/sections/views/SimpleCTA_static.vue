@@ -107,7 +107,8 @@ export default {
 
 .wrapper-question {
   margin-left: 198px;
-  padding-top: 36px;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
 }
 
 .mobileButtonLabel {
@@ -136,6 +137,26 @@ export default {
     margin-left: 0;
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
+  }
+}
+
+section .simple-cta {
+  container: simple-cta / inline-size;
+}
+
+@container simple-cta (max-width: 768px) {
+  .simple-cta .wrapper-question,
+  .simple-cta .wrapper-question,
+  .simple-cta .wrapper-question {
+    padding-left: 2vmin;
+    padding-right: 2vmin;
+    margin-left: 0;
+  }
+  .simple-cta .button-selector {
+    max-width: 100%;
+    white-space: normal;
+    margin: 0;
+    line-height: 1;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div v-if="sectionRenderData" class="author-view flex flex-col">
-    <div class="flex flex-col items-center px-4 md:px-20 pb-2">
+    <div class="flex flex-col items-center pb-2">
       <div class="flex flex-col md:flex-row justify-between wrapper pt-6 w-full md:w-720px">
         <div v-if="sectionRenderData.profile_image || sectionRenderData.full_name || sectionRenderData.biography" class="flex flex-row gap-4">
           <img v-if="sectionRenderData.profile_image && sectionRenderData.profile_image.files && sectionRenderData.profile_image.files[0] && sectionRenderData.profile_image.files[0].thumbnail_url" :src="sectionRenderData.profile_image.files[0].thumbnail_url" alt="Author profile" class="min-w-[56px] w-56px h-56px rounded-full object-cover" />
@@ -12,7 +12,7 @@
         <div v-else></div>
         <div class="flex flex-row gap-3 btns-wrapper">
           <div class="relative inline-block">
-            <div class="flex flex-row py-2.5 px-4 gap-2 md:cursor-pointer button-selector" @click="copyArticleLink">
+            <div class="flex flex-row gap-2 md:cursor-pointer button-selector" @click="copyArticleLink">
               <p>{{ $t('blogs.copyLink') }}</p>
             </div>
             <span
@@ -87,3 +87,17 @@ export default {
   }
 }
 </script>
+
+<style>
+section .author-view {
+  container: author-view / inline-size;
+}
+
+@container author-view (max-width: 768px) {
+  .author-view .wrapper,
+  .author-view .wrapper .btns-wrapper {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}
+</style>

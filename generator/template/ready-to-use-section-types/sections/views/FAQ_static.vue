@@ -195,7 +195,7 @@ export default {
 .faq-row-wrapper {
   display: flex;
   width: 100%;
-  padding: 3.5rem 1.25rem;
+  padding: 0.625rem 0;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
@@ -208,13 +208,26 @@ export default {
 }
 @media (min-width: 768px) {
   .faq-row-wrapper {
-    padding: 5rem 5rem;
+    padding: 0.625rem 0;
   }
   .faq-row-wrapper.image-right {
     flex-direction: row
   }
   .faq-row-wrapper.image-left {
     flex-direction: row-reverse
+  }
+}
+
+section .faq {
+  container: faq / inline-size;
+}
+
+@container faq (max-width: 768px) {
+  .faq .faq-row-wrapper.image-right {
+    flex-wrap: wrap !important;
+  }
+  .faq .faq-row-wrapper.image-left {
+    flex-wrap: wrap-reverse !important;
   }
 }
 </style>

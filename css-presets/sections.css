@@ -229,11 +229,11 @@ section a {
   font-size: 14px;
 }
 
-section .ql-editor a::before {
+section .ql-editor a:not(.ql-a-button)::before {
   content: "🔗";
 }
 
-section .html-content a::before {
+section .html-content a:not(.ql-a-button)::before {
   content: "🔗";
 }
 
@@ -251,6 +251,20 @@ section .html-content a::before {
   background: #00131F;
 }
 
+section .view-component button {
+  white-space:normal;
+}
+
+section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper) {
+  font-size: 14px !important;
+  border: 1px dashed #03B1C7 !important;
+  border-radius: 6px !important;
+  padding: 8px 8px !important;
+  color: #000 !important;
+  margin-right: 198px !important;
+  background: transparent !important;
+}
+
 .simple-cta .button-selector {
   font-size: 14px;
   border: 1px dashed white;
@@ -258,6 +272,22 @@ section .html-content a::before {
   padding: 8px;
   color: #03B1C7;
   margin-right: 198px;
+}
+
+input {
+  font-size: 1rem !important;
+  border: 2px dashed lightgray;
+  height: 55px;
+  line-height: 24px !important;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 0.5rem !important;
+}
+
+input:not(:placeholder-shown) {
+  border: solid lightgrey;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -269,6 +299,10 @@ section .html-content a::before {
 
 .simple-cta .buttonsRow {
   justify-content: space-between;
+}
+
+.articles-preview .button-selector {
+  align-self: start !important;
 }
 
 .button-selector {
@@ -815,6 +849,31 @@ section .html-content a::before {
   }
 }
 
+.right-wrapper .simple-menu.main,
+.left-wrapper .simple-menu.main {
+  align-items: center;
+  ul {
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+  .logo-wrapper {
+    display: contents;
+  }
+}
+
+[class^="region2"][class$="-wrapper"] .simple-menu.main,
+[class^="region6"][class$="-wrapper"] .simple-menu.main,
+[class^="region4"][class$="-wrapper"] .simple-menu.main {
+  align-items: center;
+  ul {
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+  .logo-wrapper {
+    display: contents;
+  }
+}
+
 
 :root {
   --cookie-control-barBackground: #00131F;
@@ -920,6 +979,7 @@ section .html-content a::before {
 .cookieControl__Bar {
   position: fixed;
   background-color: var(--cookie-control-barBackground);
+  z-index: 10;
 }
 
 .cookieControl__Bar h3,

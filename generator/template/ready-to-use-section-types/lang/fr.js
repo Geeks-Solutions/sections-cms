@@ -117,6 +117,7 @@ export default {
     copied: "Le lien de l'article a été copié avec succès"
   },
   forms: {
+    sectionWrapperClass: "Classe wrapper de section",
     title: "Titre",
     subtitle: "Sous titre",
     text: "Text",
@@ -267,7 +268,9 @@ export default {
     cover: "Couvrir",
     contain: "Contenir",
     fill: "Remplir",
-    none: "Aucun"
+    none: "Aucun",
+    sortDesc1: "Pour trier par ID d'article dans l'ordre décroissant, utilisez le format suivant: {\"id\":\"desc\"}.",
+    sortDesc2: "Cela spécifie que les articles doivent être classés de l'ID le plus élevé au plus bas."
   },
   "Free Start Label": "Label de démarrage pour le package Gratuit",
   "Free Start Link": "Lien de démarrage pour le package Gratuit",

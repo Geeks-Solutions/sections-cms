@@ -1,15 +1,15 @@
 <template>
   <div v-if="settings" class="text-image">
 
-	<div class="flex w-full px-5 md:px-20 py-14 md:py-20 justify-between items-center gap-8 row-wrapper" :class="settings[0].imagePosition === 'right' ? 'flex-col md:flex-row image-right' : 'flex-col-reverse md:flex-row-reverse image-left'">
+	<div class="flex w-full py-2.5 justify-between items-center gap-8 row-wrapper" :class="[settings[0].imagePosition === 'right' ? 'flex-col md:flex-row image-right' : 'flex-col-reverse md:flex-row-reverse image-left', settings[0].sectionWrapperClass]">
 	  <div class="flex flex-col space-y-6" :class="settings[0].imagePosition === 'none' ? '' : 'md:w-640px'">
       <div class="title-wrapper">
         <gWysiwygContent v-if="settings[0].title[lang]" tag="h2" :wrapper-classes="settings[0].titleClasses" :classes="`p-0 overflow-hidden h-auto`" :html-content="settings[0].title[lang]" />
       </div>
-      <gWysiwygContent v-if="settings[0].text[lang]" tag="p" :wrapper-classes="settings[0].textClasses" :classes="`p-0 h-auto pt-4`" :html-content="settings[0].text[lang]" />
+      <gWysiwygContent v-if="settings[0].text[lang]" tag="p" :wrapper-classes="[settings[0].textClasses, 'desc-wrapper']" :classes="`p-0 h-auto pt-4`" :html-content="settings[0].text[lang]" />
 	  </div>
 	  <div v-if="settings[0].imagePosition !== 'none'" class="w-full gap-4" :class="{'md:w-auto': !settings[0].videoLink}">
-		<div v-if="!settings[0].videoLink" :class="'flex h-240px md:h-360px md:row-span-2 md:mt-6'">
+		<div v-if="!settings[0].videoLink" :class="['flex h-240px md:h-360px md:row-span-2 md:mt-6 image-wrapper']">
 		  <img
 			   v-if="settings[0].media && settings[0].media.url"
 			   :src="settings[0].media.url"
@@ -143,4 +143,23 @@ button.ly-button-wrapper svg {
   height: auto;
   width: auto;
 }
+
+section .text-image {
+  container: text-image / inline-size;
+}
+
+@container text-image (max-width: 768px) {
+  .text-image .row-wrapper.image-right {
+    flex-wrap: wrap !important;
+  }
+
+  .text-image .row-wrapper.image-left {
+    flex-wrap: wrap-reverse !important;
+  }
+
+  .text-image .row-wrapper .image-wrapper {
+    height: auto !important;
+  }
+}
+
 </style>

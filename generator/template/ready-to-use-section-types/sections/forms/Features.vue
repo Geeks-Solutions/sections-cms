@@ -34,24 +34,6 @@
         </template>
       </FieldSets>
 
-<!--      <div v-for="(object, idx) in settings" :key="`object-${idx}`" class="flex flex-col">-->
-<!--        <fieldset class="fieldSetStyle border border-solid border-gray-300 p-3 mt-2">-->
-<!--          <legend class="w-auto px-16">{{ $t("forms.feature") }} #{{ idx + 1 }}: <span class="cursor-pointer text-xl pl-4 text-Blue" @click="removeFeatureBlock(idx)">x</span></legend>-->
-
-<!--          <div>-->
-<!--            <div class="mb-4">-->
-<!--              <UploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'media'; $emit('openMediaModal', object.media && Object.keys(object.media).length > 0 ? object.media.media_id : null)" @removeUploadedImage="removeMedia(idx, 'media')" />-->
-<!--              <span v-if="errors.media === true && idx === 0" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          <div class="flex flex-col items-start justify-start mt-8">-->
-<!--            <label :class="sectionsStyle.fieldLabel">{{ $t("forms.description") }}</label>-->
-<!--            <wysiwyg :html="settings[idx].text[selectedLang]" :css-classes-prop="settings[idx].textClasses" @cssClassesChanged="(v) => $set(settings[idx], 'textClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content, idx)"/>-->
-<!--          </div>-->
-
-<!--        </fieldset>-->
-<!--      </div>-->
       <div
         class="add-button underline cursor-pointer mt-2 pb-4"
         @click="addFeatureBlock()"

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="settings" class="GoogleMaps mb-16" :class="sectionsStyle.pageSectionStyle">
+  <div v-if="settings" class="GoogleMaps mb-16 py-2.5 md:mx-auto max-w-7xl">
 
     <div class="flex flex-col w-full mx-auto pb-10 map-content">
 
