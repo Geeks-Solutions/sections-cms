@@ -87,3 +87,17 @@ export default {
   }
 }
 </script>
+
+<style>
+section .author-view {
+  container: author-view / inline-size;
+}
+
+@container author-view (max-width: 768px) {
+  .author-view .wrapper,
+  .author-view .wrapper .btns-wrapper {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}
+</style>

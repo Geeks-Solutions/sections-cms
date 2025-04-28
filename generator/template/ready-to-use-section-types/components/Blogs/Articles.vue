@@ -1,5 +1,5 @@
 <template>
-  <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length === 1" class="article-preview-wrapper flex flex-col gap-9">
+  <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length === 1" class="article-preview-wrapper flex flex-col gap-9 py-2.5">
     <BlogsArticleTitleDescription :title="title" :description="description" :lang="lang" />
     <BlogsArticlePreview :path="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : `/${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : sectionRenderData.articles[0].path ? `/${sectionRenderData.articles[0].path}` : ''" :image="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].thumbnail_url : ''" :image-alt="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].seo_tag : ''" :title="sectionRenderData.articles[0].title" :content="sectionRenderData.articles[0].description" />
     <div v-if="listType === 'listing'" class="w-full">
@@ -181,5 +181,28 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   height: auto;
+}
+
+section .articles {
+  container: articles / inline-size;
+}
+
+@container articles (max-width: 768px) {
+  .articles .articles-wrapper {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+
+  .articles {
+    padding-left: 1px !important;
+    padding-right: 1rem !important;
+  }
+
+  .articles.carousel .articles-wrapper .card-wrapper .wrapper {
+    width: 300px;
+  }
+
+  .articles.carousel .articles-wrapper {
+    justify-content: start !important;
+  }
 }
 </style>

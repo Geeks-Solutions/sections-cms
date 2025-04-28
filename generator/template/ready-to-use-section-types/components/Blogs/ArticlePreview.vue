@@ -57,4 +57,27 @@ export default {
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+
+section .article-preview-wrapper {
+  container: article-preview-wrapper / inline-size;
+}
+
+@container article-preview-wrapper (max-width: 768px) {
+  .articles-preview {
+    flex-wrap: wrap;
+    gap: 1.5rem !important;
+    padding: 1.25rem 1rem !important;
+    .image-wrapper {
+      min-height: 300px;
+      max-height: 300px;
+      img {
+        min-width: 100% !important;
+      }
+    }
+  }
+
+  .articles-preview .image-wrapper, .articles-preview img {
+    width: 100% !important;
+  }
+}
 </style>

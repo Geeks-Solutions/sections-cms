@@ -217,4 +217,17 @@ export default {
     flex-direction: row-reverse
   }
 }
+
+section .faq {
+  container: faq / inline-size;
+}
+
+@container faq (max-width: 768px) {
+  .faq .faq-row-wrapper.image-right {
+    flex-wrap: wrap !important;
+  }
+  .faq .faq-row-wrapper.image-left {
+    flex-wrap: wrap-reverse !important;
+  }
+}
 </style>
