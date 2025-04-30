@@ -342,5 +342,77 @@ export default {
     registerFirst: "You need a project on ZAQ to use this section. Register ",
     here: "here",
     autoStart: "Auto start"
+  },
+  "RestaurantMenu": {
+    // Categories
+    categories: "Categories",
+    categoriesDesc: "Create categories for your menu items (e.g., Appetizers, Main Courses, Desserts)",
+    category: "Category",
+    categoryName: "Category Name",
+    categoryDescription: "Category Description",
+    displayOrder: "Display Order",
+    addCategory: "Add Category",
+    categoryView: "Category View",
+    listView: "List View",
+    categoryIcon: "Category Icon",
+    categoryIconDesc: "Add an icon for this category (recommended size: 50x50px)",
+    uploadIcon: "Upload Icon",
+    changeLogo: "Change Icon",
+    logoDesc: "Use the default class `logo` to customize your category icon display with CSS",
+    backgroundColor: "Background Color",
+    backgroundColorDesc: "Set a background color for the category (e.g., #FF5733)",
+    restaurantLogo: "Restaurant Logo",
+    changeIcon: "Change Icon",
+    viewModeDesc: "Choose how you want to display the categories on your menu",
+
+    // Cart
+    emptyCart: "Your cart is empty",
+    cart: "Cart",
+    startOrdering: "Start Ordering",
+    quantity: "Quantity",
+    specialInstructions: "Special Instructions",
+    specialInstructionsPlaceholder: "Add any special instructions for your order",
+    addToCart: "Add to Cart",
+    qty: "Qty",
+    total: "Total",
+    subtotal: "Subtotal",
+    tax: "Tax",
+    checkout: "Checkout",
+
+    // Menu Items
+    menuItems: "Menu Items",
+    menuItemsDesc: "Add items to your menu with details",
+    menuItem: "Menu Item",
+    itemName: "Item Name",
+    itemDescription: "Item Description",
+    itemPrice: "Price",
+    itemImage: "Item Image",
+    itemImageDesc: "Add an image of this menu item (recommended size: 300x200px)",
+    featuredItem: "Featured Item",
+    featuredItemDesc: "Mark this item as special or featured",
+    addMenuItem: "Add Menu Item",
+    selectCategory: "Select a Category",
+    selectCategoryFirst: "Please select a category first",
+
+    // General Settings
+    generalSettings: "General Settings",
+    menuTitle: "Menu Title",
+    menuSubtitle: "Menu Subtitle",
+    currencySymbol: "Currency Symbol",
+
+    // Common
+    requiredField: "This field is required",
+    cssClasses: "CSS Classes",
+    cssClassesDesc: "Add custom CSS classes (separated by spaces)",
+    uploadMedia: "Upload Image",
+    changeMedia: "Change Image",
+    seoTag: "SEO Tag / Alt Text",
+    specialItem: "Special",
+
+    enableTax: "Enable Tax",
+    enableTaxDesc: "Enable tax calculation for the menu items",
+    taxRate: "Tax Rate",
+    taxRateDesc: "Set the tax rate (e.g., 10 for 10%)",
+    taxSettings: "Tax Settings"
   }
 }
