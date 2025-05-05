@@ -1,7 +1,7 @@
 <template>
-  <div v-if="settings" class="service-packages py-6" :class="[settings.classes, `business-${settings.businessType}`]"
+  <div v-if="settings" class="service-packages py-2.5" :class="[settings.classes, `business-${settings.businessType}`]"
     :style="{ backgroundColor: settings.backgroundColor || 'transparent' }">
-    <div class="container mx-auto px-4">
+    <div class="px-4">
       <!-- Business Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
         <img :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Business Logo'"
@@ -18,13 +18,18 @@
         </p>
       </div>
 
+      <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
+        :whatsapp-number="settings.whatsappNumber || ''"
+        :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart"
+        :lang="lang" />
+
       <!-- Shopping Cart Icon -->
-      <cart-icon :total-items="totalItems" @click="toggleCart" />
+      <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
 
       <!-- Category View Mode -->
       <div v-if="isCategoryView" class="service-content">
         <!-- Category Navigation Tabs -->
-        <category-tabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang"
+        <CategoryTabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang" type="service"
           @select-category="setActiveCategory" />
 
         <!-- Active Category Description -->
@@ -34,44 +39,46 @@
         </div>
 
         <!-- Service Items for Active Category -->
-        <service-items-grid :items="getServiceItemsByCategory(activeCategory)"
-          :currency-symbol="settings.currencySymbol" :lang="lang" @item-click="openItemModal" />
+        <ItemsGrid :items="getServiceItemsByCategory(activeCategory)" :currency-symbol="settings.currencySymbol"
+          :lang="lang" type="service" @item-click="openItemModal" />
       </div>
 
       <!-- List View Mode -->
       <div v-else class="service-content">
-        <category-list :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
-          :currency-symbol="settings.currencySymbol" :lang="lang" @item-click="openItemModal" />
+        <CategoryList :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
+          :currency-symbol="settings.currencySymbol" :lang="lang" type="service" @item-click="openItemModal" />
       </div>
     </div>
 
-    <!-- Item Modal - Only rendered when needed -->
-    <item-modal v-if="showItemModal" :item="selectedItem" :currency-symbol="settings.currencySymbol" :lang="lang"
+    <!-- Item Modal -->
+    <ItemModal v-if="showItemModal" :item="selectedItem" :currency-symbol="settings.currencySymbol" :lang="lang"
       :quantity="itemQuantity" :notes="itemNotes" :selected-date="selectedDate" :selected-time-slot="selectedTimeSlot"
-      @close="closeItemModal" @update-quantity="updateItemQuantity" @update-notes="updateItemNotes"
-      @update-date="updateSelectedDate" @update-time-slot="updateSelectedTimeSlot" @add-to-cart="addToCart" />
+      type="service" :show-date-time-pickers="showDateTimePickers" @close="closeItemModal"
+      @update-quantity="updateItemQuantity" @update-notes="updateItemNotes" @update-date="updateSelectedDate"
+      @update-time-slot="updateSelectedTimeSlot" @add-to-cart="addToCart" />
 
-    <!-- Shopping Cart Sidebar - Only rendered when needed -->
-    <shopping-cart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
+    <!-- Shopping Cart Sidebar -->
+    <ShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
       :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true"
       :service-fee-rate="settings.serviceFeeRate ? settings.serviceFeeRate / 100 : SERVICE_FEE_RATE"
       :enable-service-fee="settings.enableServiceFee !== undefined ? settings.enableServiceFee : true" :lang="lang"
-      @close="closeCart" @increment="incrementCartItem" @decrement="decrementCartItem" @remove="removeFromCart"
-      @checkout="checkout" />
+      type="service" @close="closeCart" @increment="incrementCartItem" @decrement="decrementCartItem"
+      @remove="removeFromCart" @checkout="checkout" />
   </div>
 </template>
 
 <script>
-// Import sub-components
-import CartIcon from '../../components/ServicePackages/CartIcon.vue';
+// Import shared components
+import CartIcon from '../../components/UnifiedMenu/CartIcon.vue';
+import SocialLinks from '../../components/UnifiedMenu/SocialLinks.vue';
 
-// Use dynamic imports for components not needed on initial render
-const CategoryTabs = () => import(/* webpackChunkName: "service-category-tabs" */ '../../components/ServicePackages/CategoryTabs.vue');
-const ServiceItemsGrid = () => import(/* webpackChunkName: "service-items-grid" */ '../../components/ServicePackages/ServiceItemsGrid.vue');
-const CategoryList = () => import(/* webpackChunkName: "service-category-list" */ '../../components/ServicePackages/CategoryList.vue');
-const ItemModal = () => import(/* webpackChunkName: "service-item-modal" */ '../../components/ServicePackages/ItemModal.vue');
-const ShoppingCart = () => import(/* webpackChunkName: "service-shopping-cart" */ '../../components/ServicePackages/ShoppingCart.vue');
+// Dynamically import shared components
+const CategoryTabs = () => import('../../components/UnifiedMenu/CategoryTabs.vue');
+const ItemsGrid = () => import('../../components/UnifiedMenu/ItemsGrid.vue');
+const CategoryList = () => import('../../components/UnifiedMenu/CategoryList.vue');
+const ItemModal = () => import('../../components/UnifiedMenu/ItemModal.vue');
+const ShoppingCart = () => import('../../components/UnifiedMenu/ShoppingCart.vue');
 
 // Utility functions for debouncing
 const debounce = (fn, delay) => {
@@ -86,8 +93,9 @@ export default {
   name: 'ServicePackages',
   components: {
     CartIcon,
+    SocialLinks,
     CategoryTabs,
-    ServiceItemsGrid,
+    ItemsGrid,
     CategoryList,
     ItemModal,
     ShoppingCart
@@ -182,6 +190,11 @@ export default {
           serviceFeeRate: 5.00
         }
       ]
+    },
+    // Additional props specific to services
+    showDateTimePickers: {
+      type: Boolean,
+      default: true // Enable date/time pickers by default
     }
   },
   data() {
@@ -197,10 +210,67 @@ export default {
       activeCategory: '',
       TAX_RATE: 0.10, // 10% tax rate
       SERVICE_FEE_RATE: 0.05, // 5% service fee rate
-      isCartLoaded: false // Track if cart has been loaded from storage
+      isCartLoaded: false, // Track if cart has been loaded from storage
+      socialIcons: {
+        instagram: {
+          classes: 'instagram',
+          hoverClasses: 'instagram-hover'
+        },
+        facebook: {
+          classes: 'facebook',
+          hoverClasses: 'facebook-hover'
+        },
+        tiktok: {
+          classes: 'tiktok',
+          hoverClasses: 'tiktok-hover'
+        },
+        twitter: {
+          classes: 'twitter',
+          hoverClasses: 'twitter-hover'
+        },
+        youtube: {
+          classes: 'youtube',
+          hoverClasses: 'youtube-hover'
+        }
+      }
     };
   },
+  watch: {
+    cart: {
+      handler(newCart) {
+        // Update localStorage whenever cart changes
+        this.debouncedSaveCart();
+      },
+      deep: true
+    }
+  },
   computed: {
+    socialMediaLinks() {
+      // Default to empty array if no social media
+      if (!this.settings || !this.settings.socialMedia) return [];
+
+      // Convert settings.socialMedia to an array of link objects
+      return Object.entries(this.settings.socialMedia || {})
+        .filter(([platform, url]) => {
+          // Filter out empty URLs and WhatsApp
+          return platform !== 'whatsapp' &&
+            url &&
+            typeof url === 'string' &&
+            url.trim() !== '';
+        })
+        .map(([platform, url]) => {
+          // Get the icon classes
+          const classes = (this.socialIcons[platform] || {}).classes || '';
+          const hoverClasses = (this.socialIcons[platform] || {}).hoverClasses || '';
+
+          return {
+            type: platform,
+            url,
+            classes,
+            hoverClasses
+          };
+        });
+    },
     settings() {
       // Make sure section exists and has settings
       if (!this.section || !this.section.settings) {
@@ -208,16 +278,29 @@ export default {
           categories: [],
           serviceItems: [],
           viewMode: 'list', // Default value
-          businessType: 'travel' // Default value
+          businessType: 'travel', // Default value
+          socialMedia: {}, // Empty social media object
+          showWhatsApp: false,
+          whatsappNumber: '',
+          whatsappMessage: {}
         };
       }
 
-      // Return settings array item or direct settings object
+      // Return settings array item or direct settings object with defaults
+      let settings;
       if (Array.isArray(this.section.settings)) {
-        return this.section.settings[0] || {};
+        settings = this.section.settings[0] || {};
       } else {
-        return this.section.settings || {};
+        settings = this.section.settings || {};
       }
+
+      // Ensure required properties exist
+      if (!settings.socialMedia) settings.socialMedia = {};
+      if (typeof settings.showWhatsApp === 'undefined') settings.showWhatsApp = false;
+      if (!settings.whatsappNumber) settings.whatsappNumber = '';
+      if (!settings.whatsappMessage) settings.whatsappMessage = {};
+
+      return settings;
     },
     sortedCategories() {
       if (!this.settings.categories) return [];
@@ -237,7 +320,11 @@ export default {
       return this.cart.reduce((total, item) => total + item.quantity, 0);
     },
     cartSubtotal() {
-      return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+      return this.cart.reduce((total, item) => {
+        // Use discounted price if available
+        const price = item.hasDiscount ? (item.discountedPrice || item.price) : item.price;
+        return total + (price * item.quantity);
+      }, 0);
     },
     cartServiceFee() {
       return this.settings.enableServiceFee ? this.cartSubtotal * (this.settings.serviceFeeRate / 100 || this.SERVICE_FEE_RATE) : 0;
@@ -247,17 +334,35 @@ export default {
     },
     cartTotal() {
       return this.cartSubtotal + this.cartServiceFee + this.cartTax;
-    },
-    // Return CSS classes based on business type
-    businessTypeClasses() {
-      const type = this.settings.businessType || 'travel';
-      return `business-${type}`;
     }
   },
   created() {
     // Set initial active category if in category view mode
     if (this.isCategoryView && this.sortedCategories.length > 0) {
       this.activeCategory = this.sortedCategories[0].id;
+    }
+
+    // Initialize socialMedia if it doesn't exist
+    if (!this.settings.socialMedia) {
+      this.settings.socialMedia = {};
+    }
+
+    // Initialize WhatsApp settings if they don't exist
+    if (typeof this.settings.showWhatsApp === 'undefined') {
+      this.settings.showWhatsApp = false;
+    }
+
+    if (!this.settings.whatsappNumber) {
+      this.settings.whatsappNumber = '';
+    }
+
+    if (!this.settings.whatsappMessage) {
+      this.settings.whatsappMessage = {};
+    }
+
+    // Initialize whatsappMessage for the current language if not set
+    if (!this.settings.whatsappMessage[this.lang]) {
+      this.$set(this.settings.whatsappMessage, this.lang, 'Hello! I would like to book a service.');
     }
   },
   mounted() {
@@ -369,10 +474,12 @@ export default {
         id: this.selectedItem.id,
         name: this.selectedItem.name,
         price: this.selectedItem.price,
+        hasDiscount: this.selectedItem.hasDiscount,
+        discountedPrice: this.selectedItem.discountedPrice,
         quantity: this.itemQuantity,
         notes: this.itemNotes,
-        date: this.selectedDate,
-        timeSlot: this.selectedTimeSlot,
+        date: this.showDateTimePickers ? this.selectedDate : null,
+        timeSlot: this.showDateTimePickers ? this.selectedTimeSlot : null,
         duration: this.selectedItem.duration
       };
 
@@ -382,12 +489,7 @@ export default {
       // Then update cart in next tick to avoid blocking the UI
       this.$nextTick(() => {
         // Check if item already exists in cart with same date/time
-        const existingItemIndex = this.cart.findIndex(item =>
-          item.id === newItem.id &&
-          item.date === newItem.date &&
-          item.timeSlot === newItem.timeSlot &&
-          item.notes === newItem.notes
-        );
+        const existingItemIndex = this.findExistingCartItem(newItem);
 
         if (existingItemIndex !== -1) {
           // Update existing item quantity
@@ -405,6 +507,23 @@ export default {
           this.showCart = true;
         }, 100);
       });
+    },
+    // Find existing cart item
+    findExistingCartItem(newItem) {
+      if (this.showDateTimePickers) {
+        // For services with date/time, check if same service is booked at the same time
+        return this.cart.findIndex(item =>
+          item.id === newItem.id &&
+          item.date === newItem.date &&
+          item.timeSlot === newItem.timeSlot &&
+          item.notes === newItem.notes
+        );
+      } else {
+        // For services without date/time, just check ID and notes
+        return this.cart.findIndex(item =>
+          item.id === newItem.id && item.notes === newItem.notes
+        );
+      }
     },
     removeFromCart(index) {
       this.cart.splice(index, 1);
@@ -438,9 +557,8 @@ export default {
       return `${url}?width=${width}&height=${height}`;
     }
   }
-};
+}
 </script>
-
 <style>
 /* Critical CSS only */
 .service-packages {
@@ -478,5 +596,13 @@ export default {
 .service-packages.business-salon .featured {
   border-left-color: #ec4899;
   /* Pink for salon */
+}
+
+.social-media-links svg {
+  transition: transform 0.2s ease;
+}
+
+.social-media-links a:hover svg {
+  transform: scale(1.1);
 }
 </style>
