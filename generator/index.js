@@ -19,7 +19,8 @@ module.exports = (api, options, rootOptions) => {
                 "vue-lazytube": "^1.1.1",
                 "vue-server-renderer": "2.7.10",
                 "vue-template-compiler": "2.7.10",
-                "vue2-leaflet": "^2.7.1"
+                "vue2-leaflet": "^2.7.1",
+                "uuid": "3.4.0"
             },
             "devDependencies": {
                 "@babel/eslint-parser": "^7.14.7",
