@@ -1,4 +1,4 @@
-# Contributing New Sections Guidelines 
+# Contributing New Sections Guidelines
 
 This document provides guidelines for contributors on how to create new sections for the Vue CLI Plugin Sections. Adhering to these guidelines will ensure consistency and maintainability across all sections.
 
