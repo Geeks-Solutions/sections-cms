@@ -60,6 +60,8 @@ export default {
   },
   beforeDestroy() {
     if (window.zaq) {
+      window.zaq.$emit("clearConversations")
+      window.zaq.$emit("clearWidgetState")
       window.zaq.removeEventListners()
       window.zaq.disconnect()
     }
