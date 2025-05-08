@@ -1,26 +1,50 @@
 # vue-cli-plugin-sections
 
-A Vue js plugin to install and configure [@geeks-solutions/vue-sections](https://www.npmjs.com/package/@geeks-solutions/vue-sections) library.
+A Vue js plugin to install and configure [@geeks.solutions/vue-sections](https://www.npmjs.com/package/@geeks.solutions/vue-sections) OR [@geeks.solutions/nuxt-sections](https://www.npmjs.com/package/@geeks.solutions/nuxt-sections) library.
 
 ### How to install vue-cli-plugin-sections plugin:
 
- - npm i @geeks.solutions/vue-cli-plugin-sections
+* Have Node version: 16.14.0 installed
+
+* Create a new nuxt js 2 app: Run `npx create-nuxt-app@2 <your-project-name>` and follow the below selection when prompted, then open it in your editor (if using Nuxt js 2)
+
+  - programming language: Javascript
+  - package manager: Npm
+  - UI framework: None
+  - custom server framework: None
+  - Nuxt.js modules: None, Press Enter to skip
+  - linting tools: None, Press Enter to skip
+  - test framework: None
+  - rendering mode: Universal (SSR)
+  - development tools: None, Press Enter to skip
+
+
+* Run `npm install @geeks.solutions/vue-cli-plugin-sections`
+  Or if plugin is forked and downloaded to your local machine, add it as a dependency like `"@geeks.solutions/vue-cli-plugin-sections": "file:path-to-the-forked-library",`, and Run `npm install`
+
+* Run `npm install vue@2.7.10` (if using Nuxt js 2)
+
+* Run `npm install -g @vue/cli` (if using Nuxt js 2)
 
 ### How to run the plugin:
 
- - vue invoke @geeks.solutions/vue-cli-plugin-sections
+* Remove `index.vue` page from your nuxt project (if using Nuxt js 2)
+
+* Run `vue invoke '@geeks.solutions/vue-cli-plugin-sections'`
 
 The plugin will prompt you to answer three questions:
 
 ````
+? What version of sections would you like to install on your project:: Nuxt js
 ? What is your project url: http://localhost:8000
 ? What is your project ID: 1d23few45rw213qd6
-? Add vue-sections configuration with first sections page Yes
 ````
 
 ### What does the plugin perform:
 
- * Add "@geeks-solutions/vue-sections" to you package.json + its required dependencies and install them:
+#### If Vue js is selected from the first question:
+
+ * Add "@geeks.solutions/vue-sections" to you package.json + its required dependencies and install them:
     - "bootstrap-vue"
     - "cookie-universal-nuxt"
     - "nuxt-i18n"
@@ -31,6 +55,29 @@ The plugin will prompt you to answer three questions:
 
  * Create file configuration for i18n required by the library under /lang/en.js
 
- * Create a configured first page with sections under /pages/Sections.vue only if answered yes on the third question
+ * Create a configured first page with sections under /pages/url.vue only if answered yes on the third question
 ``? Add vue-sections configuration with first sections page Yes``
 
+ * Add 12 fully customizable and ready to use section types only if answered yes on the fourth question
+``? Add 12 ready to use section types to your project Yes``
+
+ * If you answered yes for adding 12 ready to use section types, you should find all declarations of `@geeks.solutions/nuxt-sections/lib/src/utils` (`wysiwyg.vue` under `sections/base/components/` and `nftSection.vue` under `sections/forms/`) and replace them by `@geeks.solutions/vue-sections` for the sections to work correctly
+
+
+#### If Nuxt js is selected from the first question:
+
+ * Add "@geeks.solutions/nuxt-sections" to you package.json + its required dependencies and install them:
+    - "cookie-universal-nuxt"
+
+ * Update nuxt.config.js with modules and publicRuntimeConfig required by nuxt-sections.
+ 
+ * Create file configuration for i18n required by the library under /lang/en.js /lang/fr.js
+
+ * Create a configured first page with sections under /pages/_url.vue
+
+ * Add 12 fully customizable and ready to use section types + the required Tailwind configurations for them only if answered yes on the fourth question
+``? Add 12 ready to use section types to your project Yes``
+
+### Contribute
+
+To contribute and add new sections, read our [contributors guidelines](https://github.com/Geeks-Solutions/vue-cli-plugin-sections/wiki/contributors-guidelines)

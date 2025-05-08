@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Sections from "@geeks-solutions/vue-sections";
+import Sections from "@geeks.solutions/vue-sections";
 
 export default function() {
   Vue.use(Sections, {
