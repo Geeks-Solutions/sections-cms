@@ -109,7 +109,7 @@
           :legend-label="$t('ServicePackages.serviceItem') || 'Service Item'"
           @array-updated="(data) => updateServiceItemsForCategory(selectedCategoryId, data)"
           @remove-fieldset="(object, idx) => removeServiceItem(object.id)">
-          <template #default="{ object, idx }">
+          <template #default="{ object }">
             <!-- Item Name -->
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium">{{ $t("ServicePackages.itemName") }}*</label>
@@ -393,11 +393,11 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
 import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
 import FieldSets from "@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue";
 import { sectionsStyle, scrollToFirstError } from "@/utils/constants";
 import 'vue-select/dist/vue-select.css';
-import { v4 as uuidv4 } from 'uuid';
 
 export default {
   name: 'ServicePackages',
@@ -711,7 +711,7 @@ export default {
 
       const serviceItem = {
         id: uuidv4(),
-        categoryId: categoryId,
+        categoryId,
         name: {},
         description: {},
         price: '',
@@ -769,7 +769,7 @@ export default {
         // Get the category name in the selected language, fall back to English if not available
         // If neither is available, use a default name with part of the ID for identification
         const displayName = category.name[this.selectedLang] ||
-          category.name['en'] ||
+          category.name.en ||
           `Category ${category.id.substring(0, 4)}`;
 
         return {
@@ -787,7 +787,7 @@ export default {
       if (items.length > 0 && items[0].details && items[0].details.length > 0) {
         // Set the details text from the first available language
         this.objectDetailsText = items[0].details
-          .map(detail => detail[this.selectedLang] || detail['en'] || '')
+          .map(detail => detail[this.selectedLang] || detail.en || '')
           .join('\n');
       } else {
         this.objectDetailsText = '';
