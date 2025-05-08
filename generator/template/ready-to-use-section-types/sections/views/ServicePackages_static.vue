@@ -393,9 +393,7 @@ export default {
         try {
           this.cart = JSON.parse(savedCart);
           this.isCartLoaded = true;
-        } catch (e) {
-          console.error('Error loading cart from localStorage:', e);
-        }
+        } catch {}
       }
     },
     // Optimized method to get items by category

@@ -86,7 +86,7 @@
           :legend-label="$t('RestaurantMenu.menuItem')"
           @array-updated="(data) => updateMenuItemsForCategory(selectedCategoryId, data)"
           @remove-fieldset="(object, idx) => removeMenuItem(object.id)">
-          <template #default="{ object, idx }">
+          <template #default="{ object }">
             <!-- Item Name -->
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium">{{ $t("RestaurantMenu.itemName") }}*</label>
@@ -298,11 +298,11 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
 import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
 import FieldSets from "@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue";
 import { sectionsStyle, scrollToFirstError } from "@/utils/constants";
 import 'vue-select/dist/vue-select.css';
-import { v4 as uuidv4 } from 'uuid';
 
 export default {
   name: 'RestaurantMenu',
@@ -447,12 +447,6 @@ export default {
       // Select the first category and store its ID
       const firstCategory = this.settings[0].categories[0];
       this.selectedCategoryId = firstCategory.id;
-
-      // Log the selected category name for debugging
-      const categoryName = firstCategory.name[this.selectedLang] ||
-        firstCategory.name['en'] ||
-        `Category ${firstCategory.id.substring(0, 4)}`;
-      console.log("Selected category:", categoryName);
     }
 
     // Initialize localized fields
@@ -677,7 +671,7 @@ export default {
 
       const menuItem = {
         id: uuidv4(),
-        categoryId: categoryId,
+        categoryId,
         name: {},
         description: {},
         price: '',
@@ -726,7 +720,7 @@ export default {
         // Get the category name in the selected language, fall back to English if not available
         // If neither is available, use a default name with part of the ID for identification
         const displayName = category.name[this.selectedLang] ||
-          category.name['en'] ||
+          category.name.en ||
           `Category ${category.id.substring(0, 4)}`;
 
         return {
