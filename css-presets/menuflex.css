@@ -896,3 +896,49 @@
 .restaurant-menu .menu-item:hover {
   background-color: #f9fafb;
 }
+
+/* Critical CSS only */
+.service-packages {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Featured item styling */
+.service-packages .featured {
+  border-left: 4px solid #3b82f6;
+  padding-left: 1rem;
+}
+
+/* Basic service item styling */
+.service-packages .service-item {
+  border-radius: 0.25rem;
+  padding: 1rem;
+  transition: background-color 0.2s;
+}
+
+.service-packages .service-item:hover {
+  background-color: #f9fafb;
+}
+
+/* Business type specific styling */
+.service-packages.business-travel .featured {
+  border-left-color: #3b82f6;
+  /* Blue for travel */
+}
+
+.service-packages.business-spa .featured {
+  border-left-color: #10b981;
+  /* Green for spa */
+}
+
+.service-packages.business-salon .featured {
+  border-left-color: #ec4899;
+  /* Pink for salon */
+}
+
+.social-media-links svg {
+  transition: transform 0.2s ease;
+}
+
+.social-media-links a:hover svg {
+  transform: scale(1.1);
+}
