@@ -80,4 +80,5 @@ The plugin will prompt you to answer three questions:
 
 ### Contribute
 
-To contribute and add new sections, read our [contributors guidelines](https://github.com/Geeks-Solutions/vue-cli-plugin-sections/wiki/contributors-guidelines)
+To contribute and add new sections, read our [contributors guidelines](https://github.com/Geeks-Solutions/vue-cli-plugin-sections/wiki/contributors-guidelines).
+For guidelines on creating new section components specifically, please see our [Section Contribution Guidelines](CONTRIBUTING_SECTIONS.md).
