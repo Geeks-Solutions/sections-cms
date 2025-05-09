@@ -421,7 +421,6 @@ export default {
     salon: 'Salon',
     businessTypeDesc:
       "Sélectionnez votre type d'entreprise pour des fonctionnalités spécialisées",
-
     // Categories
     categories: 'Catégories',
     categoriesDesc: 'Définissez les catégories pour vos services',
@@ -436,7 +435,6 @@ export default {
     addCategory: 'Ajouter une catégorie',
     selectCategory: 'Sélectionner une catégorie',
     selectCategoryFirst: "Veuillez d'abord sélectionner une catégorie",
-
     // Service Items
     serviceItems: 'Services',
     serviceItemsDesc: 'Ajoutez des services ou des forfaits à vos catégories',
@@ -461,7 +459,6 @@ export default {
     featuredItemDesc: 'Mettre en avant ce service',
     addServiceItem: 'Ajouter un service',
     specialItem: 'En vedette',
-
     // Settings
     generalSettings: 'Paramètres généraux',
     businessLogo: "Logo de l'entreprise",
@@ -475,7 +472,6 @@ export default {
     cssClassesDesc: 'Ajoutez des classes CSS personnalisées pour le style',
     backgroundColor: 'Couleur de fond',
     backgroundColorDesc: 'Définissez la couleur de fond de la page de services',
-
     // Fee Settings
     feeSettings: 'Paramètres des frais',
     enableTax: 'Activer la taxe',
@@ -487,7 +483,6 @@ export default {
     serviceFeeRate: 'Taux des frais de service (%)',
     serviceFeeRateDesc:
       'Pourcentage des frais de service appliqués aux réservations',
-
     // Form validation
     requiredField: 'Champ obligatoire',
 

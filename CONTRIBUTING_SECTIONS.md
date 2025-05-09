@@ -271,7 +271,14 @@ Standard props for view components:
 
 ### Styling Guidelines
 
-*   **No Hardcoded Styles:** Avoid using specific colors, font sizes, font weights, or backgrounds directly in the component's `<style>` block unless absolutely necessary for structural layout. Styling should primarily be controlled by the host Nuxt project's global styles or theme. Use classes for your html elements and wrappers to easily target them inside the css preset file. 
+*   **No Hardcoded Styles:** Avoid using specific colors, font sizes, font weights, or backgrounds directly in the component's `<style>` block unless absolutely necessary for structural layout. Styling should primarily be controlled by the host Nuxt project's global styles or theme. Use classes for your html elements and wrappers to easily target them inside the css preset file. You can also use the below default vars in your sections which can be overwritten by the preset css
+```css
+:root {
+    --primary-color: #4B5563;
+    --secondary-color: #9CA3AF;
+    --bg-color: #F9FAFB;
+}
+```
 *   **Utility Classes:** Prefer using utility CSS classes (e.g., Tailwind CSS if the project uses it) for layout and basic styling.
 *   **Custom CSS Presets:**
     *   If a section requires unique, complex styling that cannot be achieved with utility classes, create a dedicated CSS file in the [`css-presets/`](css-presets/:0) directory (e.g., `css-presets/my-section.css`).

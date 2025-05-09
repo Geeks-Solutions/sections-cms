@@ -19,7 +19,8 @@ module.exports = (api, options, rootOptions) => {
                 "vue-lazytube": "^1.1.1",
                 "vue-server-renderer": "2.7.10",
                 "vue-template-compiler": "2.7.10",
-                "vue2-leaflet": "^2.7.1"
+                "vue2-leaflet": "^2.7.1",
+                "uuid": "3.4.0"
             },
             "devDependencies": {
                 "@babel/eslint-parser": "^7.14.7",
@@ -90,6 +91,11 @@ module.exports.hooks = (api, options) => {
         const renderIndex0 = lines.findIndex(line => line.match(/export default/))
         if (options.choice === 'nuxt') {
             lines[renderIndex0] = lines[renderIndex0].replace(`{`, `{\rcomponents: true,`)
+        }
+
+        const renderIndex01 = lines.findIndex(line => line.match(/css:/))
+        if (options.choice === 'nuxt') {
+            lines[renderIndex01] = lines[renderIndex01].replace(`[`, `\r'~/assets/css/default.css',`)
         }
 
         const renderIndex1 = lines.findIndex(line => line.match(/plugins:/))
