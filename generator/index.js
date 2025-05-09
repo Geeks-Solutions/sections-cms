@@ -93,6 +93,11 @@ module.exports.hooks = (api, options) => {
             lines[renderIndex0] = lines[renderIndex0].replace(`{`, `{\rcomponents: true,`)
         }
 
+        const renderIndex01 = lines.findIndex(line => line.match(/css:/))
+        if (options.choice === 'nuxt') {
+            lines[renderIndex01] = lines[renderIndex01].replace(`[`, `\r'~/assets/css/default.css',`)
+        }
+
         const renderIndex1 = lines.findIndex(line => line.match(/plugins:/))
         if (options.choice === 'vue') {
             lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/sections.js', ssr: false },`)
