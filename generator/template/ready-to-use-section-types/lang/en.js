@@ -343,7 +343,7 @@ export default {
     here: "here",
     autoStart: "Auto start"
   },
-  "RestaurantMenu": {
+  RestaurantMenu: {
     // Categories
     categories: "Categories",
     categoriesDesc: "Create categories for your menu items (e.g., Appetizers, Main Courses, Desserts)",
@@ -363,6 +363,8 @@ export default {
     backgroundColorDesc: "Set a background color for the category (e.g., #FF5733)",
     restaurantLogo: "Restaurant Logo",
     changeIcon: "Change Icon",
+    viewMode: "View Mode",
+    uploadLogo: "Upload Logo",
     viewModeDesc: "Choose how you want to display the categories on your menu",
 
     // Cart
@@ -373,7 +375,7 @@ export default {
     specialInstructions: "Special Instructions",
     specialInstructionsPlaceholder: "Add any special instructions for your order",
     addToCart: "Add to Cart",
-    qty: "Qty",
+    qty: "Quantity",
     total: "Total",
     subtotal: "Subtotal",
     tax: "Tax",
@@ -518,13 +520,12 @@ export default {
     checkout: "Complete Booking",
     bookingConfirmed: "Your booking has been confirmed!",
     yourCart: "Your Cart",
-
     defaultWhatsAppMessage: "Hello, I would like to inquire about your services",
-    socialMediaDesc: "Add your social media links to connect with your audience",
-    socialMedia: "Social Media",
     completeBooking: "Complete Booking"
   },
   socialMedia: {
+    socialMediaDesc: "Add your social media links to connect with your audience",
+    socialMedia: "Social Media",
     instagram: "Instagram",
     facebook: "Facebook",
     twitter: "Twitter",

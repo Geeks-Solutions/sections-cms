@@ -53,11 +53,6 @@
             <input v-model="object.classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
           </div>
 
-          <div class="flex flex-col items-start justify-start mt-4">
-            <label class="mr-4 font-medium">{{ $t("RestaurantMenu.displayOrder") }}</label>
-            <input v-model="object.order" type="number" min="0" placeholder="Display Order"
-              :class="sectionsStyle.input" />
-          </div>
         </template>
       </FieldSets>
 
@@ -75,9 +70,12 @@
       <div class="flex flex-col items-start justify-start mb-6">
         <label class="mr-4 font-medium mb-2">{{ $t("RestaurantMenu.selectCategory") }}</label>
         <gAutoComplete :main-filter="selectedCategoryId" :placeholder="$t('RestaurantMenu.selectCategory')"
-          :filter-label-prop="'name'" :reduce="(option) => option.id" :filter-options="getCategoryOptions()"
+          :filter-label-prop="'name'" :reduce="option => option.id" :filter-options="getCategoryOptions()"
           :filter-searchable="true" :close-on-select="true" :filter-clearable="true" :track-by="'id'"
-          @itemSelected="(val) => { selectedCategoryId = val; }">
+          @itemSelected="val => selectedCategoryId = val">
+          <template #option="{ name, _showId }">
+            {{ _showId ? `Category ${id.slice(0, 4)}` : name }}
+          </template>
         </gAutoComplete>
       </div>
 
@@ -86,7 +84,7 @@
           :legend-label="$t('RestaurantMenu.menuItem')"
           @array-updated="(data) => updateMenuItemsForCategory(selectedCategoryId, data)"
           @remove-fieldset="(object, idx) => removeMenuItem(object.id)">
-          <template #default="{ object }">
+          <template #default="{ object, idx }">
             <!-- Item Name -->
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium">{{ $t("RestaurantMenu.itemName") }}*</label>
@@ -211,8 +209,8 @@
       </div>
 
       <div class="flex flex-col items-start justify-start mt-8 pt-8 border-t">
-        <h3 class="text-lg font-semibold mb-4">{{ $t("RestaurantMenu.socialMedia") }}</h3>
-        <span class="text-xs text-Gray_800 mb-4">{{ $t("RestaurantMenu.socialMediaDesc") }}</span>
+        <h3 class="text-lg font-semibold mb-4">{{ $t("socialMedia.socialMedia") }}</h3>
+        <span class="text-xs text-Gray_800 mb-4">{{ $t("socialMedia.socialMediaDesc") }}</span>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
           <!-- Instagram -->
@@ -287,12 +285,6 @@
         <span class="text-xs text-Gray_800">{{ $t("RestaurantMenu.cssClassesDesc") }}</span>
         <input v-model="settings[0].classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
       </div>
-
-      <div class="flex flex-col items-start justify-start mt-4">
-        <label class="mr-4 font-medium">{{ $t("RestaurantMenu.backgroundColor") }}</label>
-        <input v-model="settings[0].backgroundColor" type="color" :class="sectionsStyle.input" />
-        <span class="text-xs text-Gray_800">{{ $t("RestaurantMenu.backgroundColorDesc") }}</span>
-      </div>
     </div>
   </div>
 </template>
@@ -341,7 +333,6 @@ export default {
           currencySymbol: '$',
           classes: '',
           logo: {},
-          backgroundColor: '#ffffff',
           viewMode: 'list',
           enableTax: true,
           taxRate: 10.00,
@@ -440,15 +431,6 @@ export default {
     }
   },
   mounted() {
-    // Initialize with empty category and menu item
-    if (this.settings[0].categories.length === 0) {
-      this.addCategory();
-    } else {
-      // Select the first category and store its ID
-      const firstCategory = this.settings[0].categories[0];
-      this.selectedCategoryId = firstCategory.id;
-    }
-
     // Initialize localized fields
     this.initializeLocalizedFields();
 
@@ -608,10 +590,10 @@ export default {
 
       this.locales.forEach(locale => {
         if (!this.settings[0].menuTitle[locale]) {
-          this.settings[0].menuTitle[locale] = '';
+          this.$set(this.settings[0].menuTitle, locale, '');
         }
         if (!this.settings[0].menuSubtitle[locale]) {
-          this.settings[0].menuSubtitle[locale] = '';
+          this.$set(this.settings[0].menuSubtitle, locale, '');
         }
       });
     },
@@ -621,14 +603,12 @@ export default {
         name: {},
         description: {},
         classes: '',
-        order: this.settings[0].categories.length,
         icon: {}
       };
 
-      // Initialize localized fields
+      // Initialize names for ALL locales
       this.locales.forEach(locale => {
-        category.name[locale] = '';
-        category.description[locale] = '';
+        category.name[locale] = ''
       });
 
       this.settings[0].categories.push(category);
@@ -671,7 +651,7 @@ export default {
 
       const menuItem = {
         id: uuidv4(),
-        categoryId,
+        categoryId: categoryId,
         name: {},
         description: {},
         price: '',

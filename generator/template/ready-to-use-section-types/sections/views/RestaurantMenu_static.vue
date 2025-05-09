@@ -1,6 +1,5 @@
 <template>
-  <div v-if="settings" class="restaurant-menu py-2.5" :class="settings.classes"
-    :style="{ backgroundColor: settings.backgroundColor || 'transparent' }">
+  <div v-if="settings" class="restaurant-menu py-2.5" :class="settings.classes">
     <div>
       <!-- Restaurant Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
@@ -10,11 +9,11 @@
 
       <!-- Menu Title and Subtitle -->
       <div class="mb-8">
-        <h2 v-if="settings.menuTitle && settings.menuTitle[lang]" class="menu-title mb-2">
-          {{ settings.menuTitle[lang] }}
+        <h2 v-if="menuTitle" class="menu-title mb-2 flex justify-center">
+          {{ menuTitle }}
         </h2>
-        <p v-if="settings.menuSubtitle && settings.menuSubtitle[lang]" class="menu-subtitle">
-          {{ settings.menuSubtitle[lang] }}
+        <p v-if="menuSubtitle" class="menu-subtitle flex justify-center">
+          {{ menuSubtitle }}
         </p>
       </div>
 
@@ -112,19 +111,61 @@ export default {
     viewStructure: {
       settings: [
         {
+          logo: 'image',
+          menuTitle: {
+            en: 'Our Menu',
+            fr: 'Notre Menu'
+          },
+          menuSubtitle: {
+            en: 'Discover our delicious options',
+            fr: 'Découvrez nos délicieuses options'
+          },
           categories: [
             {
-              id: 'category-id',
+              id: 'drinks-category-id',
               name: {
-                en: 'Category Name',
-                fr: 'Nom de la catégorie'
+                en: 'Drinks',
+                fr: 'Boissons'
               },
               description: {
                 en: 'Category Description',
                 fr: 'Description de la catégorie'
               },
               classes: '',
-              order: 0,
+              icon: {
+                media_id: '',
+                url: '',
+                seo_tag: ''
+              }
+            },
+            {
+              id: 'category-id',
+              name: {
+                en: 'Food',
+                fr: 'Nourriture'
+              },
+              description: {
+                en: '',
+                fr: ''
+              },
+              classes: '',
+              icon: {
+                media_id: '',
+                url: '',
+                seo_tag: ''
+              }
+            },
+            {
+              id: 'category-id',
+              name: {
+                en: 'Salads',
+                fr: 'Salades'
+              },
+              description: {
+                en: '',
+                fr: ''
+              },
+              classes: '',
               icon: {
                 media_id: '',
                 url: '',
@@ -133,6 +174,38 @@ export default {
             }
           ],
           menuItems: [
+            {
+              id: 'item-id',
+              categoryId: 'drinks-category-id',
+              name: {
+                en: 'Item Name',
+                fr: 'Nom du plat'
+              },
+              description: {
+                en: 'Item Description',
+                fr: 'Description du plat'
+              },
+              price: 10.99,
+              image: 'image',
+              featured: true,
+              classes: ''
+            },
+            {
+              id: 'item-id',
+              categoryId: 'drinks-category-id',
+              name: {
+                en: 'Item Name',
+                fr: 'Nom du plat'
+              },
+              description: {
+                en: 'Item Description',
+                fr: 'Description du plat'
+              },
+              price: 10.99,
+              image: 'image',
+              featured: true,
+              classes: ''
+            },
             {
               id: 'item-id',
               categoryId: 'category-id',
@@ -145,31 +218,13 @@ export default {
                 fr: 'Description du plat'
               },
               price: 10.99,
-              image: {
-                media_id: '',
-                url: '',
-                seo_tag: ''
-              },
+              image: 'image',
               featured: false,
               classes: ''
             }
           ],
-          menuTitle: {
-            en: 'Our Menu',
-            fr: 'Notre Menu'
-          },
-          menuSubtitle: {
-            en: 'Discover our delicious options',
-            fr: 'Découvrez nos délicieuses options'
-          },
           currencySymbol: '$',
           classes: '',
-          logo: {
-            media_id: '',
-            url: '',
-            seo_tag: ''
-          },
-          backgroundColor: '#ffffff',
           viewMode: 'list', // list or category
           enableTax: true,
           taxRate: 10.00
@@ -213,10 +268,23 @@ export default {
     };
   },
   computed: {
+    menuTitle() {
+      if (this.settings && this.settings.menuTitle && this.settings.menuTitle[this.lang]) {
+        return this.settings.menuTitle[this.lang];
+      }
+      return '';
+    },
+
+    menuSubtitle() {
+      if (this.settings && this.settings.menuSubtitle && this.settings.menuSubtitle[this.lang]) {
+        return this.settings.menuSubtitle[this.lang];
+      }
+      return '';
+    },
     settings() {
-      if (Array.isArray(this.section.settings)) {
-        return this.section.settings[0];
-      } else return this.section.settings;
+      if (!this.section?.settings) return {};
+      // Always use the first element of the settings array
+      return Array.isArray(this.section.settings) ? this.section.settings[0] : this.section.settings;
     },
     socialMediaLinks() {
       // Default to empty array if no social media
@@ -245,11 +313,10 @@ export default {
         });
     },
     sortedCategories() {
-      if (!this.settings.categories) return [];
+      if (!this.settings || !this.settings.categories) return [];
 
-      return [...this.settings.categories].sort((a, b) => {
-        return (a.order || 0) - (b.order || 0);
-      });
+      // Return categories in their original order without sorting by order property
+      return [...this.settings.categories];
     },
     isCategoryView() {
       return this.settings && this.settings.viewMode === 'category';
@@ -275,36 +342,65 @@ export default {
     // Set initial active category if in category view mode
     this.initializeActiveCategory();
 
-    // Initialize socialMedia if it doesn't exist
-    if (!this.settings.socialMedia) {
-      this.settings.socialMedia = {};
-    }
+    // Initialize menu titles
+    this.initializeMenuTitles();
+    // The key fix: Check if settings exists before trying to access its properties
+    if (this.settings) {
+      // Initialize socialMedia if it doesn't exist
+      if (!this.settings.socialMedia) {
+        // Use Vue's $set to ensure the property is reactive
+        this.$set(this.settings, 'socialMedia', {
+          instagram: '',
+          facebook: '',
+          tiktok: '',
+          twitter: '',
+          youtube: ''
+        });
+      }
 
-    // Initialize WhatsApp settings if they don't exist
-    if (typeof this.settings.showWhatsApp === 'undefined') {
-      this.settings.showWhatsApp = false;
-    }
+      // Initialize WhatsApp settings if they don't exist
+      if (typeof this.settings.showWhatsApp === 'undefined') {
+        this.$set(this.settings, 'showWhatsApp', false);
+      }
 
-    if (!this.settings.whatsappNumber) {
-      this.settings.whatsappNumber = '';
-    }
+      if (!this.settings.whatsappNumber) {
+        this.$set(this.settings, 'whatsappNumber', '');
+      }
 
-    if (!this.settings.whatsappMessage) {
-      this.settings.whatsappMessage = {};
-    }
+      if (!this.settings.whatsappMessage) {
+        this.$set(this.settings, 'whatsappMessage', {});
+      }
 
-    // Initialize whatsappMessage for the current language if not set
-    if (!this.settings.whatsappMessage[this.lang]) {
-      this.$set(this.settings.whatsappMessage, this.lang, 'Hello! I would like to reserve a table.');
+      // Initialize whatsappMessage for the current language if not set
+      if (this.settings.whatsappMessage && !this.settings.whatsappMessage[this.lang]) {
+        this.$set(this.settings.whatsappMessage, this.lang, 'Hello! I would like to reserve a table.');
+      }
     }
   },
   watch: {
+    // Watch for settings changes
     settings: {
       handler() {
         // Re-initialize when settings change
         this.initializeActiveCategory();
+        this.initializeMenuTitles();
       },
       deep: true
+    },
+
+    // Watch for section settings changes directly
+    "section.settings": {
+      handler() {
+        // Re-initialize when settings change
+        this.initializeActiveCategory();
+        this.initializeMenuTitles();
+      },
+      deep: true
+    },
+
+    // Watch for language changes
+    lang() {
+      this.initializeMenuTitles();
     }
   },
   mounted() {
@@ -326,6 +422,29 @@ export default {
     document.removeEventListener('keydown', this.handleKeyEvents);
   },
   methods: {
+    initializeMenuTitles() {
+      if (this.settings) {
+        // Initialize menuTitle if it doesn't exist
+        if (!this.settings.menuTitle) {
+          this.$set(this.settings, 'menuTitle', {});
+        }
+
+        // Initialize menuTitle for the current language
+        if (!this.settings.menuTitle[this.lang]) {
+          this.$set(this.settings.menuTitle, this.lang, '');
+        }
+
+        // Initialize menuSubtitle if it doesn't exist
+        if (!this.settings.menuSubtitle) {
+          this.$set(this.settings, 'menuSubtitle', {});
+        }
+
+        // Initialize menuSubtitle for the current language
+        if (!this.settings.menuSubtitle[this.lang]) {
+          this.$set(this.settings.menuSubtitle, this.lang, '');
+        }
+      }
+    },
     // Load cart from storage (deferred)
     loadCartFromStorage() {
       if (this.isCartLoaded) return;
@@ -337,7 +456,7 @@ export default {
           try {
             this.cart = JSON.parse(savedCart);
             this.isCartLoaded = true;
-          } catch {}
+          } catch () {}
         }
       }
     },

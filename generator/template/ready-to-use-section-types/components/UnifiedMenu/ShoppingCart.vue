@@ -2,7 +2,7 @@
   <div class="fixed inset-0 cart-modal-overlay z-50" @click="$emit('close')">
     <div class="absolute right-0 top-0 h-full cart-sidebar w-full max-w-md overflow-y-auto shadow-xl" @click.stop>
       <div class="cart-container">
-        <div class="cart-header">
+        <div class="cart-header flex justify-between items-center">
           <h2 class="cart-title">{{ isService ?
             $t('ServicePackages.yourCart') :
             $t('RestaurantMenu.cart') }}</h2>
@@ -15,7 +15,7 @@
         </div>
 
         <!-- Empty cart message -->
-        <div v-if="cart.length === 0" class="empty-cart-message">
+        <div v-if="cart.length === 0" class="empty-cart-message flex flex-col items-center">
           <!-- Different icon based on type -->
           <svg v-if="isService" xmlns="http://www.w3.org/2000/svg" class="empty-cart-icon" fill="none"
             viewBox="0 0 24 24" stroke="currentColor" width="64" height="64">
@@ -39,11 +39,11 @@
         </div>
 
         <!-- Cart items -->
-        <div v-else class="cart-items-container">
+        <div v-else class="cart-items-container flex flex-col gap-4">
           <!-- Loop through cart items -->
           <div v-for="(item, index) in cart" :key="`cart-item-${index}`" class="cart-item">
             <!-- Item header with name and remove button -->
-            <div class="cart-item-header flex justify-between items-center">
+            <div class="cart-item-header flex justify-between items-center mb-3">
               <h3 class="cart-item-name">{{ item.name[lang] }}</h3>
               <button @click="$emit('remove', index)" class="cart-item-remove">
                 <svg xmlns="http://www.w3.org/2000/svg" class="cart-remove-icon" fill="none" viewBox="0 0 24 24"
@@ -67,9 +67,9 @@
             <!-- Item quantity and price row -->
             <div class="cart-item-controls flex justify-between items-center">
               <!-- Quantity controls -->
-              <div class="quantity-control-wrapper">
+              <div class="quantity-control-wrapper flex items-center">
                 <label class="cart-item-label">{{ $t(isService ? 'ServicePackages.qty' : 'RestaurantMenu.qty')
-                  }}:</label>
+                }}:</label>
                 <div class="cart-qty-control">
                   <button @click="$emit('decrement', index)" class="cart-qty-minus">
                     −
@@ -105,40 +105,40 @@
 
           <!-- Order summary -->
           <div class="cart-summary">
-            <div class="cart-subtotal">
-              <span class="cart-subtotal-label">{{ isService ?
+            <div class="cart-subtotal mb-3 flex justify-between">
+              <h3 class="cart-subtotal-label">{{ isService ?
                 $t('ServicePackages.subtotal') :
-                $t('RestaurantMenu.subtotal') }}:</span>
+                $t('RestaurantMenu.subtotal') }}:</h3>
               <span class="cart-subtotal-value">{{ currencySymbol }}{{ formatPrice(subtotal) }}</span>
             </div>
 
             <!-- Service fee (for services only) -->
             <div v-if="isService && enableServiceFee" class="cart-service-fee">
-              <span class="cart-summary-label">{{ $t('ServicePackages.serviceFee') }} ({{ (serviceFeeRate *
+              <h3 class="cart-summary-label">{{ $t('ServicePackages.serviceFee') }} ({{ (serviceFeeRate *
                 100).toFixed(2)
-                }}%):</span>
+              }}%):</h3>
               <span class="cart-summary-value">{{ currencySymbol }}{{ formatPrice(serviceFee) }}</span>
             </div>
 
             <!-- Tax (if enabled) -->
-            <div v-if="enableTax" class="cart-tax">
-              <span class="cart-summary-label">{{ isService ?
+            <div v-if="enableTax" class="cart-tax mb-3 flex justify-between">
+              <h3 class="cart-summary-label">{{ isService ?
                 $t('ServicePackages.tax') :
-                $t('RestaurantMenu.tax') }} ({{ (taxRate * 100).toFixed(2) }}%):</span>
+                $t('RestaurantMenu.tax') }} ({{ (taxRate * 100).toFixed(2) }}%):</h3>
               <span class="cart-summary-value">{{ currencySymbol }}{{ formatPrice(tax) }}</span>
             </div>
 
             <!-- Total -->
-            <div class="cart-total">
-              <span class="cart-total-label">{{ isService ?
+            <div class="cart-total my-3 flex justify-between items-center">
+              <h3 class="cart-total-label">{{ isService ?
                 $t('ServicePackages.total') :
-                $t('RestaurantMenu.total') }}:</span>
-              <span class="cart-total-value">{{ currencySymbol }}{{ formatPrice(total) }}</span>
+                $t('RestaurantMenu.total') }}:</h3>
+              <h3 class="cart-total-value">{{ currencySymbol }}{{ formatPrice(total) }}</h3>
             </div>
           </div>
 
           <!-- Checkout button -->
-          <button @click="$emit('checkout')" class="checkout-button"
+          <button @click="$emit('checkout')" class="checkout-button w-full"
             :class="isService ? 'service-theme' : 'restaurant-theme'">
             {{ isService ?
               $t('ServicePackages.completeBooking') :
@@ -229,3 +229,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.cart-sidebar {
+  background-color: var(--bg-color);
+}
+</style>
