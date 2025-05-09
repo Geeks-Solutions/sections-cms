@@ -451,6 +451,10 @@ export default {
     taxRateDesc: 'Définir le taux de taxe (par exemple, 10 pour 10%)',
     taxSettings: 'Paramètres de Taxe',
     orderPlaced: 'Votre commande a été passée !',
+    whatsappCartMessage: "Je souhaite commander les articles suivants :",
+    whatsappDefaultMessage: "Bonjour ! Je voudrais commander à manger.",
+    orderViaWhatsApp: "Commande via WhatsApp",
+    total: "Total"
   },
   ServicePackages: {
     viewMode: "Mode d'affichage",
@@ -547,6 +551,12 @@ export default {
     defaultWhatsAppMessage:
       "Bonjour, j'aimerais me renseigner sur vos services",
     completeBooking: 'Compléter la réservation',
+    hasDiscount: 'A un code de réduction',
+    hasDiscountDesc: 'Entrez le code de réduction pour bénéficier d\'une remise',
+    discountedPrice: "Prix après réduction",
+    whatsappCartMessage: "Je suis intéressé par les services suivants :",
+    whatsappDefaultMessage: "Bonjour ! Je souhaite réserver une prestation.",
+    orderViaWhatsApp: "Commande via WhatsApp"
   },
   socialMedia: {
     socialMediaDesc:

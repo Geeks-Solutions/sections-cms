@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { generateWhatsAppMessage } from '@/utils/constants';
 export default {
   name: 'SocialLinks',
   props: {
@@ -46,6 +47,11 @@ export default {
     lang: {
       type: String,
       default: 'en'
+    },
+    type: {
+      type: String,
+      default: 'restaurant', // 'restaurant' or 'service'
+      validator: value => ['restaurant', 'service'].includes(value)
     }
   },
   computed: {
@@ -59,7 +65,24 @@ export default {
       if (!this.whatsappNumber) return '#';
 
       const phoneNumber = this.whatsappNumber.replace(/[^0-9+]/g, '');
-      const message = this.generateWhatsAppMessage();
+      let message;
+      if (!this.cart || this.cart.length === 0) {
+        message = this.whatsappMessage || generateWhatsAppMessage(
+          [], // Empty cart
+          this.type,
+          this.lang,
+          (key, options = {}) => this.$t(key, options.defaultMessage || '')
+        );
+      } else {
+        // Cart has items, generate message with items
+        message = generateWhatsAppMessage(
+          this.cart,
+          this.type,
+          this.lang,
+          (key, options = {}) => this.$t(key, options.defaultMessage || '')
+        );
+      }
+
       const encodedMessage = encodeURIComponent(message);
       return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     }
@@ -189,23 +212,14 @@ export default {
             }
           };
       }
-    },
-    generateWhatsAppMessage() {
-      // If cart is empty, use the default message
-      if (!this.cart || this.cart.length === 0) {
-        return this.whatsappMessage || 'Hello! I would like to book a service.';
-      }
-
-      // If cart has items, create a custom message with the items
-      let message = 'I am interested in the following items:\n';
-
-      // Add each item to the message
-      this.cart.forEach(item => {
-        const itemName = item.name[this.lang] || Object.values(item.name)[0]; // Fallback to first available name
-        message += `* ${itemName} qty: ${item.quantity}\n`;
-      });
-
-      return message;
+    }
+  },
+  watch: {
+    cart: {
+      handler(newCart) {
+        this.$forceUpdate();
+      },
+      deep: true
     }
   }
 }

@@ -942,3 +942,81 @@
 .social-media-links a:hover svg {
   transform: scale(1.1);
 }
+
+.whatsapp-checkout-button {
+  background-color: #25d366;
+  /* WhatsApp brand color */
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.whatsapp-checkout-button:hover {
+  background-color: #22c15e;
+  /* Slightly darker on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.whatsapp-checkout-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Service theme with potential custom colors */
+.whatsapp-checkout-button.service-theme {
+  background-color: var(--primary-color, #25d366);
+}
+
+.whatsapp-checkout-button.service-theme:hover {
+  background-color: var(--primary-color-dark, #22c15e);
+}
+
+/* Restaurant theme with potential custom colors */
+.whatsapp-checkout-button.restaurant-theme {
+  background-color: var(--primary-color, #25d366);
+}
+
+.whatsapp-checkout-button.restaurant-theme:hover {
+  background-color: var(--primary-color-dark, #22c15e);
+}
+
+/* Badge styling */
+.badge-featured {
+  background-color: #e0edff;
+  color: #1e40af;
+}
+
+.badge-availability {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badge-discount {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Price styling */
+.item-price-discounted {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.item-price-regular {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Item content styling */
+.item-name {
+  font-weight: 600;
+}
+
+.item-description {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
