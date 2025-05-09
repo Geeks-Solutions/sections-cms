@@ -240,7 +240,6 @@ export default {
               featured: false,
               classes: ''
             },
-            ,
             {
               id: 'item-id',
               categoryId: 'category-id1',

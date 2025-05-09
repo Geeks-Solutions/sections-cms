@@ -519,7 +519,6 @@ export default {
     subtotal: "Subtotal",
     serviceFee: "Service Fee",
     tax: "Tax",
-    total: "Total",
     checkout: "Complete Booking",
     bookingConfirmed: "Your booking has been confirmed!",
     yourCart: "Your Cart",
