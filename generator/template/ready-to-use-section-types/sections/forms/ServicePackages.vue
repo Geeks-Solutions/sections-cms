@@ -45,6 +45,7 @@
         @array-updated="(data) => $set(settings[0], 'categories', data)"
         @remove-fieldset="(object, idx) => removeCategory(idx)">
         <template #default="{ object, idx }">
+          {{ loadItemDetailsText(object) }}
           <div class="flex flex-col items-start justify-start mt-4">
             <label class="mr-4 font-medium">{{ $t("ServicePackages.categoryName") }}*</label>
             <input v-model="object.name[selectedLang]" type="text" placeholder="Category Name"
@@ -76,11 +77,6 @@
             <input v-model="object.classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
           </div>
 
-          <div class="flex flex-col items-start justify-start mt-4">
-            <label class="mr-4 font-medium">{{ $t("ServicePackages.displayOrder") }}</label>
-            <input v-model="object.order" type="number" min="0" placeholder="Display Order"
-              :class="sectionsStyle.input" />
-          </div>
         </template>
       </FieldSets>
 
@@ -98,9 +94,12 @@
       <div class="flex flex-col items-start justify-start mb-6">
         <label class="mr-4 font-medium mb-2">{{ $t("ServicePackages.selectCategory") }}</label>
         <gAutoComplete :main-filter="selectedCategoryId" :placeholder="$t('ServicePackages.selectCategory')"
-          :filter-label-prop="'name'" :reduce="(option) => option.id" :filter-options="getCategoryOptions()"
+          :filter-label-prop="'name'" :reduce="option => option.id" :filter-options="getCategoryOptions()"
           :filter-searchable="true" :close-on-select="true" :filter-clearable="true" :track-by="'id'"
-          @itemSelected="(val) => { selectedCategoryId = val; }">
+          @itemSelected="val => selectedCategoryId = val">
+          <template #option="{ name, _showId }">
+            {{ _showId ? `Category ${id.slice(0, 4)}` : name }}
+          </template>
         </gAutoComplete>
       </div>
 
@@ -160,7 +159,7 @@
             <!-- Item Duration -->
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium">{{ $t("ServicePackages.itemDuration") }}</label>
-              <input v-model="object.duration" type="text" placeholder="e.g. 1 hour, 3 days"
+              <input v-model="object.duration[selectedLang]" type="text" placeholder="e.g. 1 hour, 3 days"
                 :class="sectionsStyle.input" />
             </div>
 
@@ -168,8 +167,8 @@
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium">{{ $t("ServicePackages.itemDetails") }}</label>
               <span class="text-xs text-Gray_800 mb-2">{{ $t("ServicePackages.itemDetailsDesc") }}</span>
-              <textarea v-model="objectDetailsText" type="text" placeholder="One detail per line"
-                :class="sectionsStyle.textarea" rows="4" @input="updateObjectDetails(object)"></textarea>
+              <textarea v-model="itemDetailsTextMap[object.id]" type="text" placeholder="One detail per line"
+                :class="sectionsStyle.textarea" rows="4" @input="updateItemDetails(object)"></textarea>
             </div>
 
             <!-- Item Image -->
@@ -188,7 +187,7 @@
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium">{{ $t("ServicePackages.availability") }}</label>
               <div class="flex items-center mt-2">
-                <select v-model="object.availability" :class="sectionsStyle.input">
+                <select v-model="object.availability" :class="sectionsStyle.input" class="h-56px">
                   <option value="available">{{ $t("ServicePackages.fullyAvailable") }}</option>
                   <option value="limited">{{ $t("ServicePackages.limitedAvailability") }}</option>
                 </select>
@@ -272,10 +271,13 @@
 
         <div v-if="settings[0].enableTax" class="flex flex-col items-start justify-start mt-4">
           <label class="mr-4 font-medium">
-            {{ $t("ServicePackages.taxRate") }}
+            {{ $t("ServicePackages.taxRate") }}*
           </label>
-          <input v-model.number="settings[0].taxRate" type="number" min="0" max="100" step="0.01" placeholder="10.00"
-            :class="sectionsStyle.input" />
+          <input id="taxRate" v-model.number="settings[0].taxRate" type="number" min="0" max="100" step="0.01"
+            placeholder="Enter tax rate (e.g. 10.00)" :class="sectionsStyle.input" />
+          <span v-show="errors.generalSettings.taxRate === true" class="text-error text-sm pt-2 pl-2">
+            {{ $t('ServicePackages.requiredField') }}
+          </span>
           <span class="text-xs text-Gray_800">
             {{ $t("ServicePackages.taxRateDesc") }}
           </span>
@@ -295,10 +297,13 @@
 
         <div v-if="settings[0].enableServiceFee" class="flex flex-col items-start justify-start mt-4">
           <label class="mr-4 font-medium">
-            {{ $t("ServicePackages.serviceFeeRate") }}
+            {{ $t("ServicePackages.serviceFeeRate") }}*
           </label>
-          <input v-model.number="settings[0].serviceFeeRate" type="number" min="0" max="100" step="0.01"
-            placeholder="5.00" :class="sectionsStyle.input" />
+          <input id="serviceFeeRate" v-model.number="settings[0].serviceFeeRate" type="number" min="0" max="100"
+            step="0.01" placeholder="Enter service fee rate (e.g. 5.00)" :class="sectionsStyle.input" />
+          <span v-show="errors.generalSettings.serviceFeeRate === true" class="text-error text-sm pt-2 pl-2">
+            {{ $t('ServicePackages.requiredField') }}
+          </span>
           <span class="text-xs text-Gray_800">
             {{ $t("ServicePackages.serviceFeeRateDesc") }}
           </span>
@@ -311,11 +316,6 @@
         <input v-model="settings[0].classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
       </div>
 
-      <div class="flex flex-col items-start justify-start mt-4">
-        <label class="mr-4 font-medium">{{ $t("ServicePackages.backgroundColor") }}</label>
-        <input v-model="settings[0].backgroundColor" type="color" :class="sectionsStyle.input" />
-        <span class="text-xs text-Gray_800">{{ $t("ServicePackages.backgroundColorDesc") }}</span>
-      </div>
     </div>
 
     <div class="flex flex-col items-start justify-start mt-8 pt-8 border-t">
@@ -436,13 +436,12 @@ export default {
           currencySymbol: '$',
           classes: '',
           logo: {},
-          backgroundColor: '#ffffff',
           viewMode: 'list',
           businessType: 'travel', // travel, spa, or salon
-          enableTax: true,
-          taxRate: 10.00,
-          enableServiceFee: true,
-          serviceFeeRate: 5.00,
+          enableTax: false,
+          taxRate: '',
+          enableServiceFee: false,
+          serviceFeeRate: '',
           socialMedia: {
             instagram: '',
             facebook: '',
@@ -457,9 +456,13 @@ export default {
       ],
       errors: {
         categories: [],
-        serviceItems: []
+        serviceItems: [],
+        generalSettings: {
+          taxRate: false,
+          serviceFeeRate: false
+        }
       },
-      objectDetailsText: '', // For managing item details textarea
+      itemDetailsTextMap: {}, // For managing item details textarea
       currentMediaItemId: null,
       currentMediaType: null, // To track what kind of media we're uploading
       currentCategoryId: null,
@@ -535,18 +538,11 @@ export default {
     }
   },
   mounted() {
-    // Initialize with empty category and service item
-    if (this.settings[0].categories.length === 0) {
-      this.addCategory();
-    } else {
-      // Select the first category and store its ID
-      const firstCategory = this.settings[0].categories[0];
-      this.selectedCategoryId = firstCategory.id;
-    }
-
     // Initialize localized fields
     this.initializeLocalizedFields();
-
+    // Initialize duration localization for existing items
+    this.initializeDurationLocalization();
+    
     // Safely initialize social media settings
     if (!this.settings[0].socialMedia) {
       this.$set(this.settings[0], 'socialMedia', {
@@ -587,6 +583,86 @@ export default {
     });
   },
   methods: {
+    initializeDurationLocalization() {
+      if (this.settings[0].serviceItems && this.settings[0].serviceItems.length > 0) {
+        this.settings[0].serviceItems.forEach(item => {
+          // Check if duration is a string (old format)
+          if (typeof item.duration === 'string') {
+            const oldValue = item.duration;
+            // Convert to object format
+            this.$set(item, 'duration', {});
+
+            // Set the value for all locales
+            this.locales.forEach(locale => {
+              this.$set(item.duration, locale, oldValue);
+            });
+          }
+          // If duration is undefined or null, initialize it
+          else if (!item.duration) {
+            this.$set(item, 'duration', {});
+
+            // Initialize for all locales
+            this.locales.forEach(locale => {
+              this.$set(item.duration, locale, '');
+            });
+          }
+          // Check if any locale is missing in the duration object
+          else {
+            this.locales.forEach(locale => {
+              if (!item.duration[locale]) {
+                this.$set(item.duration, locale, item.duration.en || '');
+              }
+            });
+          }
+        });
+      }
+    },
+    getItemDetailsText(itemId) {
+      return this.itemDetailsTextMap[itemId] || '';
+    },
+    setItemDetailsText(itemId, text) {
+      this.$set(this.itemDetailsTextMap, itemId, text);
+    },
+    updateItemDetails(object) {
+      const itemId = object.id;
+      const detailsText = this.itemDetailsTextMap[itemId] || '';
+
+      // Convert textarea content to array of localized objects
+      const lines = detailsText.split('\n').filter(line => line.trim() !== '');
+
+      if (!object.details) {
+        this.$set(object, 'details', []);
+      }
+
+      object.details = lines.map(line => {
+        const detailObj = {};
+        this.locales.forEach(locale => {
+          detailObj[locale] = line;
+        });
+        return detailObj;
+      });
+    },
+    loadItemDetailsText(object) {
+      if (object && object.details && object.details.length > 0) {
+        // Set the details text from the selected language
+        const detailsText = object.details
+          .map(detail => detail[this.selectedLang] || detail.en || '')
+          .join('\n');
+        this.setItemDetailsText(object.id, detailsText);
+      } else {
+        this.setItemDetailsText(object.id, '');
+      }
+    },
+    updateObjectDetailsText(object) {
+      if (object && object.details && object.details.length > 0) {
+        // Set the details text from the first available language
+        this.objectDetailsText = object.details
+          .map(detail => detail[this.selectedLang] || detail.en || '')
+          .join('\n');
+      } else {
+        this.objectDetailsText = '';
+      }
+    },
     resetMediaState() {
       this.currentMediaItemId = null;
       this.currentCategoryId = null;
@@ -622,7 +698,6 @@ export default {
       }
     },
     initializeLocalizedFields() {
-      // Initialize pageTitle and pageSubtitle for all locales
       if (!this.settings[0].pageTitle) {
         this.settings[0].pageTitle = {};
       }
@@ -632,10 +707,10 @@ export default {
 
       this.locales.forEach(locale => {
         if (!this.settings[0].pageTitle[locale]) {
-          this.settings[0].pageTitle[locale] = '';
+          this.$set(this.settings[0].pageTitle, locale, '');
         }
         if (!this.settings[0].pageSubtitle[locale]) {
-          this.settings[0].pageSubtitle[locale] = '';
+          this.$set(this.settings[0].pageSubtitle, locale, '');
         }
       });
     },
@@ -645,7 +720,6 @@ export default {
         name: {},
         description: {},
         classes: '',
-        order: this.settings[0].categories.length,
         icon: {}
       };
 
@@ -715,7 +789,7 @@ export default {
         name: {},
         description: {},
         price: '',
-        duration: '',
+        duration: {},
         hasDiscount: false,
         discountedPrice: '',
         image: {},
@@ -729,6 +803,7 @@ export default {
       this.locales.forEach(locale => {
         serviceItem.name[locale] = '';
         serviceItem.description[locale] = '';
+        serviceItem.duration[locale] = '';
       });
 
       this.settings[0].serviceItems.push(serviceItem);
@@ -740,7 +815,7 @@ export default {
       });
 
       // Reset the details text area when adding a new item
-      this.objectDetailsText = '';
+      this.setItemDetailsText(serviceItem.id, '');
     },
     removeServiceItem(itemId) {
       // Find the index of the service item with this ID
@@ -774,26 +849,16 @@ export default {
 
         return {
           id: category.id,
-          name: displayName
+          name: displayName,
+          _showId: !category.name[this.selectedLang] && !category.name.en
         };
       });
     },
     getServiceItemsByCategory(categoryId) {
       if (!categoryId || !this.settings[0].serviceItems) return [];
 
-      const items = this.settings[0].serviceItems.filter(item => item.categoryId === categoryId);
-
-      // For newly loaded items, set the details text area
-      if (items.length > 0 && items[0].details && items[0].details.length > 0) {
-        // Set the details text from the first available language
-        this.objectDetailsText = items[0].details
-          .map(detail => detail[this.selectedLang] || detail.en || '')
-          .join('\n');
-      } else {
-        this.objectDetailsText = '';
-      }
-
-      return items;
+      // Just return the filtered items without setting objectDetailsText here
+      return this.settings[0].serviceItems.filter(item => item.categoryId === categoryId);
     },
     updateServiceItemsForCategory(categoryId, updatedItems) {
       if (!categoryId) return;
@@ -810,6 +875,10 @@ export default {
     },
     validate() {
       let valid = true;
+
+      // Reset general settings errors
+      this.errors.generalSettings.taxRate = false;
+      this.errors.generalSettings.serviceFeeRate = false;
 
       // Validate categories
       this.settings[0].categories.forEach((category, idx) => {
@@ -858,6 +927,18 @@ export default {
           valid = false;
         }
       });
+
+      // Validate tax rate if tax is enabled
+      if (this.settings[0].enableTax && (!this.settings[0].taxRate && this.settings[0].taxRate !== 0)) {
+        this.errors.generalSettings.taxRate = true;
+        valid = false;
+      }
+
+      // Validate service fee rate if service fee is enabled
+      if (this.settings[0].enableServiceFee && (!this.settings[0].serviceFeeRate && this.settings[0].serviceFeeRate !== 0)) {
+        this.errors.generalSettings.serviceFeeRate = true;
+        valid = false;
+      }
 
       // Clean up media objects
       this.settings[0].serviceItems.forEach(item => {

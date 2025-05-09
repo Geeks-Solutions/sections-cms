@@ -198,10 +198,14 @@
 
         <div v-if="settings[0].enableTax" class="flex flex-col items-start justify-start mt-4">
           <label class="mr-4 font-medium">
-            {{ $t("RestaurantMenu.taxRate") }}
+            {{ $t("RestaurantMenu.taxRate") }}*
           </label>
-          <input v-model.number="settings[0].taxRate" type="number" min="0" max="100" step="0.01" placeholder="10.00"
-            :class="sectionsStyle.input" />
+          <input id="taxRate" v-model.number="settings[0].taxRate" type="number" min="0" max="100" step="0.01"
+            placeholder="Enter tax rate (e.g. 10.00)"
+            :class="[sectionsStyle.input, errors.generalSettings.taxRate ? 'error' : '']" />
+          <span v-show="errors.generalSettings.taxRate === true" class="text-error text-sm pt-2 pl-2">
+            {{ $t('RestaurantMenu.requiredField') }}
+          </span>
           <span class="text-xs text-Gray_800">
             {{ $t("RestaurantMenu.taxRateDesc") }}
           </span>
@@ -334,8 +338,8 @@ export default {
           classes: '',
           logo: {},
           viewMode: 'list',
-          enableTax: true,
-          taxRate: 10.00,
+          enableTax: false,
+          taxRate: '',
           medias: [],
           socialMedia: {
             instagram: '',
@@ -351,7 +355,10 @@ export default {
       ],
       errors: {
         categories: [],
-        menuItems: []
+        menuItems: [],
+        generalSettings: {
+          taxRate: false
+        }
       },
       currentMediaItemId: null,
       currentMediaType: null, // To track what kind of media we're uploading
@@ -730,6 +737,10 @@ export default {
     validate() {
       let valid = true;
 
+      // Reset general settings errors
+      this.errors.generalSettings = this.errors.generalSettings || {};
+      this.errors.generalSettings.taxRate = false;
+
       // Validate categories
       this.settings[0].categories.forEach((category, idx) => {
         // Reset error
@@ -763,6 +774,12 @@ export default {
           valid = false;
         }
       });
+
+      // Validate tax rate if tax is enabled
+      if (this.settings[0].enableTax && (!this.settings[0].taxRate && this.settings[0].taxRate !== 0)) {
+        this.errors.generalSettings.taxRate = true;
+        valid = false;
+      }
 
       // Clean up media objects
       this.settings[0].menuItems.forEach(item => {

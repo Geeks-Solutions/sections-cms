@@ -192,3 +192,33 @@ export const globalEvents = []
 export function formatPrice(price) {
   return (Math.round(price * 100) / 100).toFixed(2);
 }
+
+export function generateWhatsAppMessage(cart, type, lang, i18n, currencySymbol = '$', total = 0) {
+    const isService = type === 'service';
+    // If cart is empty, return a default message
+    if (!cart || cart.length === 0) {
+      return isService
+        ? i18n('ServicePackages.whatsappDefaultMessage')
+        : i18n('RestaurantMenu.whatsappDefaultMessage');
+    }
+  
+    // Create a custom message with the cart contents
+    const headerMessage = isService
+      ? i18n('ServicePackages.whatsappCartMessage')
+      : i18n('RestaurantMenu.whatsappCartMessage');
+    
+    let message = `${headerMessage}\n`;
+  
+    // Add each item to the message
+    cart.forEach(item => {
+      const itemName = item.name[lang] || Object.values(item.name)[0]; // Fallback to first available name
+      message += `* ${itemName}  x${item.quantity}\n`;
+    });
+  
+    // Add total if provided
+    if (total > 0) {
+      message += `\n${i18n('RestaurantMenu.total')}: ${currencySymbol}${formatPrice(total)}`;
+    }
+  
+    return message;
+  }

@@ -10,18 +10,18 @@
 
       <!-- Page Title and Subtitle -->
       <div class="mb-8">
-        <h2 v-if="settings.pageTitle && settings.pageTitle[lang]" class="menu-title mb-2">
+        <h2 v-if="settings.pageTitle && settings.pageTitle[lang]" class="menu-title  mb-2 flex justify-center">
           {{ settings.pageTitle[lang] }}
         </h2>
-        <p v-if="settings.pageSubtitle && settings.pageSubtitle[lang]" class="menu-subtitle">
+        <p v-if="settings.pageSubtitle && settings.pageSubtitle[lang]" class="menu-subtitle flex justify-center">
           {{ settings.pageSubtitle[lang] }}
         </p>
       </div>
 
       <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
         :whatsapp-number="settings.whatsappNumber || ''"
-        :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart"
-        :lang="lang" />
+        :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
+        :type="'service'" />
 
       <!-- Shopping Cart Icon -->
       <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
@@ -63,8 +63,9 @@
       :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true"
       :service-fee-rate="settings.serviceFeeRate ? settings.serviceFeeRate / 100 : SERVICE_FEE_RATE"
       :enable-service-fee="settings.enableServiceFee !== undefined ? settings.enableServiceFee : true" :lang="lang"
-      type="service" @close="closeCart" @increment="incrementCartItem" @decrement="decrementCartItem"
-      @remove="removeFromCart" @checkout="checkout" />
+      type="service" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
+      :whatsapp-number="settings.whatsappNumber || ''" @close="closeCart" @increment="incrementCartItem"
+      @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout" />
   </div>
 </template>
 
@@ -116,6 +117,15 @@ export default {
     viewStructure: {
       settings: [
         {
+          logo: 'image',
+          pageTitle: {
+            en: 'Our Services',
+            fr: 'Nos Services'
+          },
+          pageSubtitle: {
+            en: 'Book your next experience with us',
+            fr: 'Réservez votre prochaine expérience avec nous'
+          },
           categories: [
             {
               id: 'category-id',
@@ -128,12 +138,33 @@ export default {
                 fr: 'Description de la catégorie'
               },
               classes: '',
-              order: 0,
-              icon: {
-                media_id: '',
-                url: '',
-                seo_tag: ''
-              }
+              icon: 'image'
+            },
+            {
+              id: 'category-id1',
+              name: {
+                en: 'Category Name',
+                fr: 'Nom de la catégorie'
+              },
+              description: {
+                en: '',
+                fr: ''
+              },
+              classes: '',
+              icon: 'image'
+            },
+            {
+              id: 'category-id1',
+              name: {
+                en: 'Category Name',
+                fr: 'Nom de la catégorie'
+              },
+              description: {
+                en: '',
+                fr: ''
+              },
+              classes: '',
+              icon: 'image'
             }
           ],
           serviceItems: [
@@ -156,31 +187,87 @@ export default {
                   fr: 'Point de détail 1'
                 }
               ],
-              image: {
-                media_id: '',
-                url: '',
-                seo_tag: ''
+              image: 'image',
+              availability: 'available',
+              featured: false,
+              classes: ''
+            },
+            {
+              id: 'item-id',
+              categoryId: 'category-id',
+              name: {
+                en: 'Item Name',
+                fr: 'Nom du service'
               },
+              description: {
+                en: 'Item Description',
+                fr: 'Description du service'
+              },
+              price: 10.99,
+              duration: '1 hour',
+              details: [
+                {
+                  en: 'Detail point 1',
+                  fr: 'Point de détail 1'
+                }
+              ],
+              image: 'image',
+              availability: 'available',
+              featured: false,
+              classes: ''
+            },
+            {
+              id: 'item-id',
+              categoryId: 'category-id',
+              name: {
+                en: 'Item Name',
+                fr: 'Nom du service'
+              },
+              description: {
+                en: 'Item Description',
+                fr: 'Description du service'
+              },
+              price: 10.99,
+              duration: '1 hour',
+              details: [
+                {
+                  en: 'Detail point 1',
+                  fr: 'Point de détail 1'
+                }
+              ],
+              image: 'image',
+              availability: 'available',
+              featured: false,
+              classes: ''
+            },
+            ,
+            {
+              id: 'item-id',
+              categoryId: 'category-id1',
+              name: {
+                en: 'Item Name',
+                fr: 'Nom du service'
+              },
+              description: {
+                en: 'Item Description',
+                fr: 'Description du service'
+              },
+              price: 10.99,
+              duration: '1 hour',
+              details: [
+                {
+                  en: 'Detail point 1',
+                  fr: 'Point de détail 1'
+                }
+              ],
+              image: 'image',
               availability: 'available',
               featured: false,
               classes: ''
             }
           ],
-          pageTitle: {
-            en: 'Our Services',
-            fr: 'Nos Services'
-          },
-          pageSubtitle: {
-            en: 'Book your next experience with us',
-            fr: 'Réservez votre prochaine expérience avec nous'
-          },
           currencySymbol: '$',
           classes: '',
-          logo: {
-            media_id: '',
-            url: '',
-            seo_tag: ''
-          },
           backgroundColor: '#ffffff',
           viewMode: 'list', // list or category
           businessType: 'travel', // travel, spa, or salon
@@ -236,6 +323,29 @@ export default {
     };
   },
   watch: {
+    settings: {
+      handler() {
+        // Re-initialize when settings change
+        this.initializeActiveCategory();
+        this.initializeMenuTitles();
+      },
+      deep: true
+    },
+
+    // Watch for section settings changes directly
+    "section.settings": {
+      handler() {
+        // Re-initialize when settings change
+        this.initializeActiveCategory();
+        this.initializeMenuTitles();
+      },
+      deep: true
+    },
+
+    // Watch for language changes
+    lang() {
+      this.initializeMenuTitles();
+    },
     cart: {
       handler(newCart) {
         // Update localStorage whenever cart changes
@@ -303,11 +413,10 @@ export default {
       return settings;
     },
     sortedCategories() {
-      if (!this.settings.categories) return [];
+      if (!this.settings || !this.settings.categories) return [];
 
-      return [...this.settings.categories].sort((a, b) => {
-        return (a.order || 0) - (b.order || 0);
-      });
+      // Return categories in their original order without sorting by order property
+      return [...this.settings.categories];
     },
     isCategoryView() {
       return this.settings.viewMode === 'category';
@@ -384,6 +493,34 @@ export default {
     document.removeEventListener('keydown', this.handleKeyEvents);
   },
   methods: {
+    initializeActiveCategory() {
+      if (this.isCategoryView && this.sortedCategories.length > 0 && !this.activeCategory) {
+        this.activeCategory = this.sortedCategories[0].id;
+      }
+    },
+    initializeMenuTitles() {
+      if (this.settings) {
+        // Initialize menuTitle if it doesn't exist
+        if (!this.settings.menuTitle) {
+          this.$set(this.settings, 'menuTitle', {});
+        }
+
+        // Initialize menuTitle for the current language
+        if (!this.settings.menuTitle[this.lang]) {
+          this.$set(this.settings.menuTitle, this.lang, '');
+        }
+
+        // Initialize menuSubtitle if it doesn't exist
+        if (!this.settings.menuSubtitle) {
+          this.$set(this.settings, 'menuSubtitle', {});
+        }
+
+        // Initialize menuSubtitle for the current language
+        if (!this.settings.menuSubtitle[this.lang]) {
+          this.$set(this.settings.menuSubtitle, this.lang, '');
+        }
+      }
+    },
     // Load cart from storage (deferred)
     loadCartFromStorage() {
       if (this.isCartLoaded) return;
@@ -393,7 +530,7 @@ export default {
         try {
           this.cart = JSON.parse(savedCart);
           this.isCartLoaded = true;
-        } catch {}
+        } catch { }
       }
     },
     // Optimized method to get items by category

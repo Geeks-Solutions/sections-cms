@@ -22,8 +22,8 @@
 
       <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
         :whatsapp-number="settings.whatsappNumber || ''"
-        :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart"
-        :lang="lang" />
+        :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
+        :type="'restaurant'" />
 
       <!-- Category View Mode -->
       <div v-if="isCategoryView" class="menu-content">
@@ -55,10 +55,12 @@
       @update-notes="updateItemNotes" @add-to-cart="addToCart" />
 
     <!-- Shopping Cart Sidebar - Conditionally imported and rendered -->
-    <shopping-cart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
+    <ShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
       :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true" :lang="lang" @close="closeCart"
-      @increment="incrementCartItem" @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout" />
+      @increment="incrementCartItem" @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout"
+      type="restaurant" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
+      :whatsapp-number="settings.whatsappNumber || ''" />
   </div>
 </template>
 
@@ -456,7 +458,7 @@ export default {
           try {
             this.cart = JSON.parse(savedCart);
             this.isCartLoaded = true;
-          } catch {}
+          } catch { }
         }
       }
     },

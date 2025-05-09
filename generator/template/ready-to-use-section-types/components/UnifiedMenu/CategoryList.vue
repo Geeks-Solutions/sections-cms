@@ -38,49 +38,59 @@
             <!-- Item Content -->
             <div class="item-content flex-grow">
               <div class="flex justify-between items-start">
-                <h4 class="item-name mb-1">{{ item.name[lang] }}</h4>
-                <div class="flex flex-col items-end">
-                  <!-- Pricing for service items with potential discount -->
-                  <div v-if="isService && item.hasDiscount" class="item-price ml-4">
-                    <div class="flex flex-col items-end">
-                      <span class="item-price-regular">{{ currencySymbol }}{{ formatPrice(item.price) }}</span>
-                      <span class="item-price-discounted">{{ currencySymbol }}{{ formatPrice(item.discountedPrice)
-                        }}</span>
+                <!-- Item Name and Description in a column -->
+                <div class="flex flex-col flex-grow mr-4">
+                  <h4 class="item-name mb-1">{{ item.name[lang] }}</h4>
+                  <p v-if="item.description && item.description[lang]" class="item-description">
+                    {{ item.description[lang] }}
+                  </p>
+                  <div class="flex">
+                    <!-- Featured badge - in a separate row if needed -->
+                    <div v-if="item.featured" class="mt-2">
+                      <div class="badge badge-featured inline-block px-2 py-1 rounded"
+                        :class="{ 'badge-restaurant': type === 'restaurant', 'badge-service': type === 'service' }">
+                        {{ isService ? $t('ServicePackages.featuredItem') : $t('RestaurantMenu.specialItem') }}
+                      </div>
+                    </div>
+                    <!-- Availability badge for service items -->
+                    <div v-if="isService && item.availability === 'limited'" class="mt-2">
+                      <div class="badge badge-availability inline-block px-2 py-1 rounded ml-2">
+                        {{ $t('ServicePackages.limitedAvailability') }}
+                      </div>
+                    </div>
+                    <!-- Discount badge for service items -->
+                    <div v-if="isService && item.hasDiscount && calculateDiscountPercentage(item) > 0"
+                      class="badge badge-discount inline-block px-2 py-1 rounded-full ml-2 mt-2">
+                      {{ calculateDiscountPercentage(item) }}% OFF
                     </div>
                   </div>
-                  <!-- Standard pricing for items -->
-                  <div v-else class="item-price ml-4">
-                    {{ currencySymbol }}{{ formatPrice(item.price) }}
+                </div>
+
+                <!-- Price, Duration, and Badges Column -->
+                <div class="flex flex-col items-end flex-shrink-0">
+                  <div class="flex items-center">
+                    <!-- Pricing for service items with potential discount -->
+                    <div v-if="isService && item.hasDiscount" class="item-price">
+                      <div class="flex flex-col items-end">
+                        <span class="item-price-regular line-through">{{ currencySymbol }}{{ formatPrice(item.price)
+                          }}</span>
+                        <span class="item-price-discounted">{{ currencySymbol }}{{ formatPrice(item.discountedPrice)
+                          }}</span>
+                      </div>
+                    </div>
+                    <!-- Standard pricing for items -->
+                    <div v-else class="item-price">
+                      {{ currencySymbol }}{{ formatPrice(item.price) }}
+                    </div>
                   </div>
-                  <!-- Duration for services -->
-                  <div v-if="isService && item.duration" class="item-duration ml-4">
-                    {{ item.duration }}
+
+                  <!-- Duration and Availability on same row -->
+                  <div class="flex items-center mt-1">
+                    <!-- Duration for services -->
+                    <div v-if="isService && item.duration" class="item-duration">
+                      {{ item.duration[lang] }}
+                    </div>
                   </div>
-                </div>
-              </div>
-
-              <p v-if="item.description && item.description[lang]" class="item-description">
-                {{ item.description[lang] }}
-              </p>
-
-              <!-- Additional badges -->
-              <div class="mt-2 flex flex-wrap gap-2">
-                <!-- Featured badge - different based on type -->
-                <div v-if="item.featured" class="badge badge-featured inline-block px-2 py-1 rounded"
-                  :class="{ 'badge-restaurant': type === 'restaurant', 'badge-service': type === 'service' }">
-                  {{ isService ? $t('ServicePackages.featuredItem') : $t('RestaurantMenu.specialItem') }}
-                </div>
-
-                <!-- Discount badge for service items -->
-                <div v-if="isService && item.hasDiscount && calculateDiscountPercentage(item) > 0"
-                  class="badge badge-discount inline-block px-2 py-1 rounded-full">
-                  {{ calculateDiscountPercentage(item) }}% OFF
-                </div>
-
-                <!-- Availability badge for service items -->
-                <div v-if="isService && item.availability === 'limited'"
-                  class="badge badge-availability inline-block px-2 py-1 rounded">
-                  {{ $t('ServicePackages.limitedAvailability') }}
                 </div>
               </div>
             </div>

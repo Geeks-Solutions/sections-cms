@@ -22,7 +22,7 @@
             <h3 class="modal-item-name">{{ item.name[lang] }}</h3>
             <div class="flex items-baseline">
               <!-- Original price if discounted -->
-              <span v-if="isService && item.hasDiscount" class="item-price-regular mr-2">{{
+              <span v-if="isService && item.hasDiscount" class="item-price-regular line-through mr-2">{{
                 formatPrice(item.price) }}</span>
               <!-- Current price -->
               <span class="modal-item-price">{{ currencySymbol }}{{ formatPrice(isService && item.hasDiscount ?
@@ -203,10 +203,10 @@ export default {
           return;
         }
 
-        if (!this.selectedTimeSlot && this.timeSlots.length > 0) {
-          alert(this.$t('ServicePackages.selectTimeRequired'));
-          return;
-        }
+        // if (!this.selectedTimeSlot && this.timeSlots.length > 0) {
+        //   alert(this.$t('ServicePackages.selectTimeRequired'));
+        //   return;
+        // }
       }
 
       this.$emit('add-to-cart');

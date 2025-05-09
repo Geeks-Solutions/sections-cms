@@ -415,7 +415,10 @@ export default {
     enableTaxDesc: "Enable tax calculation for the menu items",
     taxRate: "Tax Rate",
     taxRateDesc: "Set the tax rate (e.g., 10 for 10%)",
-    taxSettings: "Tax Settings"
+    taxSettings: "Tax Settings",
+    whatsappCartMessage: "I want to order the following items:",
+    whatsappDefaultMessage: "Hello! I would like to order food.",
+    orderViaWhatsApp: "Order via WhatsApp"
   },
   ServicePackages: {
     // General UI translations
@@ -521,7 +524,14 @@ export default {
     bookingConfirmed: "Your booking has been confirmed!",
     yourCart: "Your Cart",
     defaultWhatsAppMessage: "Hello, I would like to inquire about your services",
-    completeBooking: "Complete Booking"
+    completeBooking: "Complete Booking",
+    hasDiscount: "Enable Discount",
+    hasDiscountDesc: "Enable discount code for this item",
+    discountedPrice: "Discounted Price",
+    whatsappCartMessage: "I am interested in the following services:",
+    whatsappDefaultMessage: "Hello! I would like to book a service.",
+    orderViaWhatsApp: "Order via WhatsApp",
+    total: "Total"
   },
   socialMedia: {
     socialMediaDesc: "Add your social media links to connect with your audience",
