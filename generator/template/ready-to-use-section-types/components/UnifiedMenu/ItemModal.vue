@@ -3,8 +3,7 @@
     <div class="item-modal-content rounded-lg shadow-xl max-w-lg w-full" :class="{ 'max-w-2xl': isService }">
       <div class="relative">
         <!-- Close button -->
-        <div @click="$emit('close')"
-          class="modal-close-button absolute top-3 right-3 z-10 cursor-pointer">
+        <div @click="$emit('close')" class="modal-close-button absolute top-3 right-3 z-10 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             width="20" height="20">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -48,7 +47,8 @@
           </ul>
           <ul v-else-if="isService" class="feature-list mb-4">
             <li v-if="item.duration" class="feature-list-item">{{ item.duration }} service</li>
-            <li v-for="(feature, index) in parseFeatures(item.description[lang])" :key="index" class="feature-list-item">
+            <li v-for="(feature, index) in parseFeatures(item.description[lang])" :key="index"
+              class="feature-list-item">
               {{ feature }}
             </li>
           </ul>
@@ -58,14 +58,12 @@
             <label class="input-label mr-4">{{ $t(isService ? 'ServicePackages.quantity' : 'RestaurantMenu.quantity')
               }}:</label>
             <div class="custom-quantity-control flex items-center">
-              <button @click="decrementQuantity"
-                class="item-qty-minus flex items-center justify-center rounded-full">
+              <button @click="decrementQuantity" class="item-qty-minus flex items-center justify-center rounded-full">
                 −
               </button>
               <input type="text" :value="localQuantity" min="1" @input="updateQuantity($event.target.value)"
                 class="item-qty-value w-12 text-center" readonly />
-              <button @click="incrementQuantity"
-                class="item-qty-plus flex items-center justify-center rounded-full">
+              <button @click="incrementQuantity" class="item-qty-plus flex items-center justify-center rounded-full">
                 +
               </button>
             </div>
@@ -216,3 +214,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.item-modal-content {
+  background-color: var(--bg-color);
+}
+</style>
