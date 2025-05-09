@@ -84,7 +84,7 @@
           :legend-label="$t('RestaurantMenu.menuItem')"
           @array-updated="(data) => updateMenuItemsForCategory(selectedCategoryId, data)"
           @remove-fieldset="(object, idx) => removeMenuItem(object.id)">
-          <template #default="{ object, idx }">
+          <template #default="{ object }">
             <!-- Item Name -->
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium">{{ $t("RestaurantMenu.itemName") }}*</label>
@@ -651,7 +651,7 @@ export default {
 
       const menuItem = {
         id: uuidv4(),
-        categoryId: categoryId,
+        categoryId,
         name: {},
         description: {},
         price: '',

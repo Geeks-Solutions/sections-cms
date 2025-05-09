@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-for="(category, catIndex) in categories">
-      <div class="category-container mb-12" :class="category.classes">
+      <div class="category-container mb-12" :class="category.classes" :key="`cat-${catIndex}`">
         <div class="flex items-center border-b pb-2 mb-6">
           <!-- Category Icon -->
           <div v-if="category.icon && category.icon.url" class="mr-3">
