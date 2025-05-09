@@ -415,7 +415,6 @@ export default {
       'Ajoutez des instructions spéciales pour votre commande',
     addToCart: 'Ajouter au Panier',
     qty: 'Qté',
-    total: 'Total',
     subtotal: 'Sous-total',
     tax: 'Taxe',
     checkout: 'Paiement',
@@ -571,5 +570,5 @@ export default {
     whatsapp: 'WhatsApp',
     whatsappNumberDesc: 'Numéro de téléphone WhatsApp (ex. +1234567890)',
     whatsappMessage: 'Message WhatsApp',
-  },
+  }
 }
