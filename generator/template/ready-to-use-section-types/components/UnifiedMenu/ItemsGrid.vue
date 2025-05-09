@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <div v-for="(item, index) in items" :key="`item-${item.id}`" class="menu-item flex cursor-pointer" :class="[
+    <div v-for="(item) in items" :key="`item-${item.id}`" class="menu-item flex cursor-pointer" :class="[
       item.classes,
       { 'featured': item.featured },
       { 'menu-item-restaurant': type === 'restaurant' },
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { formatPrice } from '@/utils/constants'; 
+import { formatPrice } from '@/utils/constants';
 
 export default {
   name: 'ItemsGrid',

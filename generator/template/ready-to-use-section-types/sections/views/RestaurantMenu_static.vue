@@ -456,7 +456,7 @@ export default {
           try {
             this.cart = JSON.parse(savedCart);
             this.isCartLoaded = true;
-          } catch () {}
+          } catch {}
         }
       }
     },
