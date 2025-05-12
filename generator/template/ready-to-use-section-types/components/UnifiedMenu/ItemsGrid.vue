@@ -10,8 +10,8 @@
 
       <!-- Item Image -->
       <div v-if="item.image && item.image.url" class="item-image-wrapper md:mr-4 mb-4 md:mb-0 flex-shrink-0">
-        <img :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]" format="webp" loading="lazy"
-          class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" />
+        <img :src="getOptimizedImage(item.image.url, 80, 80)" :alt="item.image.seo_tag || item.name[lang]"
+          class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" loading="lazy" />
       </div>
 
       <!-- Item Content -->
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { formatPrice } from '@/utils/constants';
+import { formatPrice, getOptimizedImage } from '@/utils/constants';
 
 export default {
   name: 'ItemsGrid',
@@ -106,6 +106,7 @@ export default {
     }
   },
   methods: {
+    getOptimizedImage,
     formatPrice,
     calculateDiscountPercentage(item) {
       if (!item.hasDiscount || !item.price || !item.discountedPrice) return 0;
