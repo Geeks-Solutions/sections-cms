@@ -9,8 +9,8 @@
         <div class="flex items-center justify-center">
           <div v-if="category.icon && category.icon.url"
             class="icon-container mr-1 flex-shrink-0 w-5 h-5 flex items-center justify-center">
-            <img :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
-              class="icon-image max-w-full max-h-full object-contain" format="webp" loading="lazy" width="20" height="20" />
+            <img :src="getOptimizedImage(category.icon.url, 20, 20)" :alt="category.icon.seo_tag || category.name[lang]"
+              class="icon-image max-w-full max-h-full object-contain" width="20" height="20" loading="lazy" />
           </div>
           <span class="tab-text">{{ category.name[lang] }}</span>
         </div>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { getOptimizedImage } from '../../utils/constants'
 export default {
   name: 'CategoryTabs',
   props: {
@@ -40,6 +41,9 @@ export default {
       default: 'restaurant', // 'restaurant' or 'service'
       validator: value => ['restaurant', 'service'].includes(value)
     }
+  },
+  methods: {
+   getOptimizedImage
   }
 }
 </script>

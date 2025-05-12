@@ -5,8 +5,8 @@
         <div class="flex items-center border-b pb-2 mb-6">
           <!-- Category Icon -->
           <div v-if="category.icon && category.icon.url" class="mr-3">
-            <img :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
-              class="w-8 h-8 object-contain" format="webp" loading="lazy" width="32" height="32" />
+            <img :src="getOptimizedImage(category.icon.url, 32, 32)" :alt="category.icon.seo_tag || category.name[lang]"
+              class="icon-image max-w-full max-h-full object-contain" width="32" height="32" loading="lazy" />
           </div>
 
           <!-- Category Name -->
@@ -31,8 +31,9 @@
 
             <!-- Item Image -->
             <div v-if="item.image && item.image.url" class="item-image-wrapper md:mr-4 mb-4 md:mb-0 flex-shrink-0">
-              <img :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]" loading="lazy"
-                class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" />
+              <img :src="getOptimizedImage(item.image.url, 80, 80)" :alt="item.image.seo_tag || item.name[lang]"
+                class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80"
+                loading="lazy" />
             </div>
 
             <!-- Item Content -->
@@ -76,7 +77,7 @@
                         <span class="item-price-regular line-through mr-2 md:mr-0">{{ currencySymbol }}{{
                           formatPrice(item.price) }}</span>
                         <span class="item-price-discounted">{{ currencySymbol }}{{ formatPrice(item.discountedPrice)
-                          }}</span>
+                        }}</span>
                       </div>
                     </div>
                     <!-- Standard pricing for items -->
@@ -103,7 +104,8 @@
 </template>
 
 <script>
-import { formatPrice } from '@/utils/constants.js'; // Assuming this utility function is defined in your project
+
+import { formatPrice, getOptimizedImage } from '@/utils/constants.js'; // Assuming this utility function is defined in your project
 export default {
   name: 'CategoryList',
   props: {
@@ -135,6 +137,7 @@ export default {
     }
   },
   methods: {
+    getOptimizedImage,
     formatPrice,
     calculateDiscountPercentage(item) {
       if (!item.hasDiscount || !item.price || !item.discountedPrice) return 0;
