@@ -18,29 +18,34 @@
 
         <div class="p-6">
           <!-- Item header -->
-          <div class="flex justify-between items-start mb-2">
+          <div class="flex flex-col justify-between items-start mb-2">
             <h3 class="modal-item-name">{{ item.name[lang] }}</h3>
-            <div class="flex items-baseline">
+            <div class="flex items-center ">
               <!-- Original price if discounted -->
               <span v-if="isService && item.hasDiscount" class="item-price-regular line-through mr-2">{{
                 formatPrice(item.price) }}</span>
               <!-- Current price -->
-              <span class="modal-item-price">{{ currencySymbol }}{{ formatPrice(isService && item.hasDiscount ?
+              <span class="modal-item-price mr-2">{{ currencySymbol }}{{ formatPrice(isService &&
+                item.hasDiscount ?
                 item.discountedPrice : item.price) }}</span>
+              <div v-if="isService && item.hasDiscount && calculateDiscountPercentage(item) > 0"
+                class="badge-discount inline-block rounded-full px-3 py-1 ">
+                {{ calculateDiscountPercentage(item) }}% OFF
+              </div>
             </div>
           </div>
 
           <!-- Discount badge -->
-          <div v-if="isService && item.hasDiscount && calculateDiscountPercentage(item) > 0"
-            class="badge-discount inline-block mb-3 rounded-full px-3 py-1">
+          <!-- <div v-if="isService && item.hasDiscount && calculateDiscountPercentage(item) > 0"
+            class="hidden md:inline-block badge-discount mb-3 rounded-full px-3 py-1">
             {{ calculateDiscountPercentage(item) }}% OFF
-          </div>
+          </div> -->
 
           <!-- Item description -->
           <p class="modal-item-description mb-2">{{ item.description[lang] }}</p>
 
           <!-- Item features as bullet points -->
-          <ul v-if="isService && item.details && item.details.length > 0" class="feature-list mb-6">
+          <ul v-if="isService && item.details && item.details.length > 0" class="feature-list mb-4">
             <li v-for="(detail, index) in item.details" :key="index" class="feature-list-item">
               {{ detail[lang] }}
             </li>

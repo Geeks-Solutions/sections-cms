@@ -1,5 +1,5 @@
 <template>
-  <div class="category-tabs-wrapper mb-8 overflow-x-auto">
+  <div class="category-tabs-wrapper mb-4 md:mb-8 overflow-x-auto">
     <div class="flex space-x-2 pb-2">
       <div v-for="category in categories" :key="'tab-' + category.id"
         class="category-tab whitespace-nowrap px-3 sm:px-4 py-0 rounded-lg h-8 flex hover:cursor-pointer transition-colors duration-200"
@@ -10,7 +10,7 @@
           <div v-if="category.icon && category.icon.url"
             class="icon-container mr-1 flex-shrink-0 w-5 h-5 flex items-center justify-center">
             <img :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
-              class="icon-image max-w-full max-h-full object-contain" loading="lazy" width="20" height="20" />
+              class="icon-image max-w-full max-h-full object-contain" format="webp" loading="lazy" width="20" height="20" />
           </div>
           <span class="tab-text">{{ category.name[lang] }}</span>
         </div>

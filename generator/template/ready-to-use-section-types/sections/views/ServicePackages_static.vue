@@ -1,52 +1,88 @@
 <template>
   <div v-if="settings" class="service-packages py-2.5" :class="[settings.classes, `business-${settings.businessType}`]"
     :style="{ backgroundColor: settings.backgroundColor || 'transparent' }">
-    <div class="px-4">
+    <div class="md:px-4">
       <!-- Business Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
-        <img :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Business Logo'"
-          class="h-24 object-contain mx-auto" width="96" height="96" loading="lazy" />
+        <img :src="getOptimizedImage(settings.logo.url, 192, 192, true)" :alt="settings.logo.seo_tag || 'Business Logo'"
+          class="h-24 object-contain mx-auto" width="96" height="96" fetchpriority="high" />
       </div>
 
       <!-- Page Title and Subtitle -->
-      <div class="mb-8">
-        <h2 v-if="settings.pageTitle && settings.pageTitle[lang]" class="menu-title  mb-2 flex justify-center">
+      <div class="mb-4 md:mb-8">
+        <h2 v-if="settings.pageTitle && settings.pageTitle[lang]" class="menu-title mb-2 flex justify-center">
           {{ settings.pageTitle[lang] }}
         </h2>
-        <p v-if="settings.pageSubtitle && settings.pageSubtitle[lang]" class="menu-subtitle flex justify-center">
+        <p v-if="isInitialRenderComplete && settings.pageSubtitle && settings.pageSubtitle[lang]"
+          class="menu-subtitle flex justify-center">
           {{ settings.pageSubtitle[lang] }}
         </p>
       </div>
 
-      <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
-        :whatsapp-number="settings.whatsappNumber || ''"
-        :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
-        :type="'service'" />
-
       <!-- Shopping Cart Icon -->
       <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
 
-      <!-- Category View Mode -->
-      <div v-if="isCategoryView" class="service-content">
-        <!-- Category Navigation Tabs -->
-        <CategoryTabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang" type="service"
-          @select-category="setActiveCategory" />
-
-        <!-- Active Category Description -->
-        <div v-if="activeCategoryObj && activeCategoryObj.description && activeCategoryObj.description[lang]"
-          class="mb-6 text-center">
-          <p class="category-description">{{ activeCategoryObj.description[lang] }}</p>
-        </div>
-
-        <!-- Service Items for Active Category -->
-        <ItemsGrid :items="getServiceItemsByCategory(activeCategory)" :currency-symbol="settings.currencySymbol"
-          :lang="lang" type="service" @item-click="openItemModal" />
+      <div style="display: none;" aria-hidden="true">
+        <SocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :whatsapp-message="getWhatsAppMessage()"
+          :cart="[]" :lang="lang" />
+        <CategoryTabs :categories="[]" :active-category="''" :lang="lang" type="service" />
+        <CategoryList :categories="[]" :get-items-by-category="getEmptyItems" :currency-symbol="'$'" :lang="lang"
+          type="service" />
+        <ItemsGrid :items="[]" :currency-symbol="'$'" :lang="lang" type="service" />
       </div>
 
-      <!-- List View Mode -->
-      <div v-else class="service-content">
-        <CategoryList :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
-          :currency-symbol="settings.currencySymbol" :lang="lang" type="service" @item-click="openItemModal" />
+      <div v-if="isInitialRenderComplete">
+        <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
+          :whatsapp-number="settings.whatsappNumber || ''"
+          :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
+          :type="'service'" />
+
+
+        <!-- Category View Mode -->
+        <div v-if="isCategoryView" class="service-content">
+          <!-- Category Navigation Tabs -->
+          <CategoryTabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang" type="service"
+            @select-category="setActiveCategory" />
+
+          <!-- Active Category Description -->
+          <div v-if="activeCategoryObj && activeCategoryObj.description && activeCategoryObj.description[lang]"
+            class="mb-6 text-center">
+            <p class="category-description">{{ activeCategoryObj.description[lang] }}</p>
+          </div>
+
+          <!-- Service Items for Active Category -->
+          <ItemsGrid :items="getServiceItemsByCategory(activeCategory)" :currency-symbol="settings.currencySymbol"
+            :lang="lang" type="service" @item-click="openItemModal" />
+        </div>
+
+        <!-- List View Mode -->
+        <div v-else class="service-content">
+          <CategoryList :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
+            :currency-symbol="settings.currencySymbol" :lang="lang" type="service" @item-click="openItemModal" />
+        </div>
+      </div>
+      <div v-else class="loading-placeholder">
+        <!-- Placeholder content while JavaScript initializes -->
+        <div class="animate-pulse mb-8">
+
+          <!-- Category header placeholder -->
+          <div class="h-6 bg-gray-200 rounded w-1/4 mb-6"></div>
+          <div class="h-px w-full bg-gray-200 mb-8"></div>
+
+          <!-- Service items placeholder -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+            <div class="flex">
+              <div class="w-16 h-16 bg-gray-200 rounded-md flex-shrink-0"></div>
+              <div class="ml-4 flex-grow">
+                <div class="h-5 bg-gray-200 rounded w-2/5 mb-2"></div>
+                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+              </div>
+              <div class="flex flex-col items-end justify-start ml-4">
+                <div class="h-5 bg-gray-200 rounded w-20"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -57,7 +93,7 @@
       @update-quantity="updateItemQuantity" @update-notes="updateItemNotes" @update-date="updateSelectedDate"
       @update-time-slot="updateSelectedTimeSlot" @add-to-cart="addToCart" />
 
-    <!-- Shopping Cart Sidebar -->
+    <!-- Shopping Cart Sidebar - Load on demand -->
     <ShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
       :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true"
@@ -73,6 +109,8 @@
 // Import shared components
 import CartIcon from '../../components/UnifiedMenu/CartIcon.vue';
 import SocialLinks from '../../components/UnifiedMenu/SocialLinks.vue';
+// Import utils if available, otherwise define the function locally
+import { getOptimizedImage } from '../../utils/constants';
 
 // Dynamically import shared components
 const CategoryTabs = () => import('../../components/UnifiedMenu/CategoryTabs.vue');
@@ -285,6 +323,7 @@ export default {
   },
   data() {
     return {
+      isInitialRenderComplete: false,
       cart: [],
       showCart: false,
       showItemModal: false,
@@ -320,38 +359,6 @@ export default {
         }
       }
     };
-  },
-  watch: {
-    settings: {
-      handler() {
-        // Re-initialize when settings change
-        this.initializeActiveCategory();
-        this.initializeMenuTitles();
-      },
-      deep: true
-    },
-
-    // Watch for section settings changes directly
-    "section.settings": {
-      handler() {
-        // Re-initialize when settings change
-        this.initializeActiveCategory();
-        this.initializeMenuTitles();
-      },
-      deep: true
-    },
-
-    // Watch for language changes
-    lang() {
-      this.initializeMenuTitles();
-    },
-    cart: {
-      handler(newCart) {
-        // Update localStorage whenever cart changes
-        this.debouncedSaveCart();
-      },
-      deep: true
-    }
   },
   computed: {
     socialMediaLinks() {
@@ -444,47 +451,64 @@ export default {
       return this.cartSubtotal + this.cartServiceFee + this.cartTax;
     }
   },
-  created() {
-    // Set initial active category if in category view mode
-    if (this.isCategoryView && this.sortedCategories.length > 0) {
-      this.activeCategory = this.sortedCategories[0].id;
-    }
+  watch: {
+    settings: {
+      handler() {
+        // Re-initialize when settings change
+        this.initializeActiveCategory();
+        this.initializeMenuTitles();
+      },
+      deep: true
+    },
 
-    // Initialize socialMedia if it doesn't exist
-    if (!this.settings.socialMedia) {
-      this.settings.socialMedia = {};
-    }
+    // Watch for section settings changes directly
+    "section.settings": {
+      handler() {
+        // Re-initialize when settings change
+        this.initializeActiveCategory();
+        this.initializeMenuTitles();
+      },
+      deep: true
+    },
 
-    // Initialize WhatsApp settings if they don't exist
-    if (typeof this.settings.showWhatsApp === 'undefined') {
-      this.settings.showWhatsApp = false;
-    }
-
-    if (!this.settings.whatsappNumber) {
-      this.settings.whatsappNumber = '';
-    }
-
-    if (!this.settings.whatsappMessage) {
-      this.settings.whatsappMessage = {};
-    }
-
-    // Initialize whatsappMessage for the current language if not set
-    if (!this.settings.whatsappMessage[this.lang]) {
-      this.$set(this.settings.whatsappMessage, this.lang, 'Hello! I would like to book a service.');
+    // Watch for language changes
+    lang() {
+      this.initializeMenuTitles();
+    },
+    cart: {
+      handler(newCart) {
+        // Update localStorage whenever cart changes
+        this.debouncedSaveCart();
+      },
+      deep: true
     }
   },
+  created() {
+    // Set initial active category if in category view mode
+    this.initializeActiveCategory();
+    this.initializeMenuTitles();
+  },
   mounted() {
-    // Defer non-critical initialization
+    // Activate initial render after hydration
     this.$nextTick(() => {
-      // Load cart using idle callback if available, or defer with setTimeout
-      if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(this.loadCartFromStorage);
-      } else {
-        setTimeout(this.loadCartFromStorage, 200);
-      }
+      // Use requestAnimationFrame to prioritize rendering
+      window.requestAnimationFrame(() => {
+        this.isInitialRenderComplete = true;
+      });
     });
 
-    // Use event delegation for keyboard events
+    // Defer cart loading until after initial render
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => {
+        this.loadCartFromStorage();
+      });
+    } else {
+      setTimeout(() => {
+        this.loadCartFromStorage();
+      }, 500);
+    }
+
+    // Set up event listeners
     document.addEventListener('keydown', this.handleKeyEvents);
   },
   beforeDestroy() {
@@ -492,6 +516,21 @@ export default {
     document.removeEventListener('keydown', this.handleKeyEvents);
   },
   methods: {
+    getOptimizedImage,
+    // Fix #1: Add the missing empty items helper
+    getEmptyItems() {
+      return [];
+    },
+
+    // Fix #2: Handle whatsappMessage type issue
+    getWhatsAppMessage() {
+      // Fix the whatsappMessage type by returning a string
+      if (this.settings && this.settings.whatsappMessage &&
+        this.settings.whatsappMessage[this.lang]) {
+        return this.settings.whatsappMessage[this.lang];
+      }
+      return 'Hello! I would like to book a service.';
+    },
     initializeActiveCategory() {
       if (this.isCategoryView && this.sortedCategories.length > 0 && !this.activeCategory) {
         this.activeCategory = this.sortedCategories[0].id;
@@ -529,7 +568,8 @@ export default {
         try {
           this.cart = JSON.parse(savedCart);
           this.isCartLoaded = true;
-        } catch { }
+        } catch (e) {
+        }
       }
     },
     // Optimized method to get items by category
@@ -679,12 +719,6 @@ export default {
       this.cart = [];
       this.debouncedSaveCart();
       this.closeCart();
-    },
-    // Helper method to optimize images
-    getOptimizedImage(url, width, height) {
-      if (!url) return '';
-      // This is a placeholder for an image optimization service
-      return `${url}?width=${width}&height=${height}`;
     }
   }
 };
