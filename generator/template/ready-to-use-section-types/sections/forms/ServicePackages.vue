@@ -386,10 +386,13 @@
             <input v-model="settings[0].whatsappNumber" type="text" placeholder="+1234567890"
               :class="sectionsStyle.input" class="mb-2" />
             <span class="text-xs text-Gray_800 mb-2 block">{{ $t("socialMedia.whatsappNumberDesc") }}</span>
-
-            <label class="block text-sm font-medium mb-1">{{ $t("socialMedia.whatsappMessage") }}</label>
-            <input v-model="settings[0].whatsappMessage[selectedLang]" type="text"
-              placeholder="Hello! I would like to book a service." :class="sectionsStyle.input" />
+            <label class="block text-sm font-medium mb-1">
+              {{ $t("socialMedia.whatsappMessage") }} ({{ selectedLang.toUpperCase() }})
+            </label>
+            <input :key="'whatsapp-message-input-' + selectedLang" v-model="settings[0].whatsappMessage[selectedLang]"
+              type="text"
+              :placeholder="selectedLang === 'en' ? 'Hello! I would like to book a service.' : 'Bonjour ! Je voudrais réserver un service.'"
+              :class="sectionsStyle.input" @focus="setDefaultWhatsAppMessages" />
           </div>
         </div>
       </div>
@@ -567,10 +570,9 @@ export default {
     }
   },
   mounted() {
-    // Initialize localized fields
     this.initializeLocalizedFields();
-    // Initialize duration localization for existing items
     this.initializeDurationLocalization();
+    this.setDefaultWhatsAppMessages();
 
     if (this.settings[0].serviceItems && this.settings[0].serviceItems.length > 0) {
       this.settings[0].serviceItems.forEach(item => {
@@ -610,14 +612,36 @@ export default {
       this.$set(this.settings[0], 'whatsappMessage', {});
     }
 
+
     // Initialize whatsappMessage for all locales
     this.locales.forEach(locale => {
       if (!this.settings[0].whatsappMessage[locale]) {
-        this.$set(this.settings[0].whatsappMessage, locale, 'Hello! I would like to book a service.');
+        // Use locale-specific translations instead of a single default message
+        const defaultMessage = this.$i18n.t('ServicePackages.whatsappDefaultMessage', null, locale);
+        this.$set(this.settings[0].whatsappMessage, locale, defaultMessage);
       }
     });
   },
   methods: {
+    setDefaultWhatsAppMessages() {
+      // Ensure the object exists
+      if (!this.settings[0].whatsappMessage) {
+        this.$set(this.settings[0], 'whatsappMessage', {});
+      }
+
+      // Set language-specific messages directly
+      const messages = {
+        'en': 'Hello! I would like to book a service.',
+        'fr': 'Bonjour ! Je voudrais réserver un service.'
+      };
+
+      // Set each message with proper reactivity
+      Object.keys(messages).forEach(lang => {
+        if (!this.settings[0].whatsappMessage[lang]) {
+          this.$set(this.settings[0].whatsappMessage, lang, messages[lang]);
+        }
+      });
+    },
     initializeDurationLocalization() {
       if (this.settings[0].serviceItems && this.settings[0].serviceItems.length > 0) {
         this.settings[0].serviceItems.forEach(item => {

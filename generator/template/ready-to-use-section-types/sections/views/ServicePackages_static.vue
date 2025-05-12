@@ -4,8 +4,9 @@
     <div class="md:px-4">
       <!-- Business Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
-        <img :src="getOptimizedImage(settings.logo.url, 192, 192, true)" :alt="settings.logo.seo_tag || 'Business Logo'"
-          class="h-24 object-contain mx-auto" width="96" height="96" fetchpriority="high" />
+        <nuxt-img :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Business Logo'"
+          class="h-24 object-contain mx-auto" width="96" height="96" loading="eager" quality="80" format="webp"
+          fit="contain" />
       </div>
 
       <!-- Page Title and Subtitle -->

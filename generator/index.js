@@ -20,7 +20,8 @@ module.exports = (api, options, rootOptions) => {
                 "vue-server-renderer": "2.7.10",
                 "vue-template-compiler": "2.7.10",
                 "vue2-leaflet": "^2.7.1",
-                "uuid": "3.4.0"
+                "uuid": "3.4.0",
+                "@nuxt/image": "^0.7.1"
             },
             "devDependencies": {
                 "@babel/eslint-parser": "^7.14.7",
@@ -117,6 +118,7 @@ module.exports.hooks = (api, options) => {
     '@geeks.solutions/nuxt-sections',\r
     '@nuxtjs/axios',\r
     'cookie-universal-nuxt',\r
+    '@nuxt/image',\r
     [
       "@nuxtjs/i18n",
       {
