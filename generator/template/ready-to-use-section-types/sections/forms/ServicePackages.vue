@@ -104,7 +104,8 @@
       </div>
 
       <div v-if="selectedCategoryId">
-        <FieldSets :array-data-pop="getServiceItemsByCategory(selectedCategoryId)" :fieldset-group="'serviceItems'"
+        <FieldSets :key="'service-items-' + selectedCategoryId + '-' + selectedLang"
+          :array-data-pop="getServiceItemsByCategory(selectedCategoryId)" :fieldset-group="'serviceItems'"
           :legend-label="$t('ServicePackages.serviceItem') || 'Service Item'"
           @array-updated="(data) => updateServiceItemsForCategory(selectedCategoryId, data)"
           @remove-fieldset="(object, idx) => removeServiceItem(object.id)">
@@ -167,8 +168,12 @@
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium">{{ $t("ServicePackages.itemDetails") }}</label>
               <span class="text-xs text-Gray_800 mb-2">{{ $t("ServicePackages.itemDetailsDesc") }}</span>
-              <textarea v-model="itemDetailsTextMap[object.id]" type="text" placeholder="One detail per line"
-                :class="sectionsStyle.textarea" rows="4" @input="updateItemDetails(object)"></textarea>
+              <textarea v-model="itemDetailsTextMap[object.id][selectedLang]" type="text"
+                placeholder="One detail per line" :class="sectionsStyle.textarea" rows="4"
+                @input="updateItemDetails(object)"></textarea>
+              <span class="text-xs text-Gray_800 mt-1">
+                {{ $t("ServicePackages.itemDetailsLangNote", { lang: selectedLang.toUpperCase() }) }}
+              </span>
             </div>
 
             <!-- Item Image -->
@@ -471,6 +476,30 @@ export default {
     }
   },
   watch: {
+    selectedCategoryId: {
+      handler(newCategoryId) {
+        if (newCategoryId && this.settings[0].serviceItems) {
+          // Load item details text for all items in the selected category
+          const items = this.getServiceItemsByCategory(newCategoryId);
+          items.forEach(item => {
+            this.loadItemDetailsText(item);
+          });
+        }
+      }
+    },
+    selectedLang: {
+      handler(newLang) {
+        // When language changes, we need to reload details text for the currently 
+        // visible service items in the selected category
+        if (this.selectedCategoryId && this.settings[0].serviceItems) {
+          this.settings[0].serviceItems.forEach(item => {
+            if (item.categoryId === this.selectedCategoryId) {
+              this.loadItemDetailsText(item);
+            }
+          });
+        }
+      }
+    },
     selectedMedia(mediaObject) {
       if (!mediaObject) return;
 
@@ -542,7 +571,13 @@ export default {
     this.initializeLocalizedFields();
     // Initialize duration localization for existing items
     this.initializeDurationLocalization();
-    
+
+    if (this.settings[0].serviceItems && this.settings[0].serviceItems.length > 0) {
+      this.settings[0].serviceItems.forEach(item => {
+        this.loadItemDetailsText(item);
+      });
+    }
+
     // Safely initialize social media settings
     if (!this.settings[0].socialMedia) {
       this.$set(this.settings[0], 'socialMedia', {
@@ -618,39 +653,82 @@ export default {
       }
     },
     getItemDetailsText(itemId) {
-      return this.itemDetailsTextMap[itemId] || '';
+      if (!this.itemDetailsTextMap[itemId]) return '';
+      return this.itemDetailsTextMap[itemId][this.selectedLang] || '';
     },
     setItemDetailsText(itemId, text) {
-      this.$set(this.itemDetailsTextMap, itemId, text);
+      // Initialize if needed
+      if (!this.itemDetailsTextMap[itemId]) {
+        this.$set(this.itemDetailsTextMap, itemId, {});
+      }
+      this.$set(this.itemDetailsTextMap[itemId], this.selectedLang, text);
     },
     updateItemDetails(object) {
       const itemId = object.id;
-      const detailsText = this.itemDetailsTextMap[itemId] || '';
 
-      // Convert textarea content to array of localized objects
+      // Get the details text for the current language
+      const detailsText = this.itemDetailsTextMap[itemId][this.selectedLang] || '';
       const lines = detailsText.split('\n').filter(line => line.trim() !== '');
 
+      // Initialize the details array if needed
       if (!object.details) {
         this.$set(object, 'details', []);
       }
 
-      object.details = lines.map(line => {
-        const detailObj = {};
+      // Get the current details as a map of { detailIndex: { locale: text } }
+      const currentDetailsMap = {};
+
+      // First, build a map of existing details
+      object.details.forEach((detailObj, index) => {
+        currentDetailsMap[index] = { ...detailObj };
+      });
+
+      // Create new details array with updated text for the current language
+      const newDetails = lines.map((line, index) => {
+        // Start with existing translations for this detail if available
+        const detailObj = index < Object.keys(currentDetailsMap).length ?
+          { ...currentDetailsMap[index] } : {};
+
+        // Update the current language
+        detailObj[this.selectedLang] = line;
+
+        // Ensure all locales have a value
         this.locales.forEach(locale => {
-          detailObj[locale] = line;
+          if (!detailObj[locale]) {
+            detailObj[locale] = locale === this.selectedLang ? line : '';
+          }
         });
+
         return detailObj;
       });
+
+      // Update the details array
+      this.$set(object, 'details', newDetails);
     },
     loadItemDetailsText(object) {
+      if (!object || !object.id) return;
+
+      // Initialize the map for this object if it doesn't exist
+      if (!this.itemDetailsTextMap[object.id]) {
+        this.$set(this.itemDetailsTextMap, object.id, {});
+      }
+
+      // Initialize for all locales if needed
+      this.locales.forEach(locale => {
+        if (typeof this.itemDetailsTextMap[object.id][locale] === 'undefined') {
+          this.$set(this.itemDetailsTextMap[object.id], locale, '');
+        }
+      });
+
       if (object && object.details && object.details.length > 0) {
-        // Set the details text from the selected language
-        const detailsText = object.details
-          .map(detail => detail[this.selectedLang] || detail.en || '')
-          .join('\n');
-        this.setItemDetailsText(object.id, detailsText);
-      } else {
-        this.setItemDetailsText(object.id, '');
+        // For each locale, set the details text
+        this.locales.forEach(locale => {
+          const detailsText = object.details
+            .map(detail => detail[locale] || detail.en || '')
+            .join('\n');
+
+          this.$set(this.itemDetailsTextMap[object.id], locale, detailsText);
+        });
       }
     },
     updateObjectDetailsText(object) {
@@ -815,7 +893,10 @@ export default {
       });
 
       // Reset the details text area when adding a new item
-      this.setItemDetailsText(serviceItem.id, '');
+      this.$set(this.itemDetailsTextMap, serviceItem.id, {});
+      this.locales.forEach(locale => {
+        this.$set(this.itemDetailsTextMap[serviceItem.id], locale, '');
+      });
     },
     removeServiceItem(itemId) {
       // Find the index of the service item with this ID

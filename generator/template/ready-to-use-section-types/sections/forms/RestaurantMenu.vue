@@ -4,11 +4,11 @@
       <label class="mr-4 font-medium">{{ $t("RestaurantMenu.viewMode") }}</label>
       <div class="flex items-center mt-2">
         <label class="flex items-center cursor-pointer mr-4">
-          <input type="radio" v-model="settings[0].viewMode" value="list" class="mr-2 h-[20px] w-[20px]" />
+          <input v-model="settings[0].viewMode" type="radio" value="list" class="mr-2 h-[20px] w-[20px]" />
           <span>{{ $t("RestaurantMenu.listView") }}</span>
         </label>
         <label class="flex items-center cursor-pointer">
-          <input type="radio" v-model="settings[0].viewMode" value="category" class="mr-2 h-[20px] w-[20px]" />
+          <input v-model="settings[0].viewMode" type="radio" value="category" class="mr-2 h-[20px] w-[20px]" />
           <span>{{ $t("RestaurantMenu.categoryView") }}</span>
         </label>
       </div>
@@ -186,7 +186,7 @@
 
         <div class="flex flex-col items-start justify-start mt-4">
           <div class="flex items-center mb-2">
-            <input v-model="settings[0].enableTax" type="checkbox" id="enableTax" class="h-5 w-5 mr-2" />
+            <input v-model="settings[0].enableTax" id="enableTax" type="checkbox" class="h-5 w-5 mr-2" />
             <label for="enableTax" class="mr-4 font-medium">
               {{ $t("RestaurantMenu.enableTax") }}
             </label>
@@ -261,7 +261,7 @@
           <!-- WhatsApp -->
           <div class="flex flex-col items-start justify-start">
             <div class="flex items-center mb-2">
-              <input v-model="settings[0].showWhatsApp" type="checkbox" id="showWhatsApp" class="h-5 w-5 mr-2" />
+              <input v-model="settings[0].showWhatsApp" id="showWhatsApp" type="checkbox" class="h-5 w-5 mr-2" />
               <label for="showWhatsApp" class="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#22c55e" viewBox="0 0 16 16">
                   <path

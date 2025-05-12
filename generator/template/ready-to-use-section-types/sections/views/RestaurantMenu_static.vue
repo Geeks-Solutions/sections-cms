@@ -3,8 +3,9 @@
     <div>
       <!-- Restaurant Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
-        <img :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Restaurant Logo'"
-          class="h-24 object-contain mx-auto" width="96" height="96" loading="lazy" />
+        <img :src="getOptimizedImage(settings.logo.url, 192, 192, true)"
+          :alt="settings.logo.seo_tag || 'Restaurant Logo'" class="h-24 object-contain mx-auto" width="96" height="96"
+          fetchpriority="high" />
       </div>
 
       <!-- Menu Title and Subtitle -->
@@ -57,10 +58,10 @@
     <!-- Shopping Cart Sidebar - Conditionally imported and rendered -->
     <ShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
-      :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true" :lang="lang" @close="closeCart"
-      @increment="incrementCartItem" @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout"
-      type="restaurant" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
-      :whatsapp-number="settings.whatsappNumber || ''" />
+      :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true" :lang="lang" type="restaurant"
+      :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
+      :whatsapp-number="settings.whatsappNumber || ''" @close="closeCart" @increment="incrementCartItem"
+      @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout" />
   </div>
 </template>
 
@@ -68,6 +69,7 @@
 // Import sub-components to allow code splitting and lazy loading
 import CartIcon from '../../components/UnifiedMenu/CartIcon.vue';
 import SocialLinks from '../../components/UnifiedMenu/SocialLinks.vue';
+import { getOptimizedImage } from '../../utils/constants';
 
 
 // Use dynamic imports for components not needed on initial render
@@ -340,6 +342,32 @@ export default {
       return this.cartSubtotal + this.cartTax;
     }
   },
+  watch: {
+    // Watch for settings changes
+    settings: {
+      handler() {
+        // Re-initialize when settings change
+        this.initializeActiveCategory();
+        this.initializeMenuTitles();
+      },
+      deep: true
+    },
+
+    // Watch for section settings changes directly
+    "section.settings": {
+      handler() {
+        // Re-initialize when settings change
+        this.initializeActiveCategory();
+        this.initializeMenuTitles();
+      },
+      deep: true
+    },
+
+    // Watch for language changes
+    lang() {
+      this.initializeMenuTitles();
+    }
+  },
   created() {
     // Set initial active category if in category view mode
     this.initializeActiveCategory();
@@ -379,32 +407,6 @@ export default {
       }
     }
   },
-  watch: {
-    // Watch for settings changes
-    settings: {
-      handler() {
-        // Re-initialize when settings change
-        this.initializeActiveCategory();
-        this.initializeMenuTitles();
-      },
-      deep: true
-    },
-
-    // Watch for section settings changes directly
-    "section.settings": {
-      handler() {
-        // Re-initialize when settings change
-        this.initializeActiveCategory();
-        this.initializeMenuTitles();
-      },
-      deep: true
-    },
-
-    // Watch for language changes
-    lang() {
-      this.initializeMenuTitles();
-    }
-  },
   mounted() {
     // Defer non-critical initialization
     this.$nextTick(() => {
@@ -424,6 +426,7 @@ export default {
     document.removeEventListener('keydown', this.handleKeyEvents);
   },
   methods: {
+    getOptimizedImage,
     initializeMenuTitles() {
       if (this.settings) {
         // Initialize menuTitle if it doesn't exist
@@ -588,13 +591,6 @@ export default {
       this.cart = [];
       this.debouncedSaveCart();
       this.closeCart();
-    },
-    // Helper method to optimize images
-    getOptimizedImage(url, width, height) {
-      if (!url) return '';
-      // This is a placeholder for an image optimization service
-      // In a real implementation, you'd use an image CDN or backend service
-      return `${url}?width=${width}&height=${height}`;
     }
   }
 };

@@ -222,3 +222,19 @@ export function generateWhatsAppMessage(cart, type, lang, i18n, currencySymbol =
   
     return message;
   }
+
+  export function getOptimizedImage(url, width = 0, height = 0, isHighPriority = false) {
+    if (!url) return '';
+    
+    // Start with basic optimizations
+    let optimizedUrl = `${url}?format=webp`;
+    
+    // Add dimensions if provided
+    if (width > 0) optimizedUrl += `&width=${width}`;
+    if (height > 0) optimizedUrl += `&height=${height}`;
+    
+    // Add quality settings (lower for non-priority)
+    optimizedUrl += isHighPriority ? '&quality=85' : '&quality=75';
+    
+    return optimizedUrl;
+  }

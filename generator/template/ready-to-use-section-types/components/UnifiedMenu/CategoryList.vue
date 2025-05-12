@@ -6,7 +6,7 @@
           <!-- Category Icon -->
           <div v-if="category.icon && category.icon.url" class="mr-3">
             <img :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
-              class="w-8 h-8 object-contain" loading="lazy" width="32" height="32" />
+              class="w-8 h-8 object-contain" format="webp" loading="lazy" width="32" height="32" />
           </div>
 
           <!-- Category Name -->
@@ -20,9 +20,9 @@
         </p>
 
         <!-- Items Grid for this category -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
           <div v-for="item in getItemsByCategory(category.id)" :key="`item-${item.id}`"
-            class="menu-item flex cursor-pointer" :class="[
+            class="menu-item flex flex-col md:flex-row cursor-pointer" :class="[
               item.classes,
               { 'featured': item.featured },
               { 'menu-item-restaurant': type === 'restaurant' },
@@ -30,50 +30,51 @@
             ]" @click="$emit('item-click', item)">
 
             <!-- Item Image -->
-            <div v-if="item.image && item.image.url" class="item-image-wrapper mr-4 flex-shrink-0">
+            <div v-if="item.image && item.image.url" class="item-image-wrapper md:mr-4 mb-4 md:mb-0 flex-shrink-0">
               <img :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]" loading="lazy"
-                class="w-20 h-20 object-cover rounded" width="80" height="80" />
+                class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" />
             </div>
 
             <!-- Item Content -->
             <div class="item-content flex-grow">
-              <div class="flex justify-between items-start">
+              <div class="flex flex-col md:flex-row justify-between md:items-start">
                 <!-- Item Name and Description in a column -->
-                <div class="flex flex-col flex-grow mr-4">
-                  <h4 class="item-name mb-1">{{ item.name[lang] }}</h4>
+                <div class="flex flex-col flex-grow md:mr-4 mb-2 md:mb-0">
+                  <h4 class="item-name mb-0.5">{{ item.name[lang] }}</h4>
                   <p v-if="item.description && item.description[lang]" class="item-description">
                     {{ item.description[lang] }}
                   </p>
-                  <div class="flex">
-                    <!-- Featured badge - in a separate row if needed -->
-                    <div v-if="item.featured" class="mt-2">
-                      <div class="badge badge-featured inline-block px-2 py-1 rounded"
+                  <div class="flex flex-wrap mt-1.5">
+                    <!-- Featured badge -->
+                    <div v-if="item.featured">
+                      <div class="badge badge-featured inline-block px-2 py-1 rounded mr-2 mb-2"
                         :class="{ 'badge-restaurant': type === 'restaurant', 'badge-service': type === 'service' }">
                         {{ isService ? $t('ServicePackages.featuredItem') : $t('RestaurantMenu.specialItem') }}
                       </div>
                     </div>
                     <!-- Availability badge for service items -->
-                    <div v-if="isService && item.availability === 'limited'" class="mt-2">
-                      <div class="badge badge-availability inline-block px-2 py-1 rounded ml-2">
+                    <div v-if="isService && item.availability === 'limited'">
+                      <div class="badge badge-availability inline-block px-2 py-1 rounded mr-2 mb-2">
                         {{ $t('ServicePackages.limitedAvailability') }}
                       </div>
                     </div>
                     <!-- Discount badge for service items -->
-                    <div v-if="isService && item.hasDiscount && calculateDiscountPercentage(item) > 0"
-                      class="badge badge-discount inline-block px-2 py-1 rounded-full ml-2 mt-2">
-                      {{ calculateDiscountPercentage(item) }}% OFF
+                    <div v-if="isService && item.hasDiscount && calculateDiscountPercentage(item) > 0">
+                      <div class="badge badge-discount inline-block px-2 py-1 rounded-full">
+                        {{ calculateDiscountPercentage(item) }}% OFF
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <!-- Price, Duration, and Badges Column -->
-                <div class="flex flex-col items-end flex-shrink-0">
+                <!-- Price, Duration Column -->
+                <div class="flex flex-col md:items-end flex-shrink-0">
                   <div class="flex items-center">
                     <!-- Pricing for service items with potential discount -->
                     <div v-if="isService && item.hasDiscount" class="item-price">
-                      <div class="flex flex-col items-end">
-                        <span class="item-price-regular line-through">{{ currencySymbol }}{{ formatPrice(item.price)
-                          }}</span>
+                      <div class="flex md:flex-col md:items-end">
+                        <span class="item-price-regular line-through mr-2 md:mr-0">{{ currencySymbol }}{{
+                          formatPrice(item.price) }}</span>
                         <span class="item-price-discounted">{{ currencySymbol }}{{ formatPrice(item.discountedPrice)
                           }}</span>
                       </div>
@@ -84,7 +85,7 @@
                     </div>
                   </div>
 
-                  <!-- Duration and Availability on same row -->
+                  <!-- Duration on same row -->
                   <div class="flex items-center mt-1">
                     <!-- Duration for services -->
                     <div v-if="isService && item.duration" class="item-duration">
@@ -145,24 +146,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-/* Mobile responsive adjustments using container queries */
-@container item (max-width: 768px) {
-  .menu-item {
-    flex-direction: column;
-  }
-
-  .item-image-wrapper {
-    margin-bottom: 1rem;
-    margin-right: 0;
-  }
-
-  .item-image-wrapper img {
-    width: 100%;
-    height: auto;
-    max-height: 12rem;
-    object-fit: cover;
-  }
-}
-</style>
