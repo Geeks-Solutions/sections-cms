@@ -10,8 +10,11 @@
           <div v-if="category.icon && category.icon.url"
             class="icon-container mr-1 flex-shrink-0 w-5 h-5 flex items-center justify-center">
             <nuxt-img :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
-              class="icon-image max-w-full max-h-full object-contain" width="20" height="20" loading="lazy"
-              modifiers="width=20&height=20&fit=contain" />
+              class="icon-image max-w-full max-h-full object-contain" width="20" height="20" loading="lazy" :modifiers="{
+                width: 20,
+                height: 20,
+                fit: 'contain'
+              }" />
           </div>
           <span class="tab-text">{{ category.name[lang] }}</span>
         </div>
