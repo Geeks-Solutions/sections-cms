@@ -18,9 +18,9 @@
       </div>
 
       <!-- Shopping Cart Icon - Only render the icon, not full cart -->
-      <UnifiedMenuCartIcon :total-items="totalItems" @click="toggleCart" />
+      <cart-icon :total-items="totalItems" @click="toggleCart" />
 
-      <UnifiedMenuSocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
+      <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
         :whatsapp-number="settings.whatsappNumber || ''"
         :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
         :type="'restaurant'" />
@@ -28,7 +28,7 @@
       <!-- Category View Mode -->
       <div v-if="isCategoryView" class="menu-content">
         <!-- Category Navigation Tabs - Optimized for performance -->
-        <UnifiedMenuCategoryTabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang"
+        <category-tabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang"
           @select-category="setActiveCategory" />
 
         <!-- Active Category Description -->
@@ -38,24 +38,24 @@
         </div>
 
         <!-- Menu Items for Active Category - Using virtual list for large menus -->
-        <UnifiedMenuItemsGrid :items="getMenuItemsByCategory(activeCategory)" :currency-symbol="settings.currencySymbol"
+        <menu-items-grid :items="getMenuItemsByCategory(activeCategory)" :currency-symbol="settings.currencySymbol"
           :lang="lang" @item-click="openItemModal" />
       </div>
 
       <!-- List View Mode (Original) - Optimized for performance -->
       <div v-else class="menu-content">
-        <UnifiedMenuCategoryList :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
+        <category-list :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
           :currency-symbol="settings.currencySymbol" :lang="lang" @item-click="openItemModal" />
       </div>
     </div>
 
     <!-- Item Modal - Conditionally imported and rendered -->
-    <UnifiedMenuItemModal v-if="showItemModal" :item="selectedItem" :currency-symbol="settings.currencySymbol" :lang="lang"
+    <item-modal v-if="showItemModal" :item="selectedItem" :currency-symbol="settings.currencySymbol" :lang="lang"
       :quantity="itemQuantity" :notes="itemNotes" @close="closeItemModal" @update-quantity="updateItemQuantity"
       @update-notes="updateItemNotes" @add-to-cart="addToCart" />
 
     <!-- Shopping Cart Sidebar - Conditionally imported and rendered -->
-    <UnifiedMenuShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
+    <ShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
       :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true" :lang="lang" type="restaurant"
       :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
@@ -65,6 +65,18 @@
 </template>
 
 <script>
+// Import sub-components to allow code splitting and lazy loading
+import CartIcon from '../../components/UnifiedMenu/CartIcon.vue';
+import SocialLinks from '../../components/UnifiedMenu/SocialLinks.vue';
+
+
+// Use dynamic imports for components not needed on initial render
+const CategoryTabs = () => import('../../components/UnifiedMenu/CategoryTabs.vue');
+const MenuItemsGrid = () => import('../../components/UnifiedMenu/ItemsGrid.vue');
+const CategoryList = () => import('../../components/UnifiedMenu/CategoryList.vue');
+const ItemModal = () => import('../../components/UnifiedMenu/ItemModal.vue');
+const ShoppingCart = () => import('../../components/UnifiedMenu/ShoppingCart.vue');
+
 // Utility functions for debouncing
 const debounce = (fn, delay) => {
   let timeoutId;
@@ -76,6 +88,15 @@ const debounce = (fn, delay) => {
 
 export default {
   name: 'RestaurantMenu',
+  components: {
+    CartIcon,
+    SocialLinks,
+    CategoryTabs,
+    MenuItemsGrid,
+    CategoryList,
+    ItemModal,
+    ShoppingCart
+  },
   props: {
     section: {
       type: Object,

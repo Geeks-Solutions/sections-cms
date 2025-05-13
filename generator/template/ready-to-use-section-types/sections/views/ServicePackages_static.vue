@@ -21,19 +21,19 @@
       </div>
 
       <!-- Shopping Cart Icon -->
-      <UnifiedMenuCartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
+      <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
 
       <div style="display: none;" aria-hidden="true">
-        <UnifiedMenuSocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :whatsapp-message="getWhatsAppMessage()"
+        <SocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :whatsapp-message="getWhatsAppMessage()"
           :cart="[]" :lang="lang" />
-        <UnifiedMenuCategoryTabs :categories="[]" :active-category="''" :lang="lang" type="service" />
-        <UnifiedMenuCategoryList :categories="[]" :get-items-by-category="getEmptyItems" :currency-symbol="'$'" :lang="lang"
+        <CategoryTabs :categories="[]" :active-category="''" :lang="lang" type="service" />
+        <CategoryList :categories="[]" :get-items-by-category="getEmptyItems" :currency-symbol="'$'" :lang="lang"
           type="service" />
         <ItemsGrid :items="[]" :currency-symbol="'$'" :lang="lang" type="service" />
       </div>
 
       <div v-if="isInitialRenderComplete">
-        <UnifiedMenuSocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
+        <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
           :whatsapp-number="settings.whatsappNumber || ''"
           :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
           :type="'service'" />
@@ -42,7 +42,7 @@
         <!-- Category View Mode -->
         <div v-if="isCategoryView" class="service-content">
           <!-- Category Navigation Tabs -->
-          <UnifiedMenuCategoryTabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang" type="service"
+          <CategoryTabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang" type="service"
             @select-category="setActiveCategory" />
 
           <!-- Active Category Description -->
@@ -52,13 +52,13 @@
           </div>
 
           <!-- Service Items for Active Category -->
-          <UnifiedMenuItemsGrid :items="getServiceItemsByCategory(activeCategory)" :currency-symbol="settings.currencySymbol"
+          <ItemsGrid :items="getServiceItemsByCategory(activeCategory)" :currency-symbol="settings.currencySymbol"
             :lang="lang" type="service" @item-click="openItemModal" />
         </div>
 
         <!-- List View Mode -->
         <div v-else class="service-content">
-          <UnifiedMenuCategoryList :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
+          <CategoryList :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
             :currency-symbol="settings.currencySymbol" :lang="lang" type="service" @item-click="openItemModal" />
         </div>
       </div>
@@ -88,14 +88,14 @@
     </div>
 
     <!-- Item Modal -->
-    <UnifiedMenuItemModal v-if="showItemModal" :item="selectedItem" :currency-symbol="settings.currencySymbol" :lang="lang"
+    <ItemModal v-if="showItemModal" :item="selectedItem" :currency-symbol="settings.currencySymbol" :lang="lang"
       :quantity="itemQuantity" :notes="itemNotes" :selected-date="selectedDate" :selected-time-slot="selectedTimeSlot"
       type="service" :show-date-time-pickers="showDateTimePickers" @close="closeItemModal"
       @update-quantity="updateItemQuantity" @update-notes="updateItemNotes" @update-date="updateSelectedDate"
       @update-time-slot="updateSelectedTimeSlot" @add-to-cart="addToCart" />
 
     <!-- Shopping Cart Sidebar - Load on demand -->
-    <UnifiedMenuShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
+    <ShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
       :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true"
       :service-fee-rate="settings.serviceFeeRate ? settings.serviceFeeRate / 100 : SERVICE_FEE_RATE"
@@ -107,6 +107,17 @@
 </template>
 
 <script>
+// Import shared components
+import CartIcon from '../../components/UnifiedMenu/CartIcon.vue';
+import SocialLinks from '../../components/UnifiedMenu/SocialLinks.vue';
+// Import utils if available, otherwise define the function locally
+
+// Dynamically import shared components
+const CategoryTabs = () => import('../../components/UnifiedMenu/CategoryTabs.vue');
+const ItemsGrid = () => import('../../components/UnifiedMenu/ItemsGrid.vue');
+const CategoryList = () => import('../../components/UnifiedMenu/CategoryList.vue');
+const ItemModal = () => import('../../components/UnifiedMenu/ItemModal.vue');
+const ShoppingCart = () => import('../../components/UnifiedMenu/ShoppingCart.vue');
 
 // Utility functions for debouncing
 const debounce = (fn, delay) => {
@@ -119,6 +130,15 @@ const debounce = (fn, delay) => {
 
 export default {
   name: 'ServicePackages',
+  components: {
+    CartIcon,
+    SocialLinks,
+    CategoryTabs,
+    ItemsGrid,
+    CategoryList,
+    ItemModal,
+    ShoppingCart
+  },
   props: {
     section: {
       type: Object,
