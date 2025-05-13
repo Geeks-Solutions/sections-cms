@@ -111,7 +111,6 @@
 import CartIcon from '../../components/UnifiedMenu/CartIcon.vue';
 import SocialLinks from '../../components/UnifiedMenu/SocialLinks.vue';
 // Import utils if available, otherwise define the function locally
-import { getOptimizedImage } from '../../utils/constants';
 
 // Dynamically import shared components
 const CategoryTabs = () => import('../../components/UnifiedMenu/CategoryTabs.vue');
@@ -517,7 +516,6 @@ export default {
     document.removeEventListener('keydown', this.handleKeyEvents);
   },
   methods: {
-    getOptimizedImage,
     // Fix #1: Add the missing empty items helper
     getEmptyItems() {
       return [];
