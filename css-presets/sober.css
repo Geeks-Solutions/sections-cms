@@ -971,6 +971,17 @@ section .ql-editor ul li::before {
   background-size: cover;
 }
 
+.left-wrapper section .text-image .row-wrapper,
+.right-wrapper section .text-image .row-wrapper {
+  display: flex !important;
+  .image-left {
+    flex-wrap: wrap-reverse !important;
+  }
+  .image-right {
+    flex-wrap: wrap !important;
+  }
+}
+
 
 .cookieControl__Modal-enter-active, .cookieControl__Modal-leave-active {
   transition: opacity 0.25s;
