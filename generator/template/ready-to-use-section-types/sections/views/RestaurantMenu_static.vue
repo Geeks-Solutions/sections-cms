@@ -4,8 +4,7 @@
       <!-- Restaurant Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
         <nuxt-img :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Restaurant Logo'" width="96" height="96"
-          class="h-24 object-contain mx-auto" placeholder quality="80" format="webp" loading="eager"
-          fetchpriority="high" />
+          class="h-24 object-contain mx-auto" placeholder quality="80" format="webp" preload fetchpriority="high" />
       </div>
 
       <!-- Menu Title and Subtitle -->

@@ -8,14 +8,14 @@
           { 'menu-item-restaurant': type === 'restaurant' },
           { 'menu-item-service': type === 'service' }
         ]" @click="$emit('item-click', item)">
-  
+
         <!-- Item Image -->
         <div v-if="item.image && item.image.url" class="item-image-wrapper md:mr-4 mb-4 md:mb-0 flex-shrink-0">
           <nuxt-img :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]"
-            class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" loading="lazy"
-            modifiers="width=80&height=80&fit=cover" />
+            class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" preload
+            fetchpriority="high" modifiers="width=80&height=80&fit=cover" />
         </div>
-  
+
         <!-- Item Content -->
         <div class="item-content flex-grow">
           <div class="flex flex-col md:flex-row justify-between md:items-start">
@@ -46,7 +46,7 @@
                 </div>
               </div>
             </div>
-  
+
             <!-- Price, Duration Column -->
             <div class="flex flex-col md:items-end flex-shrink-0">
               <div class="flex items-center">
@@ -55,7 +55,8 @@
                   <div class="flex md:flex-col md:items-end">
                     <span class="item-price-regular line-through mr-2 md:mr-0">{{ currencySymbol }}{{
                       formatPrice(item.price) }}</span>
-                    <span class="item-price-discounted">{{ currencySymbol }}{{ formatPrice(item.discountedPrice) }}</span>
+                    <span class="item-price-discounted">{{ currencySymbol }}{{ formatPrice(item.discountedPrice)
+                      }}</span>
                   </div>
                 </div>
                 <!-- Standard pricing for items -->
@@ -63,7 +64,7 @@
                   {{ currencySymbol }}{{ formatPrice(item.price) }}
                 </div>
               </div>
-  
+
               <!-- Duration on same row -->
               <div class="flex items-center mt-1">
                 <!-- Duration for services -->

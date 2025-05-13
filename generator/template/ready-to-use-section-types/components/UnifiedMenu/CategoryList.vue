@@ -33,8 +33,8 @@
             <!-- Item Image -->
             <div v-if="item.image && item.image.url" class="item-image-wrapper md:mr-4 mb-4 md:mb-0 flex-shrink-0">
               <nuxt-img :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]"
-                class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80"
-                loading="lazy" />
+                class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" preload
+                fetchpriority="high" />
             </div>
 
             <!-- Item Content -->
@@ -78,7 +78,7 @@
                         <span class="item-price-regular line-through mr-2 md:mr-0">{{ currencySymbol }}{{
                           formatPrice(item.price) }}</span>
                         <span class="item-price-discounted">{{ currencySymbol }}{{ formatPrice(item.discountedPrice)
-                          }}</span>
+                        }}</span>
                       </div>
                     </div>
                     <!-- Standard pricing for items -->
