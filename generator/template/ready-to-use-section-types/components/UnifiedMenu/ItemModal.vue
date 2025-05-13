@@ -13,8 +13,11 @@
         <!-- Item image -->
         <div v-if="item && item.image && item.image.url" :class="isService ? 'h-64' : 'h-52'">
           <nuxt-img :src="item.image.url" :alt="item.image.seo_tag || (item.name && item.name[lang])"
-            class="modal-image w-full h-full object-cover rounded-t-lg" width="400" height="160"
-            modifiers="width=400&height=160&fit=cover" />
+            class="modal-image w-full h-full object-cover rounded-t-lg" width="400" height="160" :modifiers="{
+              width: 400,
+              height: 160,
+              fit: 'cover'
+            }" />
         </div>
 
         <div class="p-6">
@@ -47,7 +50,7 @@
 
           <!-- Item features as bullet points - FIXED HEIGHT SCROLLABLE LIST -->
           <div v-if="isService && item.details && item.details.length > 0" class="mb-4">
-            <ul class="feature-list overflow-y-auto max-h-[61px] lg:max-h-[87px]" >
+            <ul class="feature-list overflow-y-auto max-h-[61px] lg:max-h-[87px]">
               <li v-for="(detail, index) in item.details" :key="index" class="feature-list-item">
                 {{ detail[lang] }}
               </li>
@@ -66,7 +69,7 @@
           <!-- Quantity control - Updated to match mockup -->
           <div class="flex items-center mb-2">
             <label class="input-label mr-4">{{ $t(isService ? 'ServicePackages.quantity' : 'RestaurantMenu.quantity')
-              }}:</label>
+            }}:</label>
             <div class="custom-quantity-control flex items-center">
               <button @click="decrementQuantity" class="item-qty-minus flex items-center justify-center rounded-full">
                 −

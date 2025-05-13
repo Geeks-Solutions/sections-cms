@@ -6,8 +6,11 @@
           <!-- Category Icon -->
           <div v-if="category.icon && category.icon.url" class="mr-3">
             <nuxt-img :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
-              class="icon-image max-w-full max-h-full object-contain" width="32" height="32" loading="lazy"
-              modifiers="width=32&height=32&fit=contain" />
+              class="icon-image max-w-full max-h-full object-contain" width="32" height="32" loading="lazy" :modifiers="{
+                width: 32,
+                height: 32,
+                fit: 'contain'
+              }" />
           </div>
 
           <!-- Category Name -->
