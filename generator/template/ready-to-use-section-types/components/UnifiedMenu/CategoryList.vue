@@ -1,12 +1,13 @@
 <template>
   <div>
     <template v-for="(category, catIndex) in categories">
-      <div class="category-container mb-12" :class="category.classes" :key="`cat-${catIndex}`">
+      <div class="category-container category-container-query mb-12" :class="category.classes" :key="`cat-${catIndex}`">
         <div class="flex items-center border-b pb-2 mb-6">
           <!-- Category Icon -->
           <div v-if="category.icon && category.icon.url" class="mr-3">
-            <img :src="getOptimizedImage(category.icon.url, 32, 32)" :alt="category.icon.seo_tag || category.name[lang]"
-              class="icon-image max-w-full max-h-full object-contain" width="32" height="32" loading="lazy" />
+            <nuxt-img :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
+              class="icon-image max-w-full max-h-full object-contain" width="32" height="32" loading="lazy"
+              modifiers="width=32&height=32&fit=contain" />
           </div>
 
           <!-- Category Name -->
@@ -20,7 +21,7 @@
         </p>
 
         <!-- Items Grid for this category -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+        <div class="item-grid">
           <div v-for="item in getItemsByCategory(category.id)" :key="`item-${item.id}`"
             class="menu-item flex flex-col md:flex-row cursor-pointer" :class="[
               item.classes,
@@ -31,7 +32,7 @@
 
             <!-- Item Image -->
             <div v-if="item.image && item.image.url" class="item-image-wrapper md:mr-4 mb-4 md:mb-0 flex-shrink-0">
-              <img :src="getOptimizedImage(item.image.url, 80, 80)" :alt="item.image.seo_tag || item.name[lang]"
+              <nuxt-img :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]"
                 class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80"
                 loading="lazy" />
             </div>
@@ -77,7 +78,7 @@
                         <span class="item-price-regular line-through mr-2 md:mr-0">{{ currencySymbol }}{{
                           formatPrice(item.price) }}</span>
                         <span class="item-price-discounted">{{ currencySymbol }}{{ formatPrice(item.discountedPrice)
-                        }}</span>
+                          }}</span>
                       </div>
                     </div>
                     <!-- Standard pricing for items -->
@@ -105,7 +106,7 @@
 
 <script>
 
-import { formatPrice, getOptimizedImage } from '@/utils/constants.js'; // Assuming this utility function is defined in your project
+import { formatPrice } from '@/utils/constants.js'; // Assuming this utility function is defined in your project
 export default {
   name: 'CategoryList',
   props: {
@@ -137,7 +138,6 @@ export default {
     }
   },
   methods: {
-    getOptimizedImage,
     formatPrice,
     calculateDiscountPercentage(item) {
       if (!item.hasDiscount || !item.price || !item.discountedPrice) return 0;

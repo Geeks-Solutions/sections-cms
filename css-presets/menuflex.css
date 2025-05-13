@@ -932,9 +932,8 @@
   background-color: #f9fafb;
 }
 
-
 .whatsapp-checkout-button {
-  background-color: #25D366;
+  background-color: #25d366;
   /* WhatsApp brand color */
   color: white;
   padding: 0.75rem;
@@ -958,7 +957,7 @@
 
 /* Service theme with potential custom colors */
 .whatsapp-checkout-button.service-theme {
-  background-color: var(--primary-color, #25D366);
+  background-color: var(--primary-color, #25d366);
 }
 
 .whatsapp-checkout-button.service-theme:hover {
@@ -967,9 +966,124 @@
 
 /* Restaurant theme with potential custom colors */
 .whatsapp-checkout-button.restaurant-theme {
-  background-color: var(--primary-color, #25D366);
+  background-color: var(--primary-color, #25d366);
 }
 
 .whatsapp-checkout-button.restaurant-theme:hover {
   background-color: var(--primary-color-dark, #22c15e);
+}
+
+/* Set up the container query context */
+.category-container-query {
+  container-type: inline-size;
+  container-name: category-container;
+}
+
+/* Default styles - one column on mobile */
+.category-container-query .item-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* Media query for larger screens - two columns */
+@media (min-width: 1024px) {
+  .category-container-query .item-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Container query overrides */
+@container category-container (max-width: 768px) {
+  .category-container-query .item-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@container category-container (min-width: 769px) {
+  .category-container-query .item-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@container category-container (max-width: 480px) {
+  .icon-container {
+    width: 100% !important;
+    margin-right: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* Menu item layout */
+.category-container-query .menu-item {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .category-container-query .menu-item {
+    flex-direction: row;
+  }
+}
+
+@container category-container (max-width: 640px) {
+  .category-container-query .menu-item {
+    flex-direction: column !important;
+  }
+
+  .category-container-query .item-image-wrapper {
+    margin-right: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .category-container-query .item-image {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .category-container-query .item-content-row {
+    flex-direction: column !important;
+  }
+
+  .category-container-query .item-price-container {
+    align-items: flex-start !important;
+    margin-top: 0.5rem !important;
+  }
+}
+
+/* Set up the container query context */
+.category-container {
+  container-type: inline-size;
+  container-name: category-container;
+}
+
+/* Menu item image styles for mobile and small containers */
+@media (max-width: 767px) {
+  .item-image-wrapper {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .item-image-wrapper img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 200px !important; /* Adjust this value as needed */
+  }
+}
+
+/* Container query for menu item images in small containers */
+@container category-container (max-width: 640px) {
+  .item-image-wrapper {
+    width: 100% !important;
+    margin-right: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .item-image-wrapper img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 200px !important; /* Adjust as needed */
+  }
 }

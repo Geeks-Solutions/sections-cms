@@ -12,9 +12,9 @@
 
         <!-- Item image -->
         <div v-if="item && item.image && item.image.url" :class="isService ? 'h-64' : 'h-52'">
-          <img :src="getOptimizedImage(item.image.url, 400, 160)"
-            :alt="item.image.seo_tag || (item.name && item.name[lang])"
-            class="modal-image w-full h-full object-cover rounded-t-lg" width="400" height="160" />
+          <nuxt-img :src="item.image.url" :alt="item.image.seo_tag || (item.name && item.name[lang])"
+            class="modal-image w-full h-full object-cover rounded-t-lg" width="400" height="160"
+            modifiers="width=400&height=160&fit=cover" />
         </div>
 
         <div class="p-6">
@@ -45,19 +45,23 @@
           <!-- Item description -->
           <p class="modal-item-description mb-2">{{ item.description[lang] }}</p>
 
-          <!-- Item features as bullet points -->
-          <ul v-if="isService && item.details && item.details.length > 0" class="feature-list mb-4">
-            <li v-for="(detail, index) in item.details" :key="index" class="feature-list-item">
-              {{ detail[lang] }}
-            </li>
-          </ul>
-          <ul v-else-if="isService" class="feature-list mb-4">
-            <li v-if="item.duration" class="feature-list-item">{{ item.duration }} service</li>
-            <li v-for="(feature, index) in parseFeatures(item.description[lang])" :key="index"
-              class="feature-list-item">
-              {{ feature }}
-            </li>
-          </ul>
+          <!-- Item features as bullet points - FIXED HEIGHT SCROLLABLE LIST -->
+          <div v-if="isService && item.details && item.details.length > 0" class="mb-4">
+            <ul class="feature-list overflow-y-auto max-h-[61px] lg:max-h-[200px]" >
+              <li v-for="(detail, index) in item.details" :key="index" class="feature-list-item">
+                {{ detail[lang] }}
+              </li>
+            </ul>
+          </div>
+          <div v-else-if="isService" class="mb-4">
+            <ul class="feature-list overflow-y-auto max-h-[61px] lg:max-h-[200px]">
+              <li v-if="item.duration" class="feature-list-item">{{ item.duration }} service</li>
+              <li v-for="(feature, index) in parseFeatures(item.description[lang])" :key="index"
+                class="feature-list-item">
+                {{ feature }}
+              </li>
+            </ul>
+          </div>
 
           <!-- Quantity control - Updated to match mockup -->
           <div class="flex items-center mb-2">
@@ -96,7 +100,7 @@
 </template>
 
 <script>
-import { formatPrice, getOptimizedImage } from "@/utils/constants"; // Assuming you have a utility function for formatting prices
+import { formatPrice } from "@/utils/constants"; // Assuming you have a utility function for formatting prices
 export default {
   name: 'ItemModal',
   props: {
@@ -156,7 +160,6 @@ export default {
     }
   },
   methods: {
-    getOptimizedImage,
     formatPrice,
     calculateDiscountPercentage(item) {
       if (!item.hasDiscount || !item.price || !item.discountedPrice) return 0;
