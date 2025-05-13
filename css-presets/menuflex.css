@@ -261,6 +261,9 @@
 .add-to-cart-service {
   background-color: var(--menu-primary);
   color: white;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 2.5rem !important;
 }
 
 .add-to-cart-service:hover {

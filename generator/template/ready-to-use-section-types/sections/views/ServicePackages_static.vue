@@ -5,8 +5,8 @@
       <!-- Business Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
         <nuxt-img :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Business Logo'"
-          class="h-24 object-contain mx-auto" width="96" height="96" loading="eager" quality="80" format="webp"
-          fit="contain" />
+          class="h-24 object-contain mx-auto" width="96" height="96" preload fetchpriority="high" quality="80"
+          format="webp" fit="contain" />
       </div>
 
       <!-- Page Title and Subtitle -->

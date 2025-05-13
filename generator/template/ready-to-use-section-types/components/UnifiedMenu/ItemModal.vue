@@ -47,7 +47,7 @@
 
           <!-- Item features as bullet points - FIXED HEIGHT SCROLLABLE LIST -->
           <div v-if="isService && item.details && item.details.length > 0" class="mb-4">
-            <ul class="feature-list overflow-y-auto max-h-[61px] lg:max-h-[200px]" >
+            <ul class="feature-list overflow-y-auto max-h-[61px] lg:max-h-[87px]" >
               <li v-for="(detail, index) in item.details" :key="index" class="feature-list-item">
                 {{ detail[lang] }}
               </li>
