@@ -14,7 +14,7 @@
          :class="[listTypeStyle.listStyle, {'md:justify-center': sectionRenderData.articles.length <= 3}]">
       <div v-for="(object, idx) in sectionRenderData.articles" :key="`article-${object.id}-${idx}`" class="flex flex-col card-wrapper" :draggable="!isDragScrollEnabled" :class="{'flex-1': listType === 'carousel'}">
         <nuxt-link :to="localePath(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : '')" :draggable="!isDragScrollEnabled" class="w-full h-full">
-          <div class="flex flex-col gap-6 h-full py-5 px-4 wrapper" :class="{'w-300px': listType === 'carousel' && sectionRenderData.articles.length > 3}" :draggable="!isDragScrollEnabled">
+          <div class="flex flex-col gap-6 h-full py-5 px-4 wrapper" :class="{'w-[300px]': listType === 'carousel' && sectionRenderData.articles.length > 3}" :draggable="!isDragScrollEnabled">
             <div class="flex" :class="listTypeStyle.image">
               <div v-if="object.medias && object.medias.length > 0" class="flex w-full self-start min-h-[300px] max-h-[300px]">
                 <img :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" :draggable="!isDragScrollEnabled" class="object-cover w-full" />

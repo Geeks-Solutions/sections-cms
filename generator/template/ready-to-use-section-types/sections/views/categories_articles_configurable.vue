@@ -8,7 +8,7 @@
 
 <script>
 
-import {mapGetters} from "vuex";
+// import {mapGetters} from "vuex";
 import {BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH, extractQsValue} from "@/utils/constants";
 
 export default {
@@ -286,9 +286,9 @@ export default {
         return Math.ceil(this.sectionRenderData.total / blogsListSize)
       } else return 1
     },
-    ...mapGetters({
-      categoriesTitles: 'getCategoriesTitles'
-    })
+    // ...mapGetters({
+    //   categoriesTitles: 'getCategoriesTitles'
+    // })
   },
   watch: {
     sectionRenderData() {

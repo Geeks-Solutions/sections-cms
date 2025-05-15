@@ -16,12 +16,12 @@
 
     <div id="content" class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.content") }}</label>
-      <wysiwyg :html="settings[0].content[selectedLang]" :css-classes-prop="settings[0].contentClasses" @cssClassesChanged="(v) => $set(settings[0], 'contentClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateContent(content)"/>
+      <LazyEditorWysiwyg :html="settings[0].content[selectedLang]" :css-classes-prop="settings[0].contentClasses" @cssClassesChanged="(v) => settings[0]['contentClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateContent(content)"/>
     </div>
 
     <div class="my-4">
       <label class="flex section-module-upload-media-label">{{ $t('forms.mapZoom') }}</label>
-      <div class="select-style-chooser w-344px">
+      <div class="select-style-chooser w-[344px]">
         <gAutoComplete
           :main-filter="settings[0].zoom"
           :placeholder="$t('forms.mapZoom')"
@@ -42,7 +42,7 @@
       <h3 :class="sectionsStyle.fieldLabel">{{ $t("forms.pins") }}</h3>
     </div>
     <div id="pins" class="flex flex-col mt-4">
-      <FieldSets :array-data-pop="settings[0].pins" :fieldset-group="'pins'" :legend-label="$t('forms.pin')" @array-updated="(data) => $set(settings[0], 'pins', data)" @remove-fieldset="(object, idx) => removePinBlock(idx)">
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].pins" :fieldset-group="'pins'" :legend-label="$t('forms.pin')" @array-updated="(data) => settings[0]['pins'] = data" @remove-fieldset="(object, idx) => removePinBlock(idx)">
 
         <template #default="{ object, idx }">
           <div>
@@ -72,7 +72,7 @@
             </div>
 
             <div :id="`pin-media-${idx}`" class="mt-8">
-              <UploadMedia :media-label="$t('Media') + '*'" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
+              <LazyMediasUploadMedia :media-label="$t('Media') + '*'" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
               <span v-show="errors[`pin-media-${idx}`] === true && siteLang === defaultLang"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
@@ -90,7 +90,7 @@
           </div>
         </template>
 
-      </FieldSets>
+      </LazySectionsFormsFieldSets>
 
       <div
         class="add-button underline cursor-pointer mt-2"
@@ -104,7 +104,7 @@
       <h3 :class="sectionsStyle.fieldLabel">{{ $t("forms.addresses") }}</h3>
     </div>
     <div id="addresses" class="flex flex-col mt-4">
-      <FieldSets :array-data-pop="settings[0].addresses" :fieldset-group="'addresses'" :legend-label="$t('forms.address')" @array-updated="(data) => $set(settings[0], 'addresses', data)" @remove-fieldset="(object, idx) => removeAddressBlock(idx)">
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].addresses" :fieldset-group="'addresses'" :legend-label="$t('forms.address')" @array-updated="(data) => settings[0]['addresses'] = data" @remove-fieldset="(object, idx) => removeAddressBlock(idx)">
 
         <template #default="{ object, idx }">
           <div>
@@ -155,7 +155,7 @@
               <div class="flex flex-col items-start my-4">
                 <label :class="sectionsStyle.fieldLabel">{{ $t("forms.pinType") + '*' }}</label>
                 <span class="text-sm pb-2">{{ $t('forms.addPinsFirst') }}</span>
-                <div class="select-style-chooser w-344px">
+                <div class="select-style-chooser w-[344px]">
                   <gAutoComplete
                     :main-filter="settings[0].addresses[idx].type"
                     :placeholder="$t('forms.pinType')"
@@ -250,7 +250,7 @@
           </div>
         </template>
 
-      </FieldSets>
+      </LazySectionsFormsFieldSets>
 
       <div
           class="add-button underline cursor-pointer mt-2"
@@ -267,16 +267,15 @@
         </button>
 
         <div class="w-full h-80 mt-5">
-          <component
-            :is="LMap"
+          <LazyLMap
             style="height: 100%"
             :zoom="zoom"
             :center="center"
             @click="setLocation"
           >
-            <component :is="LTileLayer" :url="tileLayerUrl"></component>
-            <component :is="LMarker" v-if="marker" :lat-lng="marker" :icon="markerIcon"></component>
-          </component>
+            <LazyLTileLayer :url="tileLayerUrl"></LazyLTileLayer>
+            <LazyLMarker v-if="marker" :lat-lng="marker" :icon="markerIcon"></LazyLMarker>
+          </LazyLMap>
         </div>
 
         <div class="mt-4 text-right">
@@ -294,18 +293,10 @@
 </template>
 
 <script>
-import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wysiwyg.vue";
-import FieldSets from '@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue'
-import UploadMedia from '@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue'
 import {sectionsStyle, scrollToFirstError} from "../../utils/constants";
 
 export default {
   name: 'GoogleMaps',
-  components: {
-    UploadMedia,
-    FieldSets,
-    wysiwyg
-  },
   props: {
     selectedLang: {
       type: String,
@@ -395,9 +386,6 @@ export default {
       mediaFieldIndex: '',
       sectionsStyle,
       selectedAddressIndex: null,
-      LMap: null,
-      LTileLayer: null,
-      LMarker: null,
       L: null,
       showMapSelection: false,
       zoom: 1,
@@ -452,25 +440,21 @@ export default {
       if (this.settings[0].pins[this.mediaFieldIndex].media.media_id) {
         const mediaIndex = this.settings[0].medias.findIndex(media => media.media_id === this.settings[0].pins[this.mediaFieldIndex].media.media_id)
         if (mediaIndex !== -1) {
-          this.$set(this.settings[0].medias, mediaIndex, media);
+          this.settings[0].medias[mediaIndex] = media
         } else {
           this.settings[0].medias.push(media)
         }
       } else {
         this.settings[0].medias.push(media)
       }
-      this.$set(this.settings[0].pins[this.mediaFieldIndex],'media' , media);
+      this.settings[0].pins[this.mediaFieldIndex]['media'] = media
       this.$emit('closeMediaModal')
     }
   },
   async mounted() {
-    const { LMap, LTileLayer, LMarker } = await import("vue2-leaflet");
     const L = await import("leaflet");
     await import("leaflet/dist/leaflet.css");
 
-    this.LMap = LMap;
-    this.LTileLayer = LTileLayer;
-    this.LMarker = LMarker;
     this.L = L;
     this.markerIcon = L.icon({
       iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",

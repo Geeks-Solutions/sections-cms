@@ -2,7 +2,7 @@
   <div class="QAWr">
 
     <div class="mt-4 mb-4">
-      <UploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="selectedMediaIndex = 0; $emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia(0)" />
+      <LazyMediasUploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="selectedMediaIndex = 0; $emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia(0)" />
     </div>
 
     <div class="flex flex-col items-start justify-start mt-8">
@@ -25,15 +25,14 @@
       <input
         v-model="settings[0][siteLang].title"
         type="text"
-        value=""
         :placeholder="$t('Title')"
-        :class="['py-4 pl-6 border rounded-xl h-48px w-344px focus:outline-none', errors.title ? 'border-error' : 'border-FieldGray']"
+        :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.title ? 'border-error' : 'border-FieldGray']"
       />
     </div>
 
     <div class="flex flex-col mt-4">
 
-      <FieldSets :array-data-pop="settings[0].QAs" :fieldset-group="'qa'" :legend-label="$t('QA')" @array-updated="(data) => $set(settings[0], 'QAs', data)" @remove-fieldset="(object, idx) => removeQA(idx)">
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].QAs" :fieldset-group="'qa'" :legend-label="$t('QA')" @array-updated="(data) => settings[0]['QAs'] = data" @remove-fieldset="(object, idx) => removeQA(idx)">
         <template #default="{ object, idx }">
           <div class="flex flex-row w-full justify-between">
             <div class="flex flex-col w-full items-start justify-start">
@@ -43,14 +42,13 @@
               <input
                 v-model="object[siteLang].question"
                 type="text"
-                value=""
                 :placeholder="$t('Question')"
                 class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
+            h-[48px]
             w-full
             focus:outline-none
           "
@@ -61,10 +59,10 @@
 
           <div class="flex flex-col items-start justify-start mt-8">
             <label class="mr-4 font-medium">{{ $t("Answer") }}</label>
-            <wysiwyg :quill-key="`object-${idx}`" :html="object[siteLang].answer" :css-classes-prop="object.classes" @cssClassesChanged="(v) => $set(object, 'classes', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateQAAnswer(content, idx)"/>
+            <LazyEditorWysiwyg :quill-key="`object-${idx}`" :html="object[siteLang].answer" :css-classes-prop="object.classes" @cssClassesChanged="(v) => object['classes'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateQAAnswer(content, idx)"/>
           </div>
         </template>
-      </FieldSets>
+      </LazySectionsFormsFieldSets>
 
       <div
         class="add-button underline cursor-pointer mt-2"
@@ -81,17 +79,9 @@
 </template>
 
 <script>
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
-import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wysiwyg.vue";
-import FieldSets from '@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue'
 
 export default {
   name: "FAQ",
-  components: {
-    FieldSets,
-    UploadMedia,
-    wysiwyg
-  },
   props: {
     selectedLang: {
       type: String,
@@ -171,7 +161,7 @@ export default {
       if (mediaObject.files[0].headers) {
         media.headers = mediaObject.files[0].headers
       }
-      this.$set(this.settings[this.selectedMediaIndex], 'media', media);
+      this.settings[this.selectedMediaIndex]['media'] = media
       this.$emit('closeMediaModal')
     }
   },

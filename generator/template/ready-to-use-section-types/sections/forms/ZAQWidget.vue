@@ -9,7 +9,6 @@
       <input
         v-model="settings[0].websiteId"
         type="text"
-        value=""
         :placeholder="$t('zaq.websiteId')"
         :class="sectionsStyle.input"
       />
@@ -17,13 +16,13 @@
     </div>
 
     <div id="sequence" class="mb-4">
-      <UploadMedia :is-document="true" :media-label="$t('zaq.sequence')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].sequence && Object.keys(settings[0].sequence).length > 0 ? [settings[0].sequence] : []" @uploadContainerClicked="selectedMediaKey = 'sequence'; $emit('openMediaModal', settings[0].sequence && Object.keys(settings[0].sequence).length > 0 ? settings[0].sequence.media_id : null)" @removeUploadedImage="removeMedia('sequence')" />
+      <LazyMediasUploadMedia :is-document="true" :media-label="$t('zaq.sequence')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].sequence && Object.keys(settings[0].sequence).length > 0 ? [settings[0].sequence] : []" @uploadContainerClicked="selectedMediaKey = 'sequence'; $emit('openMediaModal', settings[0].sequence && Object.keys(settings[0].sequence).length > 0 ? settings[0].sequence.media_id : null)" @removeUploadedImage="removeMedia('sequence')" />
       <span v-if="errors.sequence === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
     <div v-if="sequences && Object.keys(sequences).length > 0" class="mb-4">
       <label class="flex section-module-upload-media-label">{{ $t('zaq.autoStart') }}</label>
-      <div class="select-style-chooser w-344px">
+      <div class="select-style-chooser w-[344px]">
         <gAutoComplete
           :main-filter="settings[0].autoStart"
           :placeholder="$t('zaq.autoStart')"
@@ -42,20 +41,20 @@
 
 
     <div class="mb-4">
-      <UploadMedia :is-document="true" :media-label="$t('zaq.css')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].css && Object.keys(settings[0].css).length > 0 ? [settings[0].css] : []" @uploadContainerClicked="selectedMediaKey = 'css'; $emit('openMediaModal', settings[0].css && Object.keys(settings[0].css).length > 0 ? settings[0].css.media_id : null)" @removeUploadedImage="removeMedia('css')" />
+      <LazyMediasUploadMedia :is-document="true" :media-label="$t('zaq.css')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].css && Object.keys(settings[0].css).length > 0 ? [settings[0].css] : []" @uploadContainerClicked="selectedMediaKey = 'css'; $emit('openMediaModal', settings[0].css && Object.keys(settings[0].css).length > 0 ? settings[0].css.media_id : null)" @removeUploadedImage="removeMedia('css')" />
       <span class="text-xs text-Gray_800"></span>
     </div>
 
     <div class="mb-4">
       <label class="flex section-module-upload-media-label">{{ $t('zaq.sendbtnIcon') }}</label>
       <span class="flex text-xs text-Gray_800 pb-1">{{ $t('zaq.recommendedSize') }}</span>
-      <UploadMedia :media-label="''" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].sendBtnMedia && Object.keys(settings[0].sendBtnMedia).length > 0 ? [settings[0].sendBtnMedia] : []" @uploadContainerClicked="selectedMediaKey = 'sendBtnMedia'; $emit('openMediaModal', settings[0].sendBtnMedia && Object.keys(settings[0].sendBtnMedia).length > 0 ? settings[0].sendBtnMedia.media_id : null)" @removeUploadedImage="removeMedia('sendBtnMedia')" />
+      <LazyMediasUploadMedia :media-label="''" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].sendBtnMedia && Object.keys(settings[0].sendBtnMedia).length > 0 ? [settings[0].sendBtnMedia] : []" @uploadContainerClicked="selectedMediaKey = 'sendBtnMedia'; $emit('openMediaModal', settings[0].sendBtnMedia && Object.keys(settings[0].sendBtnMedia).length > 0 ? settings[0].sendBtnMedia.media_id : null)" @removeUploadedImage="removeMedia('sendBtnMedia')" />
     </div>
 
     <div class="mb-4">
       <label class="flex section-module-upload-media-label">{{ $t('zaq.typingIcon') }}</label>
       <span class="flex text-xs text-Gray_800 pb-1">{{ $t('zaq.recommendedSize') }}</span>
-      <UploadMedia :media-label="''" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].typingIconMedia && Object.keys(settings[0].typingIconMedia).length > 0 ? [settings[0].typingIconMedia] : []" @uploadContainerClicked="selectedMediaKey = 'typingIconMedia'; $emit('openMediaModal', settings[0].typingIconMedia && Object.keys(settings[0].typingIconMedia).length > 0 ? settings[0].typingIconMedia.media_id : null)" @removeUploadedImage="removeMedia('typingIconMedia')" />
+      <LazyMediasUploadMedia :media-label="''" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].typingIconMedia && Object.keys(settings[0].typingIconMedia).length > 0 ? [settings[0].typingIconMedia] : []" @uploadContainerClicked="selectedMediaKey = 'typingIconMedia'; $emit('openMediaModal', settings[0].typingIconMedia && Object.keys(settings[0].typingIconMedia).length > 0 ? settings[0].typingIconMedia.media_id : null)" @removeUploadedImage="removeMedia('typingIconMedia')" />
     </div>
 
     <div class="flex flex-col items-start justify-start mt-8">
@@ -64,11 +63,10 @@
       <input
         v-model="settings[0].hideBadge"
         type="checkbox"
-        value=""
         :placeholder="$t('zaq.hideBadge')"
         class="
-            h-25px
-            w-25px
+            h-[25px]
+            w-[25px]
             pl-6
             border border-FieldGray
             rounded-xl
@@ -81,14 +79,10 @@
 </template>
 
 <script>
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
 import {sectionsStyle, scrollToFirstError} from "@/utils/constants";
 
 export default {
   name: 'ZAQWidget',
-  components: {
-    UploadMedia
-  },
   props: {
     selectedLang: {
       type: String,
@@ -175,7 +169,7 @@ export default {
       if (mediaObject.files[0].headers) {
         media.headers = mediaObject.files[0].headers
       }
-      this.$set(this.settings[0], this.selectedMediaKey, media);
+      this.settings[0][this.selectedMediaKey] = media
       this.$emit('closeMediaModal')
       this.settings[0].autoStart = 'None'
       if (this.selectedMediaKey === 'sequence') {
@@ -204,7 +198,7 @@ export default {
     },
     validate() {
       try {
-        const allCookies = this.$cookies.getAll();
+        const allCookies = []// this.$cookies.getAll();
         Object.keys(allCookies).forEach((cookieName) => {
           if (cookieName.startsWith('zaq_')) {
             this.$cookies.remove(cookieName);
