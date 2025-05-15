@@ -1,5 +1,5 @@
 <template>
-  <div v-if="settings" class="GoogleMaps mb-16 py-2.5 md:mx-auto max-w-7xl">
+  <div v-if="settings" class="GoogleMaps mb-16 py-2.5 md:mx-auto max-w-[7xl]">
 
     <div class="flex flex-col w-full mx-auto pb-10 map-content">
 
@@ -7,7 +7,7 @@
 
     </div>
 
-    <div :id="`map-${section.weight}`" class="w-full h-447px map-wrapper"></div>
+    <div :id="`map-${section.weight}`" class="w-full h-[447px] map-wrapper"></div>
 
     <div class="grid md:flex grid-cols-2 md:flex-row md:flex-wrap text-Gray_800 gap-y-5 gap-x-3 md:gap-3 mt-8 md:ml-4 pins-wrapper">
       <div v-for="(pin, pinIdx) in settings.pins" :key="`pin-${pinIdx}`" class="flex flex-col items-start gap-1">
@@ -67,7 +67,7 @@
 
 <script>
 /* global google */
-import { Loader } from "@googlemaps/js-api-loader";
+import * as Loader from "@googlemaps/js-api-loader";
 import {sectionsStyle} from "../../utils/constants";
 
 export default {
@@ -156,7 +156,7 @@ export default {
       }
     },
     initLoader() {
-      this.loader = new Loader({
+      this.loader = new Loader.Loader({
         apiKey: this.settings.mapApiKey
       });
     },
@@ -206,7 +206,8 @@ export default {
               marker,
               addr
             })
-            marker.addListener("click", () => {
+
+            marker.addListener("gmp-click", () => {
               this.filteredAddresses = []
               if (this.infoWindow) {
                 this.infoWindow.close();

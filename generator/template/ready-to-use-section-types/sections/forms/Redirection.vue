@@ -2,7 +2,7 @@
   <div>
     <div id="message" class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-bold">{{ $t("forms.message") }}</label>
-      <wysiwyg :html="settings[0][selectedLang].message" :css-classes-prop="settings[0].classes" @cssClassesChanged="(v) => $set(settings[0], 'classes', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateMessageDescription"/>
+      <LazyEditorWysiwyg :html="settings[0][selectedLang].message" :css-classes-prop="settings[0].classes" @cssClassesChanged="(v) => settings[0]['classes'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateMessageDescription"/>
       <span v-show="selectedLang === 'en' && errors.message" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
     <div class="flex flex-col items-start justify-start mt-8">
@@ -14,15 +14,14 @@
       <input
         v-model="settings[0][selectedLang].redirectionUrl"
         type="text"
-        value=""
         :placeholder="$t('forms.redirectionUrl')"
         class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-344px
+            h-[48px]
+            w-[344px]
             focus:outline-none
           "
       />
@@ -33,15 +32,14 @@
       <input
         v-model="settings[0].timeToRedirect"
         type="number"
-        value=""
         :placeholder="$t('forms.timeToRedirect')"
         class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-344px
+            h-[48px]
+            w-[344px]
             focus:outline-none
           "
       />
@@ -51,14 +49,10 @@
 </template>
 
 <script>
-import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wysiwyg.vue";
 import {scrollToFirstError} from "@/utils/constants";
 
 export default {
   name: 'Redirection',
-  components: {
-    wysiwyg
-  },
   props: {
     selectedLang: {
       type: String,

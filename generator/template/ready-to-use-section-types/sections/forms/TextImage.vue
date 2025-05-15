@@ -57,7 +57,7 @@
     </div>
 
     <div class="mt-4 mb-4">
-      <UploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="selectedMediaIndex = 0; $emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia(0)" />
+      <LazyMediasUploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="selectedMediaIndex = 0; $emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia(0)" />
     </div>
 
     <div class="flex flex-col items-start justify-start mt-8">
@@ -85,13 +85,13 @@
 
     <div id="title" class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.title") + '*' }}</label>
-      <wysiwyg :html="settings[0].title[selectedLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => $set(settings[0], 'titleClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content)"/>
+      <LazyEditorWysiwyg :html="settings[0].title[selectedLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => settings[0]['titleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content)"/>
       <span v-if="errors.title === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
     <div id="text" class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.text") + '*' }}</label>
-      <wysiwyg :html="settings[0].text[selectedLang]" :css-classes-prop="settings[0].textClasses" @cssClassesChanged="(v) => $set(settings[0], 'textClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content)"/>
+      <LazyEditorWysiwyg :html="settings[0].text[selectedLang]" :css-classes-prop="settings[0].textClasses" @cssClassesChanged="(v) => settings[0]['textClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content)"/>
       <span v-if="errors.text === true " class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
@@ -99,16 +99,10 @@
 </template>
 
 <script>
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
-import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wysiwyg.vue";
 import {sectionsStyle, scrollToFirstError} from "@/utils/constants";
 
 export default {
   name: 'TextImage',
-  components: {
-    UploadMedia,
-    wysiwyg
-  },
   props: {
     selectedLang: {
       type: String,
@@ -189,7 +183,7 @@ export default {
       if (mediaObject.files[0].headers) {
         media.headers = mediaObject.files[0].headers
       }
-      this.$set(this.settings[this.selectedMediaIndex], 'media', media);
+      this.settings[this.selectedMediaIndex]['media'] = media
       this.$emit('closeMediaModal')
     }
   },

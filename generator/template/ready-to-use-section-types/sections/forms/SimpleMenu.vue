@@ -2,7 +2,7 @@
   <div class="p-4">
 
     <div class="mb-4">
-      <UploadMedia :media-label="$t('forms.logo')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="$emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia()" />
+      <LazyMediasUploadMedia :media-label="$t('forms.logo')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="$emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia()" />
       <span class="flex text-xs text-Gray_800">{{ $t("forms.logoIconDesc") }}</span>
     </div>
 
@@ -21,7 +21,7 @@
         :track-by="'path'"
         @itemSelected="
                   (val) => {
-                    locales.forEach(locale => { $set(settings[0].logoPage, locale, val) })
+                    locales.forEach(locale => { settings[0].logoPage[locale] = val })
                   }
                 "
       >
@@ -34,7 +34,6 @@
       <input
         v-model="settings[0].logoLink[selectedLang]"
         type="text"
-        value=""
         :placeholder="$t('forms.link')"
         :class="sectionsStyle.input"
       />
@@ -42,7 +41,7 @@
 
     <div class="my-4">
       <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-      <div class="select-style-chooser w-344px">
+      <div class="select-style-chooser w-[344px]">
         <gAutoComplete
           :main-filter="settings[0].logoLinkTarget"
           :placeholder="$t('forms.linkTarget')"
@@ -65,7 +64,6 @@
       <input
         v-model="settings[0].logoClasses"
         type="text"
-        value=""
         :placeholder="$t('forms.logoCssClasses')"
         :class="sectionsStyle.input"
       />
@@ -76,7 +74,6 @@
       <input
         v-model="settings[0].menuLabel[selectedLang]"
         type="text"
-        value=""
         :placeholder="$t('forms.menuLabel')"
         :class="sectionsStyle.input"
       />
@@ -88,7 +85,6 @@
       <input
         v-model="settings[0].classes"
         type="text"
-        value=""
         :placeholder="$t('forms.cssClasses')"
         :class="sectionsStyle.input"
       />
@@ -98,14 +94,13 @@
 
     <div id="menu" class="flex flex-col mt-4">
 
-      <FieldSets :array-data-pop="settings[0].menu" :fieldset-group="'menu'" :legend-label="$t('forms.link')" @array-updated="(data) => $set(settings[0], 'menu', data)" @remove-fieldset="(object, idx) => removeMenuItem(idx)">
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].menu" :fieldset-group="'menu'" :legend-label="$t('forms.link')" @array-updated="(data) => settings[0]['menu'] = data" @remove-fieldset="(object, idx) => removeMenuItem(idx)">
         <template #default="{ object, idx }">
           <div class="flex flex-col items-start justify-start mt-8">
             <label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.label") + '*' : $t("forms.label") }}</label>
             <input
               v-model="object.label[selectedLang]"
               type="text"
-              value=""
               :placeholder="$t('forms.label')"
               :class="sectionsStyle.input"
             />
@@ -120,7 +115,6 @@
             <input
               v-model="settings[0].menu[idx].menuItemClasses"
               type="text"
-              value=""
               :placeholder="$t('forms.cssClasses')"
               :class="sectionsStyle.input"
             />
@@ -132,11 +126,10 @@
             <input
               v-model="settings[0].menu[idx].languageMenu"
               type="checkbox"
-              value=""
               :placeholder="$t('Language menu')"
               class="
-            h-25px
-            w-25px
+            h-[25px]
+            w-[25px]
             pl-6
             border border-FieldGray
             rounded-xl
@@ -161,7 +154,7 @@
                 :track-by="'path'"
                 @itemSelected="
                   (val) => {
-                    locales.forEach(locale => { $set(settings[0].menu[idx].page, locale, val) })
+                    locales.forEach(locale => { settings[0].menu[idx].page[locale] = val })
                   }
                 "
               >
@@ -174,7 +167,6 @@
               <input
                 v-model="object.link[selectedLang]"
                 type="text"
-                value=""
                 :placeholder="$t('forms.link')"
                 :class="sectionsStyle.input"
               />
@@ -186,7 +178,7 @@
           <div v-if="settings[0].menu[idx].languageMenu !== true">
             <div class="my-4">
               <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-              <div class="select-style-chooser w-344px">
+              <div class="select-style-chooser w-[344px]">
                 <gAutoComplete
                   :main-filter="settings[0].menu[idx].linkTarget"
                   :placeholder="$t('forms.linkTarget')"
@@ -204,7 +196,7 @@
             </div>
           </div>
         </template>
-      </FieldSets>
+      </LazySectionsFormsFieldSets>
 
       <div
         class="add-button underline cursor-pointer mt-2"
@@ -218,15 +210,12 @@
 </template>
 
 <script>
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
-import FieldSets from "@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue";
-import {sectionHeader} from "@geeks.solutions/nuxt-sections/lib/src/utils";
+import {sectionHeader, useCookie} from "#imports";
 import {getSectionsPages, sectionsStyle, scrollToFirstError} from "@/utils/constants";
 import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'SimpleMenu',
-  components: { FieldSets, UploadMedia },
   props: {
     selectedLang: {
       type: String,
@@ -328,14 +317,12 @@ export default {
       if (mediaObject.files[0].headers) {
         media.headers = mediaObject.files[0].headers
       }
-      this.$set(this.settings[0], 'media', media);
+      this.settings[0]['media'] = media
       this.$emit('closeMediaModal')
     }
   },
   async mounted() {
-    this.$nuxt.$emit('initLoading', true)
-    this.sectionsPages = await getSectionsPages(sectionHeader({token: window.$nuxt.$cookies.get('sections-auth-token')}))
-    this.$nuxt.$emit('initLoading', false)
+    this.sectionsPages = await getSectionsPages(sectionHeader({token: useCookie('sections-auth-token').value}))
   },
   methods: {
     addMenuItem() {
@@ -355,7 +342,7 @@ export default {
       this.settings[0].menu.push(menuItem);
     },
     removeMenuItem(idx) {
-      this.$set(this.settings[0], 'menu', this.settings[0].menu.filter((ct, i) => idx !== i))
+      this.settings[0]['menu'] = this.settings[0].menu.filter((ct, i) => idx !== i)
     },
     removeMedia() {
       this.settings[0].media = {}

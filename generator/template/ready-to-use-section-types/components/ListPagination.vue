@@ -16,7 +16,7 @@
         'bg-white text-Gray_800': currentPage === page,
         'text-Gray_600 cursor-pointer': currentPage !== page
       }"
-          class="pagination w-25px xs:w-40px h-25px xs:h-40px text-center content-center rounded-full"
+          class="pagination w-[25px] xs:w-[40px] h-[25px] xs:h-[40px] text-center content-center rounded-full"
           @click="page !== '...' ? $emit('page-changed', page) : null"
       >
         {{ page }}
@@ -31,7 +31,7 @@
         'bg-Gray_50 text-Gray_800': currentPage === page,
         'text-Gray_600': currentPage !== page
       }"
-          class="pagination-m w-25px xs:w-40px h-25px xs:h-40px text-center content-center"
+          class="pagination-m w-[25px] xs:w-[40px] h-[25px] xs:h-[40px] text-center content-center"
           @click="page !== '...' ? $emit('page-changed', page) : null"
       >
         {{ page }}

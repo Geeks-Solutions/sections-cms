@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {useCookie} from '#imports'
 
 export default {
   name: 'RedirectionStatic',
@@ -41,7 +42,7 @@ export default {
     },
   },
   mounted() {
-    if (this.settings && this.settings.timeToRedirect && this.settings[this.lang].redirectionUrl && !this.$cookies.get('sections-auth-token')) {
+    if (this.settings && this.settings.timeToRedirect && this.settings[this.lang].redirectionUrl && !useCookie('sections-auth-token').value) {
       setTimeout(() => {
         this.openLink(this.settings[this.lang].redirectionUrl)
       }, Number(this.settings.timeToRedirect) * 1000)

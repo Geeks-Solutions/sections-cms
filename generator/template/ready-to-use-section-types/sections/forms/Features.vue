@@ -3,12 +3,12 @@
 
     <div class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.title") }}</label>
-      <wysiwyg :html="settings[0].title[selectedLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => $set(settings[0], 'titleClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content, 0)"/>
+      <LazyEditorWysiwyg :html="settings[0].title[selectedLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => settings[0]['titleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content, 0)"/>
     </div>
 
     <div class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.description") }}</label>
-      <wysiwyg :html="settings[0].subtitle[selectedLang]" :css-classes-prop="settings[0].subtitleClasses" @cssClassesChanged="(v) => $set(settings[0], 'subtitleClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateSubtitleDescription(content, 0)"/>
+      <LazyEditorWysiwyg :html="settings[0].subtitle[selectedLang]" :css-classes-prop="settings[0].subtitleClasses" @cssClassesChanged="(v) => settings[0]['subtitleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateSubtitleDescription(content, 0)"/>
     </div>
 
     <div class="flex flex-row justify-center mt-8">
@@ -16,23 +16,23 @@
     </div>
 
     <div id="media" class="flex flex-col mt-4">
-      <FieldSets :array-data-pop="settings[0].features" :fieldset-group="'menu'" :legend-label="$t('forms.feature')" @array-updated="(data) => $set(settings[0], 'features', data)" @remove-fieldset="(object, idx) => removeFeatureBlock(idx)">
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].features" :fieldset-group="'menu'" :legend-label="$t('forms.feature')" @array-updated="(data) => settings[0]['features'] = data" @remove-fieldset="(object, idx) => removeFeatureBlock(idx)">
         <template #default="{ object, idx }">
 
           <div>
             <div class="mb-4">
-              <UploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'media'; $emit('openMediaModal', object.media && Object.keys(object.media).length > 0 ? object.media.media_id : null)" @removeUploadedImage="removeMedia(idx, 'media')" />
+              <LazyMediasUploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'media'; $emit('openMediaModal', object.media && Object.keys(object.media).length > 0 ? object.media.media_id : null)" @removeUploadedImage="removeMedia(idx, 'media')" />
               <span v-if="errors.media === true && idx === 0" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
           </div>
 
           <div class="flex flex-col items-start justify-start mt-8">
             <label :class="sectionsStyle.fieldLabel">{{ $t("forms.description") }}</label>
-            <wysiwyg :html="object.text[selectedLang]" :css-classes-prop="object.textClasses" @cssClassesChanged="(v) => $set(object, 'textClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content, idx)"/>
+            <LazyEditorWysiwyg :html="object.text[selectedLang]" :css-classes-prop="object.textClasses" @cssClassesChanged="(v) => object['textClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content, idx)"/>
           </div>
 
         </template>
-      </FieldSets>
+      </LazySectionsFormsFieldSets>
 
       <div
         class="add-button underline cursor-pointer mt-2 pb-4"
@@ -46,18 +46,10 @@
 </template>
 
 <script>
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
-import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wysiwyg.vue";
-import FieldSets from '@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue'
 import {scrollToFirstError, sectionsStyle} from "@/utils/constants";
 
 export default {
   name: 'Features',
-  components: {
-    FieldSets,
-    UploadMedia,
-    wysiwyg
-  },
   props: {
     selectedLang: {
       type: String,
@@ -152,14 +144,14 @@ export default {
       if (mediaObject.files[0].headers) {
         media.headers = mediaObject.files[0].headers
       }
-      this.$set(this.settings[0].features[this.selectedMediaIndex], this.selectedMediaKey, media)
+      this.settings[0].features[this.selectedMediaIndex][this.selectedMediaKey] = media
       this.settings[0].medias.push(media)
       this.$emit('closeMediaModal')
     },
     settings: {
       handler(v) {
         if (v && v[0] && v[0].features === undefined) {
-          this.$set(this.settings[0], 'features', [])
+          this.settings[0]['features'] = []
           this.settings[0].medias = []
           this.settings.forEach(st => {
             this.settings[0].features.push(JSON.parse(JSON.stringify(st)))

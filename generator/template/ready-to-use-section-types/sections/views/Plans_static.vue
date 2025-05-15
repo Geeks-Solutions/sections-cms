@@ -27,7 +27,7 @@
 				</div>
 			  </div>
 			  <div class="flex items-center border-b border-FieldGray pb-4">
-				<div class="flex justify-center border border-Dark rounded-full w-100px h-100px mr-6 img-wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
+				<div class="flex justify-center border border-Dark rounded-full w-[100px] h-[100px] mr-6 img-wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
 				  <img v-if="plan.media && (plan.media.files && plan.media.files[0].url) || (plan.media && plan.media.url && plan.media.url !== '')" format="webp" loading="lazy" :src="plan.media.url && plan.media.url !== '' ? plan.media.url : plan.media.files[0].url" :alt="plan.media.seo_tag" class="p-2" />
 				</div>
 				<div class="w-140px plansTitleBox ql-snow">

@@ -7,9 +7,8 @@
 	  <input
 		   v-model="settings[0][selectedLang].title"
 		   type="text"
-		   value=""
 		   :placeholder="$t('Title')"
-		   :class="['py-4 pl-6 border rounded-xl h-48px w-344px focus:outline-none', errors.title ? 'border-error' : 'border-FieldGray']"
+		   :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.title ? 'border-error' : 'border-FieldGray']"
 	  />
 	</div>
 
@@ -20,9 +19,8 @@
 	  <input
 		   v-model="settings[0][selectedLang].subTitle"
 		   type="text"
-		   value=""
 		   :placeholder="$t('Subtitle')"
-		   :class="['py-4 pl-6 border rounded-xl h-48px w-344px focus:outline-none', errors.subTitle ? 'border-error' : 'border-FieldGray']"
+		   :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.subTitle ? 'border-error' : 'border-FieldGray']"
 	  />
 	</div>
 
@@ -33,9 +31,8 @@
 	  <input
 		   v-model="settings[0][selectedLang].buttonLabel"
 		   type="text"
-		   value=""
 		   :placeholder="$t('Button Label')"
-		   :class="['py-4 pl-6 border rounded-xl h-48px w-344px focus:outline-none', errors.buttonLabel ? 'border-error' : 'border-FieldGray']"
+		   :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.buttonLabel ? 'border-error' : 'border-FieldGray']"
 	  />
 	</div>
 
@@ -46,16 +43,15 @@
 	  <input
 		   v-model="settings[0][selectedLang].link"
 		   type="text"
-		   value=""
 		   :placeholder="$t('Link')"
-		   :class="['py-4 pl-6 border rounded-xl h-48px w-344px focus:outline-none', errors.link ? 'border-error' : 'border-FieldGray']"
+		   :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.link ? 'border-error' : 'border-FieldGray']"
 	  />
 	  <link-description />
 	</div>
 
     <div class="my-4">
       <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-      <div class="select-style-chooser w-344px">
+      <div class="select-style-chooser w-[344px]">
         <gAutoComplete
           :main-filter="settings[0].linkTarget"
           :placeholder="$t('forms.linkTarget')"

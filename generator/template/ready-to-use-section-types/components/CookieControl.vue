@@ -1,5 +1,5 @@
 <template>
-  <section class="cookieControl">
+  <div class="cookieControl">
     <transition :name="`cookieControl__Bar--${cookies.barPosition}`">
       <div v-if="colorsSet && !cookies.consent" :class="`cookieControl__Bar cookieControl__Bar--${cookies.barPosition}`">
         <div class="cookieControl__BarContainer">
@@ -65,7 +65,7 @@
         </div>
       </div>
     </transition>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -139,7 +139,7 @@ export default {
       return this.cookies.optional;
     }
   },
-  mounted() {
+  beforeMount() {
     if(this.$cookies.get('cookie_control_enabled_cookies') !== undefined && this.$cookies.get('cookie_control_enabled_cookies').length !== 0){
       this.optionalCookies.forEach(c => {
         for (const cookieKey of Object.keys(this.$cookies.getAll())) {
