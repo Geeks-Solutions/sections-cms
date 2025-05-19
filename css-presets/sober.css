@@ -1463,7 +1463,7 @@ section .ql-editor ul li::before {
     width: 50% !important;
   }
 
-  .faq div.faq-row-wrapper .imageWrapper div.h-240px {
+  .faq div.faq-row-wrapper .imageWrapper div {
     height: 100% !important;
     margin-top: 0 !important;
     max-height: 470px;
