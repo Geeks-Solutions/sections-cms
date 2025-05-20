@@ -80,6 +80,8 @@
 
 <script>
 import {sectionsStyle, scrollToFirstError} from "@/utils/constants";
+import { useCookie } from '#imports'
+import { useFetch } from '#app'
 
 export default {
   name: 'ZAQWidget',
@@ -186,7 +188,12 @@ export default {
     async loadSequences() {
       if (this.settings && this.settings[0] && this.settings[0].sequence && this.settings[0].sequence.url) {
         try {
-          const res = await this.$axios.get(this.settings[0].sequence.url);
+          const res = await useFetch(
+            this.settings[0].sequence.url,
+            {
+              method: 'GET'
+            }
+          )
           this.sequences = res.data;
         } catch (err) {}
       }
@@ -201,7 +208,7 @@ export default {
         const allCookies = []// this.$cookies.getAll();
         Object.keys(allCookies).forEach((cookieName) => {
           if (cookieName.startsWith('zaq_')) {
-            this.$cookies.remove(cookieName);
+            useCookie(cookieName).value = null;
           }
         });
       } catch {}

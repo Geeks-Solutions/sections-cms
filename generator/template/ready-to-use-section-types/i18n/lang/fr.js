@@ -294,10 +294,8 @@ export default {
     contain: 'Contenir',
     fill: 'Remplir',
     none: 'Aucun',
-    sortDesc1:
-      'Pour trier par ID d\'article dans l\'ordre décroissant, utilisez le format suivant: {"id":"desc"}.',
-    sortDesc2:
-      "Cela spécifie que les articles doivent être classés de l'ID le plus élevé au plus bas.",
+    sortDesc1: "Pour trier par ID d'article dans l'ordre décroissant, utilisez le format suivant: &#123\"id\":\"desc\"&#125.",
+    sortDesc2: "Cela spécifie que les articles doivent être classés de l'ID le plus élevé au plus bas."
   },
   'Free Start Label': 'Label de démarrage pour le package Gratuit',
   'Free Start Link': 'Lien de démarrage pour le package Gratuit',

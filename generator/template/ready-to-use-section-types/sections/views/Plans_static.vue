@@ -14,7 +14,7 @@
 	  <div :class="['flex flex-wrap justify-center gap-7 items-center mt-16', (settings.features && settings.features[lang] !== '') ? 'md:h-full' : 'md:h-full']">
 
 		<div v-for="(plan, idx) in settings.plans" :key="`plans-${idx}`" :class="plan.title && plan.title[lang] ? '' : 'hidden'">
-		  <div v-if="plan.title && plan.title[lang]" class="flex justify-between relative plansBox md:w-312px rounded-md" :class="[{'mostPopular' : plan.mostPopular === true}, `plan-${idx}`]">
+		  <div v-if="plan.title && plan.title[lang]" class="flex justify-between relative plansBox md:w-[312px] rounded-md" :class="[{'mostPopular' : plan.mostPopular === true}, `plan-${idx}`]">
 			<div class="flex flex-col z-10 w-max justify-between py-4 rounded-md mx-4 px-4 wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
 			  <div v-if="plan.mostPopular === true" class="absolute top-0 left-0 transform w-2/3 border-transparent">
 				<span class="absolute popPad" />
@@ -27,11 +27,11 @@
 				</div>
 			  </div>
 			  <div class="flex items-center border-b border-FieldGray pb-4">
-				<div class="flex justify-center border border-Dark rounded-full w-[100px] h-[100px] mr-6 img-wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
+				<div class="flex justify-center border rounded-full w-[100px] h-[100px] mr-6 img-wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
 				  <img v-if="plan.media && (plan.media.files && plan.media.files[0].url) || (plan.media && plan.media.url && plan.media.url !== '')" format="webp" loading="lazy" :src="plan.media.url && plan.media.url !== '' ? plan.media.url : plan.media.files[0].url" :alt="plan.media.seo_tag" class="p-2" />
 				</div>
-				<div class="w-140px plansTitleBox ql-snow">
-				  <div class="title w-80px" :class="{'mostPopular' : plan.mostPopular === true}" :title="plan.title[lang]">{{ plan.title[lang] }}</div>
+				<div class="w-[140px] plansTitleBox ql-snow">
+				  <div class="title w-[80px]" :class="{'mostPopular' : plan.mostPopular === true}" :title="plan.title[lang]">{{ plan.title[lang] }}</div>
           <gWysiwygContent v-if="plan.description[lang] !== ''" tag="div" :wrapper-classes="plan.classes" :classes="`pt-2 pb-0 pl-0 desc`" :html-content="plan.description[lang]" />
 				</div>
 
@@ -50,7 +50,7 @@
 
 			  <div class="pt-6 flex flex-col h-full justify-between">
 				<div class="pb-4 features">
-				  <ul v-for="(item, index) in plan.features[lang] && plan.features[lang].includes('-') ? plan.features[lang].split('-') : []" :key="`plan-${item}-${index}`" class="flex justify-start items-start md:w-full w-250px max-w-[250px] pt-1 ">
+				  <ul v-for="(item, index) in plan.features[lang] && plan.features[lang].includes('-') ? plan.features[lang].split('-') : []" :key="`plan-${item}-${index}`" class="flex justify-start items-start md:w-full w-[250px] max-w-[250px] pt-1 ">
 					<li class="bp" :class="{'mostPopular' : plan.mostPopular === true}">{{ item }}</li>
 				  </ul>
 				</div>

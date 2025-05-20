@@ -1,4 +1,5 @@
 import { useFetch, useNuxtApp } from '#app'
+import { useRouter, useRoute } from '#imports'
 
 export const BLOGS_LIST_SIZE = 12
 
@@ -40,8 +41,9 @@ export function extractQsValue(key, path, ctTitles = false) {
     let finalPath = ''
     if (path) {
         finalPath = path
-    } else if (window && window.$nuxt) {
-        finalPath = window.$nuxt.$route.path;
+    } else {
+      const route = useRoute()
+        finalPath = route.path;
     }
     if (finalPath && finalPath.includes('categories_titles') && ctTitles === true) {
         return decodeURIComponent(finalPath.substring(finalPath.indexOf('categories_titles[]=') + 20, finalPath.length))
@@ -86,7 +88,8 @@ export function updateQueryStringValue(path, params, autoRedirect = true) {
         });
         window.history.replaceState(null, '', newPath);
         if (autoRedirect && autoRedirect === true) {
-            window.$nuxt.$router.push(newPath)
+          const router = useRouter();
+          router.push(newPath)
         }
         return newPath
     } catch {
@@ -129,7 +132,7 @@ export const sectionsStyle = {
     textarea: 'py-4 pl-6 border border-FieldGray rounded-xl w-full focus:outline-none resize-none h-32',
     fieldLabel: 'font-bold',
     wysiwygHtml: 'ql-editor ql-snow h-auto',
-    pageSectionStyle: 'md:mx-auto max-w-[7xl] md:px-2 sm:px-6 lg:px-8 mx-4',
+    pageSectionStyle: 'md:mx-auto max-w-7xl md:px-2 sm:px-6 lg:px-8 mx-4',
     sectionsPagePad: 'md:mx-auto max-w-[1440px] md:pl-[15px] md:pr-[15px]'
 }
 
@@ -166,7 +169,8 @@ export function emitGlobalEvent(link, target, event) {
       event.preventDefault()
     } catch {}
     if (isGlobalEvent(link)) {
-      window.$nuxt.$emit(link)
+      const { $event } = useNuxtApp()
+      $event(link)
     } else window.open(link, target || linkTarget(link))
 }
 
@@ -209,3 +213,13 @@ export function generateWhatsAppMessage(cart, type, lang, i18n, currencySymbol =
 
     return message;
   }
+
+
+export const importAsset = (path) => {
+  try {
+    const images = import.meta.glob("/assets/icons/**/*", {eager: true});
+    return images[path].default;
+  } catch {
+    return ''
+  }
+};

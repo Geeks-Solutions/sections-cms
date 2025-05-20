@@ -7,7 +7,7 @@
           <div v-for="(qa, index) in settings.QAs" :key="`qa-${index}`" class="question" :class="[`question-${sectionWeight}`, answerShowing[index] === true ? 'expanded' : 'collapsed']">
             <div class="flex flex-row justify-between" :class="`question-title-${index}-${sectionWeight}`" @click="toggleAnswer(index)">
               <h3 class="question-title">{{ qa[lang].question }}</h3>
-              <img :src="answerShowing[index] === true ? useDynamicImage('/assets/icons/arrowUp.svg') : useDynamicImage('/assets/icons/arrowDown.svg')" alt="arrow" class="arrow w-6" loading="lazy" />
+              <img :src="answerShowing[index] === true ? importAsset('/assets/icons/arrowUp.svg') : importAsset('/assets/icons/arrowDown.svg')" alt="arrow" class="arrow w-6" loading="lazy" />
             </div>
             <div v-if="answerShowing[index] === true" class="answer" :class="[index === 0 ? 'show' : '', `answer-${index}-${sectionWeight}`]">
               <div class="flex w-full justify-start">
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { useDynamicImage } from '~/utils/constants.js'
+import { importAsset } from '~/utils/constants.js'
 
 export default {
   name: "FAQStatic",
@@ -128,7 +128,7 @@ export default {
     this.initQAs()
   },
   methods: {
-    useDynamicImage,
+    importAsset,
     initQAs() {
       let questions = []
       this.answerShowing = []

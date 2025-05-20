@@ -1,4 +1,5 @@
-import Vue from 'vue';
-import { dragscroll } from 'vue-dragscroll';
+import { dragscroll } from 'vue-dragscroll'
 
-Vue.directive('dragscroll', dragscroll);
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.directive('dragscroll', dragscroll)
+})

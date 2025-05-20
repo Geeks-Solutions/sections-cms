@@ -38,7 +38,7 @@
                   <li v-for="cookie in cookies[type]" :key="cookie.id">
                     <div class="cookieControl__ModalInputWrapper">
                       <input v-if="type === 'necessary' && cookie.name !== 'functional'" :id="getCookieFirstName(cookie.name)" type="checkbox" disabled checked/>
-                      <input v-else :id="getCookieFirstName(cookie.name)" type="checkbox" :checked="($cookies.get('cookie_control_consent') !== undefined && $cookies.get('cookie_control_consent') === true && $cookies.get('cookie_control_enabled_cookies') && $cookies.get('cookie_control_enabled_cookies').includes(cookie.identifier)) || ($cookies.get('cookie_control_consent') === undefined && cookie.initialState === true)" @change="toggleCookie(cookie)"/>
+                      <input v-else :id="getCookieFirstName(cookie.name)" type="checkbox" :checked="(useCookie('cookie_control_consent').value !== undefined && useCookie('cookie_control_consent').value === true && useCookie('cookie_control_enabled_cookies').value && useCookie('cookie_control_enabled_cookies').value.includes(cookie.identifier)) || (useCookie('cookie_control_consent').value === undefined && cookie.initialState === true)" @change="toggleCookie(cookie)"/>
                       <label :for="getCookieFirstName(cookie.name)" v-html="cookie.name"/>
                       <span class="cookieControl__ModalCookieName">
                           {{ $t(cookie.name) }}
@@ -69,6 +69,8 @@
 </template>
 
 <script>
+import { useCookie } from '#imports'
+
 export default {
   name: 'CookieControl',
   props: {
@@ -83,7 +85,7 @@ export default {
       colorsSet: true,
       cookies: {
         modal: false,
-        consent: this.$cookies.get('cookie_control_consent'),
+        consent: useCookie('cookie_control_consent').value,
         enabled: [],
         enabledList: [],
         css: true,
@@ -140,39 +142,47 @@ export default {
     }
   },
   beforeMount() {
-    if(this.$cookies.get('cookie_control_enabled_cookies') !== undefined && this.$cookies.get('cookie_control_enabled_cookies').length !== 0){
-      this.optionalCookies.forEach(c => {
-        for (const cookieKey of Object.keys(this.$cookies.getAll())) {
-          if(cookieKey.includes(c.identifier) && !this.$cookies.get('cookie_control_enabled_cookies').includes(c.identifier)) {
-            this.$cookies.remove(cookieKey)
+    try {
+      const allCookies = document.cookie.split(';').reduce((cookies, cookie) => {
+        const [name, value] = cookie.trim().split('=').map(part => decodeURIComponent(part))
+        cookies[name] = value
+        return cookies
+      }, {})
+
+      if(useCookie('cookie_control_enabled_cookies').value !== undefined && useCookie('cookie_control_enabled_cookies').value.length !== 0){
+        this.optionalCookies.forEach(c => {
+          for (const cookieKey of Object.keys(allCookies)) {
+            if(cookieKey.includes(c.identifier) && !useCookie('cookie_control_enabled_cookies').value.includes(c.identifier)) {
+              useCookie(cookieKey).value = null
+            }
           }
-        }
-        if(c.initialState === true && this.$cookies.get('cookie_control_enabled_cookies').includes(c.identifier)) {
-          this.cookies.enabledList.push(c.identifier);
-          if (c.accepted) {
-            this.$gtm.init(this.gtmId)
-            c.accepted(c.identifier)
+          if(c.initialState === true && useCookie('cookie_control_enabled_cookies').value.includes(c.identifier)) {
+            this.cookies.enabledList.push(c.identifier);
+            if (c.accepted) {
+              this.$emit('consent')
+              c.accepted(c.identifier)
+            }
           }
-        }
-      })
-      this.$gtm.push({'event': 'geeks-consent', 'analyticsPurposesConsent': this.$cookies.get('cookie_control_enabled_cookies')})
-    } else if(this.$cookies.get('cookie_control_consent') === undefined) {
-      this.optionalCookies.forEach(c => {
-        if(c.initialState === true) {
-          this.cookies.enabledList.push(c.identifier);
-        }
-      })
-    } else if(this.$cookies.get('cookie_control_consent') === false || this.$cookies.get('cookie_control_enabled_cookies').length === 0) {
-      this.optionalCookies.forEach(c => {
-        for (const cookieKey of Object.keys(this.$cookies.getAll())) {
-          if(cookieKey.includes(c.identifier) && !this.$cookies.get('cookie_control_enabled_cookies').includes(c.identifier)) {
-            this.$cookies.remove(cookieKey)
+        })
+      } else if(useCookie('cookie_control_consent').value === undefined) {
+        this.optionalCookies.forEach(c => {
+          if(c.initialState === true) {
+            this.cookies.enabledList.push(c.identifier);
           }
-        }
-      })
-    }
+        })
+      } else if(useCookie('cookie_control_consent').value === false || useCookie('cookie_control_enabled_cookies').value.length === 0) {
+        this.optionalCookies.forEach(c => {
+          for (const cookieKey of Object.keys(allCookies)) {
+            if(cookieKey.includes(c.identifier) && !useCookie('cookie_control_enabled_cookies').value.includes(c.identifier)) {
+              useCookie(cookieKey).value = null
+            }
+          }
+        })
+      }
+    } catch {}
   },
   methods: {
+    useCookie,
     toggleCookie(cookie) {
       const cookieName = cookie.identifier;
       if(this.saved) this.saved = false;
@@ -180,12 +190,12 @@ export default {
       else this.cookies.enabledList.splice(this.cookies.enabledList.indexOf(cookieName), 1);
     },
     setConsent({type, consent=true, reload=true, declineAll=false}){
-      this.$cookies.set( 'cookie_control_consent', consent, {expires: this.expirationDate});
+      useCookie( 'cookie_control_consent', {expires: this.expirationDate}).value = consent;
       const enabledCookies = declineAll ? [] : type === 'partial' && consent ? this.cookies.enabledList : [...this.optionalCookies.map(c => c.identifier)];
-      this.$cookies.set('cookie_control_enabled_cookies', consent ? enabledCookies.join(',') : '', {expires: this.expirationDate});
+      useCookie('cookie_control_enabled_cookies', {expires: this.expirationDate}).value = consent ? enabledCookies.join(',') : '';
       if(!reload){
         this.setConsent({})
-        this.$cookies.modal = false;
+        // this.$cookies.modal = false;
       } else window.location.reload();
     },
     getCookieFirstName(name){
@@ -194,4 +204,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.cookieControl__Modal {
+  z-index: 10;
+}
+</style>
 

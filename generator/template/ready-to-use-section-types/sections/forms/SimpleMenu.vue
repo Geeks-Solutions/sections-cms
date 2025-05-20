@@ -94,7 +94,7 @@
 
     <div id="menu" class="flex flex-col mt-4">
 
-      <LazySectionsFormsFieldSets :array-data-pop="settings[0].menu" :fieldset-group="'menu'" :legend-label="$t('forms.link')" @array-updated="(data) => settings[0]['menu'] = data" @remove-fieldset="(object, idx) => removeMenuItem(idx)">
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].menu" :fieldset-group="'menu'" :legend-label="$t('forms.link')" @array-updated="(data) => updatedArr(data)" @remove-fieldset="(object, idx) => removeMenuItem(idx)">
         <template #default="{ object, idx }">
           <div class="flex flex-col items-start justify-start mt-8">
             <label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.label") + '*' : $t("forms.label") }}</label>
@@ -113,10 +113,11 @@
             <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.menuCssClassesDesc") }}</span>
             <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.addedToTopDesc") }}</span>
             <input
-              v-model="settings[0].menu[idx].menuItemClasses"
+              v-model="object.menuItemClasses"
               type="text"
               :placeholder="$t('forms.cssClasses')"
               :class="sectionsStyle.input"
+              @input="settings[0].menu[idx] = {...object, menuItemClasses: object.menuItemClasses}"
             />
           </div>
 
@@ -124,7 +125,7 @@
             <label class="mr-4 pb-2 font-bold">{{ $t("Language menu") }}</label>
             <span class="text-xs text-Gray_800 pb-1">{{ $t("forms.languageDesc") }}</span>
             <input
-              v-model="settings[0].menu[idx].languageMenu"
+              v-model="object.languageMenu"
               type="checkbox"
               :placeholder="$t('Language menu')"
               class="
@@ -135,6 +136,7 @@
             rounded-xl
             focus:outline-none
           "
+              @change="(event) => settings[0].menu[idx] = {...object, languageMenu: event.target.checked}"
             />
           </div>
 
@@ -144,7 +146,7 @@
               <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
               <gAutoComplete
                 :main-filter="settings[0].menu[idx].page[selectedLang]"
-                :placeholder="$t('forms.aspectRatio')"
+                :placeholder="$t('Sections pages')"
                 :filter-label-prop="'page'"
                 :reduce="(option) => option.path"
                 :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
@@ -340,6 +342,9 @@ export default {
         menuItem.page[locale] = ''
       })
       this.settings[0].menu.push(menuItem);
+    },
+    updatedArr(data) {
+      this.settings[0]['menu'] = data
     },
     removeMenuItem(idx) {
       this.settings[0]['menu'] = this.settings[0].menu.filter((ct, i) => idx !== i)

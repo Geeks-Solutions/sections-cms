@@ -12,7 +12,13 @@ describe('FAQ', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(FAQ, {
-      mocks: global.mocks,
+      global: {
+        config: {
+          globalProperties: {
+            $t: vi.fn()
+          }
+        }
+      },
       data() {
         return defaultData
       },

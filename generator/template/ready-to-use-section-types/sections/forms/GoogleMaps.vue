@@ -62,10 +62,11 @@
             <div :id="`pin-type-${idx}`" class="flex flex-col items-start justify-start mt-8">
               <label :class="sectionsStyle.fieldLabel">{{ $t("forms.pinType") + '*' }}</label>
               <input
-                v-model="settings[0].pins[idx].type"
+                v-model="object.type"
                 type="text"
                 :placeholder="$t('forms.pinType')"
                 :class="sectionsStyle.input"
+                @input="settings[0].pins[idx] = {...object, type: object.type}"
               />
               <span v-show="errors[`pin-type-${idx}`] === true && siteLang === defaultLang"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
@@ -161,23 +162,23 @@
                     :placeholder="$t('forms.pinType')"
                     :filter-label-prop="'value'"
                     :reduce="(option) => option.key"
-                    :filter-options="[...defaultPins, ...settings[0].pins.filter(pin => pin.type !== '' && pin.name[siteLang] !== '').map(pin => {return {key: pin.type, value: pin.name[siteLang], image: pin.media && pin.media.url ? pin.media.url : ''}})]"
+                    :filter-options="[...defaultPins, ...settings[0].pins.filter(pin => pin.type !== '' && pin.name[siteLang] !== '').map(pin => {return {key: pin.type, option: pin.name[siteLang], value: pin.name[siteLang], selected: pin.name[siteLang], image: pin.media && pin.media.url ? pin.media.url : '', label: pin.media && pin.media.url ? pin.media.url : ''}})]"
                     :filter-searchable="false"
                     :close-on-select="true"
                     :filter-clearable="true"
                     :track-by="'key'"
                     @itemSelected="(val) => {settings[0].addresses[idx].type = val;}"
                   >
-                    <template #selected-option="{ value, image }">
+                    <template #selected-option="{ selected, label }">
                       <div style="display: flex; flex-direction: row; align-items: center">
-                        <img :src="image" alt="" style="width: 43px; padding: 8px;" />
-                        <span style="margin: 0.5rem 0.5rem;">{{ value }}</span>
+                        <img :src="label" alt="" style="width: 43px; padding: 8px;" />
+                        <span style="margin: 0.5rem 0.5rem;">{{ selected }}</span>
                       </div>
                     </template>
-                    <template #option="{ value, image }">
+                    <template #option="{ option, label }">
                       <div style="display: flex; flex-direction: row; align-items: center">
-                        <img :src="image" alt="" style="width: 43px; padding: 8px;" />
-                        <span style="margin: 0.5rem 0.5rem;">{{ value }}</span>
+                        <img :src="label" alt="" style="width: 43px; padding: 8px;" />
+                        <span style="margin: 0.5rem 0.5rem;">{{ option }}</span>
                       </div>
                     </template>
                   </gAutoComplete>
@@ -396,18 +397,27 @@ export default {
       defaultPins: [
         {
           "value": "Default 1",
+          "option": "Default 1",
+          "selected": "Default 1",
           "key": "default1",
-          "image": "https://maps.google.com/mapfiles/ms/micons/red.png"
+          "image": "https://maps.google.com/mapfiles/ms/micons/red.png",
+          "label": "https://maps.google.com/mapfiles/ms/micons/red.png",
         },
         {
           "value": "Default 2",
+          "option": "Default 2",
+          "selected": "Default 2",
           "key": "default2",
-          "image": "https://maps.google.com/mapfiles/ms/micons/blue.png"
+          "image": "https://maps.google.com/mapfiles/ms/micons/blue.png",
+          "label": "https://maps.google.com/mapfiles/ms/micons/blue.png",
         },
         {
           "value": "Default 3",
+          "option": "Default 3",
+          "selected": "Default 3",
           "key": "default3",
-          "image": "https://maps.google.com/mapfiles/ms/micons/green.png"
+          "image": "https://maps.google.com/mapfiles/ms/micons/green.png",
+          "label": "https://maps.google.com/mapfiles/ms/micons/green.png",
         }
       ]
     }

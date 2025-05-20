@@ -1,5 +1,5 @@
 <template>
-  <div v-if="settings" class="GoogleMaps mb-16 py-2.5 md:mx-auto max-w-[7xl]">
+  <div v-if="settings" class="GoogleMaps mb-16 py-2.5 md:mx-auto max-w-7xl">
 
     <div class="flex flex-col w-full mx-auto pb-10 map-content">
 
@@ -7,7 +7,7 @@
 
     </div>
 
-    <div :id="`map-${section.weight}`" class="w-full h-[447px] map-wrapper"></div>
+    <div :ref="`map-${section.weight}`" class="w-full h-[447px] map-wrapper"></div>
 
     <div class="grid md:flex grid-cols-2 md:flex-row md:flex-wrap text-Gray_800 gap-y-5 gap-x-3 md:gap-3 mt-8 md:ml-4 pins-wrapper">
       <div v-for="(pin, pinIdx) in settings.pins" :key="`pin-${pinIdx}`" class="flex flex-col items-start gap-1">
@@ -67,8 +67,9 @@
 
 <script>
 /* global google */
-import * as Loader from "@googlemaps/js-api-loader";
-import {sectionsStyle} from "../../utils/constants";
+import * as Loader from '@googlemaps/js-api-loader'
+import { showToast } from '#imports'
+import { sectionsStyle } from '../../utils/constants'
 
 export default {
   name: 'GoogleMapsStatic',
@@ -116,17 +117,19 @@ export default {
   watch: {
     section: {
       async handler() {
-        if(this.settings && this.settings.addresses && this.settings.addresses.length > 0) {
-          await this.initMarkers()
-          if (this.map && this.settings.zoom !== 'fit_pins') {
-            this.map.setZoom(this.getZoomLevel())
-          } else if (this.map && this.settings.zoom === 'fit_pins') {
-            const bounds = new google.maps.LatLngBounds();
-            this.markers.forEach(object => {
-              bounds.extend(object.marker.position);
-            })
-            this.map.fitBounds(bounds);
-          }
+        if(this.settings && this.settings.addresses && this.settings.addresses.length > 0 && this.map && process.client) {
+          await this.initAddresses(true)
+          this.$nextTick(() => {
+            if (this.map && this.settings.zoom !== 'fit_pins') {
+              this.map.setZoom(this.getZoomLevel())
+            } else if (this.map && this.settings.zoom === 'fit_pins') {
+              const bounds = new google.maps.LatLngBounds();
+              this.markers.forEach(object => {
+                bounds.extend(object.marker.position);
+              })
+              this.map.fitBounds(bounds);
+            }
+          })
         }
       },
       deep: true,
@@ -137,20 +140,24 @@ export default {
     await this.initAddresses()
   },
   methods: {
-    async initAddresses() {
+    async initAddresses(skipZoom) {
       this.filteredAddresses = []
       if(this.settings && this.settings.addresses && this.settings.addresses.length > 0 && this.settings.mapApiKey) {
         this.initLoader();
-        await this.initMap();
-        await this.initMarkers();
-        if (this.map && this.settings.zoom) {
+        if (this.map) {
+          this.map = null
+        }
+        const map = await this.initMap();
+        this.map = map;
+        await this.initMarkers(map);
+        if (map && this.settings.zoom && !skipZoom) {
           const bounds = new google.maps.LatLngBounds();
           this.markers.forEach(object => {
             bounds.extend(object.marker.position);
           })
-          this.map.fitBounds(bounds);
+          map.fitBounds(bounds);
           if (this.settings.zoom !== 'fit_pins') {
-            this.map.setZoom(Number(this.settings.zoom))
+            map.setZoom(Number(this.settings.zoom))
           }
         }
       }
@@ -165,15 +172,15 @@ export default {
     },
     async initMap() {
       const { Map } = await this.loader.importLibrary("maps")
-      this.map = new Map(document.getElementById(`map-${this.section.weight}`), {
+      return new Map(this.$refs[`map-${this.section.weight}`], {
         center: { lat: 0, lng: 0 },
         zoom: this.settings.zoom !== 'fit_pins' ? this.getZoomLevel() : 2,
         minZoom: 1,
         mapId: 'META_SECTIONS_MAP',
         mapTypeControl: false
-      });
+      })
     },
-    async initMarkers() {
+    async initMarkers(map) {
       if (this.loader) {
         this.removeMarkers()
 
@@ -198,7 +205,7 @@ export default {
 
             const marker = new AdvancedMarkerElement({
               position: {lat: Number(addr.lat), lng: Number(addr.lng)},
-              map: this.map,
+              map: map,
               title: addr.name[this.lang],
               content: addressMarker
             })
@@ -240,7 +247,7 @@ export default {
 </div>`)
               this.infoWindow.open({
                 anchor: marker,
-                map: this.map,
+                map: map,
               });
               this.infoWindow.addListener('closeclick', ()=>{
                 this.filteredAddresses = []
@@ -319,24 +326,15 @@ export default {
               this.map.fitBounds(bounds);
             }
           } else {
-            this.$nuxt.$emit('showToast', {
-              description: this.$t('forms.noAddresses'),
-              state: 'info'
-            })
+            showToast("", "info", this.$t('forms.noAddresses'));
           }
 
         }).catch(() => {
-          this.$nuxt.$emit('showToast', {
-            description: this.$t('forms.noAddresses'),
-            state: 'info'
-          })
+          showToast("", "info", this.$t('forms.noAddresses'));
         })
 
       } else {
-        this.$nuxt.$emit('showToast', {
-          description: this.$t('forms.noAddresses'),
-          state: 'info'
-        })
+        showToast("", "info", this.$t('forms.noAddresses'));
       }
     }
   }

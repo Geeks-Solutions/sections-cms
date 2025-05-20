@@ -8,8 +8,9 @@
 
 <script>
 
-// import {mapGetters} from "vuex";
-import {BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH, extractQsValue} from "@/utils/constants";
+import { useCmsCloudStore } from '~/stores/index.js'
+import { mapState } from 'pinia'
+import { BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH, extractQsValue, updateQueryStringValue } from '@/utils/constants'
 
 export default {
   name: 'CategoriesArticlesConfigurable',
@@ -286,9 +287,7 @@ export default {
         return Math.ceil(this.sectionRenderData.total / blogsListSize)
       } else return 1
     },
-    // ...mapGetters({
-    //   categoriesTitles: 'getCategoriesTitles'
-    // })
+    ...mapState(useCmsCloudStore, ['categoriesTitles'])
   },
   watch: {
     sectionRenderData() {
@@ -301,6 +300,9 @@ export default {
   },
   methods: {
     pageChanged(offset) {
+      updateQueryStringValue(this.$route.path, {
+        offset_ca: offset
+      }, false)
       this.$emit('refresh-section', {
         qs: {
           categories_titles: this.categoriesTitles.includes(',') ? this.categoriesTitles.split(',') : this.categoriesTitles.length > 0 ? [this.categoriesTitles] : [],
