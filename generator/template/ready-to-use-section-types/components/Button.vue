@@ -105,37 +105,37 @@ export default {
           return {
             wrapper: 'px-3.5 py-2 gap-2',
             text: 'text-sm font-semibold',
-            dotWrapper: 'w-20px h-20px'
+            dotWrapper: 'w-[20px] h-[20px]'
           }
         case 'md':
           return {
             wrapper: 'px-4 py-2.5 gap-2',
             text: 'text-sm font-semibold',
-            dotWrapper: 'w-20px h-20px'
+            dotWrapper: 'w-[20px] h-[20px]'
           }
         case 'lg':
           return {
             wrapper: 'px-4 py-2.5 gap-2',
             text: 'text-base font-semibold',
-            dotWrapper: 'w-21px h-21px'
+            dotWrapper: 'w-[21px] h-[21px]'
         }
         case 'xl':
           return {
             wrapper: 'px-5 py-3 gap-2',
             text: 'text-base font-semibold',
-            dotWrapper: 'w-20px h-20px'
+            dotWrapper: 'w-[20px] h-[20px]'
         }
         case '2xl':
           return {
             wrapper: 'px-7 py-4 gap-3',
             text: 'text-lg font-bold',
-            dotWrapper: 'w-24px h-24px'
+            dotWrapper: 'w-[24px] h-[24px]'
         }
         default:
           return {
             wrapper: 'px-3.5 py-2 gap-2',
             text: 'text-sm font-semibold',
-            dotWrapper: 'w-20px h-20px'
+            dotWrapper: 'w-[20px] h-[20px]'
           }
       }
     }

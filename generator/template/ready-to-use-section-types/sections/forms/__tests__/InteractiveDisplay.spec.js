@@ -12,7 +12,13 @@ describe('InteractiveDisplay', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(InteractiveDisplay, {
-      mocks: global.mocks,
+      global: {
+        config: {
+          globalProperties: {
+            $t: vi.fn()
+          }
+        }
+      },
       data() {
         return defaultData
       },
@@ -32,89 +38,153 @@ describe('InteractiveDisplay', () => {
   });
 
   test('adds a new media block when addMedia is called', async () => {
-    const initialLength = wrapper.vm.settings.length;
+    const initialLength = wrapper.vm.settings[0].carousels.length;
     await wrapper.vm.addMedia();
-    expect(wrapper.vm.settings.length).toBe(initialLength + 1);
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.settings[0].carousels.length).toBe(initialLength + 1);
   });
 
   test('removes a media block when removeCarouselBlock is called', async () => {
     await wrapper.vm.addMedia(); // Ensure there's more than one item
-    const initialLength = wrapper.vm.settings.length;
+    const initialLength = wrapper.vm.settings[0].carousels.length;
     await wrapper.vm.removeCarouselBlock(1);
-    expect(wrapper.vm.settings.length).toBe(initialLength - 1);
+    expect(wrapper.vm.settings[0].carousels.length).toBe(initialLength - 1);
   });
 
   it('should remove wysiwygMediasData if media_id is not found in title or text', () => {
-    wrapper.setData({
-      settings: [
-        {
-          title: {
-            en: 'Title',
-            fr: 'Title'
-          },
-          text: {
-            en: 'Text',
-            fr: 'Text'
-          },
-          cta: {
-            en: '',
-            fr: ''
-          },
-          ctaLink: {
-            en: '',
-            fr: ''
-          },
-          wysiwygMediasData: [
-            {
-              wysiwygLang: 'en',
-              wysiwygMedia: { media_id: 'not_existing' },
-            },
-          ],
-          wysiwygMedias: [{ media_id: 'not_existing' }],
+    wrapper.vm.settings = [
+      {
+        title: {
+          en: 'Title',
+          fr: 'Title'
         },
-      ],
-    });
+        text: {
+          en: 'Text',
+          fr: 'Text'
+        },
+        cta: {
+          en: '',
+          fr: ''
+        },
+        ctaLink: {
+          en: '',
+          fr: ''
+        },
+        wysiwygMediasData: [
+          {
+            wysiwygLang: 'en',
+            wysiwygMedia: { media_id: 'not_existing' },
+          },
+        ],
+        wysiwygMedias: [{ media_id: 'not_existing' }],
+        carousels: [
+          {
+            title: {
+              en: '',
+              fr: ''
+            },
+            text: {
+              en: '',
+              fr: ''
+            },
+            titleClasses: '',
+            textClasses: '',
+            cta: {
+              en: '',
+              fr: ''
+            },
+            ctaLink: {
+              en: '',
+              fr: ''
+            },
+            ctaLinkTarget: '',
+            media: {
+              media_id: "",
+              url: "",
+              seo_tag: ""
+            },
+            mediaMobile: {
+              media_id: "",
+              url: "",
+              seo_tag: ""
+            }
+          }
+        ]
+      },
+    ]
 
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.settings[0].wysiwygMediasData).toHaveLength(0);
-      expect(wrapper.vm.settings[0].wysiwygMedias).toHaveLength(0);
-    });
+    wrapper.vm.validate()
+    wrapper.vm.$nextTick();
+    expect(wrapper.vm.settings[0].wysiwygMediasData).toHaveLength(0);
+    expect(wrapper.vm.settings[0].wysiwygMedias).toBe(undefined);
   });
 
-  it('should delete wysiwygMedias if it is empty', () => {
-    wrapper.setData({
-      settings: [
-        {
-          title: {
-            en: 'Title',
-            fr: 'Title'
-          },
-          text: {
-            en: 'Text',
-            fr: 'Text'
-          },
-          cta: {
-            en: '',
-            fr: ''
-          },
-          ctaLink: {
-            en: '',
-            fr: ''
-          },
-          wysiwygMediasData: [],
-          wysiwygMedias: [],
+  it('should delete wysiwygMedias if it is empty', async () => {
+    wrapper.vm.settings = [
+      {
+        title: {
+          en: 'Title',
+          fr: 'Title'
         },
-      ],
-    });
+        text: {
+          en: 'Text',
+          fr: 'Text'
+        },
+        cta: {
+          en: '',
+          fr: ''
+        },
+        ctaLink: {
+          en: '',
+          fr: ''
+        },
+        wysiwygMediasData: [],
+        wysiwygMedias: [],
+        carousels: [
+          {
+            title: {
+              en: '',
+              fr: ''
+            },
+            text: {
+              en: '',
+              fr: ''
+            },
+            titleClasses: '',
+            textClasses: '',
+            cta: {
+              en: '',
+              fr: ''
+            },
+            ctaLink: {
+              en: '',
+              fr: ''
+            },
+            ctaLinkTarget: '',
+            media: {
+              media_id: "",
+              url: "",
+              seo_tag: ""
+            },
+            mediaMobile: {
+              media_id: "",
+              url: "",
+              seo_tag: ""
+            }
+          }
+        ]
+      },
+    ]
 
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.settings[0]).not.toHaveProperty('wysiwygMedias');
-    });
+    wrapper.vm.validate()
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.settings[0]).not.toHaveProperty('wysiwygMedias');
   });
 
   it('returns modified videoLink when mobileVideoLink is not set and videoLink is a YouTube link', async () => {
 
-    await jest.resetAllMocks();
+    await vi.resetAllMocks();
 
     setTimeout(() => {
       wrapper.setProps({

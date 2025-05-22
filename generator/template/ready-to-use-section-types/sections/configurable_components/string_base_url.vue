@@ -5,7 +5,6 @@
       <input
         v-model="base_url"
         type="text"
-        value=""
         :placeholder="$t('forms.baseUrl')"
         :class="inputStyle"
         @input="changeFieldValue"
@@ -22,16 +21,20 @@ export default {
   data() {
     return {
       configurableReference: null,
-      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-48px w-full focus:outline-none',
+      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
       base_url: ""
     }
   },
   watch: {
-    reference(value) {
-      this.configurableReference = value
-      if (this.configurableReference.optionsData.base_url && typeof this.configurableReference.optionsData.base_url === 'string') {
-        this.base_url = this.configurableReference.optionsData.base_url
-      }
+    reference: {
+      handler(value) {
+        this.configurableReference = value.value
+        if (this.configurableReference.optionsData.base_url && typeof this.configurableReference.optionsData.base_url === 'string') {
+          this.base_url = this.configurableReference.optionsData.base_url
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {

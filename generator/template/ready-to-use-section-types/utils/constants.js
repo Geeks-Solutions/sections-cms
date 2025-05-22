@@ -1,3 +1,6 @@
+import { useFetch, useNuxtApp } from '#app'
+import { useRouter, useRoute } from '#imports'
+
 export const BLOGS_LIST_SIZE = 12
 
 export const BLOGS_SECTION_PAGE_PATH = '/blogs'
@@ -33,30 +36,14 @@ export function getFormsKeysTranslation(val) {
     }
 }
 
-export function showToast($toast, variant, message) {
-  $toast[variant](message, {
-      position: "top-right",
-      timeout: 5000,
-      closeOnClick: true,
-      pauseOnFocusLoss: true,
-      pauseOnHover: true,
-      draggable: true,
-      draggablePercent: 0.6,
-      showCloseButtonOnHover: false,
-      hideProgressBar: false,
-      closeButton: "button",
-      icon: false,
-      rtl: false
-    })
-}
-
 // Function to extract query string values from url path
 export function extractQsValue(key, path, ctTitles = false) {
     let finalPath = ''
     if (path) {
         finalPath = path
-    } else if (window && window.$nuxt) {
-        finalPath = window.$nuxt.$route.path;
+    } else {
+      const route = useRoute()
+        finalPath = route.path;
     }
     if (finalPath && finalPath.includes('categories_titles') && ctTitles === true) {
         return decodeURIComponent(finalPath.substring(finalPath.indexOf('categories_titles[]=') + 20, finalPath.length))
@@ -101,7 +88,8 @@ export function updateQueryStringValue(path, params, autoRedirect = true) {
         });
         window.history.replaceState(null, '', newPath);
         if (autoRedirect && autoRedirect === true) {
-            window.$nuxt.$router.push(newPath)
+          const router = useRouter();
+          router.push(newPath)
         }
         return newPath
     } catch {
@@ -110,10 +98,12 @@ export function updateQueryStringValue(path, params, autoRedirect = true) {
 }
 
 export async function getSectionsPages(sectionHeader) {
-    try {
-        const pagesResponse = await window.$nuxt.$axios.get(
-            `${window.$nuxt.$sections.serverUrl}/project/${window.$nuxt.$sections.projectId}/pages`,
+  const app = useNuxtApp();
+  try {
+        const pagesResponse = await useFetch(
+            `${app.$sections.serverUrl}/project/${app.$sections.projectId}/pages`,
             {
+                method: 'GET',
                 headers: sectionHeader
             }
         )
@@ -138,7 +128,7 @@ export function scrollToFirstError(errors) {
 }
 
 export const sectionsStyle = {
-    input: 'py-4 pl-6 border border-FieldGray rounded-xl h-48px w-full focus:outline-none',
+    input: 'py-4 pl-6 border border-FieldGray rounded-xl h-[48px] w-full focus:outline-none',
     textarea: 'py-4 pl-6 border border-FieldGray rounded-xl w-full focus:outline-none resize-none h-32',
     fieldLabel: 'font-bold',
     wysiwygHtml: 'ql-editor ql-snow h-auto',
@@ -179,7 +169,8 @@ export function emitGlobalEvent(link, target, event) {
       event.preventDefault()
     } catch {}
     if (isGlobalEvent(link)) {
-      window.$nuxt.$emit(link)
+      const { $event } = useNuxtApp()
+      $event(link)
     } else window.open(link, target || linkTarget(link))
 }
 
@@ -201,24 +192,34 @@ export function generateWhatsAppMessage(cart, type, lang, i18n, currencySymbol =
         ? i18n('ServicePackages.whatsappDefaultMessage')
         : i18n('RestaurantMenu.whatsappDefaultMessage');
     }
-  
+
     // Create a custom message with the cart contents
     const headerMessage = isService
       ? i18n('ServicePackages.whatsappCartMessage')
       : i18n('RestaurantMenu.whatsappCartMessage');
-    
+
     let message = `${headerMessage}\n`;
-  
+
     // Add each item to the message
     cart.forEach(item => {
       const itemName = item.name[lang] || Object.values(item.name)[0]; // Fallback to first available name
       message += `* ${itemName}  x${item.quantity}\n`;
     });
-  
+
     // Add total if provided
     if (total > 0) {
       message += `\n${i18n('RestaurantMenu.total')}: ${currencySymbol}${formatPrice(total)}`;
     }
-  
+
     return message;
   }
+
+
+export const importAsset = (path) => {
+  try {
+    const images = import.meta.glob("/assets/icons/**/*", {eager: true});
+    return images[path].default;
+  } catch {
+    return ''
+  }
+};

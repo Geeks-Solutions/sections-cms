@@ -1,5 +1,10 @@
 import { shallowMount } from "@vue/test-utils";
 import ImageGalleryStatic from "../ImageGallery_static.vue";
+import Grid from '~/components/GalleryLayout/Grid.vue'
+import VerticalMasonry from '~/components/GalleryLayout/VerticalMasonry.vue'
+import HorizontalMasonry from '~/components/GalleryLayout/HorizontalMasonry.vue'
+import Slider from '~/components/GalleryLayout/Slider.vue'
+import Thumbnails from '~/components/GalleryLayout/Thumbnails.vue'
 
 describe('ImageGalleryStatic.vue', () => {
   let wrapper
@@ -22,7 +27,16 @@ describe('ImageGalleryStatic.vue', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(ImageGalleryStatic, {
-      propsData: {
+      global: {
+        stubs: {
+          GalleryLayoutGrid: Grid,
+          GalleryLayoutVerticalMasonry: VerticalMasonry,
+          GalleryLayoutHorizontalMasonry: HorizontalMasonry,
+          GalleryLayoutSlider: Slider,
+          GalleryLayoutThumbnails: Thumbnails
+        },
+      },
+      props: {
         section: mockSection,
         lang: 'en',
       }
@@ -31,7 +45,8 @@ describe('ImageGalleryStatic.vue', () => {
 
   it('opens preview on image click', async () => {
     const image = { media: { url: 'https://example.com/image.jpg', seo_tag: 'Example Image' } };
-    wrapper.setData({ images: [image], selectedLayout: 'grid' });
+
+    await wrapper.vm.$nextTick()
 
     const imageElement = wrapper.find('.grid-wrapper .grid-img-wrapper');
     await imageElement.trigger('click');
@@ -41,21 +56,36 @@ describe('ImageGalleryStatic.vue', () => {
   });
 
   it('should render the correct layout based on selectedLayout prop', async () => {
-    const layouts = ['vertical-masonry', 'horizontal-masonry', 'grid', 'slider', 'thumbnails'];
+    const layouts = {
+      'verticalMasonry': 'vertical-masonry',
+      'horizontalMasonry': 'horizontal-masonry',
+      'grid': 'grid',
+      'slider': 'slider',
+      'thumbnails': 'thumbnails'
+    };
 
-    await jest.resetAllMocks()
-    for (const layout of layouts) {
+    // await vi.resetAllMocks()
+
+    for (const layout of Object.keys(layouts)) {
       wrapper.setProps({
         section: {
           settings: [
             {
+              gallery: [
+                {
+                  media: {
+                    "url": "https://example.com/image.jpg",
+                    "seo_tag": "Example Image"
+                  }
+                }
+              ],
               selectedLayout: layout
             }
           ]
         }
       });
       await wrapper.vm.$nextTick(() => {
-        const layoutWrapper = wrapper.find(`.${layout}-wrapper`);
+        const layoutWrapper = wrapper.find(`.${layouts[layout]}-wrapper`);
         expect(layoutWrapper.exists()).toBe(true);
       });
     }
