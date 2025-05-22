@@ -19,7 +19,9 @@ module.exports = (api, options, rootOptions) => {
                 "vue-lazytube": "^1.1.1",
                 "vue-server-renderer": "2.7.10",
                 "vue-template-compiler": "2.7.10",
-                "vue2-leaflet": "^2.7.1"
+                "vue2-leaflet": "^2.7.1",
+                "uuid": "3.4.0",
+                "@nuxt/image": "^0.7.1"
             },
             "devDependencies": {
                 "@babel/eslint-parser": "^7.14.7",
@@ -92,6 +94,11 @@ module.exports.hooks = (api, options) => {
             lines[renderIndex0] = lines[renderIndex0].replace(`{`, `{\rcomponents: true,`)
         }
 
+        const renderIndex01 = lines.findIndex(line => line.match(/css:/))
+        if (options.choice === 'nuxt') {
+            lines[renderIndex01] = lines[renderIndex01].replace(`[`, `\r'~/assets/css/default.css',`)
+        }
+
         const renderIndex1 = lines.findIndex(line => line.match(/plugins:/))
         if (options.choice === 'vue') {
             lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/sections.js', ssr: false },`)
@@ -111,6 +118,7 @@ module.exports.hooks = (api, options) => {
     '@geeks.solutions/nuxt-sections',\r
     '@nuxtjs/axios',\r
     'cookie-universal-nuxt',\r
+    '@nuxt/image',\r
     [
       "@nuxtjs/i18n",
       {

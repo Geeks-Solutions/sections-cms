@@ -874,6 +874,10 @@ input:not(:placeholder-shown) {
   }
 }
 
+section .text-image .row-wrapper {
+  padding-right: 1.75rem;
+  padding-left: 1.75rem;
+}
 
 :root {
   --cookie-control-barBackground: #00131F;
