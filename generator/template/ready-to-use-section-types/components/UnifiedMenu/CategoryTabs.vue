@@ -9,7 +9,7 @@
         <div class="flex items-center justify-center">
           <div v-if="category.icon && category.icon.url"
             class="icon-container mr-1 flex-shrink-0 w-5 h-5 flex items-center justify-center">
-            <nuxt-img :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
+            <NuxtImg :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
               class="icon-image max-w-full max-h-full object-contain" width="20" height="20" loading="lazy" :modifiers="{
                 width: 20,
                 height: 20,
@@ -23,29 +23,28 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CategoryTabs',
-  props: {
-    categories: {
-      type: Array,
-      required: true
-    },
-    activeCategory: {
-      type: String,
-      required: true
-    },
-    lang: {
-      type: String,
-      default: 'en'
-    },
-    type: {
-      type: String,
-      default: 'restaurant', // 'restaurant' or 'service'
-      validator: value => ['restaurant', 'service'].includes(value)
-    }
+<script setup>
+defineProps({
+  categories: {
+    type: Array,
+    required: true
+  },
+  activeCategory: {
+    type: String,
+    required: true
+  },
+  lang: {
+    type: String,
+    default: 'en'
+  },
+  type: {
+    type: String,
+    default: 'restaurant', // 'restaurant' or 'service'
+    validator: value => ['restaurant', 'service'].includes(value)
   }
-}
+})
+
+defineEmits(['select-category'])
 </script>
 
 <style scoped>

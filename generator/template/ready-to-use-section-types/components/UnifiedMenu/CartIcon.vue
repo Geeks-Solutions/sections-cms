@@ -19,19 +19,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CartIcon',
-  props: {
-    totalItems: {
-      type: Number,
-      default: 0
-    },
-    cartType: {
-      type: String,
-      default: 'shopping', // 'shopping' or 'service'
-      validator: value => ['shopping', 'service'].includes(value)
-    }
+<script setup>
+defineProps({
+  totalItems: {
+    type: Number,
+    default: 0
+  },
+  cartType: {
+    type: String,
+    default: 'shopping', // 'shopping' or 'service'
+    validator: value => ['shopping', 'service'].includes(value)
   }
-}
+})
+
+defineEmits(['click'])
 </script>

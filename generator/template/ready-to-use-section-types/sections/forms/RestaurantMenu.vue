@@ -14,26 +14,27 @@
       </div>
       <span class="text-xs text-Gray_800 mt-1">{{ $t("RestaurantMenu.viewModeDesc") }}</span>
     </div>
+
     <!-- Categories Section -->
     <div id="categories" class="flex flex-col mt-4">
       <h3 class="text-lg font-semibold mb-4">{{ $t("RestaurantMenu.categories") }}</h3>
       <span class="text-xs text-Gray_800 mb-4">{{ $t("RestaurantMenu.categoriesDesc") }}</span>
 
-      <FieldSets :array-data-pop="settings[0].categories" :fieldset-group="'categories'"
-        :legend-label="$t('RestaurantMenu.category')" @array-updated="(data) => $set(settings[0], 'categories', data)"
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].categories" :fieldset-group="'categories'"
+        :legend-label="$t('RestaurantMenu.category')" @array-updated="(data) => updateCategories(data)"
         @remove-fieldset="(object, idx) => removeCategory(idx)">
         <template #default="{ object, idx }">
           <div class="flex flex-col items-start justify-start mt-4">
             <label class="mr-4 font-medium">{{ $t("RestaurantMenu.categoryName") }}*</label>
             <input v-model="object.name[selectedLang]" type="text" placeholder="Category Name"
               :class="sectionsStyle.input" />
-            <span v-show="errors.categories[idx].name === true" class="text-error text-sm pt-2 pl-2">{{
+            <span v-show="errors.categories[idx]?.name === true" class="text-error text-sm pt-2 pl-2">{{
               $t('RestaurantMenu.requiredField') }}</span>
           </div>
 
           <!-- Category Icon -->
           <div class="mb-4 mt-4">
-            <UploadMedia :media-label="$t('RestaurantMenu.categoryIcon')" :upload-text="$t('RestaurantMenu.uploadIcon')"
+            <LazyMediasUploadMedia :media-label="$t('RestaurantMenu.categoryIcon')" :upload-text="$t('RestaurantMenu.uploadIcon')"
               :change-text="$t('RestaurantMenu.changeIcon')" :seo-tag="$t('RestaurantMenu.seoTag')"
               :media="object.icon && Object.keys(object.icon).length > 0 ? [object.icon] : []"
               @uploadContainerClicked="openCategoryIconModal(object.id, object.icon && Object.keys(object.icon).length > 0 ? object.icon.media_id : null)"
@@ -52,9 +53,8 @@
             <span class="text-xs text-Gray_800">{{ $t("RestaurantMenu.cssClassesDesc") }}</span>
             <input v-model="object.classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
           </div>
-
         </template>
-      </FieldSets>
+      </LazySectionsFormsFieldSets>
 
       <div class="add-button underline cursor-pointer mt-2" @click="addCategory()">
         <div class="p3 bold text">{{ $t("RestaurantMenu.addCategory") }}</div>
@@ -69,18 +69,16 @@
       <!-- Category Selector for Menu Items -->
       <div class="flex flex-col items-start justify-start mb-6">
         <label class="mr-4 font-medium mb-2">{{ $t("RestaurantMenu.selectCategory") }}</label>
-        <gAutoComplete :main-filter="selectedCategoryId" :placeholder="$t('RestaurantMenu.selectCategory')"
-          :filter-label-prop="'name'" :reduce="option => option.id" :filter-options="getCategoryOptions()"
-          :filter-searchable="true" :close-on-select="true" :filter-clearable="true" :track-by="'id'"
-          @itemSelected="val => selectedCategoryId = val">
-          <template #option="{ name, _showId }">
-            {{ _showId ? `Category ${id.slice(0, 4)}` : name }}
-          </template>
-        </gAutoComplete>
+        <select v-model="selectedCategoryId" :class="sectionsStyle.input">
+          <option value="">{{ $t("RestaurantMenu.selectCategory") }}</option>
+          <option v-for="option in getCategoryOptions()" :key="option.id" :value="option.id">
+            {{ option.name }}
+          </option>
+        </select>
       </div>
 
       <div v-if="selectedCategoryId">
-        <FieldSets :array-data-pop="getMenuItemsByCategory(selectedCategoryId)" :fieldset-group="'menuItems'"
+        <LazySectionsFormsFieldSets :array-data-pop="getMenuItemsByCategory(selectedCategoryId)" :fieldset-group="'menuItems'"
           :legend-label="$t('RestaurantMenu.menuItem')"
           @array-updated="(data) => updateMenuItemsForCategory(selectedCategoryId, data)"
           @remove-fieldset="(object, idx) => removeMenuItem(object.id)">
@@ -112,7 +110,7 @@
 
             <!-- Item Image -->
             <div class="mb-4 mt-4">
-              <UploadMedia :media-label="$t('RestaurantMenu.itemImage')" :upload-text="$t('RestaurantMenu.uploadMedia')"
+              <LazyMediasUploadMedia :media-label="$t('RestaurantMenu.itemImage')" :upload-text="$t('RestaurantMenu.LazyMediasUploadMedia')"
                 :change-text="$t('RestaurantMenu.changeMedia')" :seo-tag="$t('RestaurantMenu.seoTag')"
                 :media="object.image && Object.keys(object.image).length > 0 ? [object.image] : []"
                 @uploadContainerClicked="openMediaModal(object.id, object.image && Object.keys(object.image).length > 0 ? object.image.media_id : null)"
@@ -136,7 +134,7 @@
               <input v-model="object.classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
             </div>
           </template>
-        </FieldSets>
+        </LazySectionsFormsFieldSets>
 
         <div class="add-button underline cursor-pointer mt-2" @click="addMenuItem(selectedCategoryId)">
           <div class="p3 bold text">{{ $t("RestaurantMenu.addMenuItem") }}</div>
@@ -151,11 +149,9 @@
     <div class="flex flex-col items-start justify-start mt-8 pt-8 border-t">
       <h3 class="text-lg font-semibold mb-4">{{ $t("RestaurantMenu.generalSettings") }}</h3>
 
-
-
       <!-- Restaurant Logo -->
       <div class="mb-6">
-        <UploadMedia :media-label="$t('RestaurantMenu.restaurantLogo') || 'Restaurant Logo'"
+        <LazyMediasUploadMedia :media-label="$t('RestaurantMenu.restaurantLogo') || 'Restaurant Logo'"
           :upload-text="$t('RestaurantMenu.uploadLogo') || 'Upload Logo'"
           :change-text="$t('RestaurantMenu.changeLogo') || 'Change Logo'" :seo-tag="$t('RestaurantMenu.seoTag')"
           :media="settings[0].logo && Object.keys(settings[0].logo).length > 0 ? [settings[0].logo] : []"
@@ -212,6 +208,7 @@
         </div>
       </div>
 
+      <!-- Social Media Section -->
       <div class="flex flex-col items-start justify-start mt-8 pt-8 border-t">
         <h3 class="text-lg font-semibold mb-4">{{ $t("socialMedia.socialMedia") }}</h3>
         <span class="text-xs text-Gray_800 mb-4">{{ $t("socialMedia.socialMediaDesc") }}</span>
@@ -293,525 +290,496 @@
   </div>
 </template>
 
-<script>
-import { v4 as uuidv4 } from 'uuid';
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
-import FieldSets from "@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue";
-import { sectionsStyle, scrollToFirstError } from "@/utils/constants";
-import 'vue-select/dist/vue-select.css';
+<script setup>
+import { ref, reactive, computed, watch, nextTick, onMounted } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
+import { sectionsStyle, scrollToFirstError } from "@/utils/constants"
+import 'vue-select/dist/vue-select.css'
 
-export default {
-  name: 'RestaurantMenu',
-  components: { FieldSets, UploadMedia },
-  props: {
-    selectedLang: {
-      type: String,
-      default: 'en'
-    },
-    selectedMedia: {},
-    selectedMediaIndex: {
-      type: Number,
-      default: -1
-    },
-    locales: {
-      type: Array,
-      default() {
-        return []
-      }
-    },
-    mediaFields: [
+// Props
+const props = defineProps({
+  selectedLang: {
+    type: String,
+    default: 'en'
+  },
+  selectedMedia: {
+    type: Object,
+    default: null
+  },
+  selectedMediaIndex: {
+    type: Number,
+    default: -1
+  },
+  locales: {
+    type: Array,
+    default: () => []
+  },
+  mediaFields: {
+    type: Array,
+    default: () => [
       {
         type: 'image',
-        name: 'medias' // Changed from 'media' to 'medias'
+        name: 'medias'
       }
     ]
-  },
-  data() {
-    return {
-      settings: [
-        {
-          categories: [],
-          menuItems: [],
-          menuTitle: {},
-          menuSubtitle: {},
-          currencySymbol: '$',
-          classes: '',
-          logo: {},
-          viewMode: 'list',
-          enableTax: false,
-          taxRate: '',
-          medias: [],
-          socialMedia: {
-            instagram: '',
-            facebook: '',
-            tiktok: '',
-            twitter: '',
-            youtube: ''
-          },
-          showWhatsApp: false,
-          whatsappNumber: '',
-          whatsappMessage: {}
-        }
-      ],
-      errors: {
-        categories: [],
-        menuItems: [],
-        generalSettings: {
-          taxRate: false
-        }
-      },
-      currentMediaItemId: null,
-      currentMediaType: null, // To track what kind of media we're uploading
-      currentCategoryId: null,
-      selectedCategoryId: '',
-      sectionsStyle
+  }
+})
+
+// Emits
+const emit = defineEmits(['openMediaModal', 'closeMediaModal'])
+
+// Reactive data
+const settings = ref([
+  {
+    categories: [],
+    menuItems: [],
+    menuTitle: {},
+    menuSubtitle: {},
+    currencySymbol: '$',
+    classes: '',
+    logo: {},
+    viewMode: 'list',
+    enableTax: false,
+    taxRate: '',
+    medias: [],
+    socialMedia: {
+      instagram: '',
+      facebook: '',
+      tiktok: '',
+      twitter: '',
+      youtube: ''
+    },
+    showWhatsApp: false,
+    whatsappNumber: '',
+    whatsappMessage: {}
+  }
+])
+
+const errors = reactive({
+  categories: [],
+  menuItems: [],
+  generalSettings: {
+    taxRate: false
+  }
+})
+
+const currentMediaItemId = ref(null)
+const currentMediaType = ref(null)
+const currentCategoryId = ref(null)
+const selectedCategoryId = ref('')
+
+// Methods
+const updateCategories = (data) => {
+  settings.value[0].categories = data
+}
+
+const updateMediasArray = (media) => {
+  if (!media || !media.media_id) return
+
+  const existingIndex = settings.value[0].medias.findIndex(m => m.media_id === media.media_id)
+  if (existingIndex !== -1) {
+    settings.value[0].medias.splice(existingIndex, 1)
+  }
+
+  settings.value[0].medias.push(media)
+}
+
+const removeFromMediasArray = (mediaId) => {
+  if (!mediaId) return
+  settings.value[0].medias = settings.value[0].medias.filter(m => m.media_id !== mediaId)
+}
+
+const initializeMediasArray = () => {
+  settings.value[0].medias = []
+
+  if (settings.value[0].logo && settings.value[0].logo.media_id) {
+    settings.value[0].medias.push(settings.value[0].logo)
+  }
+
+  if (settings.value[0].categories) {
+    settings.value[0].categories.forEach(category => {
+      if (category.icon && category.icon.media_id) {
+        settings.value[0].medias.push(category.icon)
+      }
+    })
+  }
+
+  if (settings.value[0].menuItems) {
+    settings.value[0].menuItems.forEach(item => {
+      if (item.image && item.image.media_id) {
+        settings.value[0].medias.push(item.image)
+      }
+    })
+  }
+}
+
+const resetMediaState = () => {
+  currentMediaItemId.value = null
+  currentCategoryId.value = null
+  currentMediaType.value = null
+}
+
+const openMediaModal = (itemId, mediaId) => {
+  emit('openMediaModal', mediaId)
+  nextTick(() => {
+    currentMediaItemId.value = itemId
+    currentMediaType.value = 'menuItem'
+  })
+}
+
+const openCategoryIconModal = (categoryId, mediaId) => {
+  emit('openMediaModal', mediaId)
+  nextTick(() => {
+    currentCategoryId.value = categoryId
+    currentMediaType.value = 'categoryIcon'
+  })
+}
+
+const openLogoModal = (mediaId) => {
+  emit('openMediaModal', mediaId)
+  nextTick(() => {
+    currentMediaType.value = 'logo'
+  })
+}
+
+const removeLogo = () => {
+  if (settings.value[0].logo && settings.value[0].logo.media_id) {
+    removeFromMediasArray(settings.value[0].logo.media_id)
+  }
+  settings.value[0].logo = {}
+}
+
+const removeCategoryIcon = (categoryId) => {
+  const categoryIndex = settings.value[0].categories.findIndex(cat => cat.id === categoryId)
+  if (categoryIndex !== -1 && settings.value[0].categories[categoryIndex].icon) {
+    const mediaId = settings.value[0].categories[categoryIndex].icon.media_id
+    if (mediaId) {
+      removeFromMediasArray(mediaId)
     }
-  },
-  watch: {
-    selectedMedia(mediaObject) {
-      if (!mediaObject) return;
+    settings.value[0].categories[categoryIndex].icon = {}
+  }
+}
 
-      const media = {
-        media_id: "",
-        url: "",
-        seo_tag: "",
-        filename: "",
-        headers: {}
-      };
-
-      media.media_id = mediaObject.id;
-      media.url = mediaObject.files[0].url;
-      media.seo_tag = mediaObject.seo_tag;
-      media.filename = mediaObject.files[0].filename;
-
-      if (mediaObject.files[0].headers) {
-        media.headers = mediaObject.files[0].headers;
-      }
-
-      // Handle different media types
-      if (this.currentMediaType === 'logo') {
-        // Update restaurant logo
-        this.$set(this.settings[0], 'logo', media);
-      } else if (this.currentMediaType === 'categoryIcon') {
-        // Update category icon
-        const categoryIndex = this.settings[0].categories.findIndex(cat => cat.id === this.currentCategoryId);
-        if (categoryIndex !== -1) {
-          this.$set(this.settings[0].categories[categoryIndex], 'icon', media);
-        }
-      } else if (this.currentMediaType === 'menuItem') {
-        // Handle menu item image (existing functionality)
-        const itemIndex = this.settings[0].menuItems.findIndex(item => item.id === this.currentMediaItemId);
-        if (itemIndex !== -1) {
-          this.$set(this.settings[0].menuItems[itemIndex], 'image', media);
-        }
-      }
-
-      // Add to the medias array for content linking
-      this.updateMediasArray(media);
-
-      this.$emit('closeMediaModal');
-      this.resetMediaState();
-    },
-    settings: {
-      handler(value) {
-        if (value[0].categories) {
-          // Initialize errors object when categories change
-          this.errors.categories = value[0].categories.map(() => ({ name: false }));
-
-          // Initialize selectedCategoryId if not set and we have categories
-          if (!this.selectedCategoryId && value[0].categories.length > 0) {
-            this.selectedCategoryId = value[0].categories[0].id;
-          }
-        }
-
-        if (value[0].menuItems) {
-          // Update menu item errors
-          this.errors.menuItems = value[0].menuItems.map(item => ({
-            id: item.id,
-            name: false,
-            price: false
-          }));
-        }
-      },
-      deep: true,
-      immediate: true
+const removeItemImage = (itemId) => {
+  const itemIndex = settings.value[0].menuItems.findIndex(item => item.id === itemId)
+  if (itemIndex !== -1 && settings.value[0].menuItems[itemIndex].image) {
+    const mediaId = settings.value[0].menuItems[itemIndex].image.media_id
+    if (mediaId) {
+      removeFromMediasArray(mediaId)
     }
-  },
-  mounted() {
-    // Initialize localized fields
-    this.initializeLocalizedFields();
+    settings.value[0].menuItems[itemIndex].image = {}
+  }
+}
 
-    // Initialize medias array with existing media items
-    this.initializeMediasArray();
+const initializeLocalizedFields = () => {
+  if (!settings.value[0].menuTitle) {
+    settings.value[0].menuTitle = {}
+  }
+  if (!settings.value[0].menuSubtitle) {
+    settings.value[0].menuSubtitle = {}
+  }
 
-    // Ensure socialMedia object exists and has all platforms
-    if (!this.settings[0].socialMedia) {
-      this.$set(this.settings[0], 'socialMedia', {
-        instagram: '',
-        facebook: '',
-        tiktok: '',
-        twitter: '',
-        youtube: ''
-      });
-    } else {
-      // Ensure all platforms exist
-      const platforms = ['instagram', 'facebook', 'tiktok', 'twitter', 'youtube'];
-      platforms.forEach(platform => {
-        if (typeof this.settings[0].socialMedia[platform] === 'undefined') {
-          this.$set(this.settings[0].socialMedia, platform, '');
-        }
-      });
+  props.locales.forEach(locale => {
+    if (!settings.value[0].menuTitle[locale]) {
+      settings.value[0].menuTitle[locale] = ''
     }
-
-    // Set WhatsApp properties if not already defined
-    if (typeof this.settings[0].showWhatsApp === 'undefined') {
-      this.$set(this.settings[0], 'showWhatsApp', false);
+    if (!settings.value[0].menuSubtitle[locale]) {
+      settings.value[0].menuSubtitle[locale] = ''
     }
+  })
+}
 
-    if (!this.settings[0].whatsappNumber) {
-      this.$set(this.settings[0], 'whatsappNumber', '');
-    }
+const addCategory = () => {
+  const category = {
+    id: uuidv4(),
+    name: {},
+    description: {},
+    classes: '',
+    icon: {}
+  }
 
-    if (!this.settings[0].whatsappMessage) {
-      this.$set(this.settings[0], 'whatsappMessage', {});
-    }
+  props.locales.forEach(locale => {
+    category.name[locale] = ''
+    category.description[locale] = ''
+  })
 
-    // Initialize whatsappMessage for all locales
-    this.locales.forEach(locale => {
-      if (!this.settings[0].whatsappMessage[locale]) {
-        this.$set(this.settings[0].whatsappMessage, locale, 'Hello! I would like to reserve a table.');
+  settings.value[0].categories.push(category)
+  errors.categories.push({ name: false })
+
+  if (settings.value[0].categories.length === 1) {
+    nextTick(() => {
+      selectedCategoryId.value = category.id
+    })
+  }
+}
+
+const removeCategory = (idx) => {
+  const removedCategory = settings.value[0].categories[idx]
+
+  settings.value[0].categories = settings.value[0].categories.filter((ct, i) => idx !== i)
+  errors.categories.splice(idx, 1)
+
+  if (removedCategory && removedCategory.id) {
+    const categoryId = removedCategory.id
+    settings.value[0].menuItems = settings.value[0].menuItems.filter(item => item.categoryId !== categoryId)
+
+    if (selectedCategoryId.value === categoryId) {
+      if (settings.value[0].categories.length > 0) {
+        selectedCategoryId.value = settings.value[0].categories[0].id
+      } else {
+        selectedCategoryId.value = ''
       }
-    });
-  },
-  methods: {
-    // Method to update the medias array
-    updateMediasArray(media) {
-      if (!media || !media.media_id) return;
-
-      // Remove any existing entry with the same ID
-      const existingIndex = this.settings[0].medias.findIndex(m => m.media_id === media.media_id);
-      if (existingIndex !== -1) {
-        this.settings[0].medias.splice(existingIndex, 1);
-      }
-
-      // Add the new media
-      this.settings[0].medias.push(media);
-    },
-
-    // Method to remove from medias array
-    removeFromMediasArray(mediaId) {
-      if (!mediaId) return;
-
-      // Remove media with the given ID
-      this.settings[0].medias = this.settings[0].medias.filter(m => m.media_id !== mediaId);
-    },
-
-    // Initialize the medias array with existing media references
-    initializeMediasArray() {
-      // Clear existing medias array
-      this.settings[0].medias = [];
-
-      // Add logo if it exists
-      if (this.settings[0].logo && this.settings[0].logo.media_id) {
-        this.settings[0].medias.push(this.settings[0].logo);
-      }
-
-      // Add category icons
-      if (this.settings[0].categories) {
-        this.settings[0].categories.forEach(category => {
-          if (category.icon && category.icon.media_id) {
-            this.settings[0].medias.push(category.icon);
-          }
-        });
-      }
-
-      // Add menu item images
-      if (this.settings[0].menuItems) {
-        this.settings[0].menuItems.forEach(item => {
-          if (item.image && item.image.media_id) {
-            this.settings[0].medias.push(item.image);
-          }
-        });
-      }
-    },
-
-    resetMediaState() {
-      this.currentMediaItemId = null;
-      this.currentCategoryId = null;
-      this.currentMediaType = null;
-    },
-    openMediaModal(itemId, mediaId) {
-      this.$emit('openMediaModal', mediaId);
-      this.$nextTick(() => {
-        this.currentMediaItemId = itemId;
-        this.currentMediaType = 'menuItem';
-      });
-    },
-    openCategoryIconModal(categoryId, mediaId) {
-      this.$emit('openMediaModal', mediaId);
-      this.$nextTick(() => {
-        this.currentCategoryId = categoryId;
-        this.currentMediaType = 'categoryIcon';
-      });
-    },
-    openLogoModal(mediaId) {
-      this.$emit('openMediaModal', mediaId);
-      this.$nextTick(() => {
-        this.currentMediaType = 'logo';
-      });
-    },
-    removeLogo() {
-      if (this.settings[0].logo && this.settings[0].logo.media_id) {
-        this.removeFromMediasArray(this.settings[0].logo.media_id);
-      }
-      this.$set(this.settings[0], 'logo', {});
-    },
-    removeCategoryIcon(categoryId) {
-      const categoryIndex = this.settings[0].categories.findIndex(cat => cat.id === categoryId);
-      if (categoryIndex !== -1 && this.settings[0].categories[categoryIndex].icon) {
-        const mediaId = this.settings[0].categories[categoryIndex].icon.media_id;
-        if (mediaId) {
-          this.removeFromMediasArray(mediaId);
-        }
-        this.$set(this.settings[0].categories[categoryIndex], 'icon', {});
-      }
-    },
-    removeItemImage(itemId) {
-      const itemIndex = this.settings[0].menuItems.findIndex(item => item.id === itemId);
-      if (itemIndex !== -1 && this.settings[0].menuItems[itemIndex].image) {
-        const mediaId = this.settings[0].menuItems[itemIndex].image.media_id;
-        if (mediaId) {
-          this.removeFromMediasArray(mediaId);
-        }
-        this.settings[0].menuItems[itemIndex].image = {};
-      }
-    },
-    initializeLocalizedFields() {
-      // Initialize menuTitle and menuSubtitle for all locales
-      if (!this.settings[0].menuTitle) {
-        this.settings[0].menuTitle = {};
-      }
-      if (!this.settings[0].menuSubtitle) {
-        this.settings[0].menuSubtitle = {};
-      }
-
-      this.locales.forEach(locale => {
-        if (!this.settings[0].menuTitle[locale]) {
-          this.$set(this.settings[0].menuTitle, locale, '');
-        }
-        if (!this.settings[0].menuSubtitle[locale]) {
-          this.$set(this.settings[0].menuSubtitle, locale, '');
-        }
-      });
-    },
-    addCategory() {
-      const category = {
-        id: uuidv4(),
-        name: {},
-        description: {},
-        classes: '',
-        icon: {}
-      };
-
-      // Initialize names for ALL locales
-      this.locales.forEach(locale => {
-        category.name[locale] = ''
-      });
-
-      this.settings[0].categories.push(category);
-      this.errors.categories.push({ name: false });
-
-      // Select the newly created category
-      if (this.settings[0].categories.length === 1) {
-        this.$nextTick(() => {
-          this.selectedCategoryId = category.id;
-        });
-      }
-    },
-    removeCategory(idx) {
-      const removedCategory = this.settings[0].categories[idx];
-
-      // Remove the category
-      this.$set(this.settings[0], 'categories', this.settings[0].categories.filter((ct, i) => idx !== i));
-
-      // Also update errors
-      this.errors.categories.splice(idx, 1);
-
-      // Remove all menu items that belong to the deleted category
-      if (removedCategory && removedCategory.id) {
-        const categoryId = removedCategory.id;
-        this.settings[0].menuItems = this.settings[0].menuItems.filter(item => item.categoryId !== categoryId);
-
-        // If we're removing the currently selected category
-        if (this.selectedCategoryId === categoryId) {
-          // Select the first available category if any
-          if (this.settings[0].categories.length > 0) {
-            this.selectedCategoryId = this.settings[0].categories[0].id;
-          } else {
-            this.selectedCategoryId = '';
-          }
-        }
-      }
-    },
-    addMenuItem(categoryId) {
-      if (!categoryId) return;
-
-      const menuItem = {
-        id: uuidv4(),
-        categoryId,
-        name: {},
-        description: {},
-        price: '',
-        image: {},
-        featured: false,
-        classes: ''
-      };
-
-      // Initialize localized fields
-      this.locales.forEach(locale => {
-        menuItem.name[locale] = '';
-        menuItem.description[locale] = '';
-      });
-
-      this.settings[0].menuItems.push(menuItem);
-      this.errors.menuItems.push({
-        id: menuItem.id,
-        name: false,
-        price: false
-      });
-    },
-    removeMenuItem(itemId) {
-      // Find the index of the menu item with this ID
-      const idx = this.settings[0].menuItems.findIndex(item => item.id === itemId);
-      if (idx === -1) return;
-
-      // Get the media ID before removing the item
-      const mediaId = this.settings[0].menuItems[idx].image && this.settings[0].menuItems[idx].image.media_id;
-      if (mediaId) {
-        this.removeFromMediasArray(mediaId);
-      }
-
-      // Remove the menu item
-      this.$set(this.settings[0], 'menuItems', this.settings[0].menuItems.filter(item => item.id !== itemId));
-
-      // Also update errors - find the error with this ID
-      const errorIdx = this.errors.menuItems.findIndex(err => err.id === itemId);
-      if (errorIdx !== -1) {
-        this.errors.menuItems.splice(errorIdx, 1);
-      }
-    },
-    getCategoryOptions() {
-      if (!this.settings[0].categories) return [];
-
-      return this.settings[0].categories.map(category => {
-        // Get the category name in the selected language, fall back to English if not available
-        // If neither is available, use a default name with part of the ID for identification
-        const displayName = category.name[this.selectedLang] ||
-          category.name.en ||
-          `Category ${category.id.substring(0, 4)}`;
-
-        return {
-          id: category.id,
-          name: displayName
-        };
-      });
-    },
-    getMenuItemsByCategory(categoryId) {
-      if (!categoryId || !this.settings[0].menuItems) return [];
-
-      return this.settings[0].menuItems.filter(item => item.categoryId === categoryId);
-    },
-    updateMenuItemsForCategory(categoryId, updatedItems) {
-      if (!categoryId) return;
-
-      // Get all items that don't belong to this category
-      const otherItems = this.settings[0].menuItems.filter(item => item.categoryId !== categoryId);
-
-      // Combine with the updated items for this category
-      this.$set(this.settings[0], 'menuItems', [...otherItems, ...updatedItems]);
-    },
-    getErrorForMenuItem(itemId, field) {
-      const error = this.errors.menuItems.find(err => err.id === itemId);
-      return error ? error[field] : false;
-    },
-    validate() {
-      let valid = true;
-
-      // Reset general settings errors
-      this.errors.generalSettings = this.errors.generalSettings || {};
-      this.errors.generalSettings.taxRate = false;
-
-      // Validate categories
-      this.settings[0].categories.forEach((category, idx) => {
-        // Reset error
-        this.errors.categories[idx].name = false;
-
-        // Check for required name
-        if (!category.name.en) {
-          this.errors.categories[idx].name = true;
-          valid = false;
-        }
-      });
-
-      // Validate menu items
-      this.settings[0].menuItems.forEach(item => {
-        // Find the error object for this item
-        const errorIdx = this.errors.menuItems.findIndex(err => err.id === item.id);
-        if (errorIdx === -1) return;
-
-        // Reset errors
-        this.errors.menuItems[errorIdx].name = false;
-        this.errors.menuItems[errorIdx].price = false;
-
-        // Check for required fields
-        if (!item.name.en) {
-          this.errors.menuItems[errorIdx].name = true;
-          valid = false;
-        }
-
-        if (!item.price && item.price !== 0) {
-          this.errors.menuItems[errorIdx].price = true;
-          valid = false;
-        }
-      });
-
-      // Validate tax rate if tax is enabled
-      if (this.settings[0].enableTax && (!this.settings[0].taxRate && this.settings[0].taxRate !== 0)) {
-        this.errors.generalSettings.taxRate = true;
-        valid = false;
-      }
-
-      // Clean up media objects
-      this.settings[0].menuItems.forEach(item => {
-        if (item.image && (Object.keys(item.image).length === 0 || !item.image.media_id || !item.image.url)) {
-          delete item.image;
-        }
-      });
-
-      // Clean up category icon objects
-      this.settings[0].categories.forEach(category => {
-        if (category.icon && (Object.keys(category.icon).length === 0 || !category.icon.media_id || !category.icon.url)) {
-          delete category.icon;
-        }
-      });
-
-      // Clean up logo
-      if (this.settings[0].logo && (Object.keys(this.settings[0].logo).length === 0 || !this.settings[0].logo.media_id || !this.settings[0].logo.url)) {
-        delete this.settings[0].logo;
-      }
-
-      if (!valid) {
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
-        scrollToFirstError(this.errors);
-      }
-
-      return valid;
     }
   }
 }
+
+const addMenuItem = (categoryId) => {
+  if (!categoryId) return
+
+  const menuItem = {
+    id: uuidv4(),
+    categoryId,
+    name: {},
+    description: {},
+    price: '',
+    image: {},
+    featured: false,
+    classes: ''
+  }
+
+  props.locales.forEach(locale => {
+    menuItem.name[locale] = ''
+    menuItem.description[locale] = ''
+  })
+
+  settings.value[0].menuItems.push(menuItem)
+  errors.menuItems.push({
+    id: menuItem.id,
+    name: false,
+    price: false
+  })
+}
+
+const removeMenuItem = (itemId) => {
+  const idx = settings.value[0].menuItems.findIndex(item => item.id === itemId)
+  if (idx === -1) return
+
+  const mediaId = settings.value[0].menuItems[idx].image && settings.value[0].menuItems[idx].image.media_id
+  if (mediaId) {
+    removeFromMediasArray(mediaId)
+  }
+
+  settings.value[0].menuItems = settings.value[0].menuItems.filter(item => item.id !== itemId)
+
+  const errorIdx = errors.menuItems.findIndex(err => err.id === itemId)
+  if (errorIdx !== -1) {
+    errors.menuItems.splice(errorIdx, 1)
+  }
+}
+
+const getCategoryOptions = () => {
+  if (!settings.value[0].categories) return []
+
+  return settings.value[0].categories.map(category => {
+    const displayName = category.name[props.selectedLang] ||
+      category.name.en ||
+      `Category ${category.id.substring(0, 4)}`
+
+    return {
+      id: category.id,
+      name: displayName
+    }
+  })
+}
+
+const getMenuItemsByCategory = (categoryId) => {
+  if (!categoryId || !settings.value[0].menuItems) return []
+  return settings.value[0].menuItems.filter(item => item.categoryId === categoryId)
+}
+
+const updateMenuItemsForCategory = (categoryId, updatedItems) => {
+  if (!categoryId) return
+
+  const otherItems = settings.value[0].menuItems.filter(item => item.categoryId !== categoryId)
+  settings.value[0].menuItems = [...otherItems, ...updatedItems]
+}
+
+const getErrorForMenuItem = (itemId, field) => {
+  const error = errors.menuItems.find(err => err.id === itemId)
+  return error ? error[field] : false
+}
+
+const validate = () => {
+  let valid = true
+
+  errors.generalSettings = errors.generalSettings || {}
+  errors.generalSettings.taxRate = false
+
+  settings.value[0].categories.forEach((category, idx) => {
+    if (!errors.categories[idx]) {
+      errors.categories[idx] = { name: false }
+    }
+    errors.categories[idx].name = false
+
+    if (!category.name.en) {
+      errors.categories[idx].name = true
+      valid = false
+    }
+  })
+
+  settings.value[0].menuItems.forEach(item => {
+    const errorIdx = errors.menuItems.findIndex(err => err.id === item.id)
+    if (errorIdx === -1) return
+
+    errors.menuItems[errorIdx].name = false
+    errors.menuItems[errorIdx].price = false
+
+    if (!item.name.en) {
+      errors.menuItems[errorIdx].name = true
+      valid = false
+    }
+
+    if (!item.price && item.price !== 0) {
+      errors.menuItems[errorIdx].price = true
+      valid = false
+    }
+  })
+
+  if (settings.value[0].enableTax && (!settings.value[0].taxRate && settings.value[0].taxRate !== 0)) {
+    errors.generalSettings.taxRate = true
+    valid = false
+  }
+
+  settings.value[0].menuItems.forEach(item => {
+    if (item.image && (Object.keys(item.image).length === 0 || !item.image.media_id || !item.image.url)) {
+      delete item.image
+    }
+  })
+
+  settings.value[0].categories.forEach(category => {
+    if (category.icon && (Object.keys(category.icon).length === 0 || !category.icon.media_id || !category.icon.url)) {
+      delete category.icon
+    }
+  })
+
+  if (settings.value[0].logo && (Object.keys(settings.value[0].logo).length === 0 || !settings.value[0].logo.media_id || !settings.value[0].logo.url)) {
+    delete settings.value[0].logo
+  }
+
+  if (!valid) {
+    // Note: You'll need to handle this toast notification in your Nuxt 3 app
+    if (scrollToFirstError) {
+      scrollToFirstError(errors)
+    }
+  }
+
+  return valid
+}
+
+// Watchers
+watch(() => props.selectedMedia, (mediaObject) => {
+  if (!mediaObject) return
+
+  const media = {
+    media_id: "",
+    url: "",
+    seo_tag: "",
+    filename: "",
+    headers: {}
+  }
+
+  media.media_id = mediaObject.id
+  media.url = mediaObject.files[0].url
+  media.seo_tag = mediaObject.seo_tag
+  media.filename = mediaObject.files[0].filename
+
+  if (mediaObject.files[0].headers) {
+    media.headers = mediaObject.files[0].headers
+  }
+
+  if (currentMediaType.value === 'logo') {
+    settings.value[0].logo = media
+  } else if (currentMediaType.value === 'categoryIcon') {
+    const categoryIndex = settings.value[0].categories.findIndex(cat => cat.id === currentCategoryId.value)
+    if (categoryIndex !== -1) {
+      settings.value[0].categories[categoryIndex].icon = media
+    }
+  } else if (currentMediaType.value === 'menuItem') {
+    const itemIndex = settings.value[0].menuItems.findIndex(item => item.id === currentMediaItemId.value)
+    if (itemIndex !== -1) {
+      settings.value[0].menuItems[itemIndex].image = media
+    }
+  }
+
+  updateMediasArray(media)
+  emit('closeMediaModal')
+  resetMediaState()
+})
+
+watch(() => settings.value, (value) => {
+  if (value[0].categories) {
+    errors.categories = value[0].categories.map(() => ({ name: false }))
+
+    if (!selectedCategoryId.value && value[0].categories.length > 0) {
+      selectedCategoryId.value = value[0].categories[0].id
+    }
+  }
+
+  if (value[0].menuItems) {
+    errors.menuItems = value[0].menuItems.map(item => ({
+      id: item.id,
+      name: false,
+      price: false
+    }))
+  }
+}, { deep: true, immediate: true })
+
+// Lifecycle
+onMounted(() => {
+  initializeLocalizedFields()
+  initializeMediasArray()
+
+  if (!settings.value[0].socialMedia) {
+    settings.value[0].socialMedia = {
+      instagram: '',
+      facebook: '',
+      tiktok: '',
+      twitter: '',
+      youtube: ''
+    }
+  } else {
+    const platforms = ['instagram', 'facebook', 'tiktok', 'twitter', 'youtube']
+    platforms.forEach(platform => {
+      if (typeof settings.value[0].socialMedia[platform] === 'undefined') {
+        settings.value[0].socialMedia[platform] = ''
+      }
+    })
+  }
+
+  if (typeof settings.value[0].showWhatsApp === 'undefined') {
+    settings.value[0].showWhatsApp = false
+  }
+
+  if (!settings.value[0].whatsappNumber) {
+    settings.value[0].whatsappNumber = ''
+  }
+
+  if (!settings.value[0].whatsappMessage) {
+    settings.value[0].whatsappMessage = {}
+  }
+
+  props.locales.forEach(locale => {
+    if (!settings.value[0].whatsappMessage[locale]) {
+      settings.value[0].whatsappMessage[locale] = 'Hello! I would like to reserve a table.'
+    }
+  })
+})
+
+// Expose methods that might be called from parent
+defineExpose({
+  validate,
+  settings
+})
 </script>
 
 <style>

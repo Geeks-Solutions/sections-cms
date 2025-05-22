@@ -11,7 +11,7 @@
 
         <!-- Item Image -->
         <div v-if="item.image && item.image.url" class="item-image-wrapper md:mr-4 mb-4 md:mb-0 flex-shrink-0">
-          <nuxt-img :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]"
+          <NuxtImg :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]"
             class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" preload
             fetchpriority="high" :modifiers="{
               width: 80,
@@ -34,7 +34,7 @@
                 <div v-if="item.featured">
                   <div class="badge badge-featured inline-block px-2 py-1 rounded"
                     :class="{ 'badge-restaurant': type === 'restaurant', 'badge-service': type === 'service' }">
-                    {{ isService ? $t('ServicePackages.featuredItem') : $t('RestaurantMenu.specialItem') }}
+                    {{ isService ?  $t('ServicePackages.featuredItem') : $t('RestaurantMenu.specialItem') }}
                   </div>
                 </div>
                 <!-- Availability badge for service items -->
@@ -73,7 +73,7 @@
               <div class="flex items-center mt-1">
                 <!-- Duration for services -->
                 <div v-if="isService && item.duration" class="item-duration">
-                  {{ item.duration[lang] }}
+                  {{ typeof item.duration === 'object' ? item.duration[lang] : item.duration }}
                 </div>
               </div>
             </div>
@@ -84,44 +84,40 @@
   </div>
 </template>
 
-<script>
-import { formatPrice } from '@/utils/constants';
+<script setup>
+import { computed } from 'vue'
+import { formatPrice } from '@/utils/constants'
 
-export default {
-  name: 'ItemsGrid',
-  props: {
-    items: {
-      type: Array,
-      required: true
-    },
-    currencySymbol: {
-      type: String,
-      default: '$'
-    },
-    lang: {
-      type: String,
-      default: 'en'
-    },
-    type: {
-      type: String,
-      default: 'restaurant', // 'restaurant' or 'service'
-      validator: value => ['restaurant', 'service'].includes(value)
-    }
+const props = defineProps({
+  items: {
+    type: Array,
+    required: true
   },
-  computed: {
-    isService() {
-      return this.type === 'service';
-    }
+  currencySymbol: {
+    type: String,
+    default: '$'
   },
-  methods: {
-    formatPrice,
-    calculateDiscountPercentage(item) {
-      if (!item.hasDiscount || !item.price || !item.discountedPrice) return 0;
-      const originalPrice = parseFloat(item.price);
-      const discountedPrice = parseFloat(item.discountedPrice);
-      if (originalPrice <= 0 || discountedPrice >= originalPrice) return 0;
-      return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100);
-    }
+  lang: {
+    type: String,
+    default: 'en'
+  },
+  type: {
+    type: String,
+    default: 'restaurant', // 'restaurant' or 'service'
+    validator: value => ['restaurant', 'service'].includes(value)
   }
+})
+
+defineEmits(['item-click'])
+
+// Computed properties
+const isService = computed(() => props.type === 'service')
+
+const calculateDiscountPercentage = (item) => {
+  if (!item.hasDiscount || !item.price || !item.discountedPrice) return 0
+  const originalPrice = parseFloat(item.price)
+  const discountedPrice = parseFloat(item.discountedPrice)
+  if (originalPrice <= 0 || discountedPrice >= originalPrice) return 0
+  return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100)
 }
 </script>

@@ -4,7 +4,7 @@
     <template v-if="filteredLinks.length > 0 || (showWhatsApp && whatsappNumber)">
       <a v-for="link in filteredLinks" :key="link.type" :href="link.url" target="_blank" rel="noopener"
         class="social-link rounded-full p-2 transition-colors duration-200" :class="[`social-link-${link.type}`]">
-        <component :is="getSocialIcon(link.type)" :size="24" />
+        <component :is="getSocialIcon(link.type)" />
       </a>
     </template>
 
@@ -19,208 +19,166 @@
   </div>
 </template>
 
-<script>
-import { generateWhatsAppMessage } from '@/utils/constants';
-export default {
-  name: 'SocialLinks',
-  props: {
-    links: {
-      type: Array,
-      default: () => []
-    },
-    showWhatsApp: {
-      type: Boolean,
-      default: false
-    },
-    whatsappNumber: {
-      type: String,
-      default: ''
-    },
-    whatsappMessage: {
-      type: String,
-      default: ''
-    },
-    cart: {
-      type: Array,
-      default: () => []
-    },
-    lang: {
-      type: String,
-      default: 'en'
-    },
-    type: {
-      type: String,
-      default: 'restaurant', // 'restaurant' or 'service'
-      validator: value => ['restaurant', 'service'].includes(value)
-    }
-  },
-  computed: {
-    filteredLinks() {
-      // Only return links with valid URLs
-      return (this.links || []).filter(link =>
-        link && link.url && typeof link.url === 'string' && link.url.trim() !== ''
-      );
-    },
-    whatsappUrl() {
-      if (!this.whatsappNumber) return '#';
+<script setup>
+import { computed, watch, h } from 'vue'
+import { generateWhatsAppMessage } from '@/utils/constants'
 
-      const phoneNumber = this.whatsappNumber.replace(/[^0-9+]/g, '');
-      let message;
-      if (!this.cart || this.cart.length === 0) {
-        message = this.whatsappMessage || generateWhatsAppMessage(
-          [], // Empty cart
-          this.type,
-          this.lang,
-          (key, options = {}) => this.$t(key, options.defaultMessage || '')
-        );
-      } else {
-        // Cart has items, generate message with items
-        message = generateWhatsAppMessage(
-          this.cart,
-          this.type,
-          this.lang,
-          (key, options = {}) => this.$t(key, options.defaultMessage || '')
-        );
-      }
+const props = defineProps({
+  links: {
+    type: Array,
+    default: () => []
+  },
+  showWhatsApp: {
+    type: Boolean,
+    default: false
+  },
+  whatsappNumber: {
+    type: String,
+    default: ''
+  },
+  whatsappMessage: {
+    type: String,
+    default: ''
+  },
+  cart: {
+    type: Array,
+    default: () => []
+  },
+  lang: {
+    type: String,
+    default: 'en'
+  },
+  type: {
+    type: String,
+    default: 'restaurant', // 'restaurant' or 'service'
+    validator: value => ['restaurant', 'service'].includes(value)
+  },
+  i18n: {
+    type: Function,
+    required: true
+  }
+})
 
-      const encodedMessage = encodeURIComponent(message);
-      return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    }
-  },
-  methods: {
-    getSocialIcon(type) {
-      // This method lets us use SVG icons directly without requiring imports
-      switch (type) {
-        case 'instagram':
-          return {
-            render: (h) => {
-              return h('svg', {
-                attrs: {
-                  xmlns: 'http://www.w3.org/2000/svg',
-                  width: '24',
-                  height: '24',
-                  viewBox: '0 0 24 24',
-                  fill: 'none',
-                  stroke: 'currentColor',
-                  'stroke-width': '2',
-                  'stroke-linecap': 'round',
-                  'stroke-linejoin': 'round'
-                }
-              }, [
-                h('rect', { attrs: { x: '2', y: '2', width: '20', height: '20', rx: '5', ry: '5' } }),
-                h('path', { attrs: { d: 'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z' } }),
-                h('line', { attrs: { x1: '17.5', y1: '6.5', x2: '17.51', y2: '6.5' } })
-              ]);
-            }
-          };
-        case 'facebook':
-          return {
-            render: (h) => {
-              return h('svg', {
-                attrs: {
-                  xmlns: 'http://www.w3.org/2000/svg',
-                  width: '24',
-                  height: '24',
-                  viewBox: '0 0 24 24',
-                  fill: 'none',
-                  stroke: 'currentColor',
-                  'stroke-width': '2',
-                  'stroke-linecap': 'round',
-                  'stroke-linejoin': 'round'
-                }
-              }, [
-                h('path', { attrs: { d: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' } })
-              ]);
-            }
-          };
-        case 'tiktok':
-          return {
-            render: (h) => {
-              return h('svg', {
-                attrs: {
-                  width: '24',
-                  height: '24',
-                  fill: 'currentColor',
-                  viewBox: '0 0 24 24'
-                }
-              }, [
-                h('path', { attrs: { d: 'M12.14 2h2.41c.11 1.2.48 2.21 1.08 3.02a5.57 5.57 0 0 0 3.16 2c.1 0 .22 0 .32.02v2.38a6.5 6.5 0 0 1-3.55-1.07v5.47c0 2.55-1.98 4.75-4.49 5.15a4.77 4.77 0 0 1-5.48-4.71 4.86 4.86 0 0 1 5.56-5.16v2.36a2.42 2.42 0 0 0-2.27 2.54 2.37 2.37 0 0 0 2.71 2.22c1.14-.16 2.01-1.2 2.01-2.38V2z' } })
-              ]);
-            }
-          };
-        case 'twitter':
-          return {
-            render: (h) => {
-              return h('svg', {
-                attrs: {
-                  xmlns: 'http://www.w3.org/2000/svg',
-                  width: '24',
-                  height: '24',
-                  viewBox: '0 0 24 24',
-                  fill: 'none',
-                  stroke: 'currentColor',
-                  'stroke-width': '2',
-                  'stroke-linecap': 'round',
-                  'stroke-linejoin': 'round'
-                }
-              }, [
-                h('path', { attrs: { d: 'M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z' } })
-              ]);
-            }
-          };
-        case 'youtube':
-          return {
-            render: (h) => {
-              return h('svg', {
-                attrs: {
-                  xmlns: 'http://www.w3.org/2000/svg',
-                  width: '24',
-                  height: '24',
-                  viewBox: '0 0 24 24',
-                  fill: 'none',
-                  stroke: 'currentColor',
-                  'stroke-width': '2',
-                  'stroke-linecap': 'round',
-                  'stroke-linejoin': 'round'
-                }
-              }, [
-                h('path', { attrs: { d: 'M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z' } }),
-                h('polygon', { attrs: { points: '9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02' } })
-              ]);
-            }
-          };
-        default:
-          // Link icon as default
-          return {
-            render: (h) => {
-              return h('svg', {
-                attrs: {
-                  xmlns: 'http://www.w3.org/2000/svg',
-                  width: '24',
-                  height: '24',
-                  viewBox: '0 0 24 24',
-                  fill: 'none',
-                  stroke: 'currentColor',
-                  'stroke-width': '2',
-                  'stroke-linecap': 'round',
-                  'stroke-linejoin': 'round'
-                }
-              }, [
-                h('path', { attrs: { d: 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71' } }),
-                h('path', { attrs: { d: 'M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71' } })
-              ]);
-            }
-          };
-      }
-    }
-  },
-  watch: {
-    cart: {
-      handler(newCart) {
-        this.$forceUpdate();
-      },
-      deep: true
-    }
+// Computed properties
+const filteredLinks = computed(() => {
+  return (props.links || []).filter(link =>
+    link && link.url && typeof link.url === 'string' && link.url.trim() !== ''
+  )
+})
+
+const whatsappUrl = computed(() => {
+  if (!props.whatsappNumber) return '#'
+
+  const phoneNumber = props.whatsappNumber.replace(/[^0-9+]/g, '')
+
+  const message = generateWhatsAppMessage(
+    props.cart,
+    props.type,
+    props.lang,
+    props.i18n
+  )
+
+  const encodedMessage = encodeURIComponent(message)
+  return `https://wa.me/${phoneNumber}?text=${encodedMessage}`
+})
+
+// Methods
+const getSocialIcon = (type) => {
+  switch (type) {
+    case 'instagram':
+      return () => h('svg', {
+        xmlns: 'http://www.w3.org/2000/svg',
+        width: '24',
+        height: '24',
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        'stroke-width': '2',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }, [
+        h('rect', { x: '2', y: '2', width: '20', height: '20', rx: '5', ry: '5' }),
+        h('path', { d: 'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z' }),
+        h('line', { x1: '17.5', y1: '6.5', x2: '17.51', y2: '6.5' })
+      ])
+
+    case 'facebook':
+      return () => h('svg', {
+        xmlns: 'http://www.w3.org/2000/svg',
+        width: '24',
+        height: '24',
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        'stroke-width': '2',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }, [
+        h('path', { d: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' })
+      ])
+
+    case 'tiktok':
+      return () => h('svg', {
+        width: '24',
+        height: '24',
+        fill: 'currentColor',
+        viewBox: '0 0 24 24'
+      }, [
+        h('path', { d: 'M12.14 2h2.41c.11 1.2.48 2.21 1.08 3.02a5.57 5.57 0 0 0 3.16 2c.1 0 .22 0 .32.02v2.38a6.5 6.5 0 0 1-3.55-1.07v5.47c0 2.55-1.98 4.75-4.49 5.15a4.77 4.77 0 0 1-5.48-4.71 4.86 4.86 0 0 1 5.56-5.16v2.36a2.42 2.42 0 0 0-2.27 2.54 2.37 2.37 0 0 0 2.71 2.22c1.14-.16 2.01-1.2 2.01-2.38V2z' })
+      ])
+
+    case 'twitter':
+      return () => h('svg', {
+        xmlns: 'http://www.w3.org/2000/svg',
+        width: '24',
+        height: '24',
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        'stroke-width': '2',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }, [
+        h('path', { d: 'M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z' })
+      ])
+
+    case 'youtube':
+      return () => h('svg', {
+        xmlns: 'http://www.w3.org/2000/svg',
+        width: '24',
+        height: '24',
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        'stroke-width': '2',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }, [
+        h('path', { d: 'M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z' }),
+        h('polygon', { points: '9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02' })
+      ])
+
+    default:
+      // Link icon as default
+      return () => h('svg', {
+        xmlns: 'http://www.w3.org/2000/svg',
+        width: '24',
+        height: '24',
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        'stroke-width': '2',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+      }, [
+        h('path', { d: 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71' }),
+        h('path', { d: 'M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71' })
+      ])
   }
 }
+
+// Watch for cart changes (optional, for reactivity)
+watch(() => props.cart, () => {
+  // Cart changes will automatically trigger whatsappUrl recomputation
+}, { deep: true })
 </script>

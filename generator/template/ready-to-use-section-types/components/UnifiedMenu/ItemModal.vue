@@ -12,7 +12,7 @@
 
         <!-- Item image -->
         <div v-if="item && item.image && item.image.url" :class="isService ? 'h-64' : 'h-52'">
-          <nuxt-img :src="item.image.url" :alt="item.image.seo_tag || (item.name && item.name[lang])"
+          <NuxtImg :src="item.image.url" :alt="item.image.seo_tag || (item.name && item.name[lang])"
             class="modal-image w-full h-full object-cover rounded-t-lg" width="400" height="160" :modifiers="{
               width: 400,
               height: 160,
@@ -39,12 +39,6 @@
             </div>
           </div>
 
-          <!-- Discount badge -->
-          <!-- <div v-if="isService && item.hasDiscount && calculateDiscountPercentage(item) > 0"
-            class="hidden md:inline-block badge-discount mb-3 rounded-full px-3 py-1">
-            {{ calculateDiscountPercentage(item) }}% OFF
-          </div> -->
-
           <!-- Item description -->
           <p class="modal-item-description mb-2">{{ item.description[lang] }}</p>
 
@@ -52,13 +46,15 @@
           <div v-if="isService && item.details && item.details.length > 0" class="mb-4">
             <ul class="feature-list overflow-y-auto max-h-[61px] lg:max-h-[87px]">
               <li v-for="(detail, index) in item.details" :key="index" class="feature-list-item">
-                {{ detail[lang] }}
+                {{ typeof detail === 'object' ? detail[lang] : detail }}
               </li>
             </ul>
           </div>
           <div v-else-if="isService" class="mb-4">
             <ul class="feature-list overflow-y-auto max-h-[61px] lg:max-h-[200px]">
-              <li v-if="item.duration" class="feature-list-item">{{ item.duration }} service</li>
+              <li v-if="item.duration && item.duration[lang] != ''" class="feature-list-item">
+                {{ typeof item.duration === 'object' ? item.duration[lang] : item.duration }} service
+              </li>
               <li v-for="(feature, index) in parseFeatures(item.description[lang])" :key="index"
                 class="feature-list-item">
                 {{ feature }}
@@ -66,10 +62,34 @@
             </ul>
           </div>
 
+          <!-- Date picker for services -->
+          <!-- <div v-if="isService && showDateTimePickers" class="mb-4">
+            <label class="input-label block mb-2">Select Date:</label>
+            <input 
+              type="date" 
+              :value="selectedDate" 
+              @input="updateDate($event.target.value)"
+              :min="minDate"
+              class="w-full p-3 border rounded-lg"
+            />
+          </div> -->
+
+          <!-- Time slot picker for services -->
+          <!-- <div v-if="isService && showDateTimePickers" class="mb-4">
+            <label class="input-label block mb-2">Select Time:</label>
+            <select 
+              :value="selectedTimeSlot" 
+              @change="updateTimeSlot($event.target.value)"
+              class="w-full p-3 border rounded-lg"
+            >
+              <option value="">Choose a time slot</option>
+              <option v-for="slot in timeSlots" :key="slot" :value="slot">{{ slot }}</option>
+            </select>
+          </div> -->
+
           <!-- Quantity control - Updated to match mockup -->
           <div class="flex items-center mb-2">
-            <label class="input-label mr-4">{{ $t(isService ? 'ServicePackages.quantity' : 'RestaurantMenu.quantity')
-            }}:</label>
+            <label class="input-label mr-4">{{ isService ? 'Quantity' : 'Quantity' }}:</label>
             <div class="custom-quantity-control flex items-center">
               <button @click="decrementQuantity" class="item-qty-minus flex items-center justify-center rounded-full">
                 −
@@ -84,17 +104,16 @@
 
           <!-- Special instructions - Updated styling -->
           <div class="mb-4">
-            <label class="input-label block mb-2">{{ $t(isService ? 'ServicePackages.specialRequests' :
-              'RestaurantMenu.specialInstructions') }}:</label>
+            <label class="input-label block mb-2">{{ isService ? 'Special Requests' : 'Special Instructions' }}:</label>
             <textarea :value="notes" @input="$emit('update-notes', $event.target.value)"
               class="special-request-textarea p-4 border rounded-lg w-full"
-              :placeholder="$t(isService ? 'ServicePackages.specialRequestsPlaceholder' : 'RestaurantMenu.specialInstructionsPlaceholder')"></textarea>
+              :placeholder="isService ? 'Any special requests for your service...' : 'Any special instructions...'"></textarea>
           </div>
 
           <!-- Add to cart button - Updated to match mockup -->
           <button @click="addToCart" class="add-to-cart-button w-full py-4 rounded-lg flex justify-center items-center"
             :class="{ 'add-to-cart-service': isService, 'add-to-cart-restaurant': !isService }">
-            {{ $t(isService ? 'ServicePackages.addToCart' : 'RestaurantMenu.addToCart') }}
+            {{ isService ? 'Add to Cart' : 'Add to Cart' }}
           </button>
         </div>
       </div>
@@ -102,130 +121,141 @@
   </div>
 </template>
 
-<script>
-import { formatPrice } from "@/utils/constants"; // Assuming you have a utility function for formatting prices
-export default {
-  name: 'ItemModal',
-  props: {
-    item: {
-      type: Object,
-      required: true
-    },
-    currencySymbol: {
-      type: String,
-      default: '$'
-    },
-    lang: {
-      type: String,
-      default: 'en'
-    },
-    quantity: {
-      type: Number,
-      default: 1
-    },
-    notes: {
-      type: String,
-      default: ''
-    },
-    selectedDate: {
-      type: String,
-      default: ''
-    },
-    selectedTimeSlot: {
-      type: String,
-      default: ''
-    },
-    type: {
-      type: String,
-      default: 'restaurant', // 'restaurant' or 'service'
-      validator: value => ['restaurant', 'service'].includes(value)
-    },
-    showDateTimePickers: {
-      type: Boolean,
-      default: false // Only show date/time pickers when explicitly enabled
-    }
+<script setup>
+import { ref, computed, watch } from 'vue'
+import { formatPrice } from "@/utils/constants"
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true
   },
-  data() {
-    return {
-      localQuantity: this.quantity,
-      timeSlots: ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM'],
-      minDate: new Date().toISOString().split('T')[0] // Today's date as minimum
-    };
+  currencySymbol: {
+    type: String,
+    default: '$'
   },
-  computed: {
-    isService() {
-      return this.type === 'service';
-    }
+  lang: {
+    type: String,
+    default: 'en'
   },
-  watch: {
-    quantity(newVal) {
-      this.localQuantity = newVal;
-    }
+  quantity: {
+    type: Number,
+    default: 1
   },
-  methods: {
-    formatPrice,
-    calculateDiscountPercentage(item) {
-      if (!item.hasDiscount || !item.price || !item.discountedPrice) return 0;
-      const originalPrice = parseFloat(item.price);
-      const discountedPrice = parseFloat(item.discountedPrice);
-      if (originalPrice <= 0 || discountedPrice >= originalPrice) return 0;
-      return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100);
-    },
-    decrementQuantity() {
-      if (this.localQuantity > 1) {
-        this.localQuantity--;
-        this.$emit('update-quantity', this.localQuantity);
-      }
-    },
-    incrementQuantity() {
-      this.localQuantity++;
-      this.$emit('update-quantity', this.localQuantity);
-    },
-    updateQuantity(value) {
-      const qty = parseInt(value) || 1;
-      this.localQuantity = qty < 1 ? 1 : qty;
-      this.$emit('update-quantity', this.localQuantity);
-    },
-    updateDate(date) {
-      this.$emit('update-date', date);
-    },
-    updateTimeSlot(slot) {
-      this.$emit('update-time-slot', slot);
-    },
-    parseFeatures(description) {
-      // A helper method to parse features from description if no details provided
-      if (!description) return [];
+  notes: {
+    type: String,
+    default: ''
+  },
+  selectedDate: {
+    type: String,
+    default: ''
+  },
+  selectedTimeSlot: {
+    type: String,
+    default: ''
+  },
+  type: {
+    type: String,
+    default: 'restaurant', // 'restaurant' or 'service'
+    validator: value => ['restaurant', 'service'].includes(value)
+  },
+  showDateTimePickers: {
+    type: Boolean,
+    default: false // Only show date/time pickers when explicitly enabled
+  }
+})
 
-      // Try to split by periods, commas, or bullet points
-      let features = description.split(/[.•]/);
-      features = features.filter(item => item.trim().length > 0);
+const emit = defineEmits([
+  'close',
+  'update-quantity',
+  'update-notes',
+  'update-date',
+  'update-time-slot',
+  'add-to-cart'
+])
 
-      // If we have reasonable features, return them
-      if (features.length > 1) {
-        return features.map(f => f.trim());
-      }
+// Reactive data
+const localQuantity = ref(props.quantity)
+const timeSlots = ref(['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM'])
+const minDate = ref(new Date().toISOString().split('T')[0]) // Today's date as minimum
 
-      // Otherwise return empty array - we'll just show the description
-      return [];
-    },
-    addToCart() {
-      // Validation for service bookings with date/time
-      if (this.isService && this.showDateTimePickers) {
-        if (!this.selectedDate) {
-          alert(this.$t('ServicePackages.selectDateRequired'));
-          return;
-        }
+// Computed properties
+const isService = computed(() => props.type === 'service')
 
-        // if (!this.selectedTimeSlot && this.timeSlots.length > 0) {
-        //   alert(this.$t('ServicePackages.selectTimeRequired'));
-        //   return;
-        // }
-      }
 
-      this.$emit('add-to-cart');
-    }
+
+const calculateDiscountPercentage = (item) => {
+  if (!item.hasDiscount || !item.price || !item.discountedPrice) return 0
+  const originalPrice = parseFloat(item.price)
+  const discountedPrice = parseFloat(item.discountedPrice)
+  if (originalPrice <= 0 || discountedPrice >= originalPrice) return 0
+  return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100)
+}
+
+const decrementQuantity = () => {
+  if (localQuantity.value > 1) {
+    localQuantity.value--
+    emit('update-quantity', localQuantity.value)
   }
 }
+
+const incrementQuantity = () => {
+  localQuantity.value++
+  emit('update-quantity', localQuantity.value)
+}
+
+const updateQuantity = (value) => {
+  const qty = parseInt(value) || 1
+  localQuantity.value = qty < 1 ? 1 : qty
+  emit('update-quantity', localQuantity.value)
+}
+
+const updateDate = (date) => {
+  emit('update-date', date)
+}
+
+const updateTimeSlot = (slot) => {
+  emit('update-time-slot', slot)
+}
+
+const parseFeatures = (description) => {
+  // A helper method to parse features from description if no details provided
+  if (!description) return []
+
+  // Try to split by periods, commas, or bullet points
+  let features = description.split(/[.•]/)
+  features = features.filter(item => item.trim().length > 0)
+
+  // If we have reasonable features, return them
+  if (features.length > 1) {
+    return features.map(f => f.trim())
+  }
+
+  // Otherwise return empty array - we'll just show the description
+  return []
+}
+
+const addToCart = () => {
+  // Validation for service bookings with date/time
+  if (isService.value && props.showDateTimePickers) {
+    if (!props.selectedDate) {
+      alert('Please select a date for your service')
+      return
+    }
+    // Uncomment if time slot is required
+    // if (!props.selectedTimeSlot && timeSlots.value.length > 0) {
+    //   alert('Please select a time slot for your service')
+    //   return
+    // }
+  }
+
+  emit('add-to-cart')
+}
+
+// Watch for quantity prop changes
+watch(() => props.quantity, (newVal) => {
+  localQuantity.value = newVal
+})
 </script>
 
 <style scoped>

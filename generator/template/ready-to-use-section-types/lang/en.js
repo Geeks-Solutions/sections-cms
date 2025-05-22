@@ -268,7 +268,7 @@ export default {
     contain: "Contain",
     fill: "Fill",
     none: "None",
-    sortDesc1: "To sort by article ID in descending order, use the following format: {\"id\":\"desc\"}.",
+    sortsortDesc1: 'To sort by article ID in descending order, use the following format: &#123"id":"desc"&#125.',
     sortDesc2: "This specifies that the articles should be ordered from the highest ID to the lowest."
   },
   "Free Start Label": "Free package Start Label",
@@ -544,5 +544,15 @@ export default {
     whatsapp: "WhatsApp",
     whatsappNumberDesc: "Add your WhatsApp number to allow users to contact you directly",
     whatsappMessage: "WhatsApp Message"
+  },
+  whatsapp: {
+    defaultServiceMessage: "Hello! I would like to book a service.",
+    defaultOrderMessage: "Hello! I would like to place an order.",
+    serviceCartHeader: "Hello! I would like to book the following services:",
+    orderCartHeader: "Hello! I would like to order the following items:",
+    quantity: "Qty",
+    notes: "Notes",
+    total: "Total",
+    thankYou: "Thank you!"
   }
 }
