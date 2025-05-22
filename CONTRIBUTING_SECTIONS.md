@@ -320,7 +320,7 @@ Standard props for view components:
 
 *   All user-facing strings in both form and view components (labels, placeholders, button texts, default content) **must** be translatable.
 *   Use the `$t('keyName')` syntax for translations.
-*   Add new translation keys to the language files located in [`generator/template/ready-to-use-section-types/lang/`](generator/template/ready-to-use-section-types/lang/:0) (e.g., `en.js`, `fr.js`).
+*   Add new translation keys to the language files located in [`generator/template/ready-to-use-section-types/lang/`](generator/template/ready-to-use-section-types/i18n/lang/:0) (e.g., `en.js`, `fr.js`).
     ```javascript
     // Example in en.js
     export default {

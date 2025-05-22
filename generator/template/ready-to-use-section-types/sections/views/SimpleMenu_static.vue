@@ -63,9 +63,17 @@
 </template>
 
 <script>
+import { useSwitchLocalePath } from '#imports'
 
 export default {
   name: 'SimpleMenu',
+  setup() {
+    const switchLocalePath = useSwitchLocalePath()
+
+    return {
+      switchLocalePath,
+    }
+  },
   props: {
     section: {
       type: Object,

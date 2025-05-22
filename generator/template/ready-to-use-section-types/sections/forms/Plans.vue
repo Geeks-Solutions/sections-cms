@@ -3,19 +3,19 @@
 
     <div id="title" class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-bold">{{ $t("boxTitle") }}</label>
-      <wysiwyg :html="settings[0].title[siteLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => $set(settings[0], 'titleClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateTitle"/>
+      <LazyEditorWysiwyg :html="settings[0].title[siteLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => settings[0]['titleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateTitle"/>
     </div>
 
     <div id="subTitle" class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-bold">{{ $t("SubTitle") }}</label>
-      <wysiwyg :html="settings[0].subTitle[siteLang]" :css-classes-prop="settings[0].subTitleClasses" @cssClassesChanged="(v) => $set(settings[0], 'subTitleClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateSubTitle"/>
+      <LazyEditorWysiwyg :html="settings[0].subTitle[siteLang]" :css-classes-prop="settings[0].subTitleClasses" @cssClassesChanged="(v) => settings[0]['subTitleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateSubTitle"/>
     </div>
 
 
-    <FieldSets :array-data-pop="settings[0].plans" :fieldset-group="'plans'" :legend-label="$t('plans.plan')" @array-updated="(data) => $set(settings[0], 'plans', data)" @remove-fieldset="(object, idx) => (idx) => {}">
+    <LazySectionsFormsFieldSets :array-data-pop="settings[0].plans" :fieldset-group="'plans'" :legend-label="$t('plans.plan')" @array-updated="(data) => settings[0]['plans'] = data" @remove-fieldset="(object, idx) => (idx) => {}">
       <template #default="{ plan, idx }">
         <div :id="`media-${idx}`" class="mt-8">
-          <UploadMedia :media-label="$t('Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="settings[0].plans[idx].media && Object.keys(settings[0].plans[idx].media).length > 0 ? [settings[0].plans[idx].media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
+          <LazyMediasUploadMedia :media-label="$t('Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="settings[0].plans[idx].media && Object.keys(settings[0].plans[idx].media).length > 0 ? [settings[0].plans[idx].media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
         </div>
 
         <div class="flex flex-row gap-4">
@@ -24,15 +24,14 @@
             <input
               v-model="settings[0].plans[idx].title[siteLang]"
               type="text"
-              value=""
               :placeholder="$t('plans.title')"
               class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-220px
+            h-[48px]
+            w-[220px]
             focus:outline-none
           "
             />
@@ -44,11 +43,10 @@
             <input
               v-model="settings[0].plans[idx].mostPopular"
               type="checkbox"
-              value=""
               :placeholder="$t('plans.mostPopular')"
               class="
-            h-25px
-            w-25px
+            h-[25px]
+            w-[25px]
             pl-6
             border border-FieldGray
             rounded-xl
@@ -60,7 +58,7 @@
 
         <div class="flex flex-col items-start justify-start mt-8">
           <label class="mr-4 font-bold">{{ $t("plans.description") }}</label>
-          <wysiwyg :html="settings[0].plans[idx].description[siteLang]" :css-classes-prop="settings[0].plans[idx].classes" @cssClassesChanged="(v) => $set(plan, 'classes', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateDescription(content, idx)"/>
+          <LazyEditorWysiwyg :html="settings[0].plans[idx].description[siteLang]" :css-classes-prop="settings[0].plans[idx].classes" @cssClassesChanged="(v) => plan['classes'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateDescription(content, idx)"/>
         </div>
 
         <div class="flex flex-row gap-4">
@@ -69,15 +67,14 @@
             <input
               v-model="settings[0].plans[idx].currency[siteLang]"
               type="text"
-              value=""
               :placeholder="$t('currency')"
               class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-220px
+            h-[48px]
+            w-[220px]
             focus:outline-none
           "
             />
@@ -88,15 +85,14 @@
             <input
               v-model="settings[0].plans[idx].price[siteLang]"
               type="text"
-              value=""
               :placeholder="$t('plans.price')"
               class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-220px
+            h-[48px]
+            w-[220px]
             focus:outline-none
           "
             />
@@ -108,15 +104,14 @@
           <input
             v-model="settings[0].plans[idx].frequency[siteLang]"
             type="text"
-            value=""
             :placeholder="$t('plans.frequency')"
             class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-344px
+            h-[48px]
+            w-[344px]
             focus:outline-none
           "
           />
@@ -127,15 +122,14 @@
           <input
             v-model="settings[0].plans[idx].customFeatures[siteLang]"
             type="text"
-            value=""
             :placeholder="$t('plans.customFeatures')"
             class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-344px
+            h-[48px]
+            w-[344px]
             focus:outline-none
           "
           />
@@ -151,8 +145,8 @@
             pl-6
             border border-FieldGray
             rounded-xl
-            h-200px
-            w-344px
+            h-[200px]
+            w-[344px]
             focus:outline-none
           "
           />
@@ -164,15 +158,14 @@
           <input
             v-model="settings[0].plans[idx].ctaLabel[siteLang]"
             type="text"
-            value=""
             :placeholder="$t('plans.ctaLabel')"
             class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-344px
+            h-[48px]
+            w-[344px]
             focus:outline-none
           "
           />
@@ -183,15 +176,14 @@
           <input
             v-model="settings[0].plans[idx].ctaLink[siteLang]"
             type="text"
-            value=""
             :placeholder="$t('plans.ctaLink')"
             class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-344px
+            h-[48px]
+            w-[344px]
             focus:outline-none
           "
           />
@@ -200,7 +192,7 @@
 
         <div class="my-4">
           <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-          <div class="select-style-chooser w-344px">
+          <div class="select-style-chooser w-[344px]">
             <gAutoComplete
               :main-filter="settings[0].plans[idx].ctaLinkTarget"
               :placeholder="$t('forms.linkTarget')"
@@ -217,22 +209,21 @@
           </div>
         </div>
       </template>
-    </FieldSets>
+    </LazySectionsFormsFieldSets>
 
     <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-bold">{{ $t("plans.globalCtaLabel") }}</label>
       <input
         v-model="settings[0].globalCtaLabel[siteLang]"
         type="text"
-        value=""
         :placeholder="$t('plans.globalCtaLabel')"
         class="
             py-4
             pl-6
             border border-FieldGray
             rounded-xl
-            h-48px
-            w-344px
+            h-[48px]
+            w-[344px]
             focus:outline-none
           "
       />
@@ -244,18 +235,10 @@
 </template>
 
 <script>
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
-import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wysiwyg.vue";
-import FieldSets from '@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue'
 import {scrollToFirstError} from "@/utils/constants";
 
 export default {
   name: 'Plans',
-  components: {
-    FieldSets,
-    UploadMedia,
-    wysiwyg
-  },
   props: {
     selectedLang: {
       type: String,
@@ -348,14 +331,14 @@ export default {
       if (this.settings[0].plans[this.mediaFieldIndex].media.media_id) {
         const mediaIndex = this.settings[0].medias.findIndex(media => media.media_id === this.settings[0].plans[this.mediaFieldIndex].media.media_id)
         if (mediaIndex !== -1) {
-          this.$set(this.settings[0].medias, mediaIndex, media);
+          this.settings[0].medias[mediaIndex] = media
         } else {
           this.settings[0].medias.push(media)
         }
       } else {
         this.settings[0].medias.push(media)
       }
-      this.$set(this.settings[0].plans[this.mediaFieldIndex],'media' , media);
+      this.settings[0].plans[this.mediaFieldIndex]['media'] = media
       this.$emit('closeMediaModal')
     }
   },

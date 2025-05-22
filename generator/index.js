@@ -2,43 +2,31 @@ module.exports = (api, options, rootOptions) => {
     if (options.choice === 'nuxt') {
         api.extendPackage({
             dependencies: {
-                "vue-metamask": "^2.2.1",
-                "web3": "^1.7.3",
-                "js-sha256": "^0.9.0",
-                "@geeks.solutions/nuxt-sections": "^1.1.5",
+                "@geeks.solutions/nuxt-sections": "3.0.0",
                 "@googlemaps/js-api-loader": "^1.16.6",
-                "@nuxtjs/gtm": "^2.4.0",
-                "consola": "^3.0.1",
-                "core-js": "^3.25.3",
-                "hooper": "^0.3.4",
+                "@gtm-support/vue-gtm": "^3.1.0",
                 "leaflet": "^1.9.4",
-                "nuxt": "^2.15.8",
-                "nuxt-i18n": "^6.20.5",
-                "vue": "2.7.10",
-                "vue-dragscroll": "^3.0.1",
-                "vue-lazytube": "^1.1.1",
-                "vue-server-renderer": "2.7.10",
-                "vue-template-compiler": "2.7.10",
-                "vue2-leaflet": "^2.7.1",
+                "nuxt": "^3.17.1",
+                "@nuxtjs/i18n": "^9.5.3",
+                "@nuxt/image": "^1.10.0",
+                "vue-dragscroll": "^4.0.6",
+                "nuxt-lazytube": "^0.2.2",
+                "nuxt3-leaflet": "^1.0.13",
                 "uuid": "3.4.0",
-                "@nuxt/image": "^0.7.1"
+                "pinia": "^3.0.2",
+                "@pinia/nuxt": "^0.11.0",
+                "h3-compression": "^0.3.2"
             },
             "devDependencies": {
-                "@babel/eslint-parser": "^7.14.7",
-                "@nuxtjs/eslint-config": "^6.0.1",
-                "@nuxtjs/eslint-module": "^3.0.2",
-                "@nuxtjs/tailwindcss": "6.12.2",
-                "@vue/test-utils": "^1.3.0",
-                "babel-core": "7.0.0-bridge.0",
-                "babel-jest": "^27.4.4",
-                "eslint": "^7.29.0",
-                "eslint-config-prettier": "^8.3.0",
-                "eslint-plugin-nuxt": "^2.0.0",
-                "eslint-plugin-vue": "^7.12.1",
-                "jest": "^27.4.4",
-                "postcss": "^8.4.17",
-                "tailwindcss-pixel-dimensions": "^1.0.2",
-                "vue-jest": "^3.0.4"
+                "@nuxt/eslint": "^1.3.0",
+                "@nuxt/eslint-config": "^1.3.0",
+                "@nuxt/test-utils": "^3.17.2",
+                "@nuxtjs/tailwindcss": "^6.14.0",
+                "@testing-library/vue": "^8.1.0",
+                "@vue/test-utils": "^2.4.6",
+                "eslint": "^9.25.1",
+                "happy-dom": "^17.4.6",
+                "vitest": "^3.1.2"
             }
         })
         api.render('./template/nuxt-sections-first-page', {
@@ -71,13 +59,6 @@ module.exports = (api, options, rootOptions) => {
         api.render('./template/ready-to-use-section-types', {
             ...options,
         })
-        api.extendPackage({
-            devDependencies: {
-                "@nuxtjs/tailwindcss": "^6.6.8",
-                "tailwindcss-pixel-dimensions": "^1.0.2",
-                "consola": "^3.1.0"
-            }
-        })
     }
 }
 
@@ -86,70 +67,72 @@ module.exports.hooks = (api, options) => {
     api.afterInvoke(() => {
         const {EOL} = require('os')
         const fs = require('fs')
-        const contentMain = fs.readFileSync(api.resolve('nuxt.config.js'), {encoding: 'utf-8'})
+        const contentMain = fs.readFileSync(api.resolve('nuxt.config.ts'), {encoding: 'utf-8'})
         let lines = contentMain.split(/\r?\n/g)
 
         const renderIndex0 = lines.findIndex(line => line.match(/export default/))
         if (options.choice === 'nuxt') {
-            lines[renderIndex0] = lines[renderIndex0].replace(`{`, `{\rcomponents: true,`)
-        }
-
-        const renderIndex01 = lines.findIndex(line => line.match(/css:/))
-        if (options.choice === 'nuxt') {
-            lines[renderIndex01] = lines[renderIndex01].replace(`[`, `\r'~/assets/css/default.css',`)
+            lines[renderIndex0] = lines[renderIndex0].replace(`{`, `{
+  \rmodules: [\r
+    '@geeks.solutions/nuxt-sections',\r
+    '@nuxt/image',\r
+    '@nuxtjs/i18n',\r
+    '@nuxtjs/tailwindcss',\r
+    'nuxt-lazytube',\r
+    'nuxt3-leaflet',\r
+    '@pinia/nuxt'\r],
+  \rcss: ['~/assets/css/default.css'],
+  \rplugins: ['~/plugins/vue-dragscroll.js'],
+  \ri18n: {
+    detectBrowserLanguage: false,
+    defaultLocale: "en",
+    locales: [
+      {
+        name: "French",
+        code: "fr",
+        iso: "fr",
+        file: "fr.js"
+      },
+      {
+        name: "English",
+        code: "en",
+        iso: "en",
+        file: "en.js"
+      }
+    ],
+    langDir: "lang/"
+  },\r
+  runtimeConfig: {
+    public: {
+      sections: {
+        projectId: "${options.projectId}",
+        projectUrl: "${options.projectUrl}",
+        environment: ""
+      }
+    }
+  },\r
+  vite: {
+    optimizeDeps: {
+      include: ['quill', '@devdcodes9/quill-emojijs', 'quill-table-ui'],
+    }
+  },\r
+  nitro: {
+    compressPublicAssets: {
+      gzip: true,
+      brotli: true
+    }
+  },`)
         }
 
         const renderIndex1 = lines.findIndex(line => line.match(/plugins:/))
         if (options.choice === 'vue') {
             lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/sections.js', ssr: false },`)
-        } else {
-            lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/vue-lazytube', ssr: false },\r{ src: '~/plugins/vue-dragscroll.js', ssr: false }`)
         }
 
-        if(options.addReadyToUseSectionTypes) {
-            const renderIndex4 = lines.findIndex(line => line.match(/buildModules:/))
-            lines[renderIndex4] = lines[renderIndex4].replace(`[`, `[\r
-    '@nuxtjs/tailwindcss',`)
-        }
 
         const renderIndex2 = lines.findIndex(line => line.match(/modules:/))
         if (options.choice === 'nuxt') {
-            lines[renderIndex2] = lines[renderIndex2].replace(`[`, `[\r
-    '@geeks.solutions/nuxt-sections',\r
-    '@nuxtjs/axios',\r
-    'cookie-universal-nuxt',\r
-    '@nuxt/image',\r
-    [
-      "@nuxtjs/i18n",
-      {
-        lazy: true,
-        locales: [
-          {
-            name: "French",
-            code: "fr",
-            iso: "fr",
-            file: "fr.js"
-          },
-          {
-            name: "English",
-            code: "en",
-            iso: "en",
-            file: "en.js"
-          }
-        ],
-        loadLanguagesAsync: true,
-        langDir: "lang/",
-        defaultLocale: "en"
-      }
-    ],\r
-    [
-      "vue-toastification/nuxt",
-      {
-        transition: "Vue-Toastification__fade",
-        maxToasts: 20,
-        newestOnTop: true
-      }
-    ]`)
+
         } else {
             lines[renderIndex2] = lines[renderIndex2].replace(`[`, `[\r'bootstrap-vue/nuxt',
     [
@@ -171,19 +154,7 @@ module.exports.hooks = (api, options) => {
     ],`)
         }
 
-        const renderIndex3 = lines.findIndex(line => line.match(/build:/))
-        if (options.choice === 'nuxt') {
-            lines[renderIndex3] = lines[renderIndex3].replace(`build: {`, `publicRuntimeConfig: {\r
-    sections: {
-      projectId: "${options.projectId}",
-      projectUrl: "${options.projectUrl}",
-      environment: ""
-    }
-  },\r\r
-  build: {`)
-        }
-
-        fs.writeFileSync(api.resolve('nuxt.config.js'), lines.join(EOL), {encoding: 'utf-8'})
+        fs.writeFileSync(api.resolve('nuxt.config.ts'), lines.join(EOL), {encoding: 'utf-8'})
 
         api.onCreateComplete(async () => {
 

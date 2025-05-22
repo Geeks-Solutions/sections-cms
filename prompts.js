@@ -35,8 +35,8 @@ module.exports = [
     {
         type: 'confirm',
         name: 'addReadyToUseSectionTypes',
-        message: 'Add 12 ready to use section types to your project',
-        description: 'This will generate 12 ready to use section types',
+        message: 'Add 13 ready to use section types to your project',
+        description: 'This will generate 13 ready to use section types',
         default: false,
     }
 ]
