@@ -5,7 +5,6 @@
       <input
         v-model="cta_label[selectedLang]"
         type="text"
-        value=""
         :placeholder="$t('forms.ctaLabel')"
         :class="inputStyle"
         @input="changeFieldValue"
@@ -22,7 +21,7 @@ export default {
   data() {
     return {
       configurableReference: null,
-      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-48px w-full focus:outline-none',
+      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
       cta_label: {
         en: "",
         fr: ""
@@ -30,11 +29,15 @@ export default {
     }
   },
   watch: {
-    reference(value) {
-      this.configurableReference = value
-      if (this.configurableReference.optionsData.cta_label) {
-        this.cta_label = this.configurableReference.optionsData.cta_label
-      }
+    reference: {
+      handler(value) {
+        this.configurableReference = value.value
+        if (this.configurableReference.optionsData.cta_label) {
+          this.cta_label = this.configurableReference.optionsData.cta_label
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {

@@ -1,5 +1,5 @@
 <template>
-  <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="section.render_data && section.render_data[0] && section.render_data[0].settings ? section.render_data[0].settings : {}" :lang="lang" :title="sectionRenderSettings.title ? sectionRenderSettings.title : ''" :description="sectionRenderSettings.description ? sectionRenderSettings.description : ''" />
+  <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="section.render_data && section.render_data[0] && section.render_data[0].settings ? section.render_data[0].settings : {}" :lang="lang" :title="sectionRenderSettings && sectionRenderSettings.title ? sectionRenderSettings.title : ''" :description="sectionRenderSettings && sectionRenderSettings.description ? sectionRenderSettings.description : ''" />
 </template>
 
 <script>

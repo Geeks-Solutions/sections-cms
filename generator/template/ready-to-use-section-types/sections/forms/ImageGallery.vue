@@ -47,23 +47,23 @@
 
     <div id="media" class="flex flex-col mt-4">
 
-      <FieldSets :array-data-pop="settings[0].gallery" :fieldset-group="'menu'" :legend-label="$t('forms.block')" @array-updated="(data) => $set(settings[0], 'gallery', data)" @remove-fieldset="(object, idx) => removeGalleryBlock(idx)">
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].gallery" :fieldset-group="'menu'" :legend-label="$t('forms.block')" @array-updated="(data) => settings[0]['gallery'] = data" @remove-fieldset="(object, idx) => removeGalleryBlock(idx)">
         <template #default="{ object, idx }">
           <div>
             <div class="mb-4">
-              <UploadMedia :media-label="idx === 0 ? $t('forms.media') + ' (desktop)' + '*' : $t('forms.media') + ' (desktop)'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'media'; $emit('openMediaModal', object.media && Object.keys(object.media).length > 0 ? object.media.media_id : null)" @removeUploadedImage="removeMedia(idx, 'media')" />
+              <LazyMediasUploadMedia :media-label="idx === 0 ? $t('forms.media') + ' (desktop)' + '*' : $t('forms.media') + ' (desktop)'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'media'; $emit('openMediaModal', object.media && Object.keys(object.media).length > 0 ? object.media.media_id : null)" @removeUploadedImage="removeMedia(idx, 'media')" />
               <span v-if="errors.media === true && idx === 0" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
           </div>
 
           <div :id="idx === 0 ? 'mediaMobile' : undefined">
             <div class="mb-4">
-              <UploadMedia :media-label="idx === 0 ? $t('forms.media') + ' (mobile)' + '*' : $t('forms.media') + ' (mobile)'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.mediaMobile && Object.keys(object.mediaMobile).length > 0 ? [object.mediaMobile] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'mediaMobile'; $emit('openMediaModal', object.mediaMobile && Object.keys(object.mediaMobile).length > 0 ? object.mediaMobile.media_id : null)" @removeUploadedImage="removeMedia(idx, 'mediaMobile')" />
+              <LazyMediasUploadMedia :media-label="idx === 0 ? $t('forms.media') + ' (mobile)' + '*' : $t('forms.media') + ' (mobile)'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.mediaMobile && Object.keys(object.mediaMobile).length > 0 ? [object.mediaMobile] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'mediaMobile'; $emit('openMediaModal', object.mediaMobile && Object.keys(object.mediaMobile).length > 0 ? object.mediaMobile.media_id : null)" @removeUploadedImage="removeMedia(idx, 'mediaMobile')" />
               <span v-if="errors.mediaMobile === true && idx === 0" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
           </div>
         </template>
-      </FieldSets>
+      </LazySectionsFormsFieldSets>
 
       <div
           class="add-button underline cursor-pointer mt-2 pb-4"
@@ -77,16 +77,10 @@
 </template>
 
 <script>
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
-import FieldSets from '@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue'
 import {scrollToFirstError, sectionsStyle} from "@/utils/constants";
 
 export default {
   name: 'InteractiveDisplay',
-  components: {
-    FieldSets,
-    UploadMedia
-  },
   props: {
     selectedLang: {
       type: String,
@@ -170,10 +164,10 @@ export default {
       if (mediaObject.files[0].headers) {
         media.headers = mediaObject.files[0].headers
       }
-      this.$set(this.settings[0].gallery[this.selectedMediaIndex], this.selectedMediaKey, { ...media, metadata: mediaObject.files[0].metadata })
+      this.settings[0].gallery[this.selectedMediaIndex][this.selectedMediaKey] = { ...media, metadata: mediaObject.files[0].metadata }
       const index = this.settings[0].medias.findIndex(m => m.media_id === media.media_id);
       if (index !== -1) {
-        this.$set(this.settings[0].medias, index, media);
+        this.settings[0].medias[index] = media
       } else {
         this.settings[0].medias.push(media);
       }
@@ -182,7 +176,7 @@ export default {
     settings: {
       handler(v) {
         if (v && v[0] && v[0].gallery === undefined) {
-          this.$set(this.settings[0], 'gallery', [])
+          this.settings[0]['gallery'] = []
           this.settings[0].medias = []
           this.settings.forEach(st => {
             this.settings[0].gallery.push(JSON.parse(JSON.stringify(st)))

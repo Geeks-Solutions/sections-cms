@@ -2,25 +2,40 @@ import { shallowMount } from "@vue/test-utils";
 import CategoriesArticlesConfigurable from "../categories_articles_configurable.vue";
 import { extractQsValue } from '../../../utils/constants'
 
-jest.mock('@/utils/constants', () => ({
-  extractQsValue: jest.fn(),
-  BLOGS_LIST_SIZE: 40
+vi.mock('@/utils/constants', () => ({
+  extractQsValue: vi.fn(),
+  importAsset: vi.fn(),
+  BLOGS_LIST_SIZE: 40,
+  BLOGS_SECTION_PAGE_PATH: '/blogs'
 }));
 
 describe('totalPages computed property', () => {
 
   const factory = (propsData = {}, routePath = '') => {
     return shallowMount(CategoriesArticlesConfigurable, {
-      mocks: {
-        ...global.mocks,
-        $route: { path: routePath }
+      global: {
+        config: {
+          globalProperties: {
+            $route: { path: routePath }
+          }
+        }
       },
       data() {
         return {
-          sectionRenderSettings: propsData.sectionRenderSettings || null,
-          sectionRenderData: propsData.sectionRenderData || null,
+          // sectionRenderSettings: propsData.sectionRenderSettings || null,
+          // sectionRenderData: propsData.sectionRenderData || null,
           BLOGS_SECTION_PAGE_PATH: '/blogs'
         };
+      },
+      props: {
+        section: {
+          render_data: [
+            {
+              data: {}
+            }
+          ]
+        },
+        ...propsData
       }
     });
   };
@@ -28,8 +43,16 @@ describe('totalPages computed property', () => {
   it('should default to BLOGS_LIST_SIZE when no conditions are met', () => {
     extractQsValue.mockReturnValue(null);
     const wrapper = factory({
-      sectionRenderSettings: { default_limit: "" },
-      sectionRenderData: { total: 80, articles: [{}] }
+      section: {
+        render_data: [
+          {
+            data: {
+              total: 80, articles: [{}]
+            },
+            settings: { default_limit: "" }
+          }
+        ]
+      }
     });
     expect(wrapper.vm.totalPages).toBe(2);
   });
@@ -41,11 +64,19 @@ describe('totalPages computed property', () => {
   });
 
   it('should use query string value if present', async () => {
-    await jest.resetAllMocks()
+    await vi.resetAllMocks()
     extractQsValue.mockReturnValue(40);
     const wrapper = factory({
-      sectionRenderSettings: { default_limit: "" },
-      sectionRenderData: { total: 80, articles: [{}] }
+      section: {
+        render_data: [
+          {
+            data: {
+              total: 80, articles: [{}]
+            },
+            settings: { default_limit: "" }
+          }
+        ]
+      }
     }, '/limit_ca=40');
     expect(wrapper.vm.totalPages).toBe(2);
   });
@@ -53,8 +84,16 @@ describe('totalPages computed property', () => {
   it('should compute the correct totalPages based on sectionRenderData', () => {
     extractQsValue.mockReturnValue(null);
     const wrapper = factory({
-      sectionRenderSettings: { default_limit: 5 },
-      sectionRenderData: { total: 50, articles: [{}] }
+      section: {
+        render_data: [
+          {
+            data: {
+              total: 50, articles: [{}]
+            },
+            settings: { default_limit: 5 }
+          }
+        ]
+      }
     });
     expect(wrapper.vm.totalPages).toBe(10);
   });

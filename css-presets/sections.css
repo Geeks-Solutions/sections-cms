@@ -213,6 +213,10 @@ section p {
   font-size: 18px;
 }
 
+section article {
+  font-size: 18px;
+}
+
 section ul {
   list-style: disc;
   margin: revert;
@@ -456,8 +460,8 @@ input:not(:placeholder-shown) {
   text-align: start;
 }
 
-.plans.plans-wrapper .plansTitleBox .title.w-80px {
-  width: 155px;
+.plans.plans-wrapper .plansTitleBox .title {
+  width: 155px !important;
 }
 
 .plans.plans-wrapper .mr-6.img-wrapper {

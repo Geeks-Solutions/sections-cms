@@ -9,8 +9,17 @@
 </template>
 
 <script>
+import { useLocalePath } from '#imports'
+
 export default {
   name: "ArticleButton",
+  setup() {
+    const localePath = useLocalePath()
+
+    return {
+      localePath,
+    }
+  },
   props: {
     path: {
       type: String,

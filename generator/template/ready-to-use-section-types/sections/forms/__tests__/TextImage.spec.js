@@ -12,7 +12,13 @@ describe('TextImage', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(TextImage, {
-      mocks: global.mocks,
+      global: {
+        config: {
+          globalProperties: {
+            $t: vi.fn()
+          }
+        }
+      },
       data() {
         return defaultData
       },
@@ -54,11 +60,13 @@ describe('TextImage', () => {
     expect(wrapper.vm.errors.title).toBe(true);
   });
 
-  it('passes validation if title is present', () => {
+  it('passes validation if title and text are present', () => {
     wrapper.vm.settings[0].title.en = 'Valid Title';
+    wrapper.vm.settings[0].text.en = 'Valid Text';
     expect(wrapper.vm.validate()).toBe(true);
     expect(wrapper.vm.errors.title).toBe(false);
-  });
+    expect(wrapper.vm.errors.text).toBe(false);
+  })
 
   it('removes unused media objects', () => {
     const media1 = { media_id: '11111', url: 'https://example.com/media1.jpg' };

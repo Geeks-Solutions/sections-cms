@@ -19,21 +19,25 @@ export default {
   data() {
     return {
       configurableReference: null,
-      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-48px w-full focus:outline-none',
+      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
       base_url: ""
     }
   },
   watch: {
-    reference(value) {
-      this.configurableReference = value
-      // if (this.configurableReference.optionsData.base_url) {
-      //   this.base_url = this.configurableReference.optionsData.base_url
-      // }
+    reference: {
+      handler(value) {
+        this.configurableReference = value.value
+        // if (this.configurableReference.optionsData.base_url) {
+        //   this.base_url = this.configurableReference.optionsData.base_url
+        // }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {
     isSelected(title, name) {
-      return this.configurableReference.optionsData[name] !== undefined && this.configurableReference.optionsData[name] !== null && this.configurableReference.optionsData[name].includes(title);
+      return this.configurableReference && this.configurableReference.optionsData[name] !== undefined && this.configurableReference.optionsData[name] !== null && this.configurableReference.optionsData[name].includes(title);
     },
     selectOption(value, name) {
       if (Array.isArray(this.configurableReference.optionsData[name]) && !this.configurableReference.optionsData[name].includes(value)) {
@@ -41,7 +45,7 @@ export default {
       } else if (Array.isArray(this.configurableReference.optionsData[name]) && this.configurableReference.optionsData[name].includes(value)) {
         this.configurableReference.optionsData[name].splice(this.configurableReference.optionsData[name].indexOf(value), 1);
       } else {
-        this.$set(this.configurableReference.optionsData, name, [value]);
+        this.configurableReference.optionsData[name] = [value];
       }
       this.configurableReference.options[0][name] = this.configurableReference.optionsData[name]
     }

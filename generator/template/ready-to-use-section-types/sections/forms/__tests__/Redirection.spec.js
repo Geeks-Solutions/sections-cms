@@ -12,7 +12,13 @@ describe('Redirection', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(Redirection, {
-      mocks: global.mocks,
+      global: {
+        config: {
+          globalProperties: {
+            $t: vi.fn()
+          }
+        }
+      },
       data() {
         return defaultData
       },

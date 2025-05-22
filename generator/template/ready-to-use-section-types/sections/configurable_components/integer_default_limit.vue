@@ -5,7 +5,6 @@
       <input
         v-model="default_limit"
         type="text"
-        value=""
         :placeholder="$t('forms.defaultLimit')"
         :class="inputStyle"
         @input="changeFieldValue"
@@ -22,16 +21,20 @@ export default {
   data() {
     return {
       configurableReference: null,
-      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-48px w-full focus:outline-none',
+      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
       default_limit: ""
     }
   },
   watch: {
-    reference(value) {
-      this.configurableReference = value
-      if (this.configurableReference.optionsData.default_limit) {
-        this.default_limit = Number(this.configurableReference.optionsData.default_limit)
-      }
+    reference: {
+      handler(value) {
+        this.configurableReference = value.value
+        if (this.configurableReference.optionsData.default_limit) {
+          this.default_limit = Number(this.configurableReference.optionsData.default_limit)
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {

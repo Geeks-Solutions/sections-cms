@@ -268,7 +268,7 @@ export default {
     contain: "Contain",
     fill: "Fill",
     none: "None",
-    sortDesc1: "To sort by article ID in descending order, use the following format: {\"id\":\"desc\"}.",
+    sortsortDesc1: 'To sort by article ID in descending order, use the following format: &#123"id":"desc"&#125.',
     sortDesc2: "This specifies that the articles should be ordered from the highest ID to the lowest."
   },
   "Free Start Label": "Free package Start Label",

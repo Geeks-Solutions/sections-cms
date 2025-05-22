@@ -16,8 +16,7 @@ const update_section_name = (name) => {
   } else return name
 }
 
-module.exports = {
-  page_pre_render,
+export {
   page_pre_load,
   update_section_name
 };

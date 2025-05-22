@@ -7,7 +7,6 @@
       <input
         v-model="default_sort"
         type="text"
-        value=""
         :placeholder="$t('Sort')"
         :class="inputStyle"
         @input="changeFieldValue"
@@ -24,19 +23,23 @@ export default {
   data() {
     return {
       configurableReference: null,
-      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-48px w-full focus:outline-none',
+      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
       default_sort: "{}"
     }
   },
   watch: {
-    reference(value) {
-      this.configurableReference = value
-      if (this.configurableReference.optionsData.default_sort) {
-        this.default_sort = JSON.stringify(this.configurableReference.optionsData.default_sort)
-      } else {
-        this.configurableReference.optionsData.default_sort = {}
-        this.configurableReference.options[0].default_sort = {}
-      }
+    reference: {
+      handler(value) {
+        this.configurableReference = value.value
+        if (this.configurableReference.optionsData.default_sort) {
+          this.default_sort = JSON.stringify(this.configurableReference.optionsData.default_sort)
+        } else {
+          this.configurableReference.optionsData.default_sort = {}
+          this.configurableReference.options[0].default_sort = {}
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {

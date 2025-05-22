@@ -1,10 +1,10 @@
 import { shallowMount } from "@vue/test-utils";
 import InteractiveDisplayStatic from "../InteractiveDisplay_static.vue";
 
-jest.mock('~/components/GlobalLink.vue', () => ({
-  name: 'GlobalLink',
-  render: () => {} // mock render function
-}))
+// vi.mock('~/components/GlobalLink.vue', () => ({
+//   name: 'GlobalLink',
+//   render: () => {} // mock render function
+// }))
 
 describe('InteractiveDisplayStatic.vue', () => {
   let wrapper
@@ -29,7 +29,6 @@ describe('InteractiveDisplayStatic.vue', () => {
         section: mockSection,
         lang: 'en',
       },
-      stubs: ['GlobalLink']
     })
   })
 
@@ -74,7 +73,7 @@ describe('InteractiveDisplayStatic.vue', () => {
 
   it('does not render <global-link> when video cta does not exist in settings', async () => {
 
-    await jest.resetAllMocks();
+    await vi.resetAllMocks();
     const settings = wrapper.vm.settings
     settings[0].videoTitle = { en: 'title' }
     settings[0].videoText = { en: 'desc' }

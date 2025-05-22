@@ -5,11 +5,12 @@ describe('totalPages computed property', () => {
 
   const factory = (propsData = {}, routePath = '') => {
     return shallowMount(CategoriesDynamic, {
-      mocks: {
-        ...global.mocks,
-        updateQueryStringValue: jest.fn(),
-        $store: {
-          commit: jest.fn()
+      global: {
+        config: {
+          globalProperties: {
+            $route: { path: '' },
+            updateQueryStringValue: vi.fn()
+          }
         }
       }
     });
@@ -18,8 +19,8 @@ describe('totalPages computed property', () => {
   it('emits refresh-section without sort key in qs', async () => {
     const wrapper = factory({});
 
-    jest.mock('@/utils/constants', () => ({
-      updateQueryStringValue: jest.fn()
+    vi.mock('@/utils/constants', () => ({
+      updateQueryStringValue: vi.fn()
     }))
 
     const item = { original_title: 'Test Category' }

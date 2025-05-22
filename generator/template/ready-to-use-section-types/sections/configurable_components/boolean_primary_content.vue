@@ -5,10 +5,9 @@
       <input
         :checked="primary_content"
         type="checkbox"
-        value=""
         class="
-            h-15px
-            w-15px
+            h-[15px]
+            w-[15px]
             border border-FieldGray
             rounded-sm
             focus:outline-none
@@ -31,15 +30,19 @@ export default {
     }
   },
   watch: {
-    reference(value) {
-      this.configurableReference = value
-      // eslint-disable-next-line no-prototype-builtins
-      if (this.configurableReference.optionsData.hasOwnProperty('primary_content')) {
-        this.primary_content = this.configurableReference.optionsData.primary_content
-      } else {
-        this.configurableReference.optionsData.primary_content = false
-        this.configurableReference.options[0].primary_content = false
-      }
+    reference: {
+      handler(value) {
+        this.configurableReference = value.value
+        // eslint-disable-next-line no-prototype-builtins
+        if (this.configurableReference.optionsData.hasOwnProperty('primary_content')) {
+          this.primary_content = this.configurableReference.optionsData.primary_content
+        } else {
+          this.configurableReference.optionsData.primary_content = false
+          this.configurableReference.options[0].primary_content = false
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
   methods: {
