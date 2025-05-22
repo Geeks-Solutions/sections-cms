@@ -7,7 +7,7 @@ A Vue js plugin to install and configure [@geeks.solutions/vue-sections](https:/
 * Have Node version: 19.9.0 installed
 
 * Create a new nuxt js 3 app: Run `npm create nuxt <your-project-name>` and follow the below selection when prompted, then open it in your editor (if using Nuxt js 3)
-
+ 
   - Which package manager would you like to use?: npm
   - Would you like to install any of the official modules?: None, Press Enter to skip
 
@@ -66,6 +66,8 @@ The plugin will prompt you to answer three questions:
  * Create file configuration for i18n required by the library under /i18n/lang/en.js /i18n/lang/fr.js
 
  * Create a configured first page with sections under /pages/_url.vue
+
+ * Update nitro configuration to enable Text Compressions with gzip and brotli (Better for page speed performance)
 
  * Add 13 fully customizable and ready to use section types + the required Tailwind configurations for them only if answered yes on the fourth question
 ``? Add 13 ready to use section types to your project Yes``

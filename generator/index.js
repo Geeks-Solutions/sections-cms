@@ -13,7 +13,9 @@ module.exports = (api, options, rootOptions) => {
                 "nuxt-lazytube": "^0.2.2",
                 "nuxt3-leaflet": "^1.0.13",
                 "uuid": "3.4.0",
-                "pinia": "^3.0.2"
+                "pinia": "^3.0.2",
+                "@pinia/nuxt": "^0.11.0",
+                "h3-compression": "^0.3.2"
             },
             "devDependencies": {
                 "@nuxt/eslint": "^1.3.0",
@@ -77,7 +79,8 @@ module.exports.hooks = (api, options) => {
     '@nuxtjs/i18n',\r
     '@nuxtjs/tailwindcss',\r
     'nuxt-lazytube',\r
-    'nuxt3-leaflet'\r],
+    'nuxt3-leaflet',\r
+    '@pinia/nuxt'\r],
   \rcss: ['~/assets/css/default.css'],
   \rplugins: ['~/plugins/vue-dragscroll.js'],
   \ri18n: {
@@ -111,6 +114,12 @@ module.exports.hooks = (api, options) => {
   vite: {
     optimizeDeps: {
       include: ['quill', '@devdcodes9/quill-emojijs', 'quill-table-ui'],
+    }
+  },\r
+  nitro: {
+    compressPublicAssets: {
+      gzip: true,
+      brotli: true
     }
   },`)
         }

@@ -204,10 +204,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.cookieControl__Modal {
-  z-index: 10;
-}
-</style>
-
