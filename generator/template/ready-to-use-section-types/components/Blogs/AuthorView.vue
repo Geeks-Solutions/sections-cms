@@ -3,7 +3,11 @@
     <div class="flex flex-col items-center pb-2">
       <div class="flex flex-col md:flex-row justify-between wrapper pt-6 w-full md:w-720px">
         <div v-if="sectionRenderData.profile_image || sectionRenderData.full_name || sectionRenderData.biography" class="flex flex-row gap-4">
-          <img v-if="sectionRenderData.profile_image && sectionRenderData.profile_image.files && sectionRenderData.profile_image.files[0] && sectionRenderData.profile_image.files[0].thumbnail_url" :src="sectionRenderData.profile_image.files[0].thumbnail_url" alt="Author profile" class="min-w-[56px] w-[56px] h-[56px] rounded-full object-cover" />
+          <NuxtImg v-if="sectionRenderData.profile_image && sectionRenderData.profile_image.files && sectionRenderData.profile_image.files[0] && sectionRenderData.profile_image.files[0].thumbnail_url" :src="sectionRenderData.profile_image.files[0].thumbnail_url" alt="Author profile" class="min-w-[56px] w-[56px] h-[56px] rounded-full object-cover"
+                   width="300"
+                   height="300"
+                   :placeholder="[300, 300, 75, 5]"
+                   loading="lazy"/>
           <div class="flex flex-col">
             <p v-if="sectionRenderData.full_name" class="name">{{ sectionRenderData.full_name }}</p>
             <p v-if="sectionRenderData.biography && sectionRenderData.biography[lang]" class="bio">{{ sectionRenderData.biography[lang] }}</p>

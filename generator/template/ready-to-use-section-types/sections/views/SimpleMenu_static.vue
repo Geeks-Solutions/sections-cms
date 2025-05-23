@@ -8,11 +8,14 @@
                  :lang="lang"
                  :form-link-target="settings.logoLinkTarget"
                  class="logo-wrapper">
-      <img
+      <NuxtImg
         :src="settings.media.url"
         :alt="settings.media.seo_tag ? settings.media.seo_tag : ''"
-        loading="lazy"
         class="logo"
+        width="300"
+        height="300"
+        :placeholder="[300, 300, 75, 5]"
+        loading="lazy"
       />
     </global-link>
     <h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>

@@ -11,6 +11,7 @@
 import { useCmsCloudStore } from '~/stores/index.js'
 import { mapState } from 'pinia'
 import { BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH, extractQsValue, updateQueryStringValue } from '@/utils/constants'
+import { useCookie } from '#imports'
 
 export default {
   name: 'CategoriesArticlesConfigurable',
@@ -291,7 +292,7 @@ export default {
   },
   watch: {
     sectionRenderData() {
-      if (this.$refs && this.$refs.BlogsArticles) {
+      if (this.$refs && this.$refs.BlogsArticles && !useCookie('sections-auth-token').value) {
         this.$nextTick(() => {
           this.$refs.BlogsArticles.scrollIntoView({ behavior: 'smooth'})
         })

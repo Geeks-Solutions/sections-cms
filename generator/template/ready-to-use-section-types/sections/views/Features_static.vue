@@ -10,12 +10,15 @@
 
         <div class="flex flex-col items-center image-wrapper">
           <div class="image-wrapper-inner" :class="`image-wrapper-inner-${idx}`">
-            <img
+            <NuxtImg
               v-if="container.media && container.media.url"
               :src="container.media.url"
               :alt="container.media.seo_tag ? container.media.seo_tag : ''"
-              loading="lazy"
               class="p-4"
+              width="300"
+              height="300"
+              :placeholder="[300, 300, 75, 5]"
+              loading="lazy"
             />
           </div>
           <gWysiwygContent tag="div" :wrapper-classes="[container.textClasses, 'image-desc-wrapper']" :classes="`pb-4 px-4 p-0 text`" :html-content="container.text[lang]" />
