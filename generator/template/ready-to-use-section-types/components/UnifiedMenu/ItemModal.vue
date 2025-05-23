@@ -62,34 +62,10 @@
             </ul>
           </div>
 
-          <!-- Date picker for services -->
-          <!-- <div v-if="isService && showDateTimePickers" class="mb-4">
-            <label class="input-label block mb-2">Select Date:</label>
-            <input 
-              type="date" 
-              :value="selectedDate" 
-              @input="updateDate($event.target.value)"
-              :min="minDate"
-              class="w-full p-3 border rounded-lg"
-            />
-          </div> -->
-
-          <!-- Time slot picker for services -->
-          <!-- <div v-if="isService && showDateTimePickers" class="mb-4">
-            <label class="input-label block mb-2">Select Time:</label>
-            <select 
-              :value="selectedTimeSlot" 
-              @change="updateTimeSlot($event.target.value)"
-              class="w-full p-3 border rounded-lg"
-            >
-              <option value="">Choose a time slot</option>
-              <option v-for="slot in timeSlots" :key="slot" :value="slot">{{ slot }}</option>
-            </select>
-          </div> -->
-
           <!-- Quantity control - Updated to match mockup -->
           <div class="flex items-center mb-2">
-            <label class="input-label mr-4">{{ isService ? 'Quantity' : 'Quantity' }}:</label>
+            <label class="input-label mr-4">{{ isService ? $t('ServicePackages.quantity') :
+              $t('RestaurantMenu.quantity') }}:</label>
             <div class="custom-quantity-control flex items-center">
               <button @click="decrementQuantity" class="item-qty-minus flex items-center justify-center rounded-full">
                 −
@@ -104,16 +80,17 @@
 
           <!-- Special instructions - Updated styling -->
           <div class="mb-4">
-            <label class="input-label block mb-2">{{ isService ? 'Special Requests' : 'Special Instructions' }}:</label>
+            <label class="input-label block mb-2">{{ isService ? $t('ServicePackages.specialRequests') :
+              $t('RestaurantMenu.specialInstructions') }}:</label>
             <textarea :value="notes" @input="$emit('update-notes', $event.target.value)"
               class="special-request-textarea p-4 border rounded-lg w-full"
-              :placeholder="isService ? 'Any special requests for your service...' : 'Any special instructions...'"></textarea>
+              :placeholder="isService ? $t('ServicePackages.specialRequestsPlaceholder') : $t('RestaurantMenu.specialInstructionsPlaceholder')"></textarea>
           </div>
 
           <!-- Add to cart button - Updated to match mockup -->
           <button @click="addToCart" class="add-to-cart-button w-full py-4 rounded-lg flex justify-center items-center"
             :class="{ 'add-to-cart-service': isService, 'add-to-cart-restaurant': !isService }">
-            {{ isService ? 'Add to Cart' : 'Add to Cart' }}
+            {{ isService ? $t('ServicePackages.addToCart') : $t('RestaurantMenu.addToCart') }}
           </button>
         </div>
       </div>
@@ -242,11 +219,6 @@ const addToCart = () => {
       alert('Please select a date for your service')
       return
     }
-    // Uncomment if time slot is required
-    // if (!props.selectedTimeSlot && timeSlots.value.length > 0) {
-    //   alert('Please select a time slot for your service')
-    //   return
-    // }
   }
 
   emit('add-to-cart')

@@ -110,7 +110,7 @@
 
             <!-- Item Image -->
             <div class="mb-4 mt-4">
-              <LazyMediasUploadMedia :media-label="$t('RestaurantMenu.itemImage')" :upload-text="$t('RestaurantMenu.LazyMediasUploadMedia')"
+              <LazyMediasUploadMedia :media-label="$t('RestaurantMenu.itemImage')" :upload-text="$t('RestaurantMenu.uploadMedia')"
                 :change-text="$t('RestaurantMenu.changeMedia')" :seo-tag="$t('RestaurantMenu.seoTag')"
                 :media="object.image && Object.keys(object.image).length > 0 ? [object.image] : []"
                 @uploadContainerClicked="openMediaModal(object.id, object.image && Object.keys(object.image).length > 0 ? object.image.media_id : null)"
