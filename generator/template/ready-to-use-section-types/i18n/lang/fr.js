@@ -451,7 +451,8 @@ export default {
     whatsappCartMessage: "Je souhaite commander les articles suivants :",
     whatsappDefaultMessage: "Bonjour ! Je voudrais commander à manger.",
     orderViaWhatsApp: "Commande via WhatsApp",
-    total: "Total"
+    total: "Total",
+    noItemsInCategory: "Aucun article dans cette catégorie pour le moment."
   },
   ServicePackages: {
     viewMode: "Mode d'affichage",

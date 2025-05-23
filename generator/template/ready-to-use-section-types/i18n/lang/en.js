@@ -418,7 +418,8 @@ export default {
     taxSettings: "Tax Settings",
     whatsappCartMessage: "I want to order the following items:",
     whatsappDefaultMessage: "Hello! I would like to order food.",
-    orderViaWhatsApp: "Order via WhatsApp"
+    orderViaWhatsApp: "Order via WhatsApp",
+    noItemsInCategory: "No items in this category yet."
   },
   ServicePackages: {
     // General UI translations

@@ -105,7 +105,7 @@
           </template>
           <template v-else>
             <div class="text-center py-8 text-gray-500">
-              <p>No items in this category yet.</p>
+              <p>{{ $t('RestaurantMenu.noItemsInCategory') }}</p>
             </div>
           </template>
         </div>
