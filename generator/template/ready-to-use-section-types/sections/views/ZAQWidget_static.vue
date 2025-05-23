@@ -1,6 +1,6 @@
 <template>
   <div v-if="settings" class="zaq-widget">
-    <client-only v-if="scriptLoaded === false">
+    <client-only>
       <zaq-widget
         :website-id="settings[0].websiteId"
         :hide-badge="settings[0].hideBadge.toString()"
@@ -37,7 +37,6 @@ export default {
     return {
       scriptElement: null,
       widgetEventHandler: null,
-      scriptLoaded: false,
       sequenceRun: ''
     }
   },
@@ -47,18 +46,22 @@ export default {
     }
   },
   watch: {
-    "section.settings"(v) {
-      if (v && v[0] && v[0].websiteId) {
-        this.initializeWidget()
-      }
+    "section.settings": {
+      handler(v) {
+        if (v && v[0] && v[0].websiteId) {
+          this.initializeWidget()
+        }
+      },
+      immediate: true,
+      deep: true
     }
   },
   mounted() {
     if (this.settings && this.settings[0].websiteId) {
-      this.initializeWidget(true)
+      this.initializeWidget()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (window.zaq) {
       window.zaq.$emit("clearConversations")
       window.zaq.$emit("clearWidgetState")
@@ -76,7 +79,7 @@ export default {
     }
   },
   methods: {
-    initializeWidget(scriptLoaded = false) {
+    initializeWidget() {
       if (process.browser) {
         let bucketName = `zaq-ai`
         if (this.$route.query.zaq_dev === 'true') {
@@ -93,26 +96,25 @@ export default {
           )
 
           document.head.appendChild(recaptchaScript)
-
-          if (this.$route.query.runSequence || (this.settings && this.settings[0] && this.settings[0].autoStart && this.settings[0].autoStart !== 'None')) {
-            if (this.settings && this.settings[0] && this.settings[0].autoStart && this.settings[0].autoStart !== 'None') {
-              this.sequenceRun = this.settings[0].autoStart
-            }
-            if (this.$route.query.runSequence) {
-              this.sequenceRun = this.$route.query.runSequence
-            }
-            this.widgetEventHandler = (e) => {
-              window.zaq.$emit('changeLang', `${this.lang}`)
-              if (e.detail.sequenceDone) {
-                window.zaq.$emit('initSequence', this.sequenceRun)
-                window.zaq.$emit('showPromo', true)
-              }
-            }
-            window.addEventListener('zaqWidget', this.widgetEventHandler, false)
-          }
-        } else {
-          this.scriptLoaded = scriptLoaded
         }
+
+        if (this.$route.query.runSequence || (this.settings && this.settings[0] && this.settings[0].autoStart && this.settings[0].autoStart !== 'None')) {
+          if (this.settings && this.settings[0] && this.settings[0].autoStart && this.settings[0].autoStart !== 'None') {
+            this.sequenceRun = this.settings[0].autoStart
+          }
+          if (this.$route.query.runSequence) {
+            this.sequenceRun = this.$route.query.runSequence
+          }
+          this.widgetEventHandler = (e) => {
+            window.zaq.$emit('changeLang', `${this.lang}`)
+            if (e.detail.sequenceDone) {
+              window.zaq.$emit('initSequence', this.sequenceRun)
+              window.zaq.$emit('showPromo', true)
+            }
+          }
+          window.addEventListener('zaqWidget', this.widgetEventHandler, false)
+        }
+
       }
     }
   }

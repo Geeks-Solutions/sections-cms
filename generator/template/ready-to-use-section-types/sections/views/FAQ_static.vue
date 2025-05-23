@@ -19,13 +19,16 @@
       </div>
       <div v-if="settings.imagePosition !== 'none'" class="w-full md:w-auto gap-4 imageWrapper">
         <div :class="'flex h-[240px] md:h-[360px] md:row-span-2 md:mt-6'">
-          <img
+          <NuxtImg
             v-if="settings.media && settings.media.url"
             :src="settings.media.url"
             :alt="settings.media.seo_tag ? settings.media.seo_tag : ''"
-            loading="lazy"
             class="w-full"
             :class="'h-full object-contain'"
+            width="300"
+            height="300"
+            :placeholder="[300, 300, 75, 5]"
+            loading="lazy"
           />
         </div>
       </div>

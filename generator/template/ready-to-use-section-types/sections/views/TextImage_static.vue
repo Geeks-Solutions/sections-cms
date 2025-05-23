@@ -10,14 +10,16 @@
 	  </div>
 	  <div v-if="settings[0].imagePosition !== 'none'" class="w-full gap-4" :class="{'md:w-auto': !settings[0].videoLink}">
 		<div v-if="!settings[0].videoLink" :class="['flex h-[240px] md:h-[360px] md:row-span-2 md:mt-6 image-wrapper']">
-		  <img
-			   v-if="settings[0].media && settings[0].media.url"
-			   :src="settings[0].media.url"
-			   :alt="settings[0].media.seo_tag ? settings[0].media.seo_tag : ''"
-			   loading="lazy"
-			   class="w-full"
-			   :class="'h-full object-contain'"
-		  />
+      <NuxtImg
+        v-if="settings[0].media && settings[0].media.url"
+        :src="settings[0].media.url"
+        class="w-full"
+        :class="'h-full object-contain'"
+        width="300"
+        height="300"
+        :placeholder="[300, 300, 75, 5]"
+        loading="lazy"
+      />
 		</div>
       <div v-else class="w-full relative">
         <!--  For youtube videos, the following must be added to the end of the embedded url `?autoplay=1&mute=1` for the video to autoplay -->
