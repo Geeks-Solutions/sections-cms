@@ -185,34 +185,48 @@ export function formatPrice(price) {
 }
 
 export function generateWhatsAppMessage(cart, type, lang, i18n, currencySymbol = '$', total = 0) {
-    const isService = type === 'service';
-    // If cart is empty, return a default message
-    if (!cart || cart.length === 0) {
-      return isService
-        ? i18n('ServicePackages.whatsappDefaultMessage')
-        : i18n('RestaurantMenu.whatsappDefaultMessage');
-    }
-
-    // Create a custom message with the cart contents
-    const headerMessage = isService
-      ? i18n('ServicePackages.whatsappCartMessage')
-      : i18n('RestaurantMenu.whatsappCartMessage');
-
-    let message = `${headerMessage}\n`;
-
-    // Add each item to the message
-    cart.forEach(item => {
-      const itemName = item.name[lang] || Object.values(item.name)[0]; // Fallback to first available name
-      message += `* ${itemName}  x${item.quantity}\n`;
-    });
-
-    // Add total if provided
-    if (total > 0) {
-      message += `\n${i18n('RestaurantMenu.total')}: ${currencySymbol}${formatPrice(total)}`;
-    }
-
-    return message;
+  const isService = type === 'service';
+  
+  // If cart is empty, return a default message
+  if (!cart || cart.length === 0) {
+    return isService
+      ? i18n('whatsapp.defaultServiceMessage') || 'Hello! I would like to book a service.'
+      : i18n('whatsapp.defaultOrderMessage') || 'Hello! I would like to place an order.'
   }
+
+  // Create header message
+  const headerMessage = isService
+    ? i18n('whatsapp.serviceCartHeader') || 'Hello! I would like to book the following services:'
+    : i18n('whatsapp.orderCartHeader') || 'Hello! I would like to order the following items:'
+
+  let message = `${headerMessage}\n\n`
+
+  // Add each item to the message
+  cart.forEach((item, index) => {
+    const itemName = typeof item.name === 'object' ? item.name[lang] || item.name.en : item.name
+    message += `${index + 1}. ${itemName}`
+    
+    if (item.quantity > 1) {
+      message += ` (${i18n('whatsapp.quantity') || 'Qty'}: ${item.quantity})`
+    }
+    
+    if (item.notes) {
+      message += ` - ${i18n('whatsapp.notes') || 'Notes'}: ${item.notes}`
+    }
+    
+    message += '\n'
+  })
+
+  // Add total if provided
+  if (total > 0) {
+    message += `\n${i18n('whatsapp.total') || 'Total'}: ${currencySymbol}${formatPrice(total)}`
+  }
+
+  // Add closing message
+  message += `\n\n${i18n('whatsapp.thankYou') || 'Thank you!'}`
+  
+  return message
+}
 
 
 export const importAsset = (path) => {

@@ -451,7 +451,8 @@ export default {
     whatsappCartMessage: "Je souhaite commander les articles suivants :",
     whatsappDefaultMessage: "Bonjour ! Je voudrais commander à manger.",
     orderViaWhatsApp: "Commande via WhatsApp",
-    total: "Total"
+    total: "Total",
+    noItemsInCategory: "Aucun article dans cette catégorie pour le moment."
   },
   ServicePackages: {
     viewMode: "Mode d'affichage",
@@ -568,5 +569,15 @@ export default {
     whatsapp: 'WhatsApp',
     whatsappNumberDesc: 'Numéro de téléphone WhatsApp (ex. +1234567890)',
     whatsappMessage: 'Message WhatsApp',
+  },
+  whatsapp: {
+    defaultServiceMessage: "Bonjour! J'aimerais réserver un service.",
+    defaultOrderMessage: "Bonjour! J'aimerais passer une commande.",
+    serviceCartHeader: "Bonjour! J'aimerais réserver les services suivants:",
+    orderCartHeader: "Bonjour! J'aimerais commander les articles suivants:",
+    quantity: "Qté",
+    notes: "Notes",
+    total: "Total",
+    thankYou: "Merci!"
   }
 }

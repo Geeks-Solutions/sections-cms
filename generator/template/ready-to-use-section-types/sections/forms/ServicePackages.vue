@@ -40,7 +40,7 @@
       <h3 class="text-lg font-semibold mb-4">{{ $t("ServicePackages.categories") }}</h3>
       <span class="text-xs text-Gray_800 mb-4">{{ $t("ServicePackages.categoriesDesc") }}</span>
 
-      <FieldSets :array-data-pop="settings[0].categories" :fieldset-group="'categories'"
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].categories" :fieldset-group="'categories'"
         :legend-label="$t('ServicePackages.category') || 'Category'"
         @array-updated="(data) => $set(settings[0], 'categories', data)"
         @remove-fieldset="(object, idx) => removeCategory(idx)">
@@ -56,7 +56,7 @@
 
           <!-- Category Icon -->
           <div class="mb-4 mt-4">
-            <UploadMedia :media-label="$t('ServicePackages.categoryIcon')"
+            <LazyMediasUploadMedia :media-label="$t('ServicePackages.categoryIcon')"
               :upload-text="$t('ServicePackages.uploadIcon')" :change-text="$t('ServicePackages.changeIcon')"
               :seo-tag="$t('ServicePackages.seoTag')"
               :media="object.icon && Object.keys(object.icon).length > 0 ? [object.icon] : []"
@@ -78,7 +78,7 @@
           </div>
 
         </template>
-      </FieldSets>
+      </LazySectionsFormsFieldSets>
 
       <div class="add-button underline cursor-pointer mt-2" @click="addCategory()">
         <div class="p3 bold text">{{ $t("ServicePackages.addCategory") }}</div>
@@ -104,7 +104,7 @@
       </div>
 
       <div v-if="selectedCategoryId">
-        <FieldSets :key="'service-items-' + selectedCategoryId + '-' + selectedLang"
+        <LazySectionsFormsFieldSets :key="'service-items-' + selectedCategoryId + '-' + selectedLang"
           :array-data-pop="getServiceItemsByCategory(selectedCategoryId)" :fieldset-group="'serviceItems'"
           :legend-label="$t('ServicePackages.serviceItem') || 'Service Item'"
           @array-updated="(data) => updateServiceItemsForCategory(selectedCategoryId, data)"
@@ -171,14 +171,11 @@
               <textarea v-model="itemDetailsTextMap[object.id][selectedLang]" type="text"
                 placeholder="One detail per line" :class="sectionsStyle.textarea" rows="4"
                 @input="updateItemDetails(object)"></textarea>
-              <span class="text-xs text-Gray_800 mt-1">
-                {{ $t("ServicePackages.itemDetailsLangNote", { lang: selectedLang.toUpperCase() }) }}
-              </span>
             </div>
 
             <!-- Item Image -->
             <div class="mb-4 mt-4">
-              <UploadMedia :media-label="$t('ServicePackages.itemImage') || 'Item Image'"
+              <LazyMediasUploadMedia :media-label="$t('ServicePackages.itemImage') || 'Item Image'"
                 :upload-text="$t('ServicePackages.uploadMedia') || 'Upload Image'"
                 :change-text="$t('ServicePackages.changeMedia') || 'Change Image'"
                 :seo-tag="$t('ServicePackages.seoTag') || 'SEO Tag'"
@@ -215,7 +212,7 @@
               <input v-model="object.classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
             </div>
           </template>
-        </FieldSets>
+        </LazySectionsFormsFieldSets>
 
         <div class="add-button underline cursor-pointer mt-2" @click="addServiceItem(selectedCategoryId)">
           <div class="p3 bold text">{{ $t("ServicePackages.addServiceItem") }}</div>
@@ -232,7 +229,7 @@
 
       <!-- Business Logo -->
       <div class="mb-6">
-        <UploadMedia :media-label="$t('ServicePackages.businessLogo') || 'Business Logo'"
+        <LazyMediasUploadMedia :media-label="$t('ServicePackages.businessLogo') || 'Business Logo'"
           :upload-text="$t('ServicePackages.uploadLogo') || 'Upload Logo'"
           :change-text="$t('ServicePackages.changeLogo') || 'Change Logo'"
           :seo-tag="$t('ServicePackages.seoTag') || 'SEO Tag'"
@@ -324,8 +321,8 @@
     </div>
 
     <div class="flex flex-col items-start justify-start mt-8 pt-8 border-t">
-      <h3 class="text-lg font-semibold mb-4">{{ $t("ServicePackages.socialMedia") }}</h3>
-      <span class="text-xs text-Gray_800 mb-4">{{ $t("ServicePackages.socialMediaDesc") }}</span>
+      <h3 class="text-lg font-semibold mb-4">{{ $t("socialMedia.socialMedia") }}</h3>
+      <span class="text-xs text-Gray_800 mb-4">{{ $t("socialMedia.socialMediaDesc") }}</span>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         <!-- Instagram -->
@@ -402,14 +399,11 @@
 
 <script>
 import { v4 as uuidv4 } from 'uuid';
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
-import FieldSets from "@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue";
 import { sectionsStyle, scrollToFirstError } from "@/utils/constants";
 import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'ServicePackages',
-  components: { FieldSets, UploadMedia },
   props: {
     selectedLang: {
       type: String,
@@ -526,18 +520,18 @@ export default {
       // Handle different media types
       if (this.currentMediaType === 'logo') {
         // Update business logo
-        this.$set(this.settings[0], 'logo', media);
+        this.settings[0].logo = media;
       } else if (this.currentMediaType === 'categoryIcon') {
         // Update category icon
         const categoryIndex = this.settings[0].categories.findIndex(cat => cat.id === this.currentCategoryId);
         if (categoryIndex !== -1) {
-          this.$set(this.settings[0].categories[categoryIndex], 'icon', media);
+          this.settings[0].categories[categoryIndex].icon = media;
         }
       } else if (this.currentMediaType === 'serviceItem') {
         // Handle service item image
         const itemIndex = this.settings[0].serviceItems.findIndex(item => item.id === this.currentMediaItemId);
         if (itemIndex !== -1) {
-          this.$set(this.settings[0].serviceItems[itemIndex], 'image', media);
+          this.settings[0].serviceItems[itemIndex].image = media;
         }
       }
 
@@ -582,34 +576,34 @@ export default {
 
     // Safely initialize social media settings
     if (!this.settings[0].socialMedia) {
-      this.$set(this.settings[0], 'socialMedia', {
+      this.settings[0].socialMedia = {
         instagram: '',
         facebook: '',
         tiktok: '',
         twitter: '',
         youtube: ''
-      });
+      };
     } else {
       // Ensure all platforms exist
       const platforms = ['instagram', 'facebook', 'tiktok', 'twitter', 'youtube'];
       platforms.forEach(platform => {
         if (typeof this.settings[0].socialMedia[platform] === 'undefined') {
-          this.$set(this.settings[0].socialMedia, platform, '');
+          this.settings[0].socialMedia[platform] = '';
         }
       });
     }
 
     // Set WhatsApp properties if not already defined
     if (typeof this.settings[0].showWhatsApp === 'undefined') {
-      this.$set(this.settings[0], 'showWhatsApp', false);
+      this.settings[0].showWhatsApp = false;
     }
 
     if (!this.settings[0].whatsappNumber) {
-      this.$set(this.settings[0], 'whatsappNumber', '');
+      this.settings[0].whatsappNumber = '';
     }
 
     if (!this.settings[0].whatsappMessage) {
-      this.$set(this.settings[0], 'whatsappMessage', {});
+      this.settings[0].whatsappMessage = {};
     }
 
 
@@ -618,7 +612,7 @@ export default {
       if (!this.settings[0].whatsappMessage[locale]) {
         // Use locale-specific translations instead of a single default message
         const defaultMessage = this.$i18n.t('ServicePackages.whatsappDefaultMessage', null, locale);
-        this.$set(this.settings[0].whatsappMessage, locale, defaultMessage);
+        this.settings[0].whatsappMessage[locale] = defaultMessage;
       }
     });
   },
@@ -626,7 +620,7 @@ export default {
     setDefaultWhatsAppMessages() {
       // Ensure the object exists
       if (!this.settings[0].whatsappMessage) {
-        this.$set(this.settings[0], 'whatsappMessage', {});
+        this.settings[0].whatsappMessage = {};
       }
 
       // Set language-specific messages directly
@@ -638,7 +632,7 @@ export default {
       // Set each message with proper reactivity
       Object.keys(messages).forEach(lang => {
         if (!this.settings[0].whatsappMessage[lang]) {
-          this.$set(this.settings[0].whatsappMessage, lang, messages[lang]);
+          this.settings[0].whatsappMessage[lang] = messages[lang];
         }
       });
     },
@@ -649,27 +643,27 @@ export default {
           if (typeof item.duration === 'string') {
             const oldValue = item.duration;
             // Convert to object format
-            this.$set(item, 'duration', {});
+            this.item.duration = {};
 
             // Set the value for all locales
             this.locales.forEach(locale => {
-              this.$set(item.duration, locale, oldValue);
+              this.item.duration[locale] = oldValue;
             });
           }
           // If duration is undefined or null, initialize it
           else if (!item.duration) {
-            this.$set(item, 'duration', {});
+            this.item.duration = {};
 
             // Initialize for all locales
             this.locales.forEach(locale => {
-              this.$set(item.duration, locale, '');
+              this.item.duration[locale] = '';
             });
           }
           // Check if any locale is missing in the duration object
           else {
             this.locales.forEach(locale => {
               if (!item.duration[locale]) {
-                this.$set(item.duration, locale, item.duration.en || '');
+                this.item.duration[locale] = item.duration.en || '';
               }
             });
           }
@@ -683,9 +677,9 @@ export default {
     setItemDetailsText(itemId, text) {
       // Initialize if needed
       if (!this.itemDetailsTextMap[itemId]) {
-        this.$set(this.itemDetailsTextMap, itemId, {});
+        this.itemDetailsTextMap[itemId] = {};
       }
-      this.$set(this.itemDetailsTextMap[itemId], this.selectedLang, text);
+      this.itemDetailsTextMap[itemId][this.selectedLang] = text;
     },
     updateItemDetails(object) {
       const itemId = object.id;
@@ -696,7 +690,7 @@ export default {
 
       // Initialize the details array if needed
       if (!object.details) {
-        this.$set(object, 'details', []);
+        this.object.details = [];
       }
 
       // Get the current details as a map of { detailIndex: { locale: text } }
@@ -727,20 +721,20 @@ export default {
       });
 
       // Update the details array
-      this.$set(object, 'details', newDetails);
+      this.object.details = newDetails;
     },
     loadItemDetailsText(object) {
       if (!object || !object.id) return;
 
       // Initialize the map for this object if it doesn't exist
       if (!this.itemDetailsTextMap[object.id]) {
-        this.$set(this.itemDetailsTextMap, object.id, {});
+        this.itemDetailsTextMap[object.id] = {};
       }
 
       // Initialize for all locales if needed
       this.locales.forEach(locale => {
         if (typeof this.itemDetailsTextMap[object.id][locale] === 'undefined') {
-          this.$set(this.itemDetailsTextMap[object.id], locale, '');
+          this.itemDetailsTextMap[object.id][locale] = '';
         }
       });
 
@@ -751,7 +745,7 @@ export default {
             .map(detail => detail[locale] || detail.en || '')
             .join('\n');
 
-          this.$set(this.itemDetailsTextMap[object.id], locale, detailsText);
+          this.itemDetailsTextMap[object.id][locale] = detailsText;
         });
       }
     },
@@ -791,12 +785,12 @@ export default {
       });
     },
     removeLogo() {
-      this.$set(this.settings[0], 'logo', {});
+      this.settings[0].logo = {};
     },
     removeCategoryIcon(categoryId) {
       const categoryIndex = this.settings[0].categories.findIndex(cat => cat.id === categoryId);
       if (categoryIndex !== -1) {
-        this.$set(this.settings[0].categories[categoryIndex], 'icon', {});
+        this.settings[0].categories[categoryIndex].icon = {};
       }
     },
     initializeLocalizedFields() {
@@ -809,10 +803,10 @@ export default {
 
       this.locales.forEach(locale => {
         if (!this.settings[0].pageTitle[locale]) {
-          this.$set(this.settings[0].pageTitle, locale, '');
+          this.settings[0].pageTitle[locale] = '';
         }
         if (!this.settings[0].pageSubtitle[locale]) {
-          this.$set(this.settings[0].pageSubtitle, locale, '');
+          this.settings[0].pageSubtitle[locale] = '';
         }
       });
     },
@@ -845,8 +839,7 @@ export default {
       const removedCategory = this.settings[0].categories[idx];
 
       // Remove the category
-      this.$set(this.settings[0], 'categories', this.settings[0].categories.filter((ct, i) => idx !== i));
-
+      this.settings[0].categories = this.settings[0].categories.filter((ct, i) => idx !== i);
       // Also update errors
       this.errors.categories.splice(idx, 1);
 
@@ -871,7 +864,7 @@ export default {
       const lines = this.objectDetailsText.split('\n').filter(line => line.trim() !== '');
 
       if (!object.details) {
-        this.$set(object, 'details', []);
+        this.object.details = [];
       }
 
       object.details = lines.map(line => {
@@ -917,9 +910,9 @@ export default {
       });
 
       // Reset the details text area when adding a new item
-      this.$set(this.itemDetailsTextMap, serviceItem.id, {});
+      this.itemDetailsTextMap[serviceItem.id] = {};
       this.locales.forEach(locale => {
-        this.$set(this.itemDetailsTextMap[serviceItem.id], locale, '');
+        this.itemDetailsTextMap[serviceItem.id][locale] = '';
       });
     },
     removeServiceItem(itemId) {
@@ -928,7 +921,8 @@ export default {
       if (idx === -1) return;
 
       // Remove the service item
-      this.$set(this.settings[0], 'serviceItems', this.settings[0].serviceItems.filter(item => item.id !== itemId));
+      // this.$set(this.settings[0], 'serviceItems', this.settings[0].serviceItems.filter(item => item.id !== itemId));
+      this.settings[0].serviceItems.splice(idx, 1);
 
       // Also update errors - find the error with this ID
       const errorIdx = this.errors.serviceItems.findIndex(err => err.id === itemId);
@@ -972,7 +966,7 @@ export default {
       const otherItems = this.settings[0].serviceItems.filter(item => item.categoryId !== categoryId);
 
       // Combine with the updated items for this category
-      this.$set(this.settings[0], 'serviceItems', [...otherItems, ...updatedItems]);
+      this.settings[0].serviceItems = [...otherItems, ...updatedItems];
     },
     getErrorForServiceItem(itemId, field) {
       const error = this.errors.serviceItems.find(err => err.id === itemId);
@@ -1025,7 +1019,7 @@ export default {
         if (item.hasDiscount && (!item.discountedPrice && item.discountedPrice !== 0)) {
           // Make sure the discountedPrice error field exists
           if (this.errors.serviceItems[errorIdx].discountedPrice === undefined) {
-            this.$set(this.errors.serviceItems[errorIdx], 'discountedPrice', true);
+            this.errors.serviceItems[errorIdx].discountedPrice = true;
           } else {
             this.errors.serviceItems[errorIdx].discountedPrice = true;
           }

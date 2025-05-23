@@ -418,7 +418,8 @@ export default {
     taxSettings: "Tax Settings",
     whatsappCartMessage: "I want to order the following items:",
     whatsappDefaultMessage: "Hello! I would like to order food.",
-    orderViaWhatsApp: "Order via WhatsApp"
+    orderViaWhatsApp: "Order via WhatsApp",
+    noItemsInCategory: "No items in this category yet."
   },
   ServicePackages: {
     // General UI translations
@@ -544,5 +545,15 @@ export default {
     whatsapp: "WhatsApp",
     whatsappNumberDesc: "Add your WhatsApp number to allow users to contact you directly",
     whatsappMessage: "WhatsApp Message"
+  },
+  whatsapp: {
+    defaultServiceMessage: "Hello! I would like to book a service.",
+    defaultOrderMessage: "Hello! I would like to place an order.",
+    serviceCartHeader: "Hello! I would like to book the following services:",
+    orderCartHeader: "Hello! I would like to order the following items:",
+    quantity: "Qty",
+    notes: "Notes",
+    total: "Total",
+    thankYou: "Thank you!"
   }
 }
