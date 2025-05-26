@@ -273,7 +273,7 @@ section .view-component button {
   white-space: normal;
 }
 
-.button-selector, section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper) {
+.button-selector, section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
   font-size: 0.875rem; /* sm */
   text-align: center;
   border-width: 1px;
