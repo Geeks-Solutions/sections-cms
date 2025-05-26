@@ -93,14 +93,13 @@
       <!-- Category Selector for Service Items -->
       <div class="flex flex-col items-start justify-start mb-6">
         <label class="mr-4 font-medium mb-2">{{ $t("ServicePackages.selectCategory") }}</label>
-        <gAutoComplete :main-filter="selectedCategoryId" :placeholder="$t('ServicePackages.selectCategory')"
-          :filter-label-prop="'name'" :reduce="option => option.id" :filter-options="getCategoryOptions()"
-          :filter-searchable="true" :close-on-select="true" :filter-clearable="true" :track-by="'id'"
-          @itemSelected="val => selectedCategoryId = val">
-          <template #option="{ name, _showId }">
-            {{ _showId ? `Category ${id.slice(0, 4)}` : name }}
-          </template>
-        </gAutoComplete>
+        <div class="select-style-chooser w-[344px]">
+          <gAutoComplete :main-filter="selectedCategoryId" :placeholder="$t('ServicePackages.selectCategory')"
+            :filter-label-prop="'name'" :reduce="(option) => option.id" :filter-options="getCategoryOptions()"
+            :filter-searchable="true" :close-on-select="true" :filter-clearable="true" :track-by="'id'"
+            @itemSelected="(val) => { selectedCategoryId = val; }">
+          </gAutoComplete>
+        </div>
       </div>
 
       <div v-if="selectedCategoryId">
@@ -189,7 +188,7 @@
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium">{{ $t("ServicePackages.availability") }}</label>
               <div class="flex items-center mt-2">
-                <select v-model="object.availability" :class="sectionsStyle.input" class="h-56px">
+                <select v-model="object.availability" :class="sectionsStyle.input" class="h-[55px]">
                   <option value="available">{{ $t("ServicePackages.fullyAvailable") }}</option>
                   <option value="limited">{{ $t("ServicePackages.limitedAvailability") }}</option>
                 </select>
@@ -473,6 +472,26 @@ export default {
     }
   },
   watch: {
+    'settings[0].categories': {
+      handler(newCategories, oldCategories) {
+        if (newCategories) {
+          // Initialize errors object when categories change
+          this.errors.categories = newCategories.map(() => ({ name: false }));
+
+          // If we have categories but no selection, select the first one
+          if (newCategories.length > 0 && !this.selectedCategoryId) {
+            this.selectedCategoryId = newCategories[0].id;
+          }
+
+          // If the currently selected category was deleted, select another one
+          if (this.selectedCategoryId && !newCategories.find(cat => cat.id === this.selectedCategoryId)) {
+            this.selectedCategoryId = newCategories.length > 0 ? newCategories[0].id : '';
+          }
+        }
+      },
+      deep: true,
+      immediate: true
+    },
     selectedCategoryId: {
       handler(newCategoryId) {
         if (newCategoryId && this.settings[0].serviceItems) {
@@ -684,35 +703,32 @@ export default {
     updateItemDetails(object) {
       const itemId = object.id;
 
-      // Get the details text for the current language
+      // Ensure the itemDetailsTextMap exists for this item and language
+      if (!this.itemDetailsTextMap[itemId]) {
+        this.itemDetailsTextMap[itemId] = {};
+      }
+
+      // Get the details text for the current language - DON'T filter empty lines yet
       const detailsText = this.itemDetailsTextMap[itemId][this.selectedLang] || '';
-      const lines = detailsText.split('\n').filter(line => line.trim() !== '');
+      const lines = detailsText.split('\n'); // Keep all lines including empty ones
 
       // Initialize the details array if needed
       if (!object.details) {
-        this.object.details = [];
+        object.details = [];
       }
-
-      // Get the current details as a map of { detailIndex: { locale: text } }
-      const currentDetailsMap = {};
-
-      // First, build a map of existing details
-      object.details.forEach((detailObj, index) => {
-        currentDetailsMap[index] = { ...detailObj };
-      });
 
       // Create new details array with updated text for the current language
       const newDetails = lines.map((line, index) => {
         // Start with existing translations for this detail if available
-        const detailObj = index < Object.keys(currentDetailsMap).length ?
-          { ...currentDetailsMap[index] } : {};
+        const existingDetail = object.details[index] || {};
+        const detailObj = { ...existingDetail };
 
-        // Update the current language
+        // Update the current language (keep empty lines too)
         detailObj[this.selectedLang] = line;
 
-        // Ensure all locales have a value
+        // Ensure all locales have a value (keep existing or set empty)
         this.locales.forEach(locale => {
-          if (!detailObj[locale]) {
+          if (typeof detailObj[locale] === 'undefined') {
             detailObj[locale] = locale === this.selectedLang ? line : '';
           }
         });
@@ -720,34 +736,44 @@ export default {
         return detailObj;
       });
 
-      // Update the details array
-      this.object.details = newDetails;
+      // Only filter out completely empty details (where all languages are empty)
+      const filteredDetails = newDetails.filter(detail => {
+        return this.locales.some(locale => detail[locale] && detail[locale].trim() !== '');
+      });
+
+      // Update the details array - Vue 3 reactive assignment
+      object.details = filteredDetails;
     },
     loadItemDetailsText(object) {
-      if (!object || !object.id) return;
+      if (!object || !object.id) return '';
+
+      const itemId = object.id;
 
       // Initialize the map for this object if it doesn't exist
-      if (!this.itemDetailsTextMap[object.id]) {
-        this.itemDetailsTextMap[object.id] = {};
+      if (!this.itemDetailsTextMap[itemId]) {
+        this.itemDetailsTextMap[itemId] = {};
       }
 
       // Initialize for all locales if needed
       this.locales.forEach(locale => {
-        if (typeof this.itemDetailsTextMap[object.id][locale] === 'undefined') {
-          this.itemDetailsTextMap[object.id][locale] = '';
+        if (typeof this.itemDetailsTextMap[itemId][locale] === 'undefined') {
+          this.itemDetailsTextMap[itemId][locale] = '';
         }
       });
 
+      // Load existing details into the text map
       if (object && object.details && object.details.length > 0) {
-        // For each locale, set the details text
         this.locales.forEach(locale => {
           const detailsText = object.details
-            .map(detail => detail[locale] || detail.en || '')
+            .map(detail => detail[locale] || '') // Don't filter empty strings here
             .join('\n');
 
-          this.itemDetailsTextMap[object.id][locale] = detailsText;
+          this.itemDetailsTextMap[itemId][locale] = detailsText;
         });
       }
+
+      // Return the text for the current language
+      return this.itemDetailsTextMap[itemId][this.selectedLang] || '';
     },
     updateObjectDetailsText(object) {
       if (object && object.details && object.details.length > 0) {
@@ -811,6 +837,7 @@ export default {
       });
     },
     addCategory() {
+      const categoryNumber = this.settings[0].categories.length + 1;
       const category = {
         id: uuidv4(),
         name: {},
@@ -819,7 +846,6 @@ export default {
         icon: {}
       };
 
-      // Initialize localized fields
       this.locales.forEach(locale => {
         category.name[locale] = '';
         category.description[locale] = '';
@@ -827,13 +853,6 @@ export default {
 
       this.settings[0].categories.push(category);
       this.errors.categories.push({ name: false });
-
-      // Select the newly created category
-      if (this.settings[0].categories.length === 1) {
-        this.$nextTick(() => {
-          this.selectedCategoryId = category.id;
-        });
-      }
     },
     removeCategory(idx) {
       const removedCategory = this.settings[0].categories[idx];
@@ -937,19 +956,23 @@ export default {
       }
     },
     getCategoryOptions() {
-      if (!this.settings[0].categories) return [];
+      if (!this.settings[0].categories || this.settings[0].categories.length === 0) return [];
 
       return this.settings[0].categories.map(category => {
         // Get the category name in the selected language, fall back to English if not available
-        // If neither is available, use a default name with part of the ID for identification
-        const displayName = category.name[this.selectedLang] ||
-          category.name.en ||
-          `Category ${category.id.substring(0, 4)}`;
+        const nameInSelectedLang = category.name[this.selectedLang]?.trim();
+        const nameInEnglish = category.name.en?.trim();
+
+        // Check if we have any actual name content (not just empty strings)
+        const hasValidName = nameInSelectedLang || nameInEnglish;
+
+        const displayName = hasValidName
+          ? (nameInSelectedLang || nameInEnglish)
+          : `New Category`;
 
         return {
           id: category.id,
-          name: displayName,
-          _showId: !category.name[this.selectedLang] && !category.name.en
+          name: displayName  // This is what filter-label-prop="'name'" will display
         };
       });
     },

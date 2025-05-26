@@ -34,8 +34,9 @@
 
           <!-- Category Icon -->
           <div class="mb-4 mt-4">
-            <LazyMediasUploadMedia :media-label="$t('RestaurantMenu.categoryIcon')" :upload-text="$t('RestaurantMenu.uploadIcon')"
-              :change-text="$t('RestaurantMenu.changeIcon')" :seo-tag="$t('RestaurantMenu.seoTag')"
+            <LazyMediasUploadMedia :media-label="$t('RestaurantMenu.categoryIcon')"
+              :upload-text="$t('RestaurantMenu.uploadIcon')" :change-text="$t('RestaurantMenu.changeIcon')"
+              :seo-tag="$t('RestaurantMenu.seoTag')"
               :media="object.icon && Object.keys(object.icon).length > 0 ? [object.icon] : []"
               @uploadContainerClicked="openCategoryIconModal(object.id, object.icon && Object.keys(object.icon).length > 0 ? object.icon.media_id : null)"
               @removeUploadedImage="removeCategoryIcon(object.id)" />
@@ -69,17 +70,18 @@
       <!-- Category Selector for Menu Items -->
       <div class="flex flex-col items-start justify-start mb-6">
         <label class="mr-4 font-medium mb-2">{{ $t("RestaurantMenu.selectCategory") }}</label>
-        <select v-model="selectedCategoryId" :class="sectionsStyle.input">
-          <option value="">{{ $t("RestaurantMenu.selectCategory") }}</option>
-          <option v-for="option in getCategoryOptions()" :key="option.id" :value="option.id">
-            {{ option.name }}
-          </option>
-        </select>
+        <div class="select-style-chooser w-[344px]">
+          <gAutoComplete :main-filter="selectedCategoryId" :placeholder="$t('RestaurantMenu.selectCategory')"
+            :filter-label-prop="'name'" :reduce="(option) => option.id" :filter-options="getCategoryOptions()"
+            :filter-searchable="true" :close-on-select="true" :filter-clearable="true" :track-by="'id'"
+            @itemSelected="(val) => { selectedCategoryId = val; }">
+          </gAutoComplete>
+        </div>
       </div>
 
       <div v-if="selectedCategoryId">
-        <LazySectionsFormsFieldSets :array-data-pop="getMenuItemsByCategory(selectedCategoryId)" :fieldset-group="'menuItems'"
-          :legend-label="$t('RestaurantMenu.menuItem')"
+        <LazySectionsFormsFieldSets :array-data-pop="getMenuItemsByCategory(selectedCategoryId)"
+          :fieldset-group="'menuItems'" :legend-label="$t('RestaurantMenu.menuItem')"
           @array-updated="(data) => updateMenuItemsForCategory(selectedCategoryId, data)"
           @remove-fieldset="(object, idx) => removeMenuItem(object.id)">
           <template #default="{ object }">
@@ -110,8 +112,9 @@
 
             <!-- Item Image -->
             <div class="mb-4 mt-4">
-              <LazyMediasUploadMedia :media-label="$t('RestaurantMenu.itemImage')" :upload-text="$t('RestaurantMenu.uploadMedia')"
-                :change-text="$t('RestaurantMenu.changeMedia')" :seo-tag="$t('RestaurantMenu.seoTag')"
+              <LazyMediasUploadMedia :media-label="$t('RestaurantMenu.itemImage')"
+                :upload-text="$t('RestaurantMenu.uploadMedia')" :change-text="$t('RestaurantMenu.changeMedia')"
+                :seo-tag="$t('RestaurantMenu.seoTag')"
                 :media="object.image && Object.keys(object.image).length > 0 ? [object.image] : []"
                 @uploadContainerClicked="openMediaModal(object.id, object.image && Object.keys(object.image).length > 0 ? object.image.media_id : null)"
                 @removeUploadedImage="removeItemImage(object.id)" />
@@ -578,16 +581,23 @@ const removeMenuItem = (itemId) => {
 }
 
 const getCategoryOptions = () => {
-  if (!settings.value[0].categories) return []
+  if (!settings.value[0].categories || settings.value[0].categories.length === 0) return []
 
   return settings.value[0].categories.map(category => {
-    const displayName = category.name[props.selectedLang] ||
-      category.name.en ||
-      `Category ${category.id.substring(0, 4)}`
+    // Get the category name in the selected language, fall back to English if not available
+    const nameInSelectedLang = category.name[props.selectedLang]?.trim()
+    const nameInEnglish = category.name.en?.trim()
+
+    // Check if we have any actual name content (not just empty strings)
+    const hasValidName = nameInSelectedLang || nameInEnglish
+
+    const displayName = hasValidName
+      ? (nameInSelectedLang || nameInEnglish)
+      : `New Category`
 
     return {
       id: category.id,
-      name: displayName
+      name: displayName  // This is what filter-label-prop="'name'" will display
     }
   })
 }
