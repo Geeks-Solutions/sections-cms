@@ -22,8 +22,8 @@
 
       <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
         :whatsapp-number="settings.whatsappNumber || ''"
-        :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang" :i18n="$t"
-        :type="'restaurant'" />
+        :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
+        :i18n="$t" :type="'restaurant'" />
 
       <!-- Category View Mode -->
       <div v-if="isCategoryView" class="menu-content">
@@ -51,14 +51,14 @@
 
     <!-- Item Modal - Conditionally imported and rendered -->
     <ItemModal v-if="showItemModal" :item="selectedItem" :currency-symbol="settings.currencySymbol" :lang="lang"
-      :quantity="itemQuantity" :notes="itemNotes" :type="'restaurant'" @close="closeItemModal" 
+      :quantity="itemQuantity" :notes="itemNotes" :type="'restaurant'" @close="closeItemModal"
       @update-quantity="updateItemQuantity" @update-notes="updateItemNotes" @add-to-cart="addToCart" />
 
     <!-- Shopping Cart Sidebar - Conditionally imported and rendered -->
     <ShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
-      :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true" :lang="lang" :i18n="$t" type="restaurant"
-      :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
+      :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true" :lang="lang" :i18n="$t"
+      type="restaurant" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
       :whatsapp-number="settings.whatsappNumber || ''" @close="closeCart" @increment="incrementCartItem"
       @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout" />
   </div>
@@ -91,64 +91,61 @@ const props = defineProps({
     default: () => []
   },
   viewStructure: {
-    type: Object,
-    default: () => ({
-      settings: [
-        {
-          logo: 'image',
-          menuTitle: {
-            en: 'Our Menu',
-            fr: 'Notre Menu'
-          },
-          menuSubtitle: {
-            en: 'Discover our delicious options',
-            fr: 'Découvrez nos délicieuses options'
-          },
-          categories: [
-            {
-              id: 'drinks-category-id',
-              name: {
-                en: 'Drinks',
-                fr: 'Boissons'
-              },
-              description: {
-                en: 'Category Description',
-                fr: 'Description de la catégorie'
-              },
-              classes: '',
-              icon: {
-                media_id: '',
-                url: '',
-                seo_tag: ''
-              }
+    settings: [
+      {
+        logo: 'image',
+        menuTitle: {
+          en: 'Our Menu',
+          fr: 'Notre Menu'
+        },
+        menuSubtitle: {
+          en: 'Discover our delicious options',
+          fr: 'Découvrez nos délicieuses options'
+        },
+        categories: [
+          {
+            id: 'drinks-category-id',
+            name: {
+              en: 'Drinks',
+              fr: 'Boissons'
+            },
+            description: {
+              en: 'Category Description',
+              fr: 'Description de la catégorie'
+            },
+            classes: '',
+            icon: {
+              media_id: '',
+              url: '',
+              seo_tag: ''
             }
-          ],
-          menuItems: [
-            {
-              id: 'item-id',
-              categoryId: 'drinks-category-id',
-              name: {
-                en: 'Item Name',
-                fr: 'Nom du plat'
-              },
-              description: {
-                en: 'Item Description',
-                fr: 'Description du plat'
-              },
-              price: 10.99,
-              image: 'image',
-              featured: true,
-              classes: ''
-            }
-          ],
-          currencySymbol: '$',
-          classes: '',
-          viewMode: 'list',
-          enableTax: true,
-          taxRate: 10.00
-        }
-      ]
-    })
+          }
+        ],
+        menuItems: [
+          {
+            id: 'item-id',
+            categoryId: 'drinks-category-id',
+            name: {
+              en: 'Item Name',
+              fr: 'Nom du plat'
+            },
+            description: {
+              en: 'Item Description',
+              fr: 'Description du plat'
+            },
+            price: 10.99,
+            image: 'image',
+            featured: true,
+            classes: ''
+          }
+        ],
+        currencySymbol: '$',
+        classes: '',
+        viewMode: 'list',
+        enableTax: true,
+        taxRate: 10.00
+      }
+    ]
   }
 })
 

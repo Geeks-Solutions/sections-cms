@@ -24,8 +24,8 @@
       <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
 
       <div style="display: none;" aria-hidden="true">
-        <SocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :i18n="$t" :whatsapp-message="getWhatsAppMessage()"
-          :cart="[]" :lang="lang" />
+        <SocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :i18n="$t"
+          :whatsapp-message="getWhatsAppMessage()" :cart="[]" :lang="lang" />
         <CategoryTabs :categories="[]" :active-category="''" :lang="lang" type="service" />
         <CategoryList :categories="[]" :get-items-by-category="getEmptyItems" :currency-symbol="'$'" :lang="lang"
           type="service" />
@@ -35,8 +35,8 @@
       <div v-if="isInitialRenderComplete">
         <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
           :whatsapp-number="settings.whatsappNumber || ''"
-          :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang" :i18n="$t"
-          :type="'service'" />
+          :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
+          :i18n="$t" :type="'service'" />
 
         <!-- Category View Mode -->
         <div v-if="isCategoryView" class="service-content">
@@ -97,8 +97,8 @@
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
       :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true"
       :service-fee-rate="settings.serviceFeeRate ? settings.serviceFeeRate / 100 : SERVICE_FEE_RATE"
-      :enable-service-fee="settings.enableServiceFee !== undefined ? settings.enableServiceFee : true" :lang="lang" :i18n="$t"
-      type="service" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
+      :enable-service-fee="settings.enableServiceFee !== undefined ? settings.enableServiceFee : true" :lang="lang"
+      :i18n="$t" type="service" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
       :whatsapp-number="settings.whatsappNumber || ''" @close="closeCart" @increment="incrementCartItem"
       @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout" />
   </div>
@@ -133,72 +133,86 @@ const props = defineProps({
     default: () => []
   },
   viewStructure: {
-    type: Object,
-    default: () => ({
-      settings: [
-        {
-          logo: 'image',
-          pageTitle: {
-            en: 'Our Services',
-            fr: 'Nos Services'
-          },
-          pageSubtitle: {
-            en: 'Book your next experience with us',
-            fr: 'Réservez votre prochaine expérience avec nous'
-          },
-          categories: [
-            {
-              id: 'category-id',
-              name: {
-                en: 'Category Name',
-                fr: 'Nom de la catégorie'
-              },
-              description: {
-                en: 'Category Description',
-                fr: 'Description de la catégorie'
-              },
-              classes: '',
-              icon: 'image'
-            }
-          ],
-          serviceItems: [
-            {
-              id: 'item-id',
-              categoryId: 'category-id',
-              name: {
-                en: 'Item Name',
-                fr: 'Nom du service'
-              },
-              description: {
-                en: 'Item Description',
-                fr: 'Description du service'
-              },
-              price: 10.99,
-              duration: '1 hour',
-              details: [
-                {
-                  en: 'Detail point 1',
-                  fr: 'Point de détail 1'
-                }
-              ],
-              image: 'image',
-              availability: 'available',
-              featured: false,
-              classes: ''
-            }
-          ],
-          currencySymbol: '$',
-          classes: '',
-          backgroundColor: '#ffffff',
-          viewMode: 'list',
-          businessType: 'travel',
-          enableTax: true,
-          taxRate: 10.00,
-          enableServiceFee: true,
-          serviceFeeRate: 5.00
+    settings: [
+      {
+        logo: 'image',
+        pageTitle: {
+          en: 'Our Services',
+          fr: 'Nos Services'
+        },
+        pageSubtitle: {
+          en: 'Book your next experience with us',
+          fr: 'Réservez votre prochaine expérience avec nous'
+        },
+        categories: [
+          {
+            id: 'category-id',
+            name: {
+              en: 'Category Name',
+              fr: 'Nom de la catégorie'
+            },
+            description: {
+              en: 'Category Description',
+              fr: 'Description de la catégorie'
+            },
+            classes: '',
+            icon: 'image'
+          }
+        ],
+        serviceItems: [
+          {
+            id: 'item-id',
+            categoryId: 'category-id',
+            name: {
+              en: 'Item Name',
+              fr: 'Nom du service'
+            },
+            description: {
+              en: 'Item Description',
+              fr: 'Description du service'
+            },
+            price: 10.99,
+            duration: {
+              en: '1 hour',
+              fr: '1 heure'
+            },
+            hasDiscount: true,
+            discountedPrice: 8.99,
+            details: [
+              {
+                en: 'Detail point 1',
+                fr: 'Point de détail 1'
+              }
+            ],
+            image: 'image',
+            availability: 'available',
+            featured: false,
+            classes: ''
+          }
+        ],
+        currencySymbol: '$',
+        classes: '',
+        viewMode: 'list',
+        businessType: 'travel',
+        enableTax: true,
+        taxRate: 10.00,
+        enableServiceFee: true,
+        serviceFeeRate: 5.00,
+        socialMedia: {
+          instagram: '',
+          facebook: '',
+          tiktok: '',
+          twitter: '',
+          youtube: ''
+        },
+        showWhatsApp: false,
+        whatsappNumber: '',
+        whatsappMessage: {
+          en: 'Hello! I would like to book a service.',
+          fr: 'Bonjour ! Je voudrais réserver un service.'
         }
-      ]
-    })
+      }
+    ]
   },
   showDateTimePickers: {
     type: Boolean,
