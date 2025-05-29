@@ -4,7 +4,7 @@
     <div class="md:px-4">
       <!-- Business Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
-        <nuxt-img :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Business Logo'"
+        <NuxtImg :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Business Logo'"
           class="h-24 object-contain mx-auto" width="96" height="96" preload fetchpriority="high" quality="80"
           format="webp" fit="contain" />
       </div>
@@ -24,8 +24,8 @@
       <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
 
       <div style="display: none;" aria-hidden="true">
-        <SocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :whatsapp-message="getWhatsAppMessage()"
-          :cart="[]" :lang="lang" />
+        <SocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :i18n="$t"
+          :whatsapp-message="getWhatsAppMessage()" :cart="[]" :lang="lang" />
         <CategoryTabs :categories="[]" :active-category="''" :lang="lang" type="service" />
         <CategoryList :categories="[]" :get-items-by-category="getEmptyItems" :currency-symbol="'$'" :lang="lang"
           type="service" />
@@ -36,8 +36,7 @@
         <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
           :whatsapp-number="settings.whatsappNumber || ''"
           :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
-          :type="'service'" />
-
+          :i18n="$t" :type="'service'" />
 
         <!-- Category View Mode -->
         <div v-if="isCategoryView" class="service-content">
@@ -65,7 +64,6 @@
       <div v-else class="loading-placeholder">
         <!-- Placeholder content while JavaScript initializes -->
         <div class="animate-pulse mb-8">
-
           <!-- Category header placeholder -->
           <div class="h-6 bg-gray-200 rounded w-1/4 mb-6"></div>
           <div class="h-px w-full bg-gray-200 mb-8"></div>
@@ -100,625 +98,533 @@
       :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true"
       :service-fee-rate="settings.serviceFeeRate ? settings.serviceFeeRate / 100 : SERVICE_FEE_RATE"
       :enable-service-fee="settings.enableServiceFee !== undefined ? settings.enableServiceFee : true" :lang="lang"
-      type="service" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
+      :i18n="$t" type="service" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
       :whatsapp-number="settings.whatsappNumber || ''" @close="closeCart" @increment="incrementCartItem"
       @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout" />
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
+
 // Import shared components
-import CartIcon from '../../components/UnifiedMenu/CartIcon.vue';
-import SocialLinks from '../../components/UnifiedMenu/SocialLinks.vue';
-// Import utils if available, otherwise define the function locally
+import CartIcon from '../../components/UnifiedMenu/CartIcon.vue'
+import SocialLinks from '../../components/UnifiedMenu/SocialLinks.vue'
 
-// Dynamically import shared components
-const CategoryTabs = () => import('../../components/UnifiedMenu/CategoryTabs.vue');
-const ItemsGrid = () => import('../../components/UnifiedMenu/ItemsGrid.vue');
-const CategoryList = () => import('../../components/UnifiedMenu/CategoryList.vue');
-const ItemModal = () => import('../../components/UnifiedMenu/ItemModal.vue');
-const ShoppingCart = () => import('../../components/UnifiedMenu/ShoppingCart.vue');
+// Dynamically import shared components (these will be async imports in Nuxt 3)
+import CategoryTabs from '../../components/UnifiedMenu/CategoryTabs.vue'
+import ItemsGrid from '../../components/UnifiedMenu/ItemsGrid.vue'
+import CategoryList from '../../components/UnifiedMenu/CategoryList.vue'
+import ItemModal from '../../components/UnifiedMenu/ItemModal.vue'
+import ShoppingCart from '../../components/UnifiedMenu/ShoppingCart.vue'
 
-// Utility functions for debouncing
+// Props
+const props = defineProps({
+  section: {
+    type: Object,
+    default: () => ({})
+  },
+  lang: {
+    type: String,
+    default: "en"
+  },
+  locales: {
+    type: Array,
+    default: () => []
+  },
+  viewStructure: {
+    settings: [
+      {
+        logo: 'image',
+        pageTitle: {
+          en: 'Our Services',
+          fr: 'Nos Services'
+        },
+        pageSubtitle: {
+          en: 'Book your next experience with us',
+          fr: 'Réservez votre prochaine expérience avec nous'
+        },
+        categories: [
+          {
+            id: 'category-id',
+            name: {
+              en: 'Category Name',
+              fr: 'Nom de la catégorie'
+            },
+            description: {
+              en: 'Category Description',
+              fr: 'Description de la catégorie'
+            },
+            classes: '',
+            icon: 'image'
+          }
+        ],
+        serviceItems: [
+          {
+            id: 'item-id',
+            categoryId: 'category-id',
+            name: {
+              en: 'Item Name',
+              fr: 'Nom du service'
+            },
+            description: {
+              en: 'Item Description',
+              fr: 'Description du service'
+            },
+            price: 10.99,
+            duration: {
+              en: '1 hour',
+              fr: '1 heure'
+            },
+            hasDiscount: true,
+            discountedPrice: 8.99,
+            details: [
+              {
+                en: 'Detail point 1',
+                fr: 'Point de détail 1'
+              }
+            ],
+            image: 'image',
+            availability: 'available',
+            featured: false,
+            classes: ''
+          }
+        ],
+        currencySymbol: '$',
+        classes: '',
+        viewMode: 'list',
+        businessType: 'travel',
+        enableTax: true,
+        taxRate: 10.00,
+        enableServiceFee: true,
+        serviceFeeRate: 5.00,
+        socialMedia: {
+          instagram: '',
+          facebook: '',
+          tiktok: '',
+          twitter: '',
+          youtube: ''
+        },
+        showWhatsApp: false,
+        whatsappNumber: '',
+        whatsappMessage: {
+          en: 'Hello! I would like to book a service.',
+          fr: 'Bonjour ! Je voudrais réserver un service.'
+        }
+      }
+    ]
+  },
+  showDateTimePickers: {
+    type: Boolean,
+    default: true
+  }
+})
+
+// Reactive data
+const isInitialRenderComplete = ref(false)
+const cart = ref([])
+const showCart = ref(false)
+const showItemModal = ref(false)
+const selectedItem = ref(null)
+const itemQuantity = ref(1)
+const itemNotes = ref('')
+const selectedDate = ref(new Date().toISOString().split('T')[0])
+const selectedTimeSlot = ref('')
+const activeCategory = ref('')
+const isCartLoaded = ref(false)
+
+// Constants
+const TAX_RATE = 0.10
+const SERVICE_FEE_RATE = 0.05
+
+const socialIcons = {
+  instagram: {
+    classes: 'instagram',
+    hoverClasses: 'instagram-hover'
+  },
+  facebook: {
+    classes: 'facebook',
+    hoverClasses: 'facebook-hover'
+  },
+  tiktok: {
+    classes: 'tiktok',
+    hoverClasses: 'tiktok-hover'
+  },
+  twitter: {
+    classes: 'twitter',
+    hoverClasses: 'twitter-hover'
+  },
+  youtube: {
+    classes: 'youtube',
+    hoverClasses: 'youtube-hover'
+  }
+}
+
+// Utility functions
 const debounce = (fn, delay) => {
-  let timeoutId;
+  let timeoutId
   return function (...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), delay);
-  };
-};
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => fn.apply(this, args), delay)
+  }
+}
 
-export default {
-  name: 'ServicePackages',
-  components: {
-    CartIcon,
-    SocialLinks,
-    CategoryTabs,
-    ItemsGrid,
-    CategoryList,
-    ItemModal,
-    ShoppingCart
-  },
-  props: {
-    section: {
-      type: Object,
-      default: () => { },
-    },
-    lang: {
-      type: String,
-      default: "en"
-    },
-    locales: {
-      type: Array,
-      default: () => [],
-    },
-    viewStructure: {
-      settings: [
-        {
-          logo: 'image',
-          pageTitle: {
-            en: 'Our Services',
-            fr: 'Nos Services'
-          },
-          pageSubtitle: {
-            en: 'Book your next experience with us',
-            fr: 'Réservez votre prochaine expérience avec nous'
-          },
-          categories: [
-            {
-              id: 'category-id',
-              name: {
-                en: 'Category Name',
-                fr: 'Nom de la catégorie'
-              },
-              description: {
-                en: 'Category Description',
-                fr: 'Description de la catégorie'
-              },
-              classes: '',
-              icon: 'image'
-            },
-            {
-              id: 'category-id1',
-              name: {
-                en: 'Category Name',
-                fr: 'Nom de la catégorie'
-              },
-              description: {
-                en: '',
-                fr: ''
-              },
-              classes: '',
-              icon: 'image'
-            },
-            {
-              id: 'category-id1',
-              name: {
-                en: 'Category Name',
-                fr: 'Nom de la catégorie'
-              },
-              description: {
-                en: '',
-                fr: ''
-              },
-              classes: '',
-              icon: 'image'
-            }
-          ],
-          serviceItems: [
-            {
-              id: 'item-id',
-              categoryId: 'category-id',
-              name: {
-                en: 'Item Name',
-                fr: 'Nom du service'
-              },
-              description: {
-                en: 'Item Description',
-                fr: 'Description du service'
-              },
-              price: 10.99,
-              duration: '1 hour',
-              details: [
-                {
-                  en: 'Detail point 1',
-                  fr: 'Point de détail 1'
-                }
-              ],
-              image: 'image',
-              availability: 'available',
-              featured: false,
-              classes: ''
-            },
-            {
-              id: 'item-id',
-              categoryId: 'category-id',
-              name: {
-                en: 'Item Name',
-                fr: 'Nom du service'
-              },
-              description: {
-                en: 'Item Description',
-                fr: 'Description du service'
-              },
-              price: 10.99,
-              duration: '1 hour',
-              details: [
-                {
-                  en: 'Detail point 1',
-                  fr: 'Point de détail 1'
-                }
-              ],
-              image: 'image',
-              availability: 'available',
-              featured: false,
-              classes: ''
-            },
-            {
-              id: 'item-id',
-              categoryId: 'category-id',
-              name: {
-                en: 'Item Name',
-                fr: 'Nom du service'
-              },
-              description: {
-                en: 'Item Description',
-                fr: 'Description du service'
-              },
-              price: 10.99,
-              duration: '1 hour',
-              details: [
-                {
-                  en: 'Detail point 1',
-                  fr: 'Point de détail 1'
-                }
-              ],
-              image: 'image',
-              availability: 'available',
-              featured: false,
-              classes: ''
-            },
-            {
-              id: 'item-id',
-              categoryId: 'category-id1',
-              name: {
-                en: 'Item Name',
-                fr: 'Nom du service'
-              },
-              description: {
-                en: 'Item Description',
-                fr: 'Description du service'
-              },
-              price: 10.99,
-              duration: '1 hour',
-              details: [
-                {
-                  en: 'Detail point 1',
-                  fr: 'Point de détail 1'
-                }
-              ],
-              image: 'image',
-              availability: 'available',
-              featured: false,
-              classes: ''
-            }
-          ],
-          currencySymbol: '$',
-          classes: '',
-          backgroundColor: '#ffffff',
-          viewMode: 'list', // list or category
-          businessType: 'travel', // travel, spa, or salon
-          enableTax: true,
-          taxRate: 10.00,
-          enableServiceFee: true,
-          serviceFeeRate: 5.00
-        }
-      ]
-    },
-    // Additional props specific to services
-    showDateTimePickers: {
-      type: Boolean,
-      default: true // Enable date/time pickers by default
-    }
-  },
-  data() {
+// Computed properties
+const socialMediaLinks = computed(() => {
+  if (!settings.value || !settings.value.socialMedia) return []
+
+  return Object.entries(settings.value.socialMedia || {})
+    .filter(([platform, url]) => {
+      return platform !== 'whatsapp' &&
+        url &&
+        typeof url === 'string' &&
+        url.trim() !== ''
+    })
+    .map(([platform, url]) => {
+      const classes = (socialIcons[platform] || {}).classes || ''
+      const hoverClasses = (socialIcons[platform] || {}).hoverClasses || ''
+
+      return {
+        type: platform,
+        url,
+        classes,
+        hoverClasses
+      }
+    })
+})
+
+const settings = computed(() => {
+  if (!props.section || !props.section.settings) {
     return {
-      isInitialRenderComplete: false,
-      cart: [],
-      showCart: false,
-      showItemModal: false,
-      selectedItem: null,
-      itemQuantity: 1,
-      itemNotes: '',
-      selectedDate: new Date().toISOString().split('T')[0], // Default to today
-      selectedTimeSlot: '',
-      activeCategory: '',
-      TAX_RATE: 0.10, // 10% tax rate
-      SERVICE_FEE_RATE: 0.05, // 5% service fee rate
-      isCartLoaded: false, // Track if cart has been loaded from storage
-      socialIcons: {
-        instagram: {
-          classes: 'instagram',
-          hoverClasses: 'instagram-hover'
-        },
-        facebook: {
-          classes: 'facebook',
-          hoverClasses: 'facebook-hover'
-        },
-        tiktok: {
-          classes: 'tiktok',
-          hoverClasses: 'tiktok-hover'
-        },
-        twitter: {
-          classes: 'twitter',
-          hoverClasses: 'twitter-hover'
-        },
-        youtube: {
-          classes: 'youtube',
-          hoverClasses: 'youtube-hover'
-        }
-      }
-    };
-  },
-  computed: {
-    socialMediaLinks() {
-      // Default to empty array if no social media
-      if (!this.settings || !this.settings.socialMedia) return [];
-
-      // Convert settings.socialMedia to an array of link objects
-      return Object.entries(this.settings.socialMedia || {})
-        .filter(([platform, url]) => {
-          // Filter out empty URLs and WhatsApp
-          return platform !== 'whatsapp' &&
-            url &&
-            typeof url === 'string' &&
-            url.trim() !== '';
-        })
-        .map(([platform, url]) => {
-          // Get the icon classes
-          const classes = (this.socialIcons[platform] || {}).classes || '';
-          const hoverClasses = (this.socialIcons[platform] || {}).hoverClasses || '';
-
-          return {
-            type: platform,
-            url,
-            classes,
-            hoverClasses
-          };
-        });
-    },
-    settings() {
-      // Make sure section exists and has settings
-      if (!this.section || !this.section.settings) {
-        return {
-          categories: [],
-          serviceItems: [],
-          viewMode: 'list', // Default value
-          businessType: 'travel', // Default value
-          socialMedia: {}, // Empty social media object
-          showWhatsApp: false,
-          whatsappNumber: '',
-          whatsappMessage: {}
-        };
-      }
-
-      // Return settings array item or direct settings object with defaults
-      let settings;
-      if (Array.isArray(this.section.settings)) {
-        settings = this.section.settings[0] || {};
-      } else {
-        settings = this.section.settings || {};
-      }
-
-      // Ensure required properties exist
-      if (!settings.socialMedia) settings.socialMedia = {};
-      if (typeof settings.showWhatsApp === 'undefined') settings.showWhatsApp = false;
-      if (!settings.whatsappNumber) settings.whatsappNumber = '';
-      if (!settings.whatsappMessage) settings.whatsappMessage = {};
-
-      return settings;
-    },
-    sortedCategories() {
-      if (!this.settings || !this.settings.categories) return [];
-
-      // Return categories in their original order without sorting by order property
-      return [...this.settings.categories];
-    },
-    isCategoryView() {
-      return this.settings.viewMode === 'category';
-    },
-    activeCategoryObj() {
-      if (!this.activeCategory) return null;
-      return this.settings.categories.find(cat => cat.id === this.activeCategory);
-    },
-    totalItems() {
-      return this.cart.reduce((total, item) => total + item.quantity, 0);
-    },
-    cartSubtotal() {
-      return this.cart.reduce((total, item) => {
-        // Use discounted price if available
-        const price = item.hasDiscount ? (item.discountedPrice || item.price) : item.price;
-        return total + (price * item.quantity);
-      }, 0);
-    },
-    cartServiceFee() {
-      return this.settings.enableServiceFee ? this.cartSubtotal * (this.settings.serviceFeeRate / 100 || this.SERVICE_FEE_RATE) : 0;
-    },
-    cartTax() {
-      return this.settings.enableTax ? (this.cartSubtotal + this.cartServiceFee) * (this.settings.taxRate / 100 || this.TAX_RATE) : 0;
-    },
-    cartTotal() {
-      return this.cartSubtotal + this.cartServiceFee + this.cartTax;
-    }
-  },
-  watch: {
-    settings: {
-      handler() {
-        // Re-initialize when settings change
-        this.initializeActiveCategory();
-        this.initializeMenuTitles();
-      },
-      deep: true
-    },
-
-    // Watch for section settings changes directly
-    "section.settings": {
-      handler() {
-        // Re-initialize when settings change
-        this.initializeActiveCategory();
-        this.initializeMenuTitles();
-      },
-      deep: true
-    },
-
-    // Watch for language changes
-    lang() {
-      this.initializeMenuTitles();
-    },
-    cart: {
-      handler(newCart) {
-        // Update localStorage whenever cart changes
-        this.debouncedSaveCart();
-      },
-      deep: true
-    }
-  },
-  created() {
-    // Set initial active category if in category view mode
-    this.initializeActiveCategory();
-    this.initializeMenuTitles();
-  },
-  mounted() {
-    // Activate initial render after hydration
-    this.$nextTick(() => {
-      // Use requestAnimationFrame to prioritize rendering
-      window.requestAnimationFrame(() => {
-        this.isInitialRenderComplete = true;
-      });
-    });
-
-    // Defer cart loading until after initial render
-    if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(() => {
-        this.loadCartFromStorage();
-      });
-    } else {
-      setTimeout(() => {
-        this.loadCartFromStorage();
-      }, 500);
-    }
-
-    // Set up event listeners
-    document.addEventListener('keydown', this.handleKeyEvents);
-  },
-  beforeDestroy() {
-    // Clean up event listeners
-    document.removeEventListener('keydown', this.handleKeyEvents);
-  },
-  methods: {
-    // Fix #1: Add the missing empty items helper
-    getEmptyItems() {
-      return [];
-    },
-
-    // Fix #2: Handle whatsappMessage type issue
-    getWhatsAppMessage() {
-      // Fix the whatsappMessage type by returning a string
-      if (this.settings && this.settings.whatsappMessage &&
-        this.settings.whatsappMessage[this.lang]) {
-        return this.settings.whatsappMessage[this.lang];
-      }
-      return 'Hello! I would like to book a service.';
-    },
-    initializeActiveCategory() {
-      if (this.isCategoryView && this.sortedCategories.length > 0 && !this.activeCategory) {
-        this.activeCategory = this.sortedCategories[0].id;
-      }
-    },
-    initializeMenuTitles() {
-      if (this.settings) {
-        // Initialize menuTitle if it doesn't exist
-        if (!this.settings.menuTitle) {
-          this.$set(this.settings, 'menuTitle', {});
-        }
-
-        // Initialize menuTitle for the current language
-        if (!this.settings.menuTitle[this.lang]) {
-          this.$set(this.settings.menuTitle, this.lang, '');
-        }
-
-        // Initialize menuSubtitle if it doesn't exist
-        if (!this.settings.menuSubtitle) {
-          this.$set(this.settings, 'menuSubtitle', {});
-        }
-
-        // Initialize menuSubtitle for the current language
-        if (!this.settings.menuSubtitle[this.lang]) {
-          this.$set(this.settings.menuSubtitle, this.lang, '');
-        }
-      }
-    },
-    // Load cart from storage (deferred)
-    loadCartFromStorage() {
-      if (this.isCartLoaded) return;
-
-      const savedCart = localStorage.getItem('servicePackagesCart');
-      if (savedCart) {
-        try {
-          this.cart = JSON.parse(savedCart);
-          this.isCartLoaded = true;
-        } catch (e) {
-        }
-      }
-    },
-    // Optimized method to get items by category
-    getItemsByCategory(categoryId) {
-      if (!this.settings.serviceItems) return [];
-      return this.settings.serviceItems.filter(item => item.categoryId === categoryId);
-    },
-    // Alias for consistency
-    getServiceItemsByCategory(categoryId) {
-      return this.getItemsByCategory(categoryId);
-    },
-    // Set active category (for category view)
-    setActiveCategory(categoryId) {
-      this.activeCategory = categoryId;
-    },
-    // Item modal methods
-    openItemModal(item) {
-      this.selectedItem = item;
-      this.itemQuantity = 1;
-      this.itemNotes = '';
-      this.selectedDate = new Date().toISOString().split('T')[0]; // Default to today
-      this.selectedTimeSlot = '';
-      this.showItemModal = true;
-      document.body.classList.add('overflow-hidden');
-    },
-    closeItemModal() {
-      this.showItemModal = false;
-      document.body.classList.remove('overflow-hidden');
-    },
-    updateItemQuantity(quantity) {
-      this.itemQuantity = quantity;
-    },
-    updateItemNotes(notes) {
-      this.itemNotes = notes;
-    },
-    updateSelectedDate(date) {
-      this.selectedDate = date;
-    },
-    updateSelectedTimeSlot(timeSlot) {
-      this.selectedTimeSlot = timeSlot;
-    },
-    // Cart toggle methods
-    toggleCart() {
-      // Make sure cart is loaded before showing
-      if (!this.isCartLoaded) {
-        this.loadCartFromStorage();
-      }
-
-      this.showCart = !this.showCart;
-      if (this.showCart) {
-        document.body.classList.add('overflow-hidden');
-      } else {
-        document.body.classList.remove('overflow-hidden');
-      }
-    },
-    closeCart() {
-      this.showCart = false;
-      document.body.classList.remove('overflow-hidden');
-    },
-    // Efficient event handling with delegation
-    handleKeyEvents(e) {
-      if (e.key === 'Escape') {
-        if (this.showItemModal) this.closeItemModal();
-        if (this.showCart) this.closeCart();
-      }
-    },
-    // Cart operations
-    addToCart() {
-      if (!this.selectedItem) return;
-
-      const newItem = {
-        id: this.selectedItem.id,
-        name: this.selectedItem.name,
-        price: this.selectedItem.price,
-        hasDiscount: this.selectedItem.hasDiscount,
-        discountedPrice: this.selectedItem.discountedPrice,
-        quantity: this.itemQuantity,
-        notes: this.itemNotes,
-        date: this.showDateTimePickers ? this.selectedDate : null,
-        timeSlot: this.showDateTimePickers ? this.selectedTimeSlot : null,
-        duration: this.selectedItem.duration
-      };
-
-      // Close modal first for better perceived performance
-      this.closeItemModal();
-
-      // Then update cart in next tick to avoid blocking the UI
-      this.$nextTick(() => {
-        // Check if item already exists in cart with same date/time
-        const existingItemIndex = this.findExistingCartItem(newItem);
-
-        if (existingItemIndex !== -1) {
-          // Update existing item quantity
-          this.cart[existingItemIndex].quantity += newItem.quantity;
-        } else {
-          // Add new item to cart
-          this.cart.push(newItem);
-        }
-
-        // Save cart to localStorage with debounce
-        this.debouncedSaveCart();
-
-        // Show cart after a small delay for better UX
-        setTimeout(() => {
-          this.showCart = true;
-        }, 100);
-      });
-    },
-    // Find existing cart item
-    findExistingCartItem(newItem) {
-      if (this.showDateTimePickers) {
-        // For services with date/time, check if same service is booked at the same time
-        return this.cart.findIndex(item =>
-          item.id === newItem.id &&
-          item.date === newItem.date &&
-          item.timeSlot === newItem.timeSlot &&
-          item.notes === newItem.notes
-        );
-      } else {
-        // For services without date/time, just check ID and notes
-        return this.cart.findIndex(item =>
-          item.id === newItem.id && item.notes === newItem.notes
-        );
-      }
-    },
-    removeFromCart(index) {
-      this.cart.splice(index, 1);
-      this.debouncedSaveCart();
-    },
-    incrementCartItem(index) {
-      this.cart[index].quantity++;
-      this.debouncedSaveCart();
-    },
-    decrementCartItem(index) {
-      if (this.cart[index].quantity > 1) {
-        this.cart[index].quantity--;
-        this.debouncedSaveCart();
-      }
-    },
-    // Debounced method to avoid excessive localStorage writes
-    debouncedSaveCart: debounce(function () {
-      localStorage.setItem('servicePackagesCart', JSON.stringify(this.cart));
-    }, 300),
-    checkout() {
-      // Here you would typically integrate with a booking/payment system
-      alert(this.$t('ServicePackages.bookingConfirmed') || 'Your booking has been confirmed!');
-      this.cart = [];
-      this.debouncedSaveCart();
-      this.closeCart();
+      categories: [],
+      serviceItems: [],
+      viewMode: 'list',
+      businessType: 'travel',
+      socialMedia: {},
+      showWhatsApp: false,
+      whatsappNumber: '',
+      whatsappMessage: {},
+      pageTitle: {},
+      pageSubtitle: {},
+      currencySymbol: '$',
+      menuTitle: {},
+      menuSubtitle: {}
     }
   }
-};
+
+  let settingsData
+  if (Array.isArray(props.section.settings)) {
+    settingsData = props.section.settings[0] || {}
+  } else {
+    settingsData = props.section.settings || {}
+  }
+
+  // Ensure required properties exist
+  if (!settingsData.socialMedia) settingsData.socialMedia = {}
+  if (typeof settingsData.showWhatsApp === 'undefined') settingsData.showWhatsApp = false
+  if (!settingsData.whatsappNumber) settingsData.whatsappNumber = ''
+  if (!settingsData.whatsappMessage) settingsData.whatsappMessage = {}
+  if (!settingsData.pageTitle) settingsData.pageTitle = {}
+  if (!settingsData.pageSubtitle) settingsData.pageSubtitle = {}
+  if (!settingsData.menuTitle) settingsData.menuTitle = {}
+  if (!settingsData.menuSubtitle) settingsData.menuSubtitle = {}
+  if (!settingsData.categories) settingsData.categories = []
+  if (!settingsData.serviceItems) settingsData.serviceItems = []
+
+  return settingsData
+})
+
+const sortedCategories = computed(() => {
+  if (!settings.value || !settings.value.categories) return []
+  return [...settings.value.categories]
+})
+
+const isCategoryView = computed(() => {
+  return settings.value.viewMode === 'category'
+})
+
+const activeCategoryObj = computed(() => {
+  if (!activeCategory.value) return null
+  return settings.value.categories.find(cat => cat.id === activeCategory.value)
+})
+
+const totalItems = computed(() => {
+  return cart.value.reduce((total, item) => total + item.quantity, 0)
+})
+
+const cartSubtotal = computed(() => {
+  return cart.value.reduce((total, item) => {
+    const price = item.hasDiscount ? (item.discountedPrice || item.price) : item.price
+    return total + (price * item.quantity)
+  }, 0)
+})
+
+const cartServiceFee = computed(() => {
+  return settings.value.enableServiceFee ? cartSubtotal.value * (settings.value.serviceFeeRate / 100 || SERVICE_FEE_RATE) : 0
+})
+
+const cartTax = computed(() => {
+  return settings.value.enableTax ? (cartSubtotal.value + cartServiceFee.value) * (settings.value.taxRate / 100 || TAX_RATE) : 0
+})
+
+const cartTotal = computed(() => {
+  return cartSubtotal.value + cartServiceFee.value + cartTax.value
+})
+
+// Methods
+const getEmptyItems = () => {
+  return []
+}
+
+const getWhatsAppMessage = () => {
+  if (settings.value && settings.value.whatsappMessage &&
+    settings.value.whatsappMessage[props.lang]) {
+    return settings.value.whatsappMessage[props.lang]
+  }
+  return 'Hello! I would like to book a service.'
+}
+
+const initializeActiveCategory = () => {
+  if (isCategoryView.value && sortedCategories.value.length > 0 && !activeCategory.value) {
+    activeCategory.value = sortedCategories.value[0].id
+  }
+}
+
+const initializeMenuTitles = () => {
+  if (settings.value) {
+    if (!settings.value.menuTitle) {
+      settings.value.menuTitle = {}
+    }
+    if (!settings.value.menuTitle[props.lang]) {
+      settings.value.menuTitle[props.lang] = ''
+    }
+    if (!settings.value.menuSubtitle) {
+      settings.value.menuSubtitle = {}
+    }
+    if (!settings.value.menuSubtitle[props.lang]) {
+      settings.value.menuSubtitle[props.lang] = ''
+    }
+  }
+}
+
+const loadCartFromStorage = () => {
+  if (isCartLoaded.value) return
+
+  if (process.client) {
+    const savedCart = localStorage.getItem('servicePackagesCart')
+    if (savedCart) {
+      try {
+        cart.value = JSON.parse(savedCart)
+        isCartLoaded.value = true
+      } catch (e) {
+      }
+    }
+  }
+}
+
+// Fixed: Return array directly, not a function
+const getItemsByCategory = (categoryId) => {
+  if (!settings.value || !settings.value.serviceItems) return []
+  return settings.value.serviceItems.filter(item => item.categoryId === categoryId)
+}
+
+const getServiceItemsByCategory = (categoryId) => {
+  return getItemsByCategory(categoryId)
+}
+
+const setActiveCategory = (categoryId) => {
+  activeCategory.value = categoryId
+}
+
+const openItemModal = (item) => {
+  selectedItem.value = item
+  itemQuantity.value = 1
+  itemNotes.value = ''
+  selectedDate.value = new Date().toISOString().split('T')[0]
+  selectedTimeSlot.value = ''
+  showItemModal.value = true
+  if (process.client) {
+    document.body.classList.add('overflow-hidden')
+  }
+}
+
+const closeItemModal = () => {
+  showItemModal.value = false
+  if (process.client) {
+    document.body.classList.remove('overflow-hidden')
+  }
+}
+
+const updateItemQuantity = (quantity) => {
+  itemQuantity.value = quantity
+}
+
+const updateItemNotes = (notes) => {
+  itemNotes.value = notes
+}
+
+const updateSelectedDate = (date) => {
+  selectedDate.value = date
+}
+
+const updateSelectedTimeSlot = (timeSlot) => {
+  selectedTimeSlot.value = timeSlot
+}
+
+const toggleCart = () => {
+  if (!isCartLoaded.value) {
+    loadCartFromStorage()
+  }
+
+  showCart.value = !showCart.value
+  if (process.client) {
+    if (showCart.value) {
+      document.body.classList.add('overflow-hidden')
+    } else {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }
+}
+
+const closeCart = () => {
+  showCart.value = false
+  if (process.client) {
+    document.body.classList.remove('overflow-hidden')
+  }
+}
+
+const handleKeyEvents = (e) => {
+  if (e.key === 'Escape') {
+    if (showItemModal.value) closeItemModal()
+    if (showCart.value) closeCart()
+  }
+}
+
+const addToCart = () => {
+  if (!selectedItem.value) return
+
+  const newItem = {
+    id: selectedItem.value.id,
+    name: selectedItem.value.name,
+    price: selectedItem.value.price,
+    hasDiscount: selectedItem.value.hasDiscount,
+    discountedPrice: selectedItem.value.discountedPrice,
+    quantity: itemQuantity.value,
+    notes: itemNotes.value,
+    date: props.showDateTimePickers ? selectedDate.value : null,
+    timeSlot: props.showDateTimePickers ? selectedTimeSlot.value : null,
+    duration: selectedItem.value.duration
+  }
+
+  closeItemModal()
+
+  nextTick(() => {
+    const existingItemIndex = findExistingCartItem(newItem)
+
+    if (existingItemIndex !== -1) {
+      cart.value[existingItemIndex].quantity += newItem.quantity
+    } else {
+      cart.value.push(newItem)
+    }
+
+    debouncedSaveCart()
+
+    setTimeout(() => {
+      showCart.value = true
+    }, 100)
+  })
+}
+
+const findExistingCartItem = (newItem) => {
+  if (props.showDateTimePickers) {
+    return cart.value.findIndex(item =>
+      item.id === newItem.id &&
+      item.date === newItem.date &&
+      item.timeSlot === newItem.timeSlot &&
+      item.notes === newItem.notes
+    )
+  } else {
+    return cart.value.findIndex(item =>
+      item.id === newItem.id && item.notes === newItem.notes
+    )
+  }
+}
+
+const removeFromCart = (index) => {
+  cart.value.splice(index, 1)
+  debouncedSaveCart()
+}
+
+const incrementCartItem = (index) => {
+  cart.value[index].quantity++
+  debouncedSaveCart()
+}
+
+const decrementCartItem = (index) => {
+  if (cart.value[index].quantity > 1) {
+    cart.value[index].quantity--
+    debouncedSaveCart()
+  }
+}
+
+const debouncedSaveCart = debounce(() => {
+  if (process.client) {
+    localStorage.setItem('servicePackagesCart', JSON.stringify(cart.value))
+  }
+}, 300)
+
+const checkout = () => {
+  alert('Your booking has been confirmed!')
+  cart.value = []
+  debouncedSaveCart()
+  closeCart()
+}
+
+// Watchers
+watch(() => settings.value, () => {
+  initializeActiveCategory()
+  initializeMenuTitles()
+}, { deep: true })
+
+watch(() => props.lang, () => {
+  initializeMenuTitles()
+})
+
+watch(() => cart.value, () => {
+  debouncedSaveCart()
+}, { deep: true })
+
+// Lifecycle hooks
+onMounted(() => {
+  initializeActiveCategory()
+  initializeMenuTitles()
+
+  nextTick(() => {
+    if (process.client) {
+      window.requestAnimationFrame(() => {
+        isInitialRenderComplete.value = true
+      })
+    }
+  })
+
+  if (process.client) {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => {
+        loadCartFromStorage()
+      })
+    } else {
+      setTimeout(() => {
+        loadCartFromStorage()
+      }, 500)
+    }
+
+    document.addEventListener('keydown', handleKeyEvents)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (process.client) {
+    document.removeEventListener('keydown', handleKeyEvents)
+  }
+})
 </script>

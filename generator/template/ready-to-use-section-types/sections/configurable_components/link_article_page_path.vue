@@ -22,9 +22,8 @@
 </template>
 
 <script>
-
-import {sectionHeader} from "@geeks.solutions/nuxt-sections/lib/src/utils";
-import {getSectionsPages} from "@/utils/constants";
+import {getSectionsPages} from "~/utils/constants.js";
+import { useCookie, sectionHeader } from '#imports'
 
 export default {
   name: "LinkArticlePagePath",
@@ -32,23 +31,26 @@ export default {
   data() {
     return {
       configurableReference: null,
-      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-48px w-full focus:outline-none',
+      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
       article_page_path: "",
       sectionsPages: []
     }
   },
   watch: {
-    reference(value) {
-      this.configurableReference = value
-      if (this.configurableReference.optionsData.article_page_path) {
-        this.article_page_path = this.configurableReference.optionsData.article_page_path
-      }
+    reference: {
+      handler(value) {
+        this.configurableReference = value.value
+        if (this.configurableReference.optionsData.article_page_path) {
+          this.article_page_path = this.configurableReference.optionsData.article_page_path
+        }
+      },
+      deep: true,
+      immediate: true
     }
+
   },
   async mounted() {
-    this.$nuxt.$emit('initLoading', true)
-    this.sectionsPages = await getSectionsPages(sectionHeader({token: window.$nuxt.$cookies.get('sections-auth-token')}))
-    this.$nuxt.$emit('initLoading', false)
+    this.sectionsPages = await getSectionsPages(sectionHeader({token: useCookie('sections-auth-token').value}))
   },
   methods: {
     isSelected(path) {

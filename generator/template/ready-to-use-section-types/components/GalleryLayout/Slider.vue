@@ -11,23 +11,31 @@
           class="w-full flex-shrink-0 cursor-pointer flex items-center justify-center"
           @click="$emit('openPreview', image)"
         >
-          <img
+          <NuxtImg
             v-if="image.media && image.media.url"
             :src="image.media.url"
             :alt="image.media.seo_tag ? image.media.seo_tag : ''"
             class="w-full h-full"
             :class="{'mobileHidden': image.mediaMobile && image.mediaMobile.url}"
             :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
+            width="300"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
+            loading="lazy"
             @touchstart="handleTouchStart"
             @touchmove="handleTouchMove"
             @touchend="handleTouchEnd"
           />
-          <img
+          <NuxtImg
             v-if="image.mediaMobile && image.mediaMobile.url"
             :src="image.mediaMobile.url"
             :alt="image.mediaMobile.seo_tag ? image.mediaMobile.seo_tag : ''"
             class="w-full h-full md:hidden"
             :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
+            width="300"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
+            loading="lazy"
             @touchstart="handleTouchStart"
             @touchmove="handleTouchMove"
             @touchend="handleTouchEnd"
@@ -102,7 +110,7 @@ export default {
       this.startAutoplay();
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.autoplayInterval);
   },
   methods: {

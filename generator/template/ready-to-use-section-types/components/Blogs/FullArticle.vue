@@ -8,7 +8,12 @@
         </div>
         <gWysiwygContent tag="p" :classes="`text-center html-content`" :html-content="sectionRenderData.description" />
       </div>
-      <img v-if="articleImage" :src="articleImage" :alt="articleImageAlt ? articleImageAlt : ''" class="w-fit max-w-full self-center object-contain" />
+      <NuxtImg v-if="articleImage" :src="articleImage" :alt="articleImageAlt ? articleImageAlt : ''" class="w-fit max-w-full self-center object-contain"
+           sizes="100%"
+           width="300"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
+           loading="lazy"/>
     </div>
     <div class="flex flex-col items-center body-wrapper">
       <gWysiwygContent tag="p" :classes="`html-content`" :html-content="sectionRenderData.body" />

@@ -8,8 +8,10 @@
 
 <script>
 
-import {mapGetters} from "vuex";
-import {BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH, extractQsValue} from "@/utils/constants";
+import { useSectionsStore } from '~/stores/index.js'
+import { mapState } from 'pinia'
+import { BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH, extractQsValue, updateQueryStringValue } from '@/utils/constants'
+import { useCookie } from '#imports'
 
 export default {
   name: 'CategoriesArticlesConfigurable',
@@ -286,13 +288,11 @@ export default {
         return Math.ceil(this.sectionRenderData.total / blogsListSize)
       } else return 1
     },
-    ...mapGetters({
-      categoriesTitles: 'getCategoriesTitles'
-    })
+    ...mapState(useSectionsStore, ['categoriesTitles'])
   },
   watch: {
     sectionRenderData() {
-      if (this.$refs && this.$refs.BlogsArticles) {
+      if (this.$refs && this.$refs.BlogsArticles && !useCookie('sections-auth-token').value) {
         this.$nextTick(() => {
           this.$refs.BlogsArticles.scrollIntoView({ behavior: 'smooth'})
         })
@@ -301,6 +301,9 @@ export default {
   },
   methods: {
     pageChanged(offset) {
+      updateQueryStringValue(this.$route.path, {
+        offset_ca: offset
+      }, false)
       this.$emit('refresh-section', {
         qs: {
           categories_titles: this.categoriesTitles.includes(',') ? this.categoriesTitles.split(',') : this.categoriesTitles.length > 0 ? [this.categoriesTitles] : [],

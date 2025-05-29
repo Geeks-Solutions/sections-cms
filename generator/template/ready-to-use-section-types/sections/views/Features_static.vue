@@ -6,16 +6,20 @@
 
     <div class="flex flex-wrap gap-4 md:gap-0 justify-center items-stretch blocks-wrapper" :class="settings[0].sectionWrapperClass">
 
-      <div v-for="(container,idx) in migratedSettings" :key="`block-container-${idx}`" class="flex flex-col z-10 min-h-[206px] my-3 md:mx-3 items-center md:justify-center justify-start self-center w-full md:w-448px rounded-md shadow image-main-wrapper" :class="`image-main-wrapper-${sectionWeight}`">
+      <div v-for="(container,idx) in migratedSettings" :key="`block-container-${idx}`" class="flex flex-col z-10 min-h-[206px] my-3 md:mx-3 items-center md:justify-center justify-start self-center w-full md:w-[448px] rounded-md shadow image-main-wrapper" :class="`image-main-wrapper-${sectionWeight}`">
 
         <div class="flex flex-col items-center image-wrapper">
           <div class="image-wrapper-inner" :class="`image-wrapper-inner-${idx}`">
-            <img
+            <NuxtImg
               v-if="container.media && container.media.url"
               :src="container.media.url"
               :alt="container.media.seo_tag ? container.media.seo_tag : ''"
+              class="p-4 w-fit"
+              width="300"
+           height="300"
+              sizes="100%"
+           :placeholder="[300, 300, 75, 5]"
               loading="lazy"
-              class="p-4"
             />
           </div>
           <gWysiwygContent tag="div" :wrapper-classes="[container.textClasses, 'image-desc-wrapper']" :classes="`pb-4 px-4 p-0 text`" :html-content="container.text[lang]" />

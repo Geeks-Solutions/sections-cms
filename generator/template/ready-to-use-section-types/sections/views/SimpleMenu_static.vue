@@ -8,11 +8,15 @@
                  :lang="lang"
                  :form-link-target="settings.logoLinkTarget"
                  class="logo-wrapper">
-      <img
+      <NuxtImg
         :src="settings.media.url"
         :alt="settings.media.seo_tag ? settings.media.seo_tag : ''"
+        class="logo w-fit"
+        width="300"
+           height="300"
+        sizes="100%"
+           :placeholder="[300, 300, 75, 5]"
         loading="lazy"
-        class="logo"
       />
     </global-link>
     <h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>
@@ -63,9 +67,17 @@
 </template>
 
 <script>
+import { useSwitchLocalePath } from '#imports'
 
 export default {
   name: 'SimpleMenu',
+  setup() {
+    const switchLocalePath = useSwitchLocalePath()
+
+    return {
+      switchLocalePath,
+    }
+  },
   props: {
     section: {
       type: Object,

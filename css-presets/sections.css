@@ -213,6 +213,10 @@ section p {
   font-size: 18px;
 }
 
+section article {
+  font-size: 18px;
+}
+
 section ul {
   list-style: disc;
   margin: revert;
@@ -255,7 +259,7 @@ section .view-component button {
   white-space:normal;
 }
 
-section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper) {
+section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
   font-size: 14px !important;
   border: 1px dashed #03B1C7 !important;
   border-radius: 6px !important;
@@ -456,8 +460,8 @@ input:not(:placeholder-shown) {
   text-align: start;
 }
 
-.plans.plans-wrapper .plansTitleBox .title.w-80px {
-  width: 155px;
+.plans.plans-wrapper .plansTitleBox .title {
+  width: 155px !important;
 }
 
 .plans.plans-wrapper .mr-6.img-wrapper {

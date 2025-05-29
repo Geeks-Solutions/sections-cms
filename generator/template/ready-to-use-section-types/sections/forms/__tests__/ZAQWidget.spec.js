@@ -1,6 +1,12 @@
 import { shallowMount } from "@vue/test-utils";
 import ZAQWidget from "../ZAQWidget.vue";
 
+vi.mock('#app', () => ({
+  useFetch: vi.fn()
+}))
+
+import { useFetch } from '#app'
+
 describe('ZAQWidget', () => {
   let wrapper;
 
@@ -10,7 +16,13 @@ describe('ZAQWidget', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(ZAQWidget, {
-      mocks: global.mocks,
+      global: {
+        config: {
+          globalProperties: {
+            $t: vi.fn()
+          }
+        }
+      },
       data() {
         return defaultData
       },
@@ -54,20 +66,18 @@ describe('ZAQWidget', () => {
   })
 
   it('updates sequences and autoStart when selectedMedia changes', async () => {
-    await wrapper.setData({
-      selectedMediaKey: 'sequence',
-      settings: [
-        {
-          websiteId: '123',
-          sequence: {},
-          css: {},
-          sendBtnMedia: {},
-          typingIconMedia: {},
-          hideBadge: false,
-          autoStart: 'None'
-        }
-      ]
-    })
+    wrapper.vm.selectedMediaKey = 'sequence'
+    wrapper.vm.settings = [
+      {
+        websiteId: '123',
+        sequence: {},
+        css: {},
+        sendBtnMedia: {},
+        typingIconMedia: {},
+        hideBadge: false,
+        autoStart: 'None'
+      }
+    ]
 
     const mediaObject = {
       id: '1',
@@ -81,10 +91,15 @@ describe('ZAQWidget', () => {
     expect(wrapper.vm.settings[0].sequence.seo_tag).toBe('seq')
     expect(wrapper.vm.settings[0].autoStart).toBe('None')
 
+    await vi.resetAllMocks()
+
     const mockResponse = { data: { 'seq1': 'Sequence 1', 'seq2': 'Sequence 2' } }
-    wrapper.vm.$axios = {
-      get: jest.fn().mockResolvedValue(mockResponse)
-    }
+    useFetch.mockResolvedValue({
+      data: mockResponse.data,
+      pending: false,
+      error: null,
+      refresh: vi.fn()
+    })
 
     // Call loadSequences method
     await wrapper.vm.loadSequences()

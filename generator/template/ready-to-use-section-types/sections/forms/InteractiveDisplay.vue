@@ -57,7 +57,7 @@
       </div>
       <div class="my-4 ml-6">
         <label class="flex section-module-upload-media-label">{{ $t('forms.aspectRatio') }}</label>
-        <div class="select-style-chooser w-344px">
+        <div class="select-style-chooser w-[344px]">
           <gAutoComplete
             :main-filter="settings[0].aspectRatio"
             :placeholder="$t('forms.aspectRatio')"
@@ -132,7 +132,7 @@
       </div>
       <div class="my-4 ml-6">
         <label class="flex section-module-upload-media-label">{{ $t('forms.aspectRatio') + '(Mobile)' }}</label>
-        <div class="select-style-chooser w-344px">
+        <div class="select-style-chooser w-[344px]">
           <gAutoComplete
             :main-filter="settings[0].mobileAspectRatio"
             :placeholder="$t('forms.aspectRatio') + '(Mobile)'"
@@ -154,12 +154,12 @@
     <div v-if="settings[0].videoLink">
       <div class="flex flex-col items-start justify-start mt-8">
         <label :class="sectionsStyle.fieldLabel">{{ $t("forms.title") }}</label>
-        <wysiwyg :html="settings[0].videoTitle[selectedLang]" :css-classes-prop="settings[0].videoTitleClasses" @cssClassesChanged="(v) => $set(settings[0], 'videoTitleClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateVideoTitleDescription(content, 0)"/>
+        <LazyEditorWysiwyg :html="settings[0].videoTitle[selectedLang]" :css-classes-prop="settings[0].videoTitleClasses" @cssClassesChanged="(v) => settings[0]['videoTitleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateVideoTitleDescription(content, 0)"/>
       </div>
 
       <div class="flex flex-col items-start justify-start mt-8">
         <label :class="sectionsStyle.fieldLabel">{{ $t("forms.text") }}</label>
-        <wysiwyg :html="settings[0].videoText[selectedLang]" :css-classes-prop="settings[0].videoTextClasses" @cssClassesChanged="(v) => $set(settings[0], 'videoTextClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateVideoTextDescription(content, 0)"/>
+        <LazyEditorWysiwyg :html="settings[0].videoText[selectedLang]" :css-classes-prop="settings[0].videoTextClasses" @cssClassesChanged="(v) => settings[0]['videoTextClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateVideoTextDescription(content, 0)"/>
       </div>
 
       <div class="flex flex-col items-start justify-start mt-8">
@@ -185,7 +185,7 @@
 
       <div class="my-4">
         <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-        <div class="select-style-chooser w-344px">
+        <div class="select-style-chooser w-[344px]">
           <gAutoComplete
             :main-filter="settings[0].videoCtaLinkTarget"
             :placeholder="$t('forms.linkTarget')"
@@ -233,30 +233,30 @@
 
     <div id="media" class="flex flex-col mt-4">
 
-      <FieldSets :array-data-pop="settings[0].carousels" :fieldset-group="'menu'" :legend-label="$t('forms.block')" @array-updated="(data) => $set(settings[0], 'carousels', data)" @remove-fieldset="(object, idx) => removeCarouselBlock(idx)">
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].carousels" :fieldset-group="'menu'" :legend-label="$t('forms.block')" @array-updated="(data) => settings[0]['carousels'] = data" @remove-fieldset="(object, idx) => removeCarouselBlock(idx)">
         <template #default="{ object, idx }">
           <div>
             <div class="mb-4">
-              <UploadMedia :media-label="idx === 0 ? $t('forms.media') + ' (desktop)' + '*' : $t('forms.media') + ' (desktop)'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'media'; $emit('openMediaModal', object.media && Object.keys(object.media).length > 0 ? object.media.media_id : null)" @removeUploadedImage="removeMedia(idx, 'media')" />
+              <LazyMediasUploadMedia :media-label="idx === 0 ? $t('forms.media') + ' (desktop)' + '*' : $t('forms.media') + ' (desktop)'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'media'; $emit('openMediaModal', object.media && Object.keys(object.media).length > 0 ? object.media.media_id : null)" @removeUploadedImage="removeMedia(idx, 'media')" />
               <span v-if="errors.media === true && idx === 0" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
           </div>
 
           <div :id="idx === 0 ? 'mediaMobile' : undefined">
             <div class="mb-4">
-              <UploadMedia :media-label="idx === 0 ? $t('forms.media') + ' (mobile)' + '*' : $t('forms.media') + ' (mobile)'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.mediaMobile && Object.keys(object.mediaMobile).length > 0 ? [object.mediaMobile] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'mediaMobile'; $emit('openMediaModal', object.mediaMobile && Object.keys(object.mediaMobile).length > 0 ? object.mediaMobile.media_id : null)" @removeUploadedImage="removeMedia(idx, 'mediaMobile')" />
+              <LazyMediasUploadMedia :media-label="idx === 0 ? $t('forms.media') + ' (mobile)' + '*' : $t('forms.media') + ' (mobile)'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.mediaMobile && Object.keys(object.mediaMobile).length > 0 ? [object.mediaMobile] : []" @uploadContainerClicked="selectedMediaIndex = idx; selectedMediaKey = 'mediaMobile'; $emit('openMediaModal', object.mediaMobile && Object.keys(object.mediaMobile).length > 0 ? object.mediaMobile.media_id : null)" @removeUploadedImage="removeMedia(idx, 'mediaMobile')" />
               <span v-if="errors.mediaMobile === true && idx === 0" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
           </div>
 
           <div class="flex flex-col items-start justify-start mt-8">
             <label :class="sectionsStyle.fieldLabel">{{ $t("forms.title") }}</label>
-            <wysiwyg :html="object.title[selectedLang]" :css-classes-prop="object.titleClasses" @cssClassesChanged="(v) => $set(object, 'titleClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content, idx)"/>
+            <LazyEditorWysiwyg :html="object.title[selectedLang]" :css-classes-prop="object.titleClasses" @cssClassesChanged="(v) => object['titleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content, idx)"/>
           </div>
 
           <div class="flex flex-col items-start justify-start mt-8">
             <label :class="sectionsStyle.fieldLabel">{{ $t("forms.text") }}</label>
-            <wysiwyg :html="object.text[selectedLang]" :css-classes-prop="object.textClasses" @cssClassesChanged="(v) => $set(object, 'textClasses', v)" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content, idx)"/>
+            <LazyEditorWysiwyg :html="object.text[selectedLang]" :css-classes-prop="object.textClasses" @cssClassesChanged="(v) => object['textClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content, idx)"/>
           </div>
 
           <div class="flex flex-col items-start justify-start mt-8">
@@ -282,7 +282,7 @@
 
           <div class="my-4">
             <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-            <div class="select-style-chooser w-344px">
+            <div class="select-style-chooser w-[344px]">
               <gAutoComplete
                 :main-filter="object.ctaLinkTarget"
                 :placeholder="$t('forms.linkTarget')"
@@ -299,7 +299,7 @@
             </div>
           </div>
         </template>
-      </FieldSets>
+      </LazySectionsFormsFieldSets>
 
       <div
           class="add-button underline cursor-pointer mt-2 pb-4"
@@ -313,18 +313,10 @@
 </template>
 
 <script>
-import UploadMedia from "@geeks.solutions/nuxt-sections/lib/src/components/Medias/UploadMedia.vue";
-import wysiwyg from "@geeks.solutions/nuxt-sections/lib/src/components/Editor/wysiwyg.vue";
-import FieldSets from '@geeks.solutions/nuxt-sections/lib/src/components/SectionsForms/FieldSets.vue'
 import {scrollToFirstError, sectionsStyle} from "@/utils/constants";
 
 export default {
   name: 'InteractiveDisplay',
-  components: {
-    FieldSets,
-    UploadMedia,
-    wysiwyg
-  },
   props: {
     selectedLang: {
       type: String,
@@ -482,14 +474,14 @@ export default {
       if (mediaObject.files[0].headers) {
         media.headers = mediaObject.files[0].headers
       }
-      this.$set(this.settings[0].carousels[this.selectedMediaIndex], this.selectedMediaKey, media)
+      this.settings[0].carousels[this.selectedMediaIndex][this.selectedMediaKey] = media
       this.settings[0].medias.push(media)
       this.$emit('closeMediaModal')
     },
     settings: {
       handler(v) {
         if (v && v[0] && v[0].carousels === undefined) {
-          this.$set(this.settings[0], 'carousels', [])
+          this.settings[0]['carousels'] = []
           this.settings[0].medias = []
           this.settings.forEach(st => {
             this.settings[0].carousels.push(JSON.parse(JSON.stringify(st)))

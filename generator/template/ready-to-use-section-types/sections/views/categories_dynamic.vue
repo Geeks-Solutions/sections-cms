@@ -4,6 +4,7 @@
 
 <script>
 import {updateQueryStringValue} from "@/utils/constants";
+import { useSectionsStore } from '~/stores/index.js'
 
 export default {
   name: 'CategoriesDynamic',
@@ -106,8 +107,10 @@ export default {
           offset_ca: 0
         }
       }
-      this.$store.commit('setCategoriesTitles', categoriesTitles)
-      this.$nuxt.$emit('clearOffset')
+      const sectionsStore = useSectionsStore()
+      sectionsStore.setCategoriesTitles(categoriesTitles)
+      const { $event } = useNuxtApp()
+      $event('clearOffset')
       updateQueryStringValue(this.$route.path, {
         'categories_titles[]': null
       }, false)

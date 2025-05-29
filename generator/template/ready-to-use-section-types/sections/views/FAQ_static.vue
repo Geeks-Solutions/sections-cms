@@ -7,7 +7,7 @@
           <div v-for="(qa, index) in settings.QAs" :key="`qa-${index}`" class="question" :class="[`question-${sectionWeight}`, answerShowing[index] === true ? 'expanded' : 'collapsed']">
             <div class="flex flex-row justify-between" :class="`question-title-${index}-${sectionWeight}`" @click="toggleAnswer(index)">
               <h3 class="question-title">{{ qa[lang].question }}</h3>
-              <img :src="answerShowing[index] === true ? require('@/assets/icons/arrowUp.svg') : require('@/assets/icons/arrowDown.svg')" alt="arrow" class="arrow w-6" loading="lazy" />
+              <img :src="answerShowing[index] === true ? importAsset('/assets/icons/arrowUp.svg') : importAsset('/assets/icons/arrowDown.svg')" alt="arrow" class="arrow w-6" loading="lazy" />
             </div>
             <div v-if="answerShowing[index] === true" class="answer" :class="[index === 0 ? 'show' : '', `answer-${index}-${sectionWeight}`]">
               <div class="flex w-full justify-start">
@@ -18,14 +18,17 @@
         </div>
       </div>
       <div v-if="settings.imagePosition !== 'none'" class="w-full md:w-auto gap-4 imageWrapper">
-        <div :class="'flex h-240px md:h-360px md:row-span-2 md:mt-6'">
-          <img
+        <div :class="'flex h-[240px] md:h-[360px] md:row-span-2 md:mt-6'">
+          <NuxtImg
             v-if="settings.media && settings.media.url"
             :src="settings.media.url"
             :alt="settings.media.seo_tag ? settings.media.seo_tag : ''"
-            loading="lazy"
             class="w-full"
             :class="'h-full object-contain'"
+            width="300"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
+            loading="lazy"
           />
         </div>
       </div>
@@ -34,6 +37,8 @@
 </template>
 
 <script>
+import { importAsset } from '~/utils/constants.js'
+
 export default {
   name: "FAQStatic",
   props: {
@@ -126,6 +131,7 @@ export default {
     this.initQAs()
   },
   methods: {
+    importAsset,
     initQAs() {
       let questions = []
       this.answerShowing = []
@@ -138,8 +144,8 @@ export default {
     },
     toggleAnswer(index) {
       if (this.answerShowing[index]) {
-        this.$set(this.answerShowing, index, false)
-      } else this.$set(this.answerShowing, index, true)
+        this.answerShowing[index] = false
+      } else this.answerShowing[index] = true
     }
   }
 }

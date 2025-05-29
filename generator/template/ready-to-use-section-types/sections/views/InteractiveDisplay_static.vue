@@ -6,21 +6,27 @@
          @touchend="handleTouchEnd">
       <div class="carousel-inner h-full">
         <div v-for="(block, index) in migratedSettings" :key="`carousel-media-block-${index}`" class="relative h-full" :class="`carousel-slide ${index === currentIndex ? 'active' : ''}`">
-          <img
+          <NuxtImg
               v-if="block.media && block.media.url"
               :src="block.media.url"
               :alt="block.media.seo_tag ? block.media.seo_tag : ''"
-			  loading="lazy"
               class="w-full h-full mobileHidden"
               :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
+              width="300"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
+              loading="lazy"
           />
-          <img
+          <NuxtImg
               v-if="block.mediaMobile && block.mediaMobile.url"
               :src="block.mediaMobile.url"
               :alt="block.mediaMobile.seo_tag ? block.mediaMobile.seo_tag : ''"
-			  loading="lazy"
               class="w-full h-full md:h-auto object-cover md:hidden"
               :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
+              width="300"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
+              loading="lazy"
           />
           <div v-if="(block.title[lang] || block.text[lang] || block.cta[lang]) && index === currentIndex" class="absolute top-0 w-full h-full">
             <div class="flex flex-col h-full justify-center items-center space-y-10">
@@ -283,7 +289,7 @@ export default {
   mounted() {
     this.startAutoplay();
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.autoplayInterval);
   },
   methods: {

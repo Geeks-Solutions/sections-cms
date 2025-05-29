@@ -3,3 +3,7 @@
     --secondary-color: #9CA3AF;
     --bg-color: #F9FAFB;
 }
+
+.cookieControl__Modal {
+    z-index: 10;
+}

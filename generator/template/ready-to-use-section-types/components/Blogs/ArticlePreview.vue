@@ -1,7 +1,11 @@
 <template>
   <div class="articles-preview flex flex-col md:flex-row gap-6 md:gap-24 py-5 px-4">
     <div v-if="image" class="flex image-wrapper min-h-[300px] max-h-[300px]">
-      <img :src="image" :alt="imageAlt" class="md:min-w-[440px] w-full md:w-440px object-cover" />
+      <NuxtImg :src="image" :alt="imageAlt" class="md:min-w-[440px] w-full md:w-440px object-cover"
+               width="300"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
+               loading="lazy"/>
     </div>
     <div class="flex flex-col gap-4 w-full justify-between preview-block-wrapper">
 

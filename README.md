@@ -4,31 +4,19 @@ A Vue js plugin to install and configure [@geeks.solutions/vue-sections](https:/
 
 ### How to install vue-cli-plugin-sections plugin:
 
-* Have Node version: 16.14.0 installed
+* Have Node version: 22.16.0 installed
 
-* Create a new nuxt js 2 app: Run `npx create-nuxt-app@2 <your-project-name>` and follow the below selection when prompted, then open it in your editor (if using Nuxt js 2)
-
-  - programming language: Javascript
-  - package manager: Npm
-  - UI framework: None
-  - custom server framework: None
-  - Nuxt.js modules: None, Press Enter to skip
-  - linting tools: None, Press Enter to skip
-  - test framework: None
-  - rendering mode: Universal (SSR)
-  - development tools: None, Press Enter to skip
-
+* Create a new nuxt js 3 app: Run `npm create nuxt <your-project-name>` and follow the below selection when prompted, then open it in your editor (if using Nuxt js 3)
+ 
+  - Which package manager would you like to use?: npm
+  - Would you like to install any of the official modules?: None, Press Enter to skip
 
 * Run `npm install @geeks.solutions/vue-cli-plugin-sections`
   Or if plugin is forked and downloaded to your local machine, add it as a dependency like `"@geeks.solutions/vue-cli-plugin-sections": "file:path-to-the-forked-library",`, and Run `npm install`
 
-* Run `npm install vue@2.7.10` (if using Nuxt js 2)
-
-* Run `npm install -g @vue/cli` (if using Nuxt js 2)
+* Run `npm install -g @vue/cli` (if using Nuxt js 3)
 
 ### How to run the plugin:
-
-* Remove `index.vue` page from your nuxt project (if using Nuxt js 2)
 
 * Run `vue invoke '@geeks.solutions/vue-cli-plugin-sections'`
 
@@ -59,24 +47,30 @@ The plugin will prompt you to answer three questions:
 ``? Add vue-sections configuration with first sections page Yes``
 
  * Add 12 fully customizable and ready to use section types only if answered yes on the fourth question
-``? Add 12 ready to use section types to your project Yes``
+``? Add 13 ready to use section types to your project Yes``
 
- * If you answered yes for adding 12 ready to use section types, you should find all declarations of `@geeks.solutions/nuxt-sections/lib/src/utils` (`wysiwyg.vue` under `sections/base/components/` and `nftSection.vue` under `sections/forms/`) and replace them by `@geeks.solutions/vue-sections` for the sections to work correctly
+ * If you answered yes for adding 13 ready to use section types, you should find all declarations of `@geeks.solutions/nuxt-sections/lib/src/utils` (`wysiwyg.vue` under `sections/base/components/` and `nftSection.vue` under `sections/forms/`) and replace them by `@geeks.solutions/vue-sections` for the sections to work correctly
 
 
 #### If Nuxt js is selected from the first question:
 
  * Add "@geeks.solutions/nuxt-sections" to you package.json + its required dependencies and install them:
-    - "cookie-universal-nuxt"
+   - '@nuxt/image',
+   - '@nuxtjs/i18n',
+   - '@nuxtjs/tailwindcss',
+   - 'nuxt-lazytube',
+   - 'nuxt3-leaflet'
 
- * Update nuxt.config.js with modules and publicRuntimeConfig required by nuxt-sections.
+ * Update nuxt.config.ts with modules and runtimeConfig required by nuxt-sections.
  
- * Create file configuration for i18n required by the library under /lang/en.js /lang/fr.js
+ * Create file configuration for i18n required by the library under /i18n/lang/en.js /i18n/lang/fr.js
 
  * Create a configured first page with sections under /pages/_url.vue
 
- * Add 12 fully customizable and ready to use section types + the required Tailwind configurations for them only if answered yes on the fourth question
-``? Add 12 ready to use section types to your project Yes``
+ * Update nitro configuration to enable Text Compressions with gzip and brotli (Better for page speed performance)
+
+ * Add 13 fully customizable and ready to use section types + the required Tailwind configurations for them only if answered yes on the fourth question
+``? Add 13 ready to use section types to your project Yes``
 
 ### Contribute
 
