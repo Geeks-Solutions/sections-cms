@@ -37,8 +37,8 @@
                 :class="{'mobileHidden': selectedImage && selectedImage.mediaMobile && selectedImage.mediaMobile.url}"
                 :style="{ transform: `scale(${zoom})` }"
                 width="300"
-                height="300"
-                :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
                 loading="lazy"
                 @wheel.prevent="handleZoom"
               />
@@ -49,8 +49,8 @@
                 class="w-auto max-w-full max-h-[80vh] object-contain transition-transform duration-200 md:hidden"
                 :style="{ transform: `scale(${zoom})` }"
                 width="300"
-                height="300"
-                :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
                 loading="lazy"
                 @wheel.prevent="handleZoom"
               />

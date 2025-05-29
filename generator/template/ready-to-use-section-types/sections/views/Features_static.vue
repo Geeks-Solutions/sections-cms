@@ -14,10 +14,11 @@
               v-if="container.media && container.media.url"
               :src="container.media.url"
               :alt="container.media.seo_tag ? container.media.seo_tag : ''"
-              class="p-4"
+              class="p-4 w-fit"
               width="300"
-              height="300"
-              :placeholder="[300, 300, 75, 5]"
+           height="300"
+              sizes="100%"
+           :placeholder="[300, 300, 75, 5]"
               loading="lazy"
             />
           </div>

@@ -13,8 +13,8 @@
               class="w-full h-full mobileHidden"
               :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
               width="300"
-              height="300"
-              :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
               loading="lazy"
           />
           <NuxtImg
@@ -24,8 +24,8 @@
               class="w-full h-full md:h-auto object-cover md:hidden"
               :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
               width="300"
-              height="300"
-              :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
               loading="lazy"
           />
           <div v-if="(block.title[lang] || block.text[lang] || block.cta[lang]) && index === currentIndex" class="absolute top-0 w-full h-full">

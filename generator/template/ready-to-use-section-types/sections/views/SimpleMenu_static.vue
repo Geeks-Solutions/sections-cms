@@ -11,10 +11,11 @@
       <NuxtImg
         :src="settings.media.url"
         :alt="settings.media.seo_tag ? settings.media.seo_tag : ''"
-        class="logo"
+        class="logo w-fit"
         width="300"
-        height="300"
-        :placeholder="[300, 300, 75, 5]"
+           height="300"
+        sizes="100%"
+           :placeholder="[300, 300, 75, 5]"
         loading="lazy"
       />
     </global-link>

@@ -140,11 +140,18 @@ export function openLink(link) {
     window.open(link, link[0] === "#" ? '_self' : link.includes('https://') ? '_blank' : '_self')
 }
 
+export function linkSanitizer(link) {
+  if (link.startsWith('//')) {
+    link = link.substring(1)
+  }
+  return link
+}
+
 export function fallBackLink(link, lang) {
-    if (link && !link[lang]) {
-        return link.en ? link.en.trim() : ''
+  if (link && !link[lang]) {
+        return linkSanitizer(link.en ? link.en.trim() : '')
     } else {
-        return link[lang] ? link[lang].trim() : ''
+        return linkSanitizer(link[lang] ? link[lang].trim() : '')
     }
 }
 
