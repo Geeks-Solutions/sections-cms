@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useCmsCloudStore = defineStore('cmsCloud', {
+export const useSectionsStore = defineStore('sectionsStore', {
   // State: equivalent to Vuex state
   state: () => ({
     packageData: null,

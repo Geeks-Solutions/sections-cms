@@ -4,7 +4,7 @@ A Vue js plugin to install and configure [@geeks.solutions/vue-sections](https:/
 
 ### How to install vue-cli-plugin-sections plugin:
 
-* Have Node version: 19.9.0 installed
+* Have Node version: 22.16.0 installed
 
 * Create a new nuxt js 3 app: Run `npm create nuxt <your-project-name>` and follow the below selection when prompted, then open it in your editor (if using Nuxt js 3)
  
