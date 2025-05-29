@@ -14,8 +14,8 @@
         class="w-full h-full object-cover hover:opacity-90 transition-opacity md:aspect-square"
         :class="{'mobileHidden': image.mediaMobile && image.mediaMobile.url}"
         width="300"
-        height="300"
-        :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
         loading="lazy"
       />
       <NuxtImg
@@ -24,8 +24,8 @@
         :alt="image.mediaMobile.seo_tag ? image.mediaMobile.seo_tag : ''"
         class="w-full h-full object-cover hover:opacity-90 transition-opacity md:hidden md:aspect-square"
         width="300"
-        height="300"
-        :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
         loading="lazy"
       />
     </div>

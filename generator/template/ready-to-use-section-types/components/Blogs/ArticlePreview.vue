@@ -3,8 +3,8 @@
     <div v-if="image" class="flex image-wrapper min-h-[300px] max-h-[300px]">
       <NuxtImg :src="image" :alt="imageAlt" class="md:min-w-[440px] w-full md:w-440px object-cover"
                width="300"
-               height="300"
-               :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
                loading="lazy"/>
     </div>
     <div class="flex flex-col gap-4 w-full justify-between preview-block-wrapper">

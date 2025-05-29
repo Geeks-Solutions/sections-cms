@@ -9,6 +9,7 @@
         <gWysiwygContent tag="p" :classes="`text-center html-content`" :html-content="sectionRenderData.description" />
       </div>
       <NuxtImg v-if="articleImage" :src="articleImage" :alt="articleImageAlt ? articleImageAlt : ''" class="w-fit max-w-full self-center object-contain"
+           sizes="100%"
            width="300"
            height="300"
            :placeholder="[300, 300, 75, 5]"

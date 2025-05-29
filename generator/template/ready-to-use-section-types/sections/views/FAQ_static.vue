@@ -26,8 +26,8 @@
             class="w-full"
             :class="'h-full object-contain'"
             width="300"
-            height="300"
-            :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
             loading="lazy"
           />
         </div>

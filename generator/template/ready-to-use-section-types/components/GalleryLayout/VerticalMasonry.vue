@@ -13,8 +13,8 @@
         class="w-full h-auto hover:opacity-90 transition-opacity"
         :class="{'mobileHidden': image.mediaMobile && image.mediaMobile.url}"
         width="300"
-        height="300"
-        :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
         loading="lazy"
       />
       <NuxtImg
@@ -23,8 +23,8 @@
         :alt="image.mediaMobile.seo_tag ? image.mediaMobile.seo_tag : ''"
         class="w-full h-auto hover:opacity-90 transition-opacity md:hidden"
         width="300"
-        height="300"
-        :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
         loading="lazy"
       />
     </div>

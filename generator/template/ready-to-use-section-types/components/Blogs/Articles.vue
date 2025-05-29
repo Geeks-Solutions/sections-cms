@@ -19,8 +19,8 @@
               <div v-if="object.medias && object.medias.length > 0" class="flex w-full self-start min-h-[300px] max-h-[300px]">
                 <NuxtImg :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" :draggable="!isDragScrollEnabled" class="object-cover w-full"
                          width="300"
-                         height="300"
-                         :placeholder="[300, 300, 75, 5]"
+           height="300"
+           :placeholder="[300, 300, 75, 5]"
                          loading="lazy"/>
               </div>
               <div v-else class="animate-pulse w-full md:w-352px">
