@@ -2,7 +2,7 @@ module.exports = (api, options, rootOptions) => {
     if (options.choice === 'nuxt') {
         api.extendPackage({
             dependencies: {
-                "@geeks.solutions/nuxt-sections": "3.0.0",
+                "@geeks.solutions/nuxt-sections": "3.0.1",
                 "@googlemaps/js-api-loader": "^1.16.6",
                 "@gtm-support/vue-gtm": "^3.1.0",
                 "leaflet": "^1.9.4",

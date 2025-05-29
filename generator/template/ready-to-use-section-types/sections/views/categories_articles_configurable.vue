@@ -8,7 +8,7 @@
 
 <script>
 
-import { useCmsCloudStore } from '~/stores/index.js'
+import { useSectionsStore } from '~/stores/index.js'
 import { mapState } from 'pinia'
 import { BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH, extractQsValue, updateQueryStringValue } from '@/utils/constants'
 import { useCookie } from '#imports'
@@ -288,7 +288,7 @@ export default {
         return Math.ceil(this.sectionRenderData.total / blogsListSize)
       } else return 1
     },
-    ...mapState(useCmsCloudStore, ['categoriesTitles'])
+    ...mapState(useSectionsStore, ['categoriesTitles'])
   },
   watch: {
     sectionRenderData() {
