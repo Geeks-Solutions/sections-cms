@@ -121,6 +121,12 @@ export default {
           await this.initAddresses(true)
           this.$nextTick(() => {
             if (this.map && this.settings.zoom !== 'fit_pins') {
+              const bounds = new google.maps.LatLngBounds();
+              this.markers.forEach(object => {
+                bounds.extend(object.marker.position);
+              })
+              const center = bounds.getCenter(); // Get center of all markers
+              this.map.setCenter(center);
               this.map.setZoom(this.getZoomLevel())
             } else if (this.map && this.settings.zoom === 'fit_pins') {
               const bounds = new google.maps.LatLngBounds();
@@ -155,8 +161,11 @@ export default {
           this.markers.forEach(object => {
             bounds.extend(object.marker.position);
           })
-          map.fitBounds(bounds);
-          if (this.settings.zoom !== 'fit_pins') {
+          if (this.settings.zoom === 'fit_pins') {
+            map.fitBounds(bounds);
+          } else if (this.settings.zoom !== 'fit_pins') {
+            const center = bounds.getCenter(); // Get center of all markers
+            map.setCenter(center);
             map.setZoom(Number(this.settings.zoom))
           }
         }
