@@ -578,6 +578,9 @@ input:not(:placeholder-shown) {
 
 @media screen and (max-width: 768px) {
   .simple-menu img.logo {
+    width: auto !important;
+  }
+  .simple-menu.main img.logo {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -726,6 +729,7 @@ input:not(:placeholder-shown) {
 }
 
 .simple-menu.main .mobile-menu-main-wrapper .mobile-menu-close-wrapper {
+  display: grid;
   width: 100%;
   justify-items: end;
   background-color: white;
