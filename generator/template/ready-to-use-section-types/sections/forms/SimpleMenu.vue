@@ -410,7 +410,6 @@ export default {
       this.settings[0].menus = this.settings[0].menus.filter((ct, i) => menusIdx !== i)
     },
     removeMenuItem(menusIdx, idx) {
-      console.log(this.settings[0]['menus'][menusIdx]['menu'])
       this.settings[0].menus[menusIdx].menu = this.settings[0].menus[menusIdx].menu.filter((ct, i) => idx !== i)
     },
     removeMedia() {
