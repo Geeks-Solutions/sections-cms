@@ -721,6 +721,9 @@ padding-left: 0.5rem !important;
 
 .simple-menu.footer {
   width: 100%; /* w-full (default), md:w-full, lg:w-full */
+  border: 1px solid #dddddd;
+  border-right-width: 0;
+  border-left-width: 0;
 }
 
 .simple-menu.footer {
@@ -735,6 +738,43 @@ padding-left: 0.5rem !important;
   margin-top: 0.25rem; /* py-6 */
   width: 12rem;
 }
+
+.simple-menu.footer ul.socials  {
+  align-self: self-start;
+  display: inline-flex;
+  gap: 30px;
+}
+
+.simple-menu.footer ul.socials li p, li p a {
+  display: none !important;
+}
+
+.simple-menu.footer ul.socials li {
+  background: none !important;
+  background-size: 0 !important;
+  padding-left: 0;
+}
+
+.simple-menu.footer ul.socials li.twitter {
+  background: url(https://s3.eu-west-3.amazonaws.com/geeks-apps/sections%2Ftwitter995bc6f4691945219cf3d5b372a9160a.svg) !important;
+  background-size: cover !important;
+  width: 30px !important;
+  height: 30px !important;
+  align-self: center;}
+
+.simple-menu.footer ul.socials li.facebook {
+  background: url(https://s3.eu-west-3.amazonaws.com/geeks-apps/sections%2Ffacebook94c89d4d719c483a94cc35811be073e4.svg) !important;
+  background-size: cover !important;
+  width: 30px !important;
+  height: 30px !important;
+  align-self: center;}
+
+.simple-menu.footer ul.socials li.linkedin {
+  background: url(https://s3.eu-west-3.amazonaws.com/geeks-apps/sections%2Flinkedin5b971409349142cf97da14dc8a6d9d8c.svg) !important;
+  background-size: cover !important;
+  width: 30px !important;
+  height: 30px !important;
+  align-self: center;}
 
 @media (min-width: 640px) { /* sm */
   .simple-menu.footer {
@@ -2564,13 +2604,4 @@ section .view-component .restaurant-menu button.item-qty-plus {
 .GoogleMaps .map-wrapper .phone.sections-cta-link,
 .GoogleMaps .map-wrapper .email.sections-cta-link {
   margin: 0 10px;
-}
-
-#wysiwyg-676356813893640006f2acfe .view-component,
-#wysiwyg-676356813893640006f2acfe .view-component .ql-editor.ql-snow {
-  overflow: visible;
-}
-
-#wysiwyg-676356813893640006f2acfe .wys-wrapper {
-  height: 60px;
 }
