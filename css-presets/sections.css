@@ -178,26 +178,66 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+:root {
+  --primary-color: #03B1C7 !important;
+  --secondary-color: #00131F !important;
+  --base-font-size: 16px;
+  --mobile-base-font-size: 16px;
+  --h1-color: var(--primary-color);
+  --h2-color: unset;
+  --h3-color: unset;
+  --h4-color: unset;
+  --primary-button-text-color: var(--secondary-color);
+  --hover-primary-button-text-color: var(--secondary-color);
+  --primary-button-background-color: #FFF;
+  --hover-primary-button-background-color: #FFF;
+  --primary-button-border-color: transparent;
+  --hover-primary-button-border-color: transparent;
+  --secondary-button-text-color: var(--primary-color);
+  --hover-secondary-button-text-color: var(--primary-color);
+  --secondary-button-background-color: transparent;
+  --hover-secondary-button-background-color: transparent;
+  --secondary-button-border-color: transparent;
+  --hover-secondary-button-border-color: transparent;
+  --link-text-color: #06c;
+  --hover-link-text-color: #06c;
+  --link-background-color: unset;
+  --hover-link-background-color: unset;
+  --link-border-color: unset;
+  --hover-link-border-color: unset;
+  --p-color: #000;
+}
+
 html {
   font-family: "Ubuntu", sans-serif !important;
   scroll-behavior: smooth;
+  font-size: var(--base-font-size);
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: var(--mobile-base-font-size);
+  }
 }
 
 section h1 {
   font-size: 36px;
-  color: #03B1C7;
+  color: var(--primary-color);
   font-weight: bolder;
 }
 
 section h2 {
+  color: var(--h2-color);
   font-size: 24px;
 }
 
 section h3 {
+  color: var(--h3-color);
   font-size: 22px;
 }
 
 section h4 {
+  color: var(--h4-color);
   font-size: 16px;
 }
 
@@ -210,6 +250,7 @@ section h6 {
 }
 
 section p {
+  color: var(--p-color);
   font-size: 18px;
 }
 
@@ -229,7 +270,17 @@ section ol {
   padding: revert;
 }
 
-section a {
+section .wys-wrapper .ql-snow a {
+  color: var(--link-text-color);
+  border-color: var(--link-border-color);
+  background-color: var(--link-background-color);
+  font-size: 14px;
+}
+
+section .wys-wrapper .ql-snow a:hover {
+  color: var(--hover-link-text-color);
+  border-color: var(--hover-link-border-color);
+  background-color: var(--hover-link-background-color);
   font-size: 14px;
 }
 
@@ -261,21 +312,34 @@ section .view-component button {
 
 section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
   font-size: 14px !important;
-  border: 1px dashed #03B1C7 !important;
+  border: 1px dashed var(--primary-button-border-color) !important;
   border-radius: 6px !important;
   padding: 8px 8px !important;
-  color: #000 !important;
+  color: var(--primary-button-text-color) !important;
   margin-right: 198px !important;
-  background: transparent !important;
+  background: var(--primary-button-background-color) !important;
+}
+
+section .view-component button.quill-button-container:hover, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover {
+  border: 1px dashed var(--hover-primary-button-border-color) !important;
+  color: var(--hover-primary-button-text-color) !important;
+  background: var(--hover-primary-button-background-color) !important;
 }
 
 .simple-cta .button-selector {
   font-size: 14px;
-  border: 1px dashed white;
+  border: 1px dashed var(--secondary-button-border-color);
   border-radius: 6px;
   padding: 8px;
-  color: #03B1C7;
+  color: var(--secondary-button-text-color);
   margin-right: 198px;
+  background: var(--secondary-button-background-color) !important;
+}
+
+.simple-cta .button-selector:hover {
+  border: 1px dashed var(--hover-secondary-button-border-color);
+  color: var(--hover-secondary-button-text-color);
+  background: var(--hover-secondary-button-background-color) !important;
 }
 
 input {
@@ -311,17 +375,26 @@ input:not(:placeholder-shown) {
 
 .button-selector {
   font-size: 14px;
-  border: 1px dashed #03B1C7;
+  border: 1px dashed var(--primary-button-border-color);
   border-radius: 6px;
   padding: 8px;
-  color: black;
+  color: var(--primary-button-text-color);
   height: max-content;
   white-space: nowrap;
   align-self: center;
+  background-color: var(--primary-button-background-color);
+}
+
+.button-selector:hover {
+  border: 1px dashed var(--hover-primary-button-border-color);
+  color: var(--hover-primary-button-text-color);
+  background-color: var(--hover-primary-button-background-color);
 }
 
 .faq .section-wrapper .question.expanded {
-  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%2303B1C7' stroke-width='5' stroke-dasharray='14%2c 15' stroke-dashoffset='0' stroke-linecap='butt'/%3e%3c/svg%3e");
+  --tw-shadow: 4px 2px 10px #0000001a !important;
+  --tw-shadow-colored: 4px 2px 10px var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 
 .author-view .twitter {
@@ -599,7 +672,6 @@ input:not(:placeholder-shown) {
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
-  background-image: linear-gradient(90deg, #03b1c7 45%, hsla(0, 0%, 100%, 0) 0);
   background-position: bottom;
   background-size: 18px 1.5px;
   background-repeat: repeat-x;
@@ -631,6 +703,10 @@ input:not(:placeholder-shown) {
 .simple-menu.main .sign-up {
   padding: 12px 14px 12px 8px;
   border: 1px dashed black;
+  color: #03B1C7;
+}
+
+.simple-menu.main .sign-up a p {
   color: #03B1C7;
 }
 
