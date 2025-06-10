@@ -94,41 +94,43 @@
 
     <div id="menu" class="flex flex-col mt-4">
 
-      <LazySectionsFormsFieldSets :array-data-pop="settings[0].menu" :fieldset-group="'menu'" :legend-label="$t('forms.link')" @array-updated="(data) => updatedArr(data)" @remove-fieldset="(object, idx) => removeMenuItem(idx)">
-        <template #default="{ object, idx }">
-          <div class="flex flex-col items-start justify-start mt-8">
-            <label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.label") + '*' : $t("forms.label") }}</label>
-            <input
-              v-model="object.label[selectedLang]"
-              type="text"
-              :placeholder="$t('forms.label')"
-              :class="sectionsStyle.input"
-            />
-            <span v-show="idx === 0 && errors.menu[idx].label === true && siteLang === 'en'"
-                  class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
-          </div>
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].menus" :fieldset-group="'menu-container'" :legend-label="$t('forms.menu')" @array-updated="(data) => updatedMenuContainerArr(data)" @remove-fieldset="(object, idx) => removeMenuContainer(idx)">
+        <template #default="{ object: menuContainer, idx: menuIdx }">
+          <LazySectionsFormsFieldSets :array-data-pop="menuContainer.menu" :fieldset-group="'menu'" :legend-label="`${$t('forms.menu')} #${menuIdx + 1} - ${$t('forms.link')}`" class="mt-6" @array-updated="(data) => updatedArr(data, menuIdx)" @remove-fieldset="(object, idxItem) => removeMenuItem(menuIdx, idxItem)">
+            <template #default="{ object, idx }">
+              <div class="flex flex-col items-start justify-start mt-8">
+                <label class="mr-4 font-medium">{{ menuIdx === 0 && idx === 0 ? $t("forms.label") + '*' : $t("forms.label") }}</label>
+                <input
+                  v-model="object.label[selectedLang]"
+                  type="text"
+                  :placeholder="$t('forms.label')"
+                  :class="sectionsStyle.input"
+                />
+                <span v-show="menuIdx === 0 && idx === 0 && errors.menu[idx].label === true && siteLang === 'en'"
+                      class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+              </div>
 
-          <div class="flex flex-col items-start justify-start mt-8">
-            <label class="mr-4 font-medium">{{ $t("forms.cssClasses") }}</label>
-            <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.menuCssClassesDesc") }}</span>
-            <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.addedToTopDesc") }}</span>
-            <input
-              v-model="object.menuItemClasses"
-              type="text"
-              :placeholder="$t('forms.cssClasses')"
-              :class="sectionsStyle.input"
-              @input="settings[0].menu[idx] = {...object, menuItemClasses: object.menuItemClasses}"
-            />
-          </div>
+              <div class="flex flex-col items-start justify-start mt-8">
+                <label class="mr-4 font-medium">{{ $t("forms.cssClasses") }}</label>
+                <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.menuCssClassesDesc") }}</span>
+                <span class="flex text-start text-xs text-Gray_800">{{ $t("forms.addedToTopDesc") }}</span>
+                <input
+                  v-model="object.menuItemClasses"
+                  type="text"
+                  :placeholder="$t('forms.cssClasses')"
+                  :class="sectionsStyle.input"
+                  @input="menuContainer.menu[idx] = {...object, menuItemClasses: object.menuItemClasses}"
+                />
+              </div>
 
-          <div class="flex flex-col items-start justify-start mt-8">
-            <label class="mr-4 pb-2 font-bold">{{ $t("Language menu") }}</label>
-            <span class="text-xs text-Gray_800 pb-1">{{ $t("forms.languageDesc") }}</span>
-            <input
-              v-model="object.languageMenu"
-              type="checkbox"
-              :placeholder="$t('Language menu')"
-              class="
+              <div class="flex flex-col items-start justify-start mt-8">
+                <label class="mr-4 pb-2 font-bold">{{ $t("Language menu") }}</label>
+                <span class="text-xs text-Gray_800 pb-1">{{ $t("forms.languageDesc") }}</span>
+                <input
+                  v-model="object.languageMenu"
+                  type="checkbox"
+                  :placeholder="$t('Language menu')"
+                  class="
             h-[25px]
             w-[25px]
             pl-6
@@ -136,75 +138,95 @@
             rounded-xl
             focus:outline-none
           "
-              @change="(event) => settings[0].menu[idx] = {...object, languageMenu: event.target.checked}"
+                  @change="(event) => menuContainer.menu[idx] = {...object, languageMenu: event.target.checked}"
+                />
+              </div>
+
+              <div v-if="menuContainer.menu[idx].languageMenu !== true">
+                <div class="flex flex-col items-start justify-start mt-8">
+                  <label class="mr-4 font-medium">{{ menuIdx === 0 && idx === 0 ? $t("forms.link") + '*' : $t("forms.link") }}</label>
+                  <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
+                  <gAutoComplete
+                    :main-filter="menuContainer.menu[idx].page[selectedLang]"
+                    :placeholder="$t('Sections pages')"
+                    :filter-label-prop="'page'"
+                    :reduce="(option) => option.path"
+                    :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
+                    :filter-searchable="false"
+                    :close-on-select="true"
+                    :filter-clearable="true"
+                    :track-by="'path'"
+                    @itemSelected="
+                  (val) => {
+                    locales.forEach(locale => { menuContainer.menu[idx].page[locale] = val })
+                  }
+                "
+                  >
+                  </gAutoComplete>
+                </div>
+
+                <div v-if="object.page[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
+                  <label class="mr-4 font-medium">{{ $t("Other") }}</label>
+                  <link-description class="pb-1"/>
+                  <input
+                    v-model="object.link[selectedLang]"
+                    type="text"
+                    :placeholder="$t('forms.link')"
+                    :class="sectionsStyle.input"
+                  />
+                </div>
+                <span v-show="menuIdx === 0 && idx === 0 && errors.menu[idx].link === true && siteLang === 'en'"
+                      class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+              </div>
+
+              <div v-if="menuContainer.menu[idx].languageMenu !== true">
+                <div class="my-4">
+                  <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
+                  <div class="select-style-chooser w-[344px]">
+                    <gAutoComplete
+                      :main-filter="menuContainer.menu[idx].linkTarget"
+                      :placeholder="$t('forms.linkTarget')"
+                      :filter-label-prop="'value'"
+                      :reduce="(option) => option.key"
+                      :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
+                      :filter-searchable="false"
+                      :close-on-select="true"
+                      :filter-clearable="true"
+                      :track-by="'key'"
+                      @itemSelected="(val) => {menuContainer.menu[idx].linkTarget = val;}"
+                    >
+                    </gAutoComplete>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </LazySectionsFormsFieldSets>
+
+          <div class="flex flex-col items-start justify-start mt-8">
+            <label class="mr-4 font-medium">{{ $t("forms.menuContainerCssClasses") }}</label>
+            <span class="text-xs text-Gray_800">{{ $t("forms.menuContainerCssClassesDesc") }}</span>
+            <input
+              v-model="menuContainer.menuContainerClasses"
+              type="text"
+              :placeholder="$t('forms.menuContainerCssClasses')"
+              :class="sectionsStyle.input"
             />
           </div>
 
-          <div v-if="settings[0].menu[idx].languageMenu !== true">
-            <div class="flex flex-col items-start justify-start mt-8">
-              <label class="mr-4 font-medium">{{ idx === 0 ? $t("forms.link") + '*' : $t("forms.link") }}</label>
-              <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
-              <gAutoComplete
-                :main-filter="settings[0].menu[idx].page[selectedLang]"
-                :placeholder="$t('Sections pages')"
-                :filter-label-prop="'page'"
-                :reduce="(option) => option.path"
-                :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
-                :filter-searchable="false"
-                :close-on-select="true"
-                :filter-clearable="true"
-                :track-by="'path'"
-                @itemSelected="
-                  (val) => {
-                    locales.forEach(locale => { settings[0].menu[idx].page[locale] = val })
-                  }
-                "
-              >
-              </gAutoComplete>
-            </div>
-
-            <div v-if="object.page[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
-              <label class="mr-4 font-medium">{{ $t("Other") }}</label>
-              <link-description class="pb-1"/>
-              <input
-                v-model="object.link[selectedLang]"
-                type="text"
-                :placeholder="$t('forms.link')"
-                :class="sectionsStyle.input"
-              />
-            </div>
-            <span v-show="idx === 0 && errors.menu[idx].link === true && siteLang === 'en'"
-                  class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
-          </div>
-
-          <div v-if="settings[0].menu[idx].languageMenu !== true">
-            <div class="my-4">
-              <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-              <div class="select-style-chooser w-[344px]">
-                <gAutoComplete
-                  :main-filter="settings[0].menu[idx].linkTarget"
-                  :placeholder="$t('forms.linkTarget')"
-                  :filter-label-prop="'value'"
-                  :reduce="(option) => option.key"
-                  :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
-                  :filter-searchable="false"
-                  :close-on-select="true"
-                  :filter-clearable="true"
-                  :track-by="'key'"
-                  @itemSelected="(val) => {settings[0].menu[idx].linkTarget = val;}"
-                >
-                </gAutoComplete>
-              </div>
-            </div>
+          <div
+            class="add-button underline cursor-pointer mt-2"
+            @click="addMenuItem(menuIdx)"
+          >
+            <div class="p3 bold text">{{ $t("forms.addMenuItem") }} {{ $t("forms.menu") }} {{ menuIdx + 1 }}</div>
           </div>
         </template>
       </LazySectionsFormsFieldSets>
 
       <div
         class="add-button underline cursor-pointer mt-2"
-        @click="addMenuItem()"
+        @click="addMenuContainer()"
       >
-        <div class="p3 bold text">{{ $t("forms.addMenuItem") }}</div>
+        <div class="p3 bold text">{{ $t("forms.addMenuContainer") }}</div>
       </div>
     </div>
 
@@ -252,14 +274,19 @@ export default {
           logoClasses: '',
           menuLabel: {},
           classes: '',
-          menu: [
+          menus: [
             {
-              label: {},
-              link: {},
-              page: {},
-              linkTarget: '',
-              menuItemClasses: '',
-              languageMenu: false
+              menuContainerClasses: '',
+              menu: [
+                {
+                  label: {},
+                  link: {},
+                  page: {},
+                  linkTarget: '',
+                  menuItemClasses: '',
+                  languageMenu: false
+                }
+              ]
             }
           ]
         }
@@ -303,6 +330,15 @@ export default {
           v[0].logoLink[locale] = ''
         }
       })
+      if (!v[0].menus) {
+        v[0]['menus'] = []
+        v[0].menus = [
+          {
+            menuContainerClasses: '',
+            menu: v[0].menu
+          }
+        ]
+      }
     },
     selectedMedia(mediaObject) {
       const media = {
@@ -327,7 +363,28 @@ export default {
     this.sectionsPages = await getSectionsPages(sectionHeader({token: useCookie('sections-auth-token').value}))
   },
   methods: {
-    addMenuItem() {
+    addMenuContainer() {
+      const menuContainer = {
+        menuContainerClasses: '',
+        menu: [
+          {
+            label: {},
+            link: {},
+            page: {},
+            linkTarget: '',
+            menuItemClasses: '',
+            languageMenu: false
+          }
+        ]
+      }
+      this.locales.forEach(locale => {
+        menuContainer.menu[0].label[locale] = ''
+        menuContainer.menu[0].link[locale] = ''
+        menuContainer.menu[0].page[locale] = ''
+      })
+      this.settings[0].menus.push(menuContainer);
+    },
+    addMenuItem(menusIdx) {
       const menuItem = {
         label: {},
         link: {},
@@ -341,13 +398,20 @@ export default {
         menuItem.link[locale] = ''
         menuItem.page[locale] = ''
       })
-      this.settings[0].menu.push(menuItem);
+      this.settings[0].menus[menusIdx].menu.push(menuItem);
     },
-    updatedArr(data) {
-      this.settings[0]['menu'] = data
+    updatedMenuContainerArr(data) {
+      this.settings[0]['menus'] = data
     },
-    removeMenuItem(idx) {
-      this.settings[0]['menu'] = this.settings[0].menu.filter((ct, i) => idx !== i)
+    updatedArr(data, menusIdx) {
+      this.settings[0]['menus'][menusIdx]['menu'] = data
+    },
+    removeMenuContainer(menusIdx) {
+      this.settings[0].menus = this.settings[0].menus.filter((ct, i) => menusIdx !== i)
+    },
+    removeMenuItem(menusIdx, idx) {
+      console.log(this.settings[0]['menus'][menusIdx]['menu'])
+      this.settings[0].menus[menusIdx].menu = this.settings[0].menus[menusIdx].menu.filter((ct, i) => idx !== i)
     },
     removeMedia() {
       this.settings[0].media = {}
@@ -361,11 +425,11 @@ export default {
       let valid = true;
       this.errors.menu[0].link = false;
       this.errors.menu[0].label = false;
-      if (this.settings[0].menu[0].languageMenu !== true && !this.settings[0].menu[0].link.en && !this.settings[0].menu[0].page.en) {
+      if (this.settings[0].menus[0].menu[0].languageMenu !== true && !this.settings[0].menus[0].menu[0].link.en && !this.settings[0].menus[0].menu[0].page.en) {
         this.errors.menu[0].link = true;
         valid = false;
       }
-      if (!this.settings[0].menu[0].label.en) {
+      if (!this.settings[0].menus[0].menu[0].label.en) {
         this.errors.menu[0].label = true;
         valid = false;
       }
