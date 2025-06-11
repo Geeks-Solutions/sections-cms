@@ -782,6 +782,7 @@ input:focus {
   align-self: self-start;
   display: inline-flex;
   gap: 30px;
+  width: 100%;
 }
 
 .simple-menu.footer ul.socials li p, li p a {
@@ -821,6 +822,10 @@ input:focus {
   width: 30px !important;
   height: 30px !important;
   align-self: center;}
+
+.simple-menu.footer ul.socials li {
+  margin: 0.5rem 0;
+}
 
 .SimpleMenu:has(.simple-menu.footer) {
   padding: 0 32px;
