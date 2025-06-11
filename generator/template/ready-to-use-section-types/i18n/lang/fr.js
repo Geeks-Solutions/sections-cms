@@ -176,6 +176,8 @@ export default {
     mediaTitle: 'Logo du titre',
     logo: 'Logo',
     addMenuItem: 'Add menu item',
+    addMenuContainer: "Ajouter un groupe de menus",
+    menu: "Menu",
     addIconMedia: 'Ajouter une icône de média',
     addLanguageMedia: 'Ajouter une langue',
     languageKey: 'Clé de langue',
@@ -229,6 +231,8 @@ export default {
     cssClasses: 'Classes CSS',
     cssClassesDesc:
       '(utilisées pour ajouter une ou plusieurs classes CSS pour styliser le menu entier)',
+    menuContainerCssClasses : "Classes CSS du menu",
+    menuContainerCssClassesDesc : "(utilisé pour ajouter une ou plusieurs classes CSS afin de styliser le bloc de menu)",
     logoCssClasses: 'Classes CSS du logo',
     logoCssClassesDesc:
       '(utilisées pour ajouter une ou plusieurs classes CSS pour styliser le logo)',

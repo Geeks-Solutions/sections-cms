@@ -420,6 +420,13 @@ input:focus {
   height: 30px;
   align-self: center;
 }
+.author-view .facebook {
+  background: url(https://s3.eu-west-3.amazonaws.com/geeks-apps/sections%2Ffacebook94c89d4d719c483a94cc35811be073e4.svg);
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  align-self: center;
+}
 .author-view .relative.inline-block:has(.button-selector) {
   align-content: center;
 }
@@ -808,6 +815,17 @@ input:focus {
   height: 30px !important;
   align-self: center;}
 
+.simple-menu.footer ul.socials li.instagram {
+  background: url(https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownloadbfe8cd3a2ef744b39dd39bb388125630.svg) !important;
+  background-size: cover !important;
+  width: 30px !important;
+  height: 30px !important;
+  align-self: center;}
+
+.SimpleMenu:has(.simple-menu.footer) {
+  padding: 0 32px;
+}
+
 @media (min-width: 640px) { /* sm */
   .simple-menu.footer {
     width: 100%; /* sm:w-1/2 */
@@ -818,6 +836,9 @@ input:focus {
     margin-left: auto;
     margin-right: auto;
     max-width: 1280px;
+  }
+  .SimpleMenu:has(.simple-menu.footer) {
+    padding: 0;
   }
 }
 
@@ -897,6 +918,15 @@ p.ql-snow p a:not(.ql-a-button):hover, div.ql-snow p a:not(.ql-a-button):hover, 
     display: flex;
     width: 100%;
     place-content: center;
+  }
+  .simple-menu.footer .global-link p {
+    padding-left: 0 !important;
+  }
+  .simple-menu.footer ul.mobile-top-border {
+    border-top: 1px solid #dddddd;
+  }
+  .simple-menu.footer ul.mobile-bottom-border {
+    border-bottom: 1px solid #dddddd;
   }
 }
 
@@ -2642,4 +2672,13 @@ section .view-component .restaurant-menu button.item-qty-plus {
 .GoogleMaps .map-wrapper .phone.sections-cta-link,
 .GoogleMaps .map-wrapper .email.sections-cta-link {
   margin: 0 10px;
+}
+
+#wysiwyg-676356813893640006f2acfe .view-component,
+#wysiwyg-676356813893640006f2acfe .view-component .ql-editor.ql-snow {
+  overflow: visible;
+}
+
+#wysiwyg-676356813893640006f2acfe .wys-wrapper {
+  height: 80px;
 }
