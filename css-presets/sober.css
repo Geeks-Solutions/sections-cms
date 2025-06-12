@@ -181,18 +181,18 @@
   --hover-primary-button-background-color: var(--primary-color);
   --primary-button-border-color: var(--primary-color);
   --hover-primary-button-border-color: var(--primary-color);
-  --secondary-button-text-color: var(--secondary-color);
-  --hover-secondary-button-text-color: var(--secondary-color);
-  --secondary-button-background-color: var(--secondary-color);
+  --secondary-button-text-color: var(--primary-color);
+  --hover-secondary-button-text-color: var(--primary-color);
+  --secondary-button-background-color: inherit;
   --hover-secondary-button-background-color: transparent;
-  --secondary-button-border-color: transparent;
-  --hover-secondary-button-border-color: transparent;
+  --secondary-button-border-color: var(--primary-color);
+  --hover-secondary-button-border-color: var(--primary-color);
   --link-text-color: #4A8FF6;
   --hover-link-text-color: #4A8FF6;
   --link-background-color: white;
   --hover-link-background-color: white;
-  --link-border-color: white;
-  --hover-link-border-color: white;
+  --link-border-color: transparent;
+  --hover-link-border-color: transparent;
   --p-color: rgb(55 65 81 / var(--tw-text-opacity));
 
   --cookie-control-barBackground: var(--secondary-color);
@@ -311,11 +311,12 @@ section .view-component button {
   border-width: 1px;
   border-radius: 9999px !important; /* full */
   --tw-border-opacity: 1;
-  border-color: var(--primary-button-border-color);
+  border: 1px solid !important;
+  border-color: var(--primary-button-border-color) !important;
   padding: 1rem 2rem !important;
   color: var(--primary-button-text-color); /* white */
-  --tw-gradient-to: var(--primary-button-background-color);
-  --tw-gradient-from: var(--secondary-button-background-color);
+  --tw-gradient-to: var(--primary-color);
+  --tw-gradient-from: var(--secondary-color);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
   transition-duration: 300ms;
@@ -325,13 +326,19 @@ section .view-component button {
   max-width: 100%;
 }
 
-.whatsapp-checkout-button, .button-selector:hover, section .view-component button.quill-button-container:hover, section .view-component button:hover {
+.whatsapp-checkout-button:hover, .button-selector:hover, section .view-component button.quill-button-container:hover, section .view-component button:hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   --tw-shadow: var(--tw-shadow-colored);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-color: var(--hover-primary-button-border-color);
+  color: var(--hover-primary-button-text-color); /* white */
+  --tw-gradient-to: var(--primary-color);
+  --tw-gradient-from: var(--secondary-color);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
 
 input {
@@ -368,14 +375,14 @@ input:focus {
   text-align: center;
   border-radius: 9999px; /* full */
   padding: 1rem 2rem;
-  background: inherit; /* bg-inherit */
-  border: 1px solid var(--primary-color);
+  background: var(--secondary-button-background-color); /* bg-inherit */
+  border: 1px solid var(--secondary-button-border-color);
   background-clip: text; /* text-gradient effect */
   -webkit-background-clip: text; /* For WebKit browsers */
-  color: transparent;
+  color: var(--secondary-button-text-color);
   transition: box-shadow 0.3s ease-in-out;
   --tw-border-opacity: 1;
-  border-color: var(--primary-color);
+  border-color: var(--secondary-button-border-color);
   transition-duration: 300ms;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -390,6 +397,10 @@ input:focus {
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   --tw-shadow: var(--tw-shadow-colored);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  background: var(--hover-secondary-button-background-color); /* bg-inherit */
+  border: 1px solid var(--hover-secondary-button-border-color);
+  color: var(--hover-secondary-button-text-color);
+  border-color: var(--hover-secondary-button-border-color);
 }
 
 @media (min-width: 1280px) { /* xl */
@@ -893,7 +904,8 @@ p.ql-snow p a:not(.ql-a-button), div.ql-snow p a:not(.ql-a-button), .sections-ct
   color: transparent;
   transition: box-shadow 0.3s ease-in-out;
   --tw-border-opacity: 1;
-  border-color: var(--primary-color);
+  border: 1px solid !important;
+  border-color: var(--link-border-color) !important;
   transition-duration: 300ms;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -912,7 +924,8 @@ p.ql-snow p a:not(.ql-a-button):hover, div.ql-snow p a:not(.ql-a-button):hover, 
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   --tw-shadow: var(--tw-shadow-colored);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  color: var(--hover-link-text-color);
+  border-color: var(--hover-link-border-color) !important;
+  color: var(--hover-link-text-color) !important;
   background: var(--hover-link-background-color);
 }
 

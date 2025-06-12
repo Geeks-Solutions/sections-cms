@@ -222,7 +222,7 @@ html {
 
 section h1 {
   font-size: 36px;
-  color: var(--primary-color);
+  color: var(--h1-color);
   font-weight: bolder;
 }
 
@@ -275,6 +275,7 @@ section .wys-wrapper .ql-snow a {
   border-color: var(--link-border-color);
   background-color: var(--link-background-color);
   font-size: 14px;
+  border: 1px solid var(--link-border-color);
 }
 
 section .wys-wrapper .ql-snow a:hover {
@@ -282,6 +283,7 @@ section .wys-wrapper .ql-snow a:hover {
   border-color: var(--hover-link-border-color);
   background-color: var(--hover-link-background-color);
   font-size: 14px;
+  border: 1px solid var(--hover-link-border-color);
 }
 
 section .ql-editor a:not(.ql-a-button)::before {
@@ -316,7 +318,6 @@ section .view-component button.quill-button-container, section .view-component b
   border-radius: 6px !important;
   padding: 8px 8px !important;
   color: var(--primary-button-text-color) !important;
-  margin-right: 198px !important;
   background: var(--primary-button-background-color) !important;
 }
 
