@@ -779,10 +779,9 @@ input:focus {
 }
 
 .simple-menu.footer ul.socials  {
-  align-self: self-start;
   display: inline-flex;
   gap: 30px;
-  width: 100%;
+  align-self: center;
 }
 
 .simple-menu.footer ul.socials li p, li p a {
@@ -862,6 +861,7 @@ input:focus {
   }
   .simple-menu.footer ul {
     margin-left: 40px;
+    align-content: center;
   }
 }
 
@@ -927,11 +927,15 @@ p.ql-snow p a:not(.ql-a-button):hover, div.ql-snow p a:not(.ql-a-button):hover, 
   .simple-menu.footer .global-link p {
     padding-left: 0 !important;
   }
-  .simple-menu.footer ul.mobile-top-border {
-    border-top: 1px solid #dddddd;
-  }
-  .simple-menu.footer ul.mobile-bottom-border {
+  .simple-menu.footer ul {
     border-bottom: 1px solid #dddddd;
+    padding: 16px 0;
+  }
+  .simple-menu.footer ul.socials {
+    width: 100%;
+  }
+  .simple-menu.footer {
+    border-bottom-width: 0;
   }
 }
 
