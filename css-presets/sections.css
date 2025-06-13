@@ -564,10 +564,14 @@ input:not(:placeholder-shown) {
   color: white;
 }
 
-.plans.plans-wrapper .plansTitleBox .desc p {
+.plans.plans-wrapper .plansTitleBox .desc {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 300;
+  color: gray;
+}
+
+.plans.plans-wrapper .plansTitleBox .desc p {
   color: gray;
 }
 
