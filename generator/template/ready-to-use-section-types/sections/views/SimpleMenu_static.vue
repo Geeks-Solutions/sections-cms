@@ -20,8 +20,8 @@
       />
     </global-link>
     <h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>
-    <ul>
-      <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'lang': menuItem.languageMenu === true}, {'mobileHidden': idx >= 0}]">
+    <ul v-for="(menuContainer, menuIdx) in settings.menus" :key="`simple-menu-ul-container-${menuIdx}`" :class="[menuContainer.menuContainerClasses, `ul-container-${menuIdx}`]">
+      <li v-for="(menuItem, idx) in menuContainer.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'lang': menuItem.languageMenu === true}, {'mobileHidden': idx >= 0}]">
         <global-link v-if="menuItem.languageMenu !== true"
                      :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
                      :lang="lang"
@@ -207,6 +207,14 @@ export default {
   computed: {
     settings() {
       if (Array.isArray(this.section.settings)) {
+        if (!this.section.settings[0].menus) {
+          this.section.settings[0].menus = [
+            {
+              menuContainerClasses: '',
+              menu: this.section.settings[0].menu
+            }
+          ]
+        }
         return this.section.settings[0];
       } else return this.section.settings
     },
