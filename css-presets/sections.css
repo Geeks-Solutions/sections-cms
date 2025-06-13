@@ -312,7 +312,7 @@ section .view-component button {
   white-space:normal;
 }
 
-section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
+section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect), .simple-menu.main .sign-up {
   font-size: 14px !important;
   border: 1px dashed var(--primary-button-border-color) !important;
   border-radius: 6px !important;
@@ -321,10 +321,18 @@ section .view-component button.quill-button-container, section .view-component b
   background: var(--primary-button-background-color) !important;
 }
 
-section .view-component button.quill-button-container:hover, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover {
+.simple-menu.main .sign-up a p {
+  color: var(--primary-button-text-color) !important;
+}
+
+section .view-component button.quill-button-container:hover, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover, .simple-menu.main .sign-up:hover {
   border: 1px dashed var(--hover-primary-button-border-color) !important;
   color: var(--hover-primary-button-text-color) !important;
   background: var(--hover-primary-button-background-color) !important;
+}
+
+.simple-menu.main .sign-up:hover a p {
+  color: var(--hover-primary-button-text-color) !important;
 }
 
 .simple-cta .button-selector {
@@ -556,7 +564,7 @@ input:not(:placeholder-shown) {
   color: white;
 }
 
-.plans.plans-wrapper .plansTitleBox .desc {
+.plans.plans-wrapper .plansTitleBox .desc p {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 300;
@@ -698,16 +706,6 @@ input:not(:placeholder-shown) {
 }
 
 .simple-menu.main .login {
-  color: #03B1C7;
-}
-
-.simple-menu.main .sign-up {
-  padding: 12px 14px 12px 8px;
-  border: 1px dashed black;
-  color: #03B1C7;
-}
-
-.simple-menu.main .sign-up a p {
   color: #03B1C7;
 }
 
@@ -856,12 +854,6 @@ input:not(:placeholder-shown) {
     border: 1px dashed black;
     padding: 8px 14px 8px 8px;
     margin-left: 3rem !important;
-  }
-
-  .simple-menu.main .sign-up {
-    padding: 8px 14px 8px 8px;
-    border: 1px dashed black;
-    color: #03B1C7;
   }
 
   .simple-menu.main .mobile-menu-main-wrapper .sign-up {
