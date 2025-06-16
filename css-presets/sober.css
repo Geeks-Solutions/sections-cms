@@ -166,19 +166,24 @@
   --neutral-800: #262626;
   --neutral-900: #1a1a1a;
   --plans-hover: #e5e7eb;
+  --tw-gradient-to: #0c66ee;
+  --tw-gradient-from: #468ef9;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
 
   --primary-color: #0c66ee !important;
   --secondary-color: #468ef9 !important;
+  --background-color: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%);
+  --hover-background-color: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%);
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
-  --h1-color: #262626;
+  --h1-color: var(--primary-color);
   --h2-color: #262626;
   --h3-color: #262626;
   --h4-color: #262626;
   --primary-button-text-color: white;
   --hover-primary-button-text-color: white;
-  --primary-button-background-color: var(--primary-color);
-  --hover-primary-button-background-color: var(--primary-color);
+  --primary-button-background-color: linear-gradient(to right, var(--tw-gradient-stops));
+  --hover-primary-button-background-color: linear-gradient(to right, var(--tw-gradient-stops));
   --primary-button-border-color: var(--primary-color);
   --hover-primary-button-border-color: var(--primary-color);
   --secondary-button-text-color: var(--primary-color);
@@ -187,8 +192,8 @@
   --hover-secondary-button-background-color: transparent;
   --secondary-button-border-color: var(--primary-color);
   --hover-secondary-button-border-color: var(--primary-color);
-  --link-text-color: #4A8FF6;
-  --hover-link-text-color: #4A8FF6;
+  --link-text-color: var(--primary-color);
+  --hover-link-text-color: var(--primary-color);
   --link-background-color: white;
   --hover-link-background-color: white;
   --link-border-color: transparent;
@@ -318,7 +323,7 @@ section .view-component button {
   --tw-gradient-to: var(--primary-color);
   --tw-gradient-from: var(--secondary-color);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  background: var(--primary-button-background-color);
   transition-duration: 300ms;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -338,7 +343,7 @@ section .view-component button {
   --tw-gradient-to: var(--primary-color);
   --tw-gradient-from: var(--secondary-color);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  background: var(--hover-primary-button-background-color);
 }
 
 input {
@@ -478,7 +483,11 @@ input:focus {
 }
 
 .SimpleMenu .view-component:has(> .simple-menu.main) {
-  background: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%) !important;
+  background: var(--background-color) !important;
+}
+
+.SimpleMenu .view-component:has(> .simple-menu.main):hover {
+  background: var(--hover-background-color) !important;
 }
 
 .simple-menu.main {
@@ -1951,6 +1960,13 @@ section .view-component .restaurant-menu button.item-qty-plus {
   }
 }
 
+.simple-cta {
+  background: var(--background-color);
+}
+
+.simple-cta:hover {
+  background: var(--hover-background-color);
+}
 
 /* */
 

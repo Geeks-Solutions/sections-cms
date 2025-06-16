@@ -181,12 +181,14 @@
 :root {
   --primary-color: #03B1C7 !important;
   --secondary-color: #00131F !important;
+  --background-color: #00131F;
+  --hover-background-color: #00131F;
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
   --h1-color: var(--primary-color);
-  --h2-color: unset;
-  --h3-color: unset;
-  --h4-color: unset;
+  --h2-color: #00131F;
+  --h3-color: #00131F;
+  --h4-color: #00131F;
   --primary-button-text-color: var(--secondary-color);
   --hover-primary-button-text-color: var(--secondary-color);
   --primary-button-background-color: #FFF;
@@ -199,8 +201,8 @@
   --hover-secondary-button-background-color: transparent;
   --secondary-button-border-color: transparent;
   --hover-secondary-button-border-color: transparent;
-  --link-text-color: #06c;
-  --hover-link-text-color: #06c;
+  --link-text-color: var(--primary-color);
+  --hover-link-text-color: var(--primary-color);
   --link-background-color: unset;
   --hover-link-background-color: unset;
   --link-border-color: unset;
@@ -305,7 +307,11 @@ section .html-content a:not(.ql-a-button)::before {
 }
 
 .simple-cta {
-  background: #00131F;
+  background: var(--background-color);
+}
+
+.simple-cta:hover {
+  background: var(--hover-background-color);
 }
 
 section .view-component button {
