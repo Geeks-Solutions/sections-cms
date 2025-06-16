@@ -305,7 +305,7 @@ section .view-component button {
   white-space: normal;
 }
 
-.whatsapp-checkout-button, .button-selector, section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
+.simple-menu.main ul li.sign-up .global-link p, .whatsapp-checkout-button, .button-selector, section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
   font-size: 0.875rem; /* sm */
   text-align: center;
   border-width: 1px;
@@ -326,7 +326,7 @@ section .view-component button {
   max-width: 100%;
 }
 
-.whatsapp-checkout-button:hover, .button-selector:hover, section .view-component button.quill-button-container:hover, section .view-component button:hover {
+.simple-menu.main ul li.sign-up .global-link p:hover, .whatsapp-checkout-button:hover, .button-selector:hover, section .view-component button.quill-button-container:hover, section .view-component button:hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
@@ -635,36 +635,6 @@ input:focus {
 .simple-menu ul li:not(.login):not(.sign-up) .global-link p:focus {
   outline: none; /* focus:outline-none */
   box-shadow: 0 4px 6px rgba(12, 102, 238, 0.5); /* focus:shadow-outline */
-}
-
-.simple-menu.main ul li.sign-up .global-link p {
-  font-size: 0.875rem; /* sm */
-  line-height: 1.25rem;
-  text-align: center;
-  border-width: 1px;
-  border-radius: 9999px; /* full */
-  --tw-border-opacity: 1;
-  border-color: var(--primary-color);
-  padding: 0.75rem 2rem;
-  color: #ffffff; /* white */
-  --tw-gradient-to: var(--primary-color);
-  --tw-gradient-from: var(--secondary-color);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
-  transition-duration: 300ms;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  width: max-content;
-  max-width: 100%;
-}
-
-.simple-menu.main ul li.sign-up .global-link p:hover {
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-shadow-color: rgb(12 102 238 / 0.5);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  --tw-shadow: var(--tw-shadow-colored);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 @media (min-width: 1280px) { /* xl */
