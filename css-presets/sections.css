@@ -208,6 +208,8 @@
   --link-border-color: unset;
   --hover-link-border-color: unset;
   --p-color: var(--secondary-color);
+  --menu-text-color: #00131F;
+  --hover-menu-text-color: #00131F;
 }
 
 html {
@@ -397,13 +399,13 @@ input:not(:placeholder-shown) {
   height: max-content;
   white-space: nowrap;
   align-self: center;
-  background-color: var(--primary-button-background-color);
+  background: var(--primary-button-background-color);
 }
 
 .button-selector:hover {
   border: 1px dashed var(--hover-primary-button-border-color);
   color: var(--hover-primary-button-text-color);
-  background-color: var(--hover-primary-button-background-color);
+  background: var(--hover-primary-button-background-color);
 }
 
 .faq .section-wrapper .question.expanded {
@@ -738,6 +740,11 @@ input:not(:placeholder-shown) {
 
 .simple-menu.main ul li a p {
   font-size: 16px;
+  color: var(--menu-text-color);
+}
+
+.simple-menu.main ul li a p:hover {
+  color: var(--hover-menu-text-color);
 }
 
 .simple-menu h3 {

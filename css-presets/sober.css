@@ -185,8 +185,8 @@
   --hover-primary-button-text-color: white;
   --primary-button-background-color: linear-gradient(to right, var(--tw-gradient-stops));
   --hover-primary-button-background-color: linear-gradient(to right, var(--tw-gradient-stops));
-  --primary-button-border-color: var(--primary-color);
-  --hover-primary-button-border-color: var(--primary-color);
+  --primary-button-border-color: #0c66ee;
+  --hover-primary-button-border-color: #0c66ee;
   --secondary-button-text-color: var(--primary-color);
   --hover-secondary-button-text-color: var(--primary-color);
   --secondary-button-background-color: inherit;
@@ -200,6 +200,8 @@
   --link-border-color: transparent;
   --hover-link-border-color: transparent;
   --p-color: #374151;
+  --menu-text-color: #666666;
+  --hover-menu-text-color: #666666;
 
   --cookie-control-barBackground: var(--secondary-blue);
   --cookie-control-barTextColor: #fff;
@@ -618,7 +620,7 @@ input:focus {
   font-size: 0.875rem; /* text-sm */
   background: transparent; /* bg-transparent */
   border-radius: 0.5rem; /* rounded-lg */
-  color: var(--neutral-600); /* text-[#666666] */
+  color: var(--menu-text-color); /* text-[#666666] */
   transition: color 0.3s ease; /* focus:shadow-outline, hover:text-gray-900 */
 }
 
@@ -633,7 +635,7 @@ input:focus {
 }
 
 .simple-menu ul li:not(.login):not(.sign-up) .global-link p:hover {
-  color: var(--neutral-900); /* hover:text-gray-900 */
+  color: var(--hover-menu-text-color); /* hover:text-gray-900 */
 }
 
 .simple-menu ul li:not(.login):not(.sign-up) .global-link p:focus {
