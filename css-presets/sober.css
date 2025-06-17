@@ -165,21 +165,22 @@
   --neutral-600: #666666;
   --neutral-800: #262626;
   --neutral-900: #1a1a1a;
+  --secondary-blue: #468ef9;
   --plans-hover: #e5e7eb;
   --tw-gradient-to: #0c66ee;
   --tw-gradient-from: #468ef9;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
 
   --primary-color: #0c66ee !important;
-  --secondary-color: #468ef9 !important;
+  --secondary-color: #262626 !important;
   --background-color: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%);
   --hover-background-color: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%);
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
   --h1-color: var(--primary-color);
-  --h2-color: #262626;
-  --h3-color: #262626;
-  --h4-color: #262626;
+  --h2-color: var(--secondary-color);
+  --h3-color: var(--secondary-color);
+  --h4-color: var(--secondary-color);
   --primary-button-text-color: white;
   --hover-primary-button-text-color: white;
   --primary-button-background-color: linear-gradient(to right, var(--tw-gradient-stops));
@@ -198,9 +199,9 @@
   --hover-link-background-color: white;
   --link-border-color: transparent;
   --hover-link-border-color: transparent;
-  --p-color: rgb(55 65 81 / var(--tw-text-opacity));
+  --p-color: #374151;
 
-  --cookie-control-barBackground: var(--secondary-color);
+  --cookie-control-barBackground: var(--secondary-blue);
   --cookie-control-barTextColor: #fff;
   --cookie-control-barButtonColor: #fff;
   --cookie-control-barButtonHoverColor: var(--primary-color);
@@ -218,7 +219,7 @@
   --cookie-control-barButtonHoverBackground: #fff;
   --cookie-control-checkboxActiveBackground: var(--primary-color);
   --cookie-control-controlButtonIconHoverColor: var(--primary-color);
-  --cookie-control-checkboxInactiveBackground: var(--secondary-color);
+  --cookie-control-checkboxInactiveBackground: var(--secondary-blue);
   --cookie-control-modalButtonHoverBackground: #fff;
   --cookie-control-modalOverlay: var(--neutral-800);
   --cookie-control-checkboxDisabledBackground: #ddd;
@@ -266,12 +267,12 @@ section h4 {
 section h5 {
   font-size: 0.875rem; /* sm */
   font-weight: 500; /* medium */
-  color: var(--neutral-600);
+  color: var(--secondary-color);
 }
 section h6 {
   font-size: 0.25rem; /* sm */
   font-weight: 500; /* medium */
-  color: var(--neutral-800);
+  color: var(--secondary-color);
 }
 @media (min-width: 640px) { /* sm */
   section h1 {
@@ -320,9 +321,6 @@ section .view-component button {
   border-color: var(--primary-button-border-color) !important;
   padding: 1rem 2rem !important;
   color: var(--primary-button-text-color); /* white */
-  --tw-gradient-to: var(--primary-color);
-  --tw-gradient-from: var(--secondary-color);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
   background: var(--primary-button-background-color);
   transition-duration: 300ms;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
@@ -340,9 +338,6 @@ section .view-component button {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   border-color: var(--hover-primary-button-border-color) !important;
   color: var(--hover-primary-button-text-color); /* white */
-  --tw-gradient-to: var(--primary-color);
-  --tw-gradient-from: var(--secondary-color);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
   background: var(--hover-primary-button-background-color);
 }
 
@@ -2502,7 +2497,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
 .plans.plans-wrapper .sectionsPack .title {
   font-size: 36px;
   font-weight: 600;
-  color: var(--secondary-color);
+  color: var(--secondary-blue);
   text-align: center;
 }
 .plans.plans-wrapper .sectionsPack .subtitle {
@@ -2532,7 +2527,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
   font-weight: 300;
   font-size: 6rem;
   line-height: 1;
-  color: var(--secondary-color);
+  color: var(--secondary-blue);
 }
 .plans.plans-wrapper .currency {
   font-size: 1.25rem;
@@ -2593,13 +2588,13 @@ section .view-component .restaurant-menu button.item-qty-plus {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: var(--secondary-color);
+  color: var(--secondary-blue);
 }
 .plans.plans-wrapper .cta-arrow {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: var(--secondary-color);
+  color: var(--secondary-blue);
 }
 .plans.plans-wrapper .plansBox:hover .cta-arrow {
   font-size: 1.25rem;
