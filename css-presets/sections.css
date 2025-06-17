@@ -186,9 +186,9 @@
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
   --h1-color: var(--primary-color);
-  --h2-color: #00131F;
-  --h3-color: #00131F;
-  --h4-color: #00131F;
+  --h2-color: var(--secondary-color);
+  --h3-color: var(--secondary-color);
+  --h4-color: var(--secondary-color);
   --primary-button-text-color: var(--secondary-color);
   --hover-primary-button-text-color: var(--secondary-color);
   --primary-button-background-color: #FFF;
@@ -207,7 +207,7 @@
   --hover-link-background-color: unset;
   --link-border-color: unset;
   --hover-link-border-color: unset;
-  --p-color: #000;
+  --p-color: var(--secondary-color);
 }
 
 html {
@@ -971,7 +971,7 @@ section .text-image .row-wrapper {
   --cookie-control-barTextColor: #fff;
   --cookie-control-barButtonColor: #fff;
   --cookie-control-barButtonHoverColor: #03B1C7;
-  --cookie-control-modalTextColor: #00131F;
+  --cookie-control-modalTextColor: var(--secondary-color);
   --cookie-control-modalBackground: #fff;
   --cookie-control-modalOverlayOpacity: 0.8;
   --cookie-control-modalButtonColor: #fff;
