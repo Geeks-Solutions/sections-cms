@@ -2008,7 +2008,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
   background: white;
 }
 .cookieControl__Bar h3, .cookieControl__Bar p {
-  color: var(--cookie-control-barTextColor);
+  color: var(--p-color);
   max-width: 900px;
 }
 .cookieControl__Bar h3 {
