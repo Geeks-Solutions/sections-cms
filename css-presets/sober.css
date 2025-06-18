@@ -1992,7 +1992,6 @@ section .view-component .restaurant-menu button.item-qty-plus {
 }
 .cookieControl {
   position: relative;
-  z-index: 100000;
 }
 .cookieControl button {
   border: 0;
@@ -2006,7 +2005,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
 }
 .cookieControl__Bar {
   position: fixed;
-  background-color: var(--cookie-control-barBackground);
+  background: white;
 }
 .cookieControl__Bar h3, .cookieControl__Bar p {
   color: var(--cookie-control-barTextColor);
@@ -2021,8 +2020,8 @@ section .view-component .restaurant-menu button.item-qty-plus {
   margin: 5px 0 0;
 }
 .cookieControl__Bar button {
-  color: var(--cookie-control-barButtonColor);
-  background-color: var(--cookie-control-barButtonBackground);
+  color: var(--primary-button-text-color);
+  background: var(--primary-button-background-color);
   border: 1px solid var(--cookie-control-modalButtonHoverColor);
   max-height: 64px;
   width: auto;
@@ -2032,8 +2031,8 @@ section .view-component .restaurant-menu button.item-qty-plus {
   min-height: auto;
 }
 .cookieControl__Bar button:hover {
-  color: var(--cookie-control-barButtonHoverColor);
-  background-color: var(--cookie-control-barButtonHoverBackground);
+  color: var(--hover-primary-button-text-color);
+  background: var(--hover-primary-button-background-color);
 }
 .cookieControl__Bar button + button {
   margin-left: 10px;
@@ -2043,6 +2042,10 @@ section .view-component .restaurant-menu button.item-qty-plus {
   padding: 20px;
   align-items: flex-end;
   justify-content: space-between;
+  background: var(--background-color);
+}
+.cookieControl__BarContainer:hover {
+  background: var(--hover-background-color);
 }
 .cookieControl__Bar--top-full, .cookieControl__Bar--bottom-full {
   left: 0;
@@ -2113,8 +2116,8 @@ section .view-component .restaurant-menu button.item-qty-plus {
 }
 .cookieControl__Modal button {
   white-space: nowrap;
-  color: var(--cookie-control-modalButtonColor);
-  background-color: var(--cookie-control-modalButtonBackground);
+  color: var(--primary-button-text-color);
+  background: var(--primary-button-background-color);
   border: 1px solid var(--cookie-control-modalButtonHoverColor);
   max-height: 64px;
   width: auto;
@@ -2125,16 +2128,18 @@ section .view-component .restaurant-menu button.item-qty-plus {
 }
 .cookieControl__Modal button.shadowed {
   white-space: nowrap;
-  color: var(--cookie-control-modalButtonColor);
-  background-color: var(--cookie-control-modalButtonShadowedBackground);
-  border: 1px solid var(--cookie-control-modalButtonShadowedBackground);
+  color: var(--primary-button-text-color);
+  background: var(--primary-button-background-color);
+  border: 1px solid var(--primary-button-border-color);
 }
 .cookieControl__Modal button.shadowed:hover {
-  border: 1px solid var(--cookie-control-modalButtonHoverColor);
+  color: var(--hover-primary-button-text-color);
+  background: var(--hover-primary-button-background-color);
+  border: 1px solid var(--hover-primary-button-border-color);
 }
 .cookieControl__Modal button:hover {
-  color: var(--cookie-control-modalButtonHoverColor);
-  background-color: var(--cookie-control-modalButtonHoverBackground);
+  color: var(--hover-primary-button-text-color);
+  background: var(--hover-primary-button-background-color);
 }
 .cookieControl__ModalContent {
   position: relative;
@@ -2347,7 +2352,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
   background-color: var(--cookie-control-controlButtonHoverBackground);
 }
 .cookieControl__ControlButton:hover svg {
-  color: var(--cookie-control-controlButtonIconHoverColor);
+  color: var(--primary-color);
 }
 
 
