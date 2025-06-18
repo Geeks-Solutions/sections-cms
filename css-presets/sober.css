@@ -202,6 +202,9 @@
   --p-color: #374151;
   --menu-text-color: #666666;
   --hover-menu-text-color: #666666;
+  --cookie-background-color: #468ef9;
+  --hover-cookie-background-color: #468ef9;
+  --cookie-p-color: white;
 
   --cookie-control-barBackground: var(--secondary-blue);
   --cookie-control-barTextColor: #fff;
@@ -2008,7 +2011,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
   background: white;
 }
 .cookieControl__Bar h3, .cookieControl__Bar p {
-  color: var(--p-color);
+  color: var(--cookie-p-color);
   max-width: 900px;
 }
 .cookieControl__Bar h3 {
@@ -2042,10 +2045,10 @@ section .view-component .restaurant-menu button.item-qty-plus {
   padding: 20px;
   align-items: flex-end;
   justify-content: space-between;
-  background: var(--background-color);
+  background: var(--cookie-background-color);
 }
 .cookieControl__BarContainer:hover {
-  background: var(--hover-background-color);
+  background: var(--hover-cookie-background-color);
 }
 .cookieControl__Bar--top-full, .cookieControl__Bar--bottom-full {
   left: 0;
