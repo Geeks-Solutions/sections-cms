@@ -978,13 +978,13 @@ section .text-image .row-wrapper {
   --cookie-control-barTextColor: #fff;
   --cookie-control-barButtonColor: #fff;
   --cookie-control-barButtonHoverColor: #03B1C7;
-  --cookie-control-modalTextColor: var(--secondary-color);
+  --cookie-control-modalTextColor: #00131F;
   --cookie-control-modalBackground: #fff;
   --cookie-control-modalOverlayOpacity: 0.8;
   --cookie-control-modalButtonColor: #fff;
   --cookie-control-modalUnsavedColor: #fff;
   --cookie-control-barButtonBackground: #03B1C7;
-  --cookie-control-modalButtonHoverColor: #03B1C7;
+  --cookie-control-modalButtonHoverColor: var(--primary-color);
   --cookie-control-controlButtonIconColor: #fff;
   --cookie-control-modalButtonBackground: #03B1C7;
   --cookie-control-modalButtonShadowedBackground: #aaa;
@@ -1076,8 +1076,12 @@ section .text-image .row-wrapper {
 
 .cookieControl__Bar {
   position: fixed;
-  background-color: var(--cookie-control-barBackground);
+  background: var(--background-color);
   z-index: 10;
+}
+
+.cookieControl__Bar:hover {
+  background: var(--hover-background-color);
 }
 
 .cookieControl__Bar h3,
@@ -1097,20 +1101,12 @@ section .text-image .row-wrapper {
 }
 
 .cookieControl__Bar button {
-  color: var(--cookie-control-barButtonColor);
-  background-color: var(--cookie-control-barButtonBackground);
-  border: 1px solid var(--cookie-control-modalButtonHoverColor);
   max-height: 64px;
   width: auto;
   min-width: auto;
   border-radius: 16px;
   height: auto;
   min-height: auto;
-}
-
-.cookieControl__Bar button:hover {
-  color: var(--cookie-control-barButtonHoverColor);
-  background-color: var(--cookie-control-barButtonHoverBackground);
 }
 
 .cookieControl__Bar button+button {
@@ -1222,9 +1218,6 @@ section .text-image .row-wrapper {
 
 .cookieControl__Modal button {
   white-space: nowrap;
-  color: var(--cookie-control-modalButtonColor);
-  background-color: var(--cookie-control-modalButtonBackground);
-  border: 1px solid var(--cookie-control-modalButtonHoverColor);
   max-height: 64px;
   width: auto;
   min-width: auto;
@@ -1242,11 +1235,6 @@ section .text-image .row-wrapper {
 
 .cookieControl__Modal button.shadowed:hover {
   border: 1px solid var(--cookie-control-modalButtonHoverColor);
-}
-
-.cookieControl__Modal button:hover {
-  color: var(--cookie-control-modalButtonHoverColor);
-  background-color: var(--cookie-control-modalButtonHoverBackground);
 }
 
 .cookieControl__ModalContent {
@@ -1302,7 +1290,7 @@ section .text-image .row-wrapper {
 }
 
 .cookieControl__ModalContent input:checked+label {
-  background-color: var(--cookie-control-checkboxActiveBackground);
+  background: var(--primary-color);
 }
 
 .cookieControl__ModalContent input:checked+label:before {
@@ -1480,8 +1468,8 @@ section .text-image .row-wrapper {
   backface-visibility: hidden;
   transition: background-color 200ms;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  background: var(--cookie-control-controlButtonBackground);
-  border: 1px solid var(--cookie-control-modalButtonHoverColor);
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
 
 .cookieControl__ControlButton svg {
@@ -1503,5 +1491,5 @@ section .text-image .row-wrapper {
 }
 
 .cookieControl__ControlButton:hover svg {
-  color: var(--cookie-control-controlButtonIconHoverColor);
+  color: var(--primary-color);
 }
