@@ -206,10 +206,7 @@
   --hover-cookie-background-color: #468ef9;
   --cookie-p-color: white;
 
-  --cookie-control-barBackground: var(--secondary-blue);
-  --cookie-control-barTextColor: #fff;
-  --cookie-control-barButtonColor: #fff;
-  --cookie-control-barButtonHoverColor: var(--primary-color);
+
   --cookie-control-modalTextColor: var(--neutral-800);
   --cookie-control-modalBackground: #fff;
   --cookie-control-modalOverlayOpacity: 0.8;
@@ -224,7 +221,6 @@
   --cookie-control-barButtonHoverBackground: #fff;
   --cookie-control-checkboxActiveBackground: var(--primary-color);
   --cookie-control-controlButtonIconHoverColor: var(--primary-color);
-  --cookie-control-checkboxInactiveBackground: var(--secondary-blue);
   --cookie-control-modalButtonHoverBackground: #fff;
   --cookie-control-modalOverlay: var(--neutral-800);
   --cookie-control-checkboxDisabledBackground: #ddd;
