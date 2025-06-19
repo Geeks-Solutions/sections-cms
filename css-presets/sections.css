@@ -325,7 +325,7 @@ section .view-component button {
 
 section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect), .simple-menu.main .sign-up {
   font-size: 14px !important;
-  border: 1px dashed var(--primary-button-border-color) !important;
+  border: 1px solid var(--primary-button-border-color) !important;
   border-radius: 6px !important;
   padding: 8px 8px !important;
   color: var(--primary-button-text-color) !important;
@@ -337,7 +337,7 @@ section .view-component button.quill-button-container, section .view-component b
 }
 
 section .view-component button.quill-button-container:hover, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover, .simple-menu.main .sign-up:hover {
-  border: 1px dashed var(--hover-primary-button-border-color) !important;
+  border: 1px solid var(--hover-primary-button-border-color) !important;
   color: var(--hover-primary-button-text-color) !important;
   background: var(--hover-primary-button-background-color) !important;
 }
@@ -348,7 +348,7 @@ section .view-component button.quill-button-container:hover, section .view-compo
 
 .simple-cta .button-selector {
   font-size: 14px;
-  border: 1px dashed var(--secondary-button-border-color);
+  border: 1px solid var(--secondary-button-border-color);
   border-radius: 6px;
   padding: 8px;
   color: var(--secondary-button-text-color);
@@ -357,14 +357,14 @@ section .view-component button.quill-button-container:hover, section .view-compo
 }
 
 .simple-cta .button-selector:hover {
-  border: 1px dashed var(--hover-secondary-button-border-color);
+  border: 1px solid var(--hover-secondary-button-border-color);
   color: var(--hover-secondary-button-text-color);
   background: var(--hover-secondary-button-background-color) !important;
 }
 
 input {
   font-size: 1rem !important;
-  border: 2px dashed lightgray;
+  border: 2px solid lightgray;
   height: 55px;
   line-height: 24px !important;
   outline: none;
@@ -395,7 +395,7 @@ input:not(:placeholder-shown) {
 
 .button-selector {
   font-size: 14px;
-  border: 1px dashed var(--primary-button-border-color);
+  border: 1px solid var(--primary-button-border-color);
   border-radius: 6px;
   padding: 8px;
   color: var(--primary-button-text-color);
@@ -406,7 +406,7 @@ input:not(:placeholder-shown) {
 }
 
 .button-selector:hover {
-  border: 1px dashed var(--hover-primary-button-border-color);
+  border: 1px solid var(--hover-primary-button-border-color);
   color: var(--hover-primary-button-text-color);
   background: var(--hover-primary-button-background-color);
 }
@@ -871,7 +871,7 @@ input:not(:placeholder-shown) {
 
   .simple-menu.main .mobile-menu-main-wrapper ul li.sign-up a p {
     font-size: 16px !important;
-    border: 1px dashed black;
+    border: 1px solid black;
     padding: 8px 14px 8px 8px;
     margin-left: 3rem !important;
   }
@@ -931,7 +931,7 @@ input:not(:placeholder-shown) {
 
   .simple-menu.main .mobile-menu-main-wrapper ul li.home {
     display: flex;
-    border: 1px dashed #03B1C7;
+    border: 1px solid #03B1C7;
     margin-top: 18px;
   }
 
