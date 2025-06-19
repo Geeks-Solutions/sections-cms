@@ -165,7 +165,7 @@
   --neutral-600: #666666;
   --neutral-800: #262626;
   --neutral-900: #1a1a1a;
-  --secondary-blue: #468ef9;
+  --tertiary-color: #468ef9;
   --plans-hover: #e5e7eb;
   --tw-gradient-to: #0c66ee;
   --tw-gradient-from: #468ef9;
@@ -2503,7 +2503,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
 .plans.plans-wrapper .sectionsPack .title {
   font-size: 36px;
   font-weight: 600;
-  color: var(--secondary-blue);
+  color: var(--tertiary-color);
   text-align: center;
 }
 .plans.plans-wrapper .sectionsPack .subtitle {
@@ -2533,7 +2533,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
   font-weight: 300;
   font-size: 6rem;
   line-height: 1;
-  color: var(--secondary-blue);
+  color: var(--tertiary-color);
 }
 .plans.plans-wrapper .currency {
   font-size: 1.25rem;
@@ -2594,13 +2594,13 @@ section .view-component .restaurant-menu button.item-qty-plus {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: var(--secondary-blue);
+  color: var(--tertiary-color);
 }
 .plans.plans-wrapper .cta-arrow {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: var(--secondary-blue);
+  color: var(--tertiary-color);
 }
 .plans.plans-wrapper .plansBox:hover .cta-arrow {
   font-size: 1.25rem;
