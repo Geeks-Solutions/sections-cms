@@ -280,7 +280,7 @@ section ol {
 section .wys-wrapper .ql-snow a:not(.ql-a-button), section .ql-snow article.ql-editor a:not(.ql-a-button) {
   color: var(--link-text-color);
   border-color: var(--link-border-color);
-  background-color: var(--link-background-color);
+  background: var(--link-background-color);
   font-size: 14px;
   border: 1px solid var(--link-border-color);
 }
@@ -288,7 +288,7 @@ section .wys-wrapper .ql-snow a:not(.ql-a-button), section .ql-snow article.ql-e
 section .wys-wrapper .ql-snow a:not(.ql-a-button):hover, section .ql-snow article.ql-editor a:not(.ql-a-button):hover {
   color: var(--hover-link-text-color);
   border-color: var(--hover-link-border-color);
-  background-color: var(--hover-link-background-color);
+  background: var(--hover-link-background-color);
   font-size: 14px;
   border: 1px solid var(--hover-link-border-color);
 }
