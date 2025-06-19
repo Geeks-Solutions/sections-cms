@@ -725,7 +725,7 @@ input:not(:placeholder-shown) {
 }
 
 .simple-menu.main .lang {
-  background: #03B1C7;
+  background: var(--primary-color);
   color: white;
   font-weight: 300;
   width: 30px;
