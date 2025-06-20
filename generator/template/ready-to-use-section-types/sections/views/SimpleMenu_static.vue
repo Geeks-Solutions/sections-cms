@@ -6,6 +6,7 @@
     <global-link v-if="settings.media && settings.media.url"
                  :link="settings.logoPage[lang] === 'other' ? settings.logoLink : settings.logoPage && settings.logoPage[lang] ? { ...settings.logoPage, en: '/' + settings.logoPage.en, fr: '/' + settings.logoPage.fr } : '#'"
                  :lang="lang"
+                 :default-lang="defaultLang"
                  :form-link-target="settings.logoLinkTarget"
                  class="logo-wrapper">
       <NuxtImg
@@ -25,16 +26,13 @@
         <global-link v-if="menuItem.languageMenu !== true"
                      :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
                      :lang="lang"
+                     :default-lang="defaultLang"
                      :form-link-target="menuItem.linkTarget">
           <p>
             {{ menuItem.label[lang] }}
           </p>
         </global-link>
-        <nuxt-link v-else
-                   :to="switchLocalePath(lang === 'fr' ? 'en' : 'fr')"
-        >
-          {{ menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : '' }}
-        </nuxt-link>
+        <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" />
       </li>
     </ul>
     <transition name="mobile-menu-main-wrapper">
@@ -48,16 +46,13 @@
               <global-link v-if="menuItem.languageMenu !== true"
                            :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
                            :lang="lang"
+                           :default-lang="defaultLang"
                            :form-link-target="menuItem.linkTarget">
                 <p>
                   {{ menuItem.label[lang] }}
                 </p>
               </global-link>
-              <nuxt-link v-else
-                         :to="switchLocalePath(lang === 'fr' ? 'en' : 'fr')"
-              >
-                {{ menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : '' }}
-              </nuxt-link>
+              <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" />
             </li>
           </ul>
         </div>
@@ -67,17 +62,11 @@
 </template>
 
 <script>
-import { useSwitchLocalePath } from '#imports'
+import GlobalLangSwitcher from '~/components/GlobalLangSwitcher.vue'
 
 export default {
   name: 'SimpleMenu',
-  setup() {
-    const switchLocalePath = useSwitchLocalePath()
-
-    return {
-      switchLocalePath,
-    }
-  },
+  components: { GlobalLangSwitcher },
   props: {
     section: {
       type: Object,
@@ -85,6 +74,10 @@ export default {
       },
     },
     lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
       type: String,
       default: "en"
     },

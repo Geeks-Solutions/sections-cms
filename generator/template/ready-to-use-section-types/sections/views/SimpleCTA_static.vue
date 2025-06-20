@@ -11,14 +11,14 @@
             {{ getCurrentTranslation(settings, lang, 'title', 'title') }}
           </h2>
           <div class="flex buttonsRow items-center mb-4">
-			<global-link v-if="getCurrentTranslation(settings, lang, 'subTitle', 'subTitle')" :link="{en: getCurrentTranslation(settings, 'en', 'link', 'link'), fr: getCurrentTranslation(settings, 'fr', 'link', 'link')}" :lang="lang" :form-link-target="settings.linkTarget">
+			<global-link v-if="getCurrentTranslation(settings, lang, 'subTitle', 'subTitle')" :link="{en: getCurrentTranslation(settings, 'en', 'link', 'link'), fr: getCurrentTranslation(settings, 'fr', 'link', 'link')}" :lang="lang" :default-lang="defaultLang" :form-link-target="settings.linkTarget">
               <p>
                 {{ getCurrentTranslation(settings, lang, 'subTitle', 'subTitle') }}
               </p>
             </global-link>
             <div class="mobileButtonLabel">
 			  <global-link v-if="getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') && getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') !== '' && getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') !== '/'"
-				   :link="{en: getCurrentTranslation(settings, 'en', 'link', 'link'), fr: getCurrentTranslation(settings, 'fr', 'link', 'link')}" :lang="lang" :form-link-target="settings.linkTarget">
+				   :link="{en: getCurrentTranslation(settings, 'en', 'link', 'link'), fr: getCurrentTranslation(settings, 'fr', 'link', 'link')}" :lang="lang" :default-lang="defaultLang" :form-link-target="settings.linkTarget">
 				<div class="button-selector">
 				  {{ getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') }}
 				</div>
@@ -42,6 +42,10 @@ export default {
 	  default: () => {},
     },
     lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
       type: String,
       default: "en"
     },
