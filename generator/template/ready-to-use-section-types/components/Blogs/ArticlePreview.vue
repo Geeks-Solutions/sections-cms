@@ -20,7 +20,7 @@
         <gWysiwygContent tag="p" :classes="`html-content desc p-0`" :html-content="content" />
       </div>
 
-      <BlogsArticleButton :path="path" />
+      <BlogsArticleButton :path="path" :lang="lang" :default-lang="defaultLang" />
 
     </div>
   </div>
@@ -49,7 +49,15 @@ export default {
     path: {
       type: String,
       default: ""
-    }
+    },
+    lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
+      type: String,
+      default: "en"
+    },
   }
 }
 </script>

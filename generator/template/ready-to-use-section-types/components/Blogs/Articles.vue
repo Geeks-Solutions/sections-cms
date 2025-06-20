@@ -1,7 +1,7 @@
 <template>
   <div v-if="sectionRenderData && sectionRenderData.articles && sectionRenderData.articles.length === 1" class="article-preview-wrapper flex flex-col gap-9 py-2.5">
     <BlogsArticleTitleDescription :title="title" :description="description" :lang="lang" />
-    <BlogsArticlePreview :path="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : `/${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : sectionRenderData.articles[0].path ? `/${sectionRenderData.articles[0].path}` : ''" :image="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].thumbnail_url : ''" :image-alt="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].seo_tag : ''" :title="sectionRenderData.articles[0].title" :content="sectionRenderData.articles[0].description" />
+    <BlogsArticlePreview :path="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : `/${sectionRenderSettings.article_page_path}/${sectionRenderData.articles[0].path}` : sectionRenderData.articles[0].path ? `/${sectionRenderData.articles[0].path}` : ''" :image="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].thumbnail_url : ''" :image-alt="sectionRenderData.articles[0].medias && sectionRenderData.articles[0].medias[0] && sectionRenderData.articles[0].medias[0].files ? sectionRenderData.articles[0].medias[0].files[0].seo_tag : ''" :title="sectionRenderData.articles[0].title" :content="sectionRenderData.articles[0].description" :lang="lang" :default-lang="defaultLang" />
     <div v-if="listType === 'listing'" class="w-full">
       <ListPagination :current-page="currentPage" :total-pages="totalPages" @page-changed="(page) => pageChanged(page)" />
     </div>
@@ -13,7 +13,12 @@
          class="articles-wrapper"
          :class="[listTypeStyle.listStyle, {'md:justify-center': sectionRenderData.articles.length <= 3}]">
       <div v-for="(object, idx) in sectionRenderData.articles" :key="`article-${object.id}-${idx}`" class="flex flex-col card-wrapper" :draggable="!isDragScrollEnabled" :class="{'flex-1': listType === 'carousel'}">
-        <nuxt-link :to="localePath()(sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : '')" :draggable="!isDragScrollEnabled" class="w-full h-full">
+        <global-link
+          :link="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : ''"
+          :lang="lang"
+          :default-lang="defaultLang"
+          :draggable="!isDragScrollEnabled"
+          class="w-full h-full">
           <div class="flex flex-col gap-6 h-full py-5 px-4 wrapper" :class="{'w-[300px]': listType === 'carousel' && sectionRenderData.articles.length > 3}" :draggable="!isDragScrollEnabled">
             <div class="flex" :class="listTypeStyle.image">
               <div v-if="object.medias && object.medias.length > 0" class="flex w-full self-start min-h-[300px] max-h-[300px]">
@@ -33,18 +38,21 @@
                 </h2>
                 <gWysiwygContent tag="h4" :classes="`overflow-hidden desc p-0 ${listTypeStyle.title}`" :html-content="object.description" />
               </div>
-              <BlogsArticleButton :path="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : ''" />
+              <BlogsArticleButton :path="sectionRenderSettings && sectionRenderSettings.article_page_path ? sectionRenderSettings.article_page_path.startsWith('/') ? `${sectionRenderSettings.article_page_path}/${object.path}` : `/${sectionRenderSettings.article_page_path}/${object.path}` : object.path ? `/${object.path}` : ''" :lang="lang" :default-lang="defaultLang" />
             </div>
           </div>
-        </nuxt-link>
+        </global-link>
       </div>
     </div>
     <div v-if="listType === 'carousel' && sectionRenderSettings && sectionRenderSettings.cta_label && sectionRenderSettings.cta_label[lang]" class="flex flex-row justify-center w-full">
-      <NuxtLink :to="localePath()(sectionRenderSettings ? sectionRenderSettings.cta_link : BLOGS_SECTION_PAGE_PATH)">
+      <global-link
+        :link="sectionRenderSettings ? sectionRenderSettings.cta_link : BLOGS_SECTION_PAGE_PATH"
+        :lang="lang"
+        :default-lang="defaultLang">
         <div v-if="sectionRenderSettings && sectionRenderSettings.cta_label" class="button-selector">
 		  {{ sectionRenderSettings && sectionRenderSettings.cta_label ? sectionRenderSettings.cta_label[lang] : '' }}
 		</div>
-      </NuxtLink>
+      </global-link>
     </div>
     <div v-else-if="listType === 'listing'" class="w-full">
       <ListPagination :current-page="currentPage" :total-pages="totalPages" @page-changed="(page) => pageChanged(page)" />
@@ -55,7 +63,6 @@
 <script>
 
 import { BLOGS_LIST_SIZE, BLOGS_SECTION_PAGE_PATH, extractQsValue } from '@/utils/constants'
-import { useLocalePath } from '#imports'
 
 export default {
   name: 'Articles',
@@ -69,6 +76,10 @@ export default {
       default: () => {},
     },
     lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
       type: String,
       default: "en"
     },
@@ -150,9 +161,6 @@ export default {
         blogsListSize = extractQsValue('limit_ca', this.$route.path)
       }
       return blogsListSize
-    },
-    localePath() {
-      return useLocalePath()
     },
   }
 };

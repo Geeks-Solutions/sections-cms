@@ -1,7 +1,7 @@
 <template>
   <div ref="BlogsArticles">
     <div v-if="sectionRenderData">
-      <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="sectionRenderSettings" :total-pages="totalPages" :lang="lang" list-type="listing" @page-changed="(offset) => pageChanged(offset)" />
+      <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="sectionRenderSettings" :total-pages="totalPages" :lang="lang" :default-lang="defaultLang" list-type="listing" @page-changed="(offset) => pageChanged(offset)" />
     </div>
   </div>
 </template>
@@ -21,6 +21,10 @@ export default {
       default: () => {},
     },
     lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
       type: String,
       default: "en"
     },

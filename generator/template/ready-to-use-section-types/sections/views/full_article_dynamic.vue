@@ -90,6 +90,9 @@ export default {
 		"author_id": "string"
 	  }
 	}
+  },
+  created() {
+    this.$emit('seo-support', true)
   }
 };
 </script>
