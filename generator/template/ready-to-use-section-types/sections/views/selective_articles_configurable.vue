@@ -1,5 +1,5 @@
 <template>
-  <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="section.render_data && section.render_data[0] && section.render_data[0].settings ? section.render_data[0].settings : {}" :lang="lang" :title="sectionRenderSettings && sectionRenderSettings.title ? sectionRenderSettings.title : ''" :description="sectionRenderSettings && sectionRenderSettings.description ? sectionRenderSettings.description : ''" />
+  <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="section.render_data && section.render_data[0] && section.render_data[0].settings ? section.render_data[0].settings : {}" :lang="lang" :default-lang="defaultLang" :title="sectionRenderSettings && sectionRenderSettings.title ? sectionRenderSettings.title : ''" :description="sectionRenderSettings && sectionRenderSettings.description ? sectionRenderSettings.description : ''" />
 </template>
 
 <script>
@@ -12,6 +12,10 @@ export default {
       default: () => {},
     },
     lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
       type: String,
       default: "en"
     },
@@ -261,6 +265,9 @@ export default {
         return this.section.render_data[0].settings
       } else return null
     }
+  },
+  created() {
+    this.$emit('seo-support', true)
   }
 };
 </script>

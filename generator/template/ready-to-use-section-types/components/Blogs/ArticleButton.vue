@@ -1,30 +1,30 @@
 <template>
-  <nuxt-link :to="localePath(path)" class="w-full">
+  <global-link :link="path" :lang="lang" :default-lang="defaultLang" class="w-full">
     <div class="flex flex-row w-full gap-2">
       <div class="button-selector">
         {{ $t('blogs.readPost') }}
       </div>
     </div>
-  </nuxt-link>
+  </global-link>
 </template>
 
 <script>
-import { useLocalePath } from '#imports'
 
 export default {
   name: "ArticleButton",
-  setup() {
-    const localePath = useLocalePath()
-
-    return {
-      localePath,
-    }
-  },
   props: {
     path: {
       type: String,
       default: ""
-    }
+    },
+    lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
+      type: String,
+      default: "en"
+    },
   }
 }
 </script>

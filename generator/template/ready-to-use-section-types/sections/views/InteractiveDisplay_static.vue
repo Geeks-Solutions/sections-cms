@@ -38,7 +38,7 @@
                   <gWysiwygContent tag="span" :wrapper-classes="block.textClasses" :classes="`text-center p-0`" :html-content="block.text[lang]" />
                 </p>
               </div>
-              <global-link v-if="block.cta && block.cta[lang]" :link="block.ctaLink" :lang="lang" :form-link-target="block.ctaLinkTarget">
+              <global-link v-if="block.cta && block.cta[lang]" :link="block.ctaLink" :lang="lang" :default-lang="defaultLang" :form-link-target="block.ctaLinkTarget">
                 <div class="button-selector">
 				  {{ block.cta[lang] }}
 				</div>
@@ -71,7 +71,7 @@
               <gWysiwygContent tag="span" :wrapper-classes="settings[0].videoTextClasses" :classes="`text-center p-0`" :html-content="settings[0].videoText[lang]" />
             </p>
           </div>
-          <global-link v-if="settings[0].videoCta && settings[0].videoCta[lang]" :link="settings[0].videoCtaLink" :lang="lang" :form-link-target="settings[0].videoCtaLinkTarget" class="pointer-events-auto">
+          <global-link v-if="settings[0].videoCta && settings[0].videoCta[lang]" :link="settings[0].videoCtaLink" :lang="lang" :default-lang="defaultLang" :form-link-target="settings[0].videoCtaLinkTarget" class="pointer-events-auto">
             <div class="button-selector">
               {{ settings[0].videoCta[lang] }}
             </div>
@@ -93,6 +93,10 @@ export default {
       default: () => {},
     },
     lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
       type: String,
       default: "en"
     },

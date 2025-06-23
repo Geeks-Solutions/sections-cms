@@ -181,12 +181,14 @@
 :root {
   --primary-color: #03B1C7 !important;
   --secondary-color: #00131F !important;
+  --background-color: #00131F;
+  --hover-background-color: #00131F;
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
   --h1-color: var(--primary-color);
-  --h2-color: unset;
-  --h3-color: unset;
-  --h4-color: unset;
+  --h2-color: var(--secondary-color);
+  --h3-color: var(--secondary-color);
+  --h4-color: var(--secondary-color);
   --primary-button-text-color: var(--secondary-color);
   --hover-primary-button-text-color: var(--secondary-color);
   --primary-button-background-color: #FFF;
@@ -199,13 +201,18 @@
   --hover-secondary-button-background-color: transparent;
   --secondary-button-border-color: transparent;
   --hover-secondary-button-border-color: transparent;
-  --link-text-color: #06c;
-  --hover-link-text-color: #06c;
+  --link-text-color: var(--primary-color);
+  --hover-link-text-color: var(--primary-color);
   --link-background-color: unset;
   --hover-link-background-color: unset;
   --link-border-color: unset;
   --hover-link-border-color: unset;
-  --p-color: #000;
+  --p-color: var(--secondary-color);
+  --menu-text-color: #00131F;
+  --hover-menu-text-color: #00131F;
+  --cookie-background-color: #00131F;
+  --hover-cookie-background-color: #00131F;
+  --cookie-p-color: white;
 }
 
 html {
@@ -273,7 +280,7 @@ section ol {
 section .wys-wrapper .ql-snow a:not(.ql-a-button), section .ql-snow article.ql-editor a:not(.ql-a-button) {
   color: var(--link-text-color);
   border-color: var(--link-border-color);
-  background-color: var(--link-background-color);
+  background: var(--link-background-color);
   font-size: 14px;
   border: 1px solid var(--link-border-color);
 }
@@ -281,7 +288,7 @@ section .wys-wrapper .ql-snow a:not(.ql-a-button), section .ql-snow article.ql-e
 section .wys-wrapper .ql-snow a:not(.ql-a-button):hover, section .ql-snow article.ql-editor a:not(.ql-a-button):hover {
   color: var(--hover-link-text-color);
   border-color: var(--hover-link-border-color);
-  background-color: var(--hover-link-background-color);
+  background: var(--hover-link-background-color);
   font-size: 14px;
   border: 1px solid var(--hover-link-border-color);
 }
@@ -305,7 +312,11 @@ section .html-content a:not(.ql-a-button)::before {
 }
 
 .simple-cta {
-  background: #00131F;
+  background: var(--background-color);
+}
+
+.simple-cta:hover {
+  background: var(--hover-background-color);
 }
 
 section .view-component button {
@@ -314,7 +325,7 @@ section .view-component button {
 
 section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect), .simple-menu.main .sign-up {
   font-size: 14px !important;
-  border: 1px dashed var(--primary-button-border-color) !important;
+  border: 1px solid var(--primary-button-border-color) !important;
   border-radius: 6px !important;
   padding: 8px 8px !important;
   color: var(--primary-button-text-color) !important;
@@ -326,7 +337,7 @@ section .view-component button.quill-button-container, section .view-component b
 }
 
 section .view-component button.quill-button-container:hover, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover, .simple-menu.main .sign-up:hover {
-  border: 1px dashed var(--hover-primary-button-border-color) !important;
+  border: 1px solid var(--hover-primary-button-border-color) !important;
   color: var(--hover-primary-button-text-color) !important;
   background: var(--hover-primary-button-background-color) !important;
 }
@@ -337,7 +348,7 @@ section .view-component button.quill-button-container:hover, section .view-compo
 
 .simple-cta .button-selector {
   font-size: 14px;
-  border: 1px dashed var(--secondary-button-border-color);
+  border: 1px solid var(--secondary-button-border-color);
   border-radius: 6px;
   padding: 8px;
   color: var(--secondary-button-text-color);
@@ -346,14 +357,14 @@ section .view-component button.quill-button-container:hover, section .view-compo
 }
 
 .simple-cta .button-selector:hover {
-  border: 1px dashed var(--hover-secondary-button-border-color);
+  border: 1px solid var(--hover-secondary-button-border-color);
   color: var(--hover-secondary-button-text-color);
   background: var(--hover-secondary-button-background-color) !important;
 }
 
 input {
   font-size: 1rem !important;
-  border: 2px dashed lightgray;
+  border: 2px solid lightgray;
   height: 55px;
   line-height: 24px !important;
   outline: none;
@@ -384,20 +395,20 @@ input:not(:placeholder-shown) {
 
 .button-selector {
   font-size: 14px;
-  border: 1px dashed var(--primary-button-border-color);
+  border: 1px solid var(--primary-button-border-color);
   border-radius: 6px;
   padding: 8px;
   color: var(--primary-button-text-color);
   height: max-content;
   white-space: nowrap;
   align-self: center;
-  background-color: var(--primary-button-background-color);
+  background: var(--primary-button-background-color);
 }
 
 .button-selector:hover {
-  border: 1px dashed var(--hover-primary-button-border-color);
+  border: 1px solid var(--hover-primary-button-border-color);
   color: var(--hover-primary-button-text-color);
-  background-color: var(--hover-primary-button-background-color);
+  background: var(--hover-primary-button-background-color);
 }
 
 .faq .section-wrapper .question.expanded {
@@ -714,7 +725,7 @@ input:not(:placeholder-shown) {
 }
 
 .simple-menu.main .lang {
-  background: #03B1C7;
+  background: var(--primary-color);
   color: white;
   font-weight: 300;
   width: 30px;
@@ -732,6 +743,11 @@ input:not(:placeholder-shown) {
 
 .simple-menu.main ul li a p {
   font-size: 16px;
+  color: var(--menu-text-color);
+}
+
+.simple-menu.main ul li a p:hover {
+  color: var(--hover-menu-text-color);
 }
 
 .simple-menu h3 {
@@ -855,7 +871,7 @@ input:not(:placeholder-shown) {
 
   .simple-menu.main .mobile-menu-main-wrapper ul li.sign-up a p {
     font-size: 16px !important;
-    border: 1px dashed black;
+    border: 1px solid black;
     padding: 8px 14px 8px 8px;
     margin-left: 3rem !important;
   }
@@ -915,7 +931,7 @@ input:not(:placeholder-shown) {
 
   .simple-menu.main .mobile-menu-main-wrapper ul li.home {
     display: flex;
-    border: 1px dashed #03B1C7;
+    border: 1px solid #03B1C7;
     margin-top: 18px;
   }
 
@@ -971,7 +987,7 @@ section .text-image .row-wrapper {
   --cookie-control-modalButtonColor: #fff;
   --cookie-control-modalUnsavedColor: #fff;
   --cookie-control-barButtonBackground: #03B1C7;
-  --cookie-control-modalButtonHoverColor: #03B1C7;
+  --cookie-control-modalButtonHoverColor: var(--primary-color);
   --cookie-control-controlButtonIconColor: #fff;
   --cookie-control-modalButtonBackground: #03B1C7;
   --cookie-control-modalButtonShadowedBackground: #aaa;
@@ -1047,7 +1063,6 @@ section .text-image .row-wrapper {
 
 .cookieControl {
   position: relative;
-  z-index: 100000;
 }
 
 .cookieControl button {
@@ -1063,13 +1078,17 @@ section .text-image .row-wrapper {
 
 .cookieControl__Bar {
   position: fixed;
-  background-color: var(--cookie-control-barBackground);
+  background: var(--cookie-background-color);
   z-index: 10;
+}
+
+.cookieControl__Bar:hover {
+  background: var(--hover-cookie-background-color);
 }
 
 .cookieControl__Bar h3,
 .cookieControl__Bar p {
-  color: var(--cookie-control-barTextColor);
+  color: var(--cookie-p-color);
   max-width: 900px;
 }
 
@@ -1084,20 +1103,12 @@ section .text-image .row-wrapper {
 }
 
 .cookieControl__Bar button {
-  color: var(--cookie-control-barButtonColor);
-  background-color: var(--cookie-control-barButtonBackground);
-  border: 1px solid var(--cookie-control-modalButtonHoverColor);
   max-height: 64px;
   width: auto;
   min-width: auto;
   border-radius: 16px;
   height: auto;
   min-height: auto;
-}
-
-.cookieControl__Bar button:hover {
-  color: var(--cookie-control-barButtonHoverColor);
-  background-color: var(--cookie-control-barButtonHoverBackground);
 }
 
 .cookieControl__Bar button+button {
@@ -1209,9 +1220,6 @@ section .text-image .row-wrapper {
 
 .cookieControl__Modal button {
   white-space: nowrap;
-  color: var(--cookie-control-modalButtonColor);
-  background-color: var(--cookie-control-modalButtonBackground);
-  border: 1px solid var(--cookie-control-modalButtonHoverColor);
   max-height: 64px;
   width: auto;
   min-width: auto;
@@ -1222,18 +1230,15 @@ section .text-image .row-wrapper {
 
 .cookieControl__Modal button.shadowed {
   white-space: nowrap;
-  color: var(--cookie-control-modalButtonColor);
-  background-color: var(--cookie-control-modalButtonShadowedBackground);
-  border: 1px solid var(--cookie-control-modalButtonShadowedBackground);
+  color: var(--secondary-button-text-color);
+  background: var(--secondary-button-background-color);
+  border: 1px solid var(--secondary-button-border-color);
 }
 
 .cookieControl__Modal button.shadowed:hover {
-  border: 1px solid var(--cookie-control-modalButtonHoverColor);
-}
-
-.cookieControl__Modal button:hover {
-  color: var(--cookie-control-modalButtonHoverColor);
-  background-color: var(--cookie-control-modalButtonHoverBackground);
+  color: var(--hover-secondary-button-text-color);
+  background: var(--hover-secondary-button-background-color);
+  border: 1px solid var(--hover-secondary-button-border-color);
 }
 
 .cookieControl__ModalContent {
@@ -1289,7 +1294,7 @@ section .text-image .row-wrapper {
 }
 
 .cookieControl__ModalContent input:checked+label {
-  background-color: var(--cookie-control-checkboxActiveBackground);
+  background: var(--primary-color);
 }
 
 .cookieControl__ModalContent input:checked+label:before {
@@ -1467,8 +1472,8 @@ section .text-image .row-wrapper {
   backface-visibility: hidden;
   transition: background-color 200ms;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  background: var(--cookie-control-controlButtonBackground);
-  border: 1px solid var(--cookie-control-modalButtonHoverColor);
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
 
 .cookieControl__ControlButton svg {
@@ -1490,5 +1495,5 @@ section .text-image .row-wrapper {
 }
 
 .cookieControl__ControlButton:hover svg {
-  color: var(--cookie-control-controlButtonIconHoverColor);
+  color: var(--primary-color);
 }

@@ -59,7 +59,7 @@
 				  </ul>
 				</div>
 				<div class="flex justify-center cursor-pointer">
-				  <global-link :link="plan.ctaLink" :lang="lang" :form-link-target="plan.ctaLinkTarget">
+				  <global-link :link="plan.ctaLink" :lang="lang" :default-lang="defaultLang" :form-link-target="plan.ctaLinkTarget">
 					<div class="flex">
 					  <div v-if="(plan.ctaLabel && plan.ctaLabel[lang]) || (settings.globalCtaLabel && settings.globalCtaLabel[lang])" class="pr-2 cta-arrow" :class="{'mostPopular' : plan.mostPopular === true}">
 						=>
@@ -95,6 +95,10 @@ export default {
 	  default: () => {},
 	},
 	lang: {
+	  type: String,
+	  default: "en"
+	},
+    defaultLang: {
 	  type: String,
 	  default: "en"
 	},

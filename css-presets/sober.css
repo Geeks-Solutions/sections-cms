@@ -165,40 +165,48 @@
   --neutral-600: #666666;
   --neutral-800: #262626;
   --neutral-900: #1a1a1a;
+  --tertiary-color: #468ef9;
   --plans-hover: #e5e7eb;
+  --tw-gradient-to: #0c66ee;
+  --tw-gradient-from: #468ef9;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
 
   --primary-color: #0c66ee !important;
-  --secondary-color: #468ef9 !important;
+  --secondary-color: #262626 !important;
+  --background-color: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%);
+  --hover-background-color: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%);
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
-  --h1-color: #262626;
-  --h2-color: #262626;
-  --h3-color: #262626;
-  --h4-color: #262626;
+  --h1-color: var(--primary-color);
+  --h2-color: var(--secondary-color);
+  --h3-color: var(--secondary-color);
+  --h4-color: var(--secondary-color);
   --primary-button-text-color: white;
   --hover-primary-button-text-color: white;
-  --primary-button-background-color: var(--primary-color);
-  --hover-primary-button-background-color: var(--primary-color);
-  --primary-button-border-color: var(--primary-color);
-  --hover-primary-button-border-color: var(--primary-color);
+  --primary-button-background-color: linear-gradient(to right, var(--tw-gradient-stops));
+  --hover-primary-button-background-color: linear-gradient(to right, var(--tw-gradient-stops));
+  --primary-button-border-color: #0c66ee;
+  --hover-primary-button-border-color: #0c66ee;
   --secondary-button-text-color: var(--primary-color);
   --hover-secondary-button-text-color: var(--primary-color);
   --secondary-button-background-color: inherit;
   --hover-secondary-button-background-color: transparent;
   --secondary-button-border-color: var(--primary-color);
   --hover-secondary-button-border-color: var(--primary-color);
-  --link-text-color: #4A8FF6;
-  --hover-link-text-color: #4A8FF6;
+  --link-text-color: var(--primary-color);
+  --hover-link-text-color: var(--primary-color);
   --link-background-color: white;
   --hover-link-background-color: white;
   --link-border-color: transparent;
   --hover-link-border-color: transparent;
-  --p-color: rgb(55 65 81 / var(--tw-text-opacity));
+  --p-color: #374151;
+  --menu-text-color: #666666;
+  --hover-menu-text-color: #1a1a1a;
+  --cookie-background-color: #468ef9;
+  --hover-cookie-background-color: #468ef9;
+  --cookie-p-color: white;
 
-  --cookie-control-barBackground: var(--secondary-color);
-  --cookie-control-barTextColor: #fff;
-  --cookie-control-barButtonColor: #fff;
-  --cookie-control-barButtonHoverColor: var(--primary-color);
+
   --cookie-control-modalTextColor: var(--neutral-800);
   --cookie-control-modalBackground: #fff;
   --cookie-control-modalOverlayOpacity: 0.8;
@@ -213,7 +221,6 @@
   --cookie-control-barButtonHoverBackground: #fff;
   --cookie-control-checkboxActiveBackground: var(--primary-color);
   --cookie-control-controlButtonIconHoverColor: var(--primary-color);
-  --cookie-control-checkboxInactiveBackground: var(--secondary-color);
   --cookie-control-modalButtonHoverBackground: #fff;
   --cookie-control-modalOverlay: var(--neutral-800);
   --cookie-control-checkboxDisabledBackground: #ddd;
@@ -261,12 +268,12 @@ section h4 {
 section h5 {
   font-size: 0.875rem; /* sm */
   font-weight: 500; /* medium */
-  color: var(--neutral-600);
+  color: var(--secondary-color);
 }
 section h6 {
   font-size: 0.25rem; /* sm */
   font-weight: 500; /* medium */
-  color: var(--neutral-800);
+  color: var(--secondary-color);
 }
 @media (min-width: 640px) { /* sm */
   section h1 {
@@ -305,7 +312,7 @@ section .view-component button {
   white-space: normal;
 }
 
-.whatsapp-checkout-button, .button-selector, section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
+.simple-menu.main ul li.sign-up .global-link p, .whatsapp-checkout-button, .button-selector, section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
   font-size: 0.875rem; /* sm */
   text-align: center;
   border-width: 1px;
@@ -315,10 +322,7 @@ section .view-component button {
   border-color: var(--primary-button-border-color) !important;
   padding: 1rem 2rem !important;
   color: var(--primary-button-text-color); /* white */
-  --tw-gradient-to: var(--primary-color);
-  --tw-gradient-from: var(--secondary-color);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  background: var(--primary-button-background-color);
   transition-duration: 300ms;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -326,7 +330,7 @@ section .view-component button {
   max-width: 100%;
 }
 
-.whatsapp-checkout-button:hover, .button-selector:hover, section .view-component button.quill-button-container:hover, section .view-component button:hover {
+.simple-menu.main ul li.sign-up .global-link p:hover, .whatsapp-checkout-button:hover, .button-selector:hover, section .view-component button.quill-button-container:hover, section .view-component button:hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
@@ -335,10 +339,7 @@ section .view-component button {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   border-color: var(--hover-primary-button-border-color) !important;
   color: var(--hover-primary-button-text-color); /* white */
-  --tw-gradient-to: var(--primary-color);
-  --tw-gradient-from: var(--secondary-color);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  background: var(--hover-primary-button-background-color);
 }
 
 input {
@@ -478,7 +479,11 @@ input:focus {
 }
 
 .SimpleMenu .view-component:has(> .simple-menu.main) {
-  background: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%) !important;
+  background: var(--background-color) !important;
+}
+
+.SimpleMenu .view-component:has(> .simple-menu.main):hover {
+  background: var(--hover-background-color) !important;
 }
 
 .simple-menu.main {
@@ -614,7 +619,7 @@ input:focus {
   font-size: 0.875rem; /* text-sm */
   background: transparent; /* bg-transparent */
   border-radius: 0.5rem; /* rounded-lg */
-  color: var(--neutral-600); /* text-[#666666] */
+  color: var(--menu-text-color); /* text-[#666666] */
   transition: color 0.3s ease; /* focus:shadow-outline, hover:text-gray-900 */
 }
 
@@ -629,42 +634,12 @@ input:focus {
 }
 
 .simple-menu ul li:not(.login):not(.sign-up) .global-link p:hover {
-  color: var(--neutral-900); /* hover:text-gray-900 */
+  color: var(--hover-menu-text-color); /* hover:text-gray-900 */
 }
 
 .simple-menu ul li:not(.login):not(.sign-up) .global-link p:focus {
   outline: none; /* focus:outline-none */
   box-shadow: 0 4px 6px rgba(12, 102, 238, 0.5); /* focus:shadow-outline */
-}
-
-.simple-menu.main ul li.sign-up .global-link p {
-  font-size: 0.875rem; /* sm */
-  line-height: 1.25rem;
-  text-align: center;
-  border-width: 1px;
-  border-radius: 9999px; /* full */
-  --tw-border-opacity: 1;
-  border-color: var(--primary-color);
-  padding: 0.75rem 2rem;
-  color: #ffffff; /* white */
-  --tw-gradient-to: var(--primary-color);
-  --tw-gradient-from: var(--secondary-color);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(70 142 249 / 0));
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
-  transition-duration: 300ms;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  width: max-content;
-  max-width: 100%;
-}
-
-.simple-menu.main ul li.sign-up .global-link p:hover {
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-shadow-color: rgb(12 102 238 / 0.5);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  --tw-shadow: var(--tw-shadow-colored);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 @media (min-width: 1280px) { /* xl */
@@ -1981,6 +1956,13 @@ section .view-component .restaurant-menu button.item-qty-plus {
   }
 }
 
+.simple-cta {
+  background: var(--background-color);
+}
+
+.simple-cta:hover {
+  background: var(--hover-background-color);
+}
 
 /* */
 
@@ -2009,7 +1991,6 @@ section .view-component .restaurant-menu button.item-qty-plus {
 }
 .cookieControl {
   position: relative;
-  z-index: 100000;
 }
 .cookieControl button {
   border: 0;
@@ -2023,10 +2004,10 @@ section .view-component .restaurant-menu button.item-qty-plus {
 }
 .cookieControl__Bar {
   position: fixed;
-  background-color: var(--cookie-control-barBackground);
+  background: white;
 }
 .cookieControl__Bar h3, .cookieControl__Bar p {
-  color: var(--cookie-control-barTextColor);
+  color: var(--cookie-p-color);
   max-width: 900px;
 }
 .cookieControl__Bar h3 {
@@ -2038,8 +2019,8 @@ section .view-component .restaurant-menu button.item-qty-plus {
   margin: 5px 0 0;
 }
 .cookieControl__Bar button {
-  color: var(--cookie-control-barButtonColor);
-  background-color: var(--cookie-control-barButtonBackground);
+  color: var(--primary-button-text-color);
+  background: var(--primary-button-background-color);
   border: 1px solid var(--cookie-control-modalButtonHoverColor);
   max-height: 64px;
   width: auto;
@@ -2049,8 +2030,8 @@ section .view-component .restaurant-menu button.item-qty-plus {
   min-height: auto;
 }
 .cookieControl__Bar button:hover {
-  color: var(--cookie-control-barButtonHoverColor);
-  background-color: var(--cookie-control-barButtonHoverBackground);
+  color: var(--hover-primary-button-text-color);
+  background: var(--hover-primary-button-background-color);
 }
 .cookieControl__Bar button + button {
   margin-left: 10px;
@@ -2060,6 +2041,10 @@ section .view-component .restaurant-menu button.item-qty-plus {
   padding: 20px;
   align-items: flex-end;
   justify-content: space-between;
+  background: var(--cookie-background-color);
+}
+.cookieControl__BarContainer:hover {
+  background: var(--hover-cookie-background-color);
 }
 .cookieControl__Bar--top-full, .cookieControl__Bar--bottom-full {
   left: 0;
@@ -2130,8 +2115,8 @@ section .view-component .restaurant-menu button.item-qty-plus {
 }
 .cookieControl__Modal button {
   white-space: nowrap;
-  color: var(--cookie-control-modalButtonColor);
-  background-color: var(--cookie-control-modalButtonBackground);
+  color: var(--primary-button-text-color);
+  background: var(--primary-button-background-color);
   border: 1px solid var(--cookie-control-modalButtonHoverColor);
   max-height: 64px;
   width: auto;
@@ -2142,16 +2127,18 @@ section .view-component .restaurant-menu button.item-qty-plus {
 }
 .cookieControl__Modal button.shadowed {
   white-space: nowrap;
-  color: var(--cookie-control-modalButtonColor);
-  background-color: var(--cookie-control-modalButtonShadowedBackground);
-  border: 1px solid var(--cookie-control-modalButtonShadowedBackground);
+  color: var(--primary-button-text-color);
+  background: var(--primary-button-background-color);
+  border: 1px solid var(--primary-button-border-color);
 }
 .cookieControl__Modal button.shadowed:hover {
-  border: 1px solid var(--cookie-control-modalButtonHoverColor);
+  color: var(--hover-primary-button-text-color);
+  background: var(--hover-primary-button-background-color);
+  border: 1px solid var(--hover-primary-button-border-color);
 }
 .cookieControl__Modal button:hover {
-  color: var(--cookie-control-modalButtonHoverColor);
-  background-color: var(--cookie-control-modalButtonHoverBackground);
+  color: var(--hover-primary-button-text-color);
+  background: var(--hover-primary-button-background-color);
 }
 .cookieControl__ModalContent {
   position: relative;
@@ -2364,7 +2351,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
   background-color: var(--cookie-control-controlButtonHoverBackground);
 }
 .cookieControl__ControlButton:hover svg {
-  color: var(--cookie-control-controlButtonIconHoverColor);
+  color: var(--primary-color);
 }
 
 
@@ -2516,7 +2503,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
 .plans.plans-wrapper .sectionsPack .title {
   font-size: 36px;
   font-weight: 600;
-  color: var(--secondary-color);
+  color: var(--tertiary-color);
   text-align: center;
 }
 .plans.plans-wrapper .sectionsPack .subtitle {
@@ -2546,7 +2533,7 @@ section .view-component .restaurant-menu button.item-qty-plus {
   font-weight: 300;
   font-size: 6rem;
   line-height: 1;
-  color: var(--secondary-color);
+  color: var(--tertiary-color);
 }
 .plans.plans-wrapper .currency {
   font-size: 1.25rem;
@@ -2607,13 +2594,13 @@ section .view-component .restaurant-menu button.item-qty-plus {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: var(--secondary-color);
+  color: var(--tertiary-color);
 }
 .plans.plans-wrapper .cta-arrow {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: var(--secondary-color);
+  color: var(--tertiary-color);
 }
 .plans.plans-wrapper .plansBox:hover .cta-arrow {
   font-size: 1.25rem;

@@ -1,5 +1,5 @@
 <template>
-  <BlogsArticles :section-render-data="{articles: sectionRenderData}" :section-render-settings="sectionRenderSettings" :lang="lang" />
+  <BlogsArticles :section-render-data="{articles: sectionRenderData}" :section-render-settings="sectionRenderSettings" :lang="lang" :default-lang="defaultLang" />
 </template>
 
 <script>
@@ -12,6 +12,10 @@ export default {
       default: () => {},
     },
     lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
       type: String,
       default: "en"
     },
