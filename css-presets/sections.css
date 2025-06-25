@@ -293,14 +293,6 @@ section .wys-wrapper .ql-snow a:not(.ql-a-button):hover, section .ql-snow articl
   border: 1px solid var(--hover-link-border-color);
 }
 
-section .ql-editor a:not(.ql-a-button)::before {
-  content: "🔗";
-}
-
-section .html-content a:not(.ql-a-button)::before {
-  content: "🔗";
-}
-
 .simple-cta h2 {
   font-size: 24px;
   color: white;
