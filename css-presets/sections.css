@@ -670,7 +670,8 @@ input:not(:placeholder-shown) {
   border-radius: 0;
   max-height: 58px;
   margin-left: 48px;
-  max-width: 70%
+  max-width: 70%;
+  width: auto !important;
 }
 
 @media screen and (max-width: 768px) {
