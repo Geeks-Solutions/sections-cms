@@ -677,6 +677,9 @@ input:not(:placeholder-shown) {
     transform: translate(-50%, -50%);
     margin-left: 0;
   }
+  .articles .articles-wrapper .card-wrapper img {
+    height: 300px;
+  }
 }
 
 .simple-menu.main {
