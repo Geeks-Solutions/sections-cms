@@ -50,7 +50,7 @@
             <label class="mr-4 font-medium">{{ $t("ServicePackages.categoryName") }}*</label>
             <input v-model="object.name[selectedLang]" type="text" placeholder="Category Name"
               :class="sectionsStyle.input" />
-            <span v-show="errors.categories[idx].name === true" class="text-error text-sm pt-2 pl-2">{{
+            <span v-show="errors.categories[idx].name === true && selectedLang === defaultLang" class="text-error text-sm pt-2 pl-2">{{
               $t('ServicePackages.requiredField') }}</span>
           </div>
 
@@ -114,7 +114,7 @@
               <label class="mr-4 font-medium">{{ $t("ServicePackages.itemName") }}*</label>
               <input v-model="object.name[selectedLang]" type="text" placeholder="Item Name"
                 :class="sectionsStyle.input" />
-              <span v-show="getErrorForServiceItem(object.id, 'name') === true" class="text-error text-sm pt-2 pl-2">{{
+              <span v-show="getErrorForServiceItem(object.id, 'name') === true && selectedLang === defaultLang" class="text-error text-sm pt-2 pl-2">{{
                 $t('ServicePackages.requiredField') }}</span>
             </div>
 
@@ -393,8 +393,13 @@
         </div>
       </div>
     </div>
+
+    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
+
   </div>
 </template>
+
+<i18n src="./ServicePackages_i18n.json"></i18n>
 
 <script>
 import { v4 as uuidv4 } from 'uuid';
@@ -403,8 +408,21 @@ import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'ServicePackages',
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     selectedLang: {
+      type: String,
+      default: 'en'
+    },
+    defaultLang: {
       type: String,
       default: 'en'
     },
@@ -505,7 +523,7 @@ export default {
     },
     selectedLang: {
       handler(newLang) {
-        // When language changes, we need to reload details text for the currently 
+        // When language changes, we need to reload details text for the currently
         // visible service items in the selected category
         if (this.selectedCategoryId && this.settings[0].serviceItems) {
           this.settings[0].serviceItems.forEach(item => {
@@ -1008,7 +1026,7 @@ export default {
         this.errors.categories[idx].name = false;
 
         // Check for required name
-        if (!category.name.en) {
+        if (!category.name[this.defaultLang]) {
           this.errors.categories[idx].name = true;
           valid = false;
         }
@@ -1028,7 +1046,7 @@ export default {
         }
 
         // Check for required fields
-        if (!item.name.en) {
+        if (!item.name[this.defaultLang]) {
           this.errors.serviceItems[errorIdx].name = true;
           valid = false;
         }
@@ -1082,10 +1100,6 @@ export default {
       }
 
       if (!valid) {
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
         scrollToFirstError(this.errors);
       }
 

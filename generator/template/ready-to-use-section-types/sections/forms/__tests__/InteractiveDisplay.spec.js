@@ -1,5 +1,16 @@
 import { shallowMount } from "@vue/test-utils";
 import InteractiveDisplay from "../InteractiveDisplay.vue";
+import { createI18n } from 'vue-i18n'
+
+const i18n = createI18n({
+  legacy: false,
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: {},
+    fr: {}
+  }
+})
 
 describe('InteractiveDisplay', () => {
   let wrapper;
@@ -17,7 +28,8 @@ describe('InteractiveDisplay', () => {
           globalProperties: {
             $t: vi.fn()
           }
-        }
+        },
+        plugins: [i18n]
       },
       data() {
         return defaultData

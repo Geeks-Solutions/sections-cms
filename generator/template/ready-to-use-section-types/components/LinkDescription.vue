@@ -6,9 +6,19 @@
   </div>
 </template>
 
-<script>
+<i18n src="../sections/forms/Shared_i18n.json"></i18n>
 
+<script>
 export default {
-  name: 'LinkDescription'
+  name: 'LinkDescription',
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
 }
 </script>

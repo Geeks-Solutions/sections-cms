@@ -1,11 +1,11 @@
 <template>
   <div class="w-full">
     <div id="default_limit" class="flex flex-col items-start justify-start">
-      <label class="mr-4 font-bold">{{ $t("forms.defaultLimit")+'*' }}</label>
+      <label class="mr-4 font-bold">{{ $t("defaultLimit")+'*' }}</label>
       <input
         v-model="default_limit"
         type="text"
-        :placeholder="$t('forms.defaultLimit')"
+        :placeholder="$t('defaultLimit')"
         :class="inputStyle"
         @input="changeFieldValue"
       />

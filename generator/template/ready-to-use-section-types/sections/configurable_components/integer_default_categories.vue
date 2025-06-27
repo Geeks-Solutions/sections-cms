@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <label class="mr-4 font-bold">{{ $t("forms.defaultCategories")+'*' }}</label>
+    <label class="mr-4 font-bold">{{ $t("defaultCategories")+'*' }}</label>
     <div v-if="optionValues.option_values">
       <div class="selectMultipleOptions">
         <div v-for="option in optionValues.option_values" :key="option.id" class="multiple-options-wrapper">

@@ -12,9 +12,20 @@
   </div>
 </template>
 
+<i18n src="../../sections/forms/Blogs_i18n.json"></i18n>
+
 <script>
 export default {
   name: "ArticlesCategories",
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     section: {
       type: Object,

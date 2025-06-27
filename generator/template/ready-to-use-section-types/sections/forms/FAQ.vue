@@ -20,29 +20,29 @@
 
     <div class="flex flex-col items-start justify-start mt-8">
       <div class="flex">
-        <label class="mr-4 font-bold">{{ $t("Title") }}</label>
+        <label class="mr-4 font-bold">{{ $t("forms.title") }}</label>
       </div>
       <input
         v-model="settings[0][siteLang].title"
         type="text"
-        :placeholder="$t('Title')"
-        :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.title ? 'border-error' : 'border-FieldGray']"
+        :placeholder="$t('forms.title')"
+        :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.title && selectedLang === defaultLang ? 'border-error' : 'border-FieldGray']"
       />
     </div>
 
     <div class="flex flex-col mt-4">
 
-      <LazySectionsFormsFieldSets :array-data-pop="settings[0].QAs" :fieldset-group="'qa'" :legend-label="$t('QA')" @array-updated="(data) => settings[0]['QAs'] = data" @remove-fieldset="(object, idx) => removeQA(idx)">
+      <LazySectionsFormsFieldSets :array-data-pop="settings[0].QAs" :fieldset-group="'qa'" :legend-label="$t('forms.qa')" @array-updated="(data) => settings[0]['QAs'] = data" @remove-fieldset="(object, idx) => removeQA(idx)">
         <template #default="{ object, idx }">
           <div class="flex flex-row w-full justify-between">
             <div class="flex flex-col w-full items-start justify-start">
               <div class="flex flex-row w-full justify-between mt-6">
-                <label class="mr-4 font-medium">{{ $t("Question") }}</label>
+                <label class="mr-4 font-medium">{{ $t("forms.question") }}</label>
               </div>
               <input
                 v-model="object[siteLang].question"
                 type="text"
-                :placeholder="$t('Question')"
+                :placeholder="$t('forms.question')"
                 class="
             py-4
             pl-6
@@ -58,7 +58,7 @@
           </div>
 
           <div class="flex flex-col items-start justify-start mt-8">
-            <label class="mr-4 font-medium">{{ $t("Answer") }}</label>
+            <label class="mr-4 font-medium">{{ $t("forms.answer") }}</label>
             <LazyEditorWysiwyg :quill-key="`object-${idx}`" :html="object[siteLang].answer" :css-classes-prop="object.classes" @cssClassesChanged="(v) => object['classes'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateQAAnswer(content, idx)"/>
           </div>
         </template>
@@ -69,21 +69,38 @@
         :class="{ disabled: settings[0].QAs.length === 4 }"
         @click="addQA()"
       >
-        <div class="p3 bold text">{{ $t("ADD NEW Container") }}</div>
+        <div class="p3 bold text">{{ $t("forms.addNewContainer") }}</div>
       </div>
 
 
     </div>
 
+    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
+
   </div>
 </template>
+
+<i18n src="./Shared_i18n.json"></i18n>
 
 <script>
 
 export default {
   name: "FAQ",
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     selectedLang: {
+      type: String,
+      default: 'en'
+    },
+    defaultLang: {
       type: String,
       default: 'en'
     },
@@ -209,15 +226,9 @@ export default {
       }
       let valid = true;
       this.errors.title = false;
-      if (!this.settings[0].en.title) {
+      if (!this.settings[0][this.defaultLang].title) {
         this.errors.title = true;
         valid = false;
-      }
-      if (!valid) {
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
       }
       return valid;
     }

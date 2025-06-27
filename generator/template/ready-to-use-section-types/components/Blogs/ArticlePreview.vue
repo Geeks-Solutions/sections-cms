@@ -4,7 +4,7 @@
       <NuxtImg :src="image" :alt="imageAlt" class="md:min-w-[440px] w-full md:w-440px object-cover"
                width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
                loading="lazy"/>
     </div>
     <div class="flex flex-col gap-4 w-full justify-between preview-block-wrapper">
