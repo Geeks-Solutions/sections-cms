@@ -1,5 +1,16 @@
 import { shallowMount } from "@vue/test-utils";
 import TextImage from "../TextImage.vue";
+import { createI18n } from 'vue-i18n'
+
+const i18n = createI18n({
+  legacy: false,
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: {},
+    fr: {}
+  }
+})
 
 describe('TextImage', () => {
   let wrapper;
@@ -17,7 +28,8 @@ describe('TextImage', () => {
           globalProperties: {
             $t: vi.fn()
           }
-        }
+        },
+        plugins: [i18n]
       },
       data() {
         return defaultData

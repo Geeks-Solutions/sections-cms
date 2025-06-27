@@ -3,6 +3,10 @@ import CategoriesArticlesConfigurable from "../categories_articles_configurable.
 import { extractQsValue } from '../../../utils/constants'
 
 vi.mock('@/utils/constants', () => ({
+  isAnchorOrExternalLink: vi.fn(),
+  emitGlobalEvent: vi.fn(),
+  isGlobalEvent: vi.fn(),
+  linkTarget: vi.fn(),
   extractQsValue: vi.fn(),
   importAsset: vi.fn(),
   BLOGS_LIST_SIZE: 40,

@@ -38,7 +38,7 @@
                 :style="{ transform: `scale(${zoom})` }"
                 width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
                 loading="lazy"
                 @wheel.prevent="handleZoom"
               />
@@ -50,7 +50,7 @@
                 :style="{ transform: `scale(${zoom})` }"
                 width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
                 loading="lazy"
                 @wheel.prevent="handleZoom"
               />

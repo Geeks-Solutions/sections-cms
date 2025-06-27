@@ -1,0 +1,32 @@
+{
+  "en":{
+    "blogs": {
+      "readStory": "Read Our Story",
+      "viewAllPosts": "View all posts",
+      "beautifulIdeas": "Beautiful Ideas",
+      "discoverFavorites": "Discover our favorites - the blog",
+      "allCategories": "All categories",
+      "published": "Published {time}",
+      "readPost": "Read post",
+      "next": "Next",
+      "previous": "Previous",
+      "copyLink": "Copy link",
+      "copied": "The article link was successfully copied"
+    }
+  },
+  "fr": {
+    "blogs": {
+      "readStory": "Lire Notre Histoire",
+      "viewAllPosts": "Afficher tous",
+      "beautifulIdeas": "Belles Idées",
+      "discoverFavorites": "Découvrir nos coups de coeur - le blog",
+      "allCategories": "Toutes les catégories",
+      "published": "Publié {time}",
+      "readPost": "Lire l'article",
+      "next": "Suivant",
+      "previous": "Précédent",
+      "copyLink": "Copier le lien",
+      "copied": "Le lien de l'article a été copié avec succès"
+    }
+  }
+}

@@ -12,7 +12,7 @@
            sizes="100%"
            width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
            loading="lazy"/>
     </div>
     <div class="flex flex-col items-center body-wrapper">
@@ -21,11 +21,22 @@
   </div>
 </template>
 
+<i18n src="../../sections/forms/Blogs_i18n.json"></i18n>
+
 <script>
 import {parseTime} from "@/utils/constants";
 
 export default {
   name: "FullArticle",
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     section: {
       type: Object,

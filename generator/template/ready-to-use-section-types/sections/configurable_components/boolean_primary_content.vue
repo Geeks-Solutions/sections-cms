@@ -1,7 +1,7 @@
 <template>
   <div id="BooleanPrimaryContent" class="w-full">
     <div class="flex flex-row items-center cursor-pointer">
-      <label class="mr-3 font-bold">{{ $t("forms.primaryContent") }}</label>
+      <label class="mr-3 font-bold">{{ $t("primaryContent") }}</label>
       <input
         :checked="primary_content"
         type="checkbox"

@@ -86,25 +86,42 @@
     <div id="title" class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.title") + '*' }}</label>
       <LazyEditorWysiwyg :html="settings[0].title[selectedLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => settings[0]['titleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content)"/>
-      <span v-if="errors.title === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+      <span v-if="errors.title === true && selectedLang === defaultLang" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
     <div id="text" class="flex flex-col items-start justify-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t("forms.text") + '*' }}</label>
       <LazyEditorWysiwyg :html="settings[0].text[selectedLang]" :css-classes-prop="settings[0].textClasses" @cssClassesChanged="(v) => settings[0]['textClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content)"/>
-      <span v-if="errors.text === true " class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+      <span v-if="errors.text === true && selectedLang === defaultLang" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
+
+    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
 
   </div>
 </template>
+
+<i18n src="./Shared_i18n.json"></i18n>
 
 <script>
 import {sectionsStyle, scrollToFirstError} from "@/utils/constants";
 
 export default {
   name: 'TextImage',
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     selectedLang: {
+      type: String,
+      default: 'en'
+    },
+    defaultLang: {
       type: String,
       default: 'en'
     },
@@ -224,19 +241,15 @@ export default {
       this.errors.title = false;
       this.errors.text = false;
       this.errors.media = false;
-      if (!this.settings[0].title.en) {
+      if (!this.settings[0].title[this.defaultLang]) {
         this.errors.title = true;
         valid = false;
       }
-      if (!this.settings[0].text.en) {
+      if (!this.settings[0].text[this.defaultLang]) {
         this.errors.text = true;
         valid = false;
       }
       if (!valid) {
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
         scrollToFirstError(this.errors)
       }
       return valid;

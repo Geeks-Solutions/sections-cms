@@ -6,7 +6,7 @@
           <NuxtImg v-if="sectionRenderData.profile_image && sectionRenderData.profile_image.files && sectionRenderData.profile_image.files[0] && sectionRenderData.profile_image.files[0].thumbnail_url" :src="sectionRenderData.profile_image.files[0].thumbnail_url" alt="Author profile" class="min-w-[56px] w-[56px] h-[56px] rounded-full object-cover"
            width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
                    loading="lazy"/>
           <div class="flex flex-col">
             <p v-if="sectionRenderData.full_name" class="name">{{ sectionRenderData.full_name }}</p>
@@ -41,11 +41,22 @@
   </div>
 </template>
 
+<i18n src="../../sections/forms/Blogs_i18n.json"></i18n>
+
 <script>
 import {copyText} from "@/utils/constants";
 
 export default {
   name: "AuthorView",
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     section: {
       type: Object,

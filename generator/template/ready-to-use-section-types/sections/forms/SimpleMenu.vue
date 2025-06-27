@@ -8,7 +8,7 @@
 
     <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-medium">{{ $t("forms.logoLink") }}</label>
-      <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
+      <label class="mr-4 font-bold">{{ $t('forms.sectionsPages') }}</label>
       <gAutoComplete
         :main-filter="settings[0].logoPage[selectedLang]"
         :placeholder="$t('forms.aspectRatio')"
@@ -106,7 +106,7 @@
                   :placeholder="$t('forms.label')"
                   :class="sectionsStyle.input"
                 />
-                <span v-show="menuIdx === 0 && idx === 0 && errors.menu[idx].label === true && siteLang === 'en'"
+                <span v-show="menuIdx === 0 && idx === 0 && errors.menu[idx].label === true && selectedLang === defaultLang"
                       class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
               </div>
 
@@ -124,12 +124,12 @@
               </div>
 
               <div class="flex flex-col items-start justify-start mt-8">
-                <label class="mr-4 pb-2 font-bold">{{ $t("Language menu") }}</label>
+                <label class="mr-4 pb-2 font-bold">{{ $t("forms.languageMenu") }}</label>
                 <span class="text-xs text-Gray_800 pb-1">{{ $t("forms.languageDesc") }}</span>
                 <input
                   v-model="object.languageMenu"
                   type="checkbox"
-                  :placeholder="$t('Language menu')"
+                  :placeholder="$t('forms.languageMenu')"
                   class="
             h-[25px]
             w-[25px]
@@ -145,10 +145,10 @@
               <div v-if="menuContainer.menu[idx].languageMenu !== true">
                 <div class="flex flex-col items-start justify-start mt-8">
                   <label class="mr-4 font-medium">{{ menuIdx === 0 && idx === 0 ? $t("forms.link") + '*' : $t("forms.link") }}</label>
-                  <label class="mr-4 font-bold">{{ 'Sections pages' }}</label>
+                  <label class="mr-4 font-bold">{{ $t('forms.sectionsPages') }}</label>
                   <gAutoComplete
                     :main-filter="menuContainer.menu[idx].page[selectedLang]"
-                    :placeholder="$t('Sections pages')"
+                    :placeholder="$t('forms.sectionsPages')"
                     :filter-label-prop="'page'"
                     :reduce="(option) => option.path"
                     :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
@@ -175,7 +175,7 @@
                     :class="sectionsStyle.input"
                   />
                 </div>
-                <span v-show="menuIdx === 0 && idx === 0 && errors.menu[idx].link === true && siteLang === 'en'"
+                <span v-show="menuIdx === 0 && idx === 0 && errors.menu[idx].link === true && selectedLang === defaultLang"
                       class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
               </div>
 
@@ -230,8 +230,12 @@
       </div>
     </div>
 
+    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
+
   </div>
 </template>
+
+<i18n src="./Shared_i18n.json"></i18n>
 
 <script>
 import {sectionHeader, useCookie} from "#imports";
@@ -240,10 +244,23 @@ import 'vue-select/dist/vue-select.css';
 
 export default {
   name: 'SimpleMenu',
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     selectedLang: {
       type: String,
       default: 'fr'
+    },
+    defaultLang: {
+      type: String,
+      default: 'en'
     },
     selectedMedia: {},
     locales: {
@@ -424,19 +441,15 @@ export default {
       let valid = true;
       this.errors.menu[0].link = false;
       this.errors.menu[0].label = false;
-      if (this.settings[0].menus[0].menu[0].languageMenu !== true && !this.settings[0].menus[0].menu[0].link.en && !this.settings[0].menus[0].menu[0].page.en) {
+      if (this.settings[0].menus[0].menu[0].languageMenu !== true && !this.settings[0].menus[0].menu[0].link[this.defaultLang] && !this.settings[0].menus[0].menu[0].page[this.defaultLang]) {
         this.errors.menu[0].link = true;
         valid = false;
       }
-      if (!this.settings[0].menus[0].menu[0].label.en) {
+      if (!this.settings[0].menus[0].menu[0].label[this.defaultLang]) {
         this.errors.menu[0].label = true;
         valid = false;
       }
       if (!valid) {
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
         scrollToFirstError(this.errors)
       }
       return valid;

@@ -1,0 +1,38 @@
+{
+  "en": {
+    "zaq": {
+      "websiteId": "Website ID",
+      "sequenceName": "Sequence name",
+      "sequence": "Sequence",
+      "css": "Widget CSS",
+      "sendbtnIcon": "Send button icon",
+      "typingIcon": "Typing button icon",
+      "hideBadge": "Hide badge",
+      "recommendedSize": "Recommended size (width: 35px, height: 35px)",
+      "registerFirst": "You need a project on ZAQ to use this section. Register ",
+      "here": "here",
+      "autoStart": "Auto start",
+      "uploadMedia": "Attach a media",
+      "changeMedia": "Modify your media",
+      "seoTag": "SEO tag: "
+    }
+  },
+  "fr": {
+    "zaq": {
+      "websiteId": "ID du site web",
+      "sequenceName": "Nom de la séquence",
+      "sequence": "Séquence",
+      "css": "CSS du widget",
+      "sendbtnIcon": "Icône du bouton envoyer",
+      "typingIcon": "Icône du bouton de saisie",
+      "hideBadge": "Masquer l'indicateur",
+      "recommendedSize": "Taille recommandée (largeur : 35px, hauteur : 35px)",
+      "registerFirst": "Vous avez besoin d'un projet sur ZAQ pour utiliser cette section. Inscrivez-vous ",
+      "here": "ici",
+      "autoStart": "Démarrage automatique",
+      "uploadMedia": "Attacher un média",
+      "changeMedia": "Modifier votre média",
+      "seoTag": "Tag SEO: "
+    }
+  }
+}

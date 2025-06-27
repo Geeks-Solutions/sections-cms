@@ -65,6 +65,8 @@
   </div>
 </template>
 
+<i18n src="../forms/GoogleMaps_i18n.json"></i18n>
+
 <script>
 /* global google */
 import * as Loader from '@googlemaps/js-api-loader'
@@ -73,6 +75,16 @@ import { sectionsStyle } from '../../utils/constants'
 
 export default {
   name: 'GoogleMapsStatic',
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t,
+      t
+    }
+  },
   props: {
     section: {
       type: Object,
@@ -223,6 +235,8 @@ export default {
               addr
             })
 
+            const directLabel = this.t('forms.getDirections')
+
             marker.addListener("gmp-click", () => {
               this.filteredAddresses = []
               if (this.infoWindow) {
@@ -251,7 +265,7 @@ export default {
           <a v-if="${addr.email}" href="mailto:${addr.email}" class="underline md:cursor-pointer email sections-cta-link">
             ${addr.email}
           </a>
-<a href="http://maps.google.com/maps?saddr=&daddr=(${addr.lat}, ${addr.lng})" target="_blank" id="getDirections" class="directions-btn button-selector">${this.$t('forms.getDirections')}</a>
+<a href="http://maps.google.com/maps?saddr=&daddr=(${addr.lat}, ${addr.lng})" target="_blank" id="getDirections" class="directions-btn button-selector">${directLabel}</a>
 </div>
 </div>`)
               this.infoWindow.open({

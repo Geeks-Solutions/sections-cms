@@ -16,7 +16,7 @@
         width="300"
            height="300"
         sizes="100%"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
         loading="lazy"
       />
     </global-link>

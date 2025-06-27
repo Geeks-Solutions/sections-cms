@@ -45,13 +45,28 @@
   </div>
 </template>
 
+<i18n src="./Shared_i18n.json"></i18n>
+
 <script>
 import {scrollToFirstError, sectionsStyle} from "@/utils/constants";
 
 export default {
   name: 'Features',
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     selectedLang: {
+      type: String,
+      default: 'en'
+    },
+    defaultLang: {
       type: String,
       default: 'en'
     },
@@ -238,10 +253,6 @@ export default {
       const valid = true;
       this.errors.media = false;
       if (!valid) {
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
         scrollToFirstError(this.errors)
       }
       return valid;

@@ -1,0 +1,23 @@
+# .github/workflows/validate-translations.yml
+
+name: Validate Translations
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  validate-translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Run translation validation
+        run: node generator/template/ready-to-use-section-types/validate-translations.mjs

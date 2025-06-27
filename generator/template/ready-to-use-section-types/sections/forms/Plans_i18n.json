@@ -1,0 +1,46 @@
+{
+  "en": {
+    "plans": {
+      "plan": "Plan",
+      "title": "Title",
+      "subtitle": "Subtitle",
+      "description": "Description",
+      "price": "Price",
+      "currency": "Currency",
+      "frequency": "Frequency",
+      "globalCtaLabel": "Global CTA label",
+      "ctaLabel": "Plan CTA label",
+      "ctaLabelDesc": " If you keep this label empty, the global one will be used",
+      "ctaLink": "Plan CTA link",
+      "features": "Features (separated by -)",
+      "customFeatures": "Custom features",
+      "mostPopular": "Most popular",
+      "media": "Media",
+      "uploadMedia": "Attach a media",
+      "changeMedia": "Modify your media",
+      "seoTag": "SEO tag: "
+    }
+  },
+  "fr": {
+    "plans": {
+      "plan": "Plan",
+      "title": "Titre",
+      "subtitle": "Sous titre",
+      "description": "Description",
+      "price": "Prix",
+      "currency": "Devise",
+      "frequency": "Fréquence",
+      "globalCtaLabel": "CTA globale du plan",
+      "ctaLabel": "Étiquette CTA du plan",
+      "ctaLabelDesc": "Si vous laissez cette étiquette vide, celle globale sera utilisée",
+      "ctaLink": "Lien CTA du plan",
+      "features": "Caractéristiques (séparées par -)",
+      "customFeatures": "Caractéristiques personnalisées",
+      "mostPopular": "Populaire",
+      "media": "Média",
+      "uploadMedia": "Attacher un média",
+      "changeMedia": "Modifier votre média",
+      "seoTag": "Tag SEO: "
+    }
+  }
+}

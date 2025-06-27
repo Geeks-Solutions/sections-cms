@@ -3,7 +3,7 @@
     <div id="message" class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-bold">{{ $t("forms.message") }}</label>
       <LazyEditorWysiwyg :html="settings[0][selectedLang].message" :css-classes-prop="settings[0].classes" @cssClassesChanged="(v) => settings[0]['classes'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateMessageDescription"/>
-      <span v-show="selectedLang === 'en' && errors.message" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+      <span v-show="errors.message && selectedLang === defaultLang" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
     <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-medium">{{ $t("forms.redirectionUrl") }}</label>
@@ -25,7 +25,7 @@
             focus:outline-none
           "
       />
-      <span v-show="selectedLang === 'en' && errors.redirectionUrl" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+      <span v-show="errors.redirectionUrl && selectedLang === defaultLang" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
     <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-medium">{{ $t("forms.timeToRedirect") }}</label>
@@ -43,18 +43,36 @@
             focus:outline-none
           "
       />
-      <span v-show="selectedLang === 'en' && errors.timeToRedirect" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+      <span v-show="errors.timeToRedirect" class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
+
+    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
+
   </div>
 </template>
+
+<i18n src="./Shared_i18n.json"></i18n>
 
 <script>
 import {scrollToFirstError} from "@/utils/constants";
 
 export default {
   name: 'Redirection',
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     selectedLang: {
+      type: String,
+      default: 'en'
+    },
+    defaultLang: {
       type: String,
       default: 'en'
     },
@@ -142,11 +160,11 @@ export default {
       this.errors.message = false;
       this.errors.redirectionUrl = false;
       this.errors.timeToRedirect = false;
-      if (!this.settings[0].en.message) {
+      if (!this.settings[0][this.defaultLang].message) {
         this.errors.message = true;
         valid = false;
       }
-      if (!this.settings[0].en.redirectionUrl) {
+      if (!this.settings[0][this.defaultLang].redirectionUrl) {
         this.errors.redirectionUrl = true;
         valid = false;
       }
@@ -156,10 +174,6 @@ export default {
       }
       if (!valid) {
         setTimeout(() => document.getElementById('required-fields').scrollIntoView(), 1000)
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
         scrollToFirstError(this.errors)
       }
       return valid;

@@ -1,0 +1,12 @@
+{
+  "en": {
+    "forms": {
+      "getDirections": "Get directions"
+    }
+  },
+  "fr": {
+    "forms": {
+      "getDirections": "Obtenir des directions"
+    }
+  }
+}

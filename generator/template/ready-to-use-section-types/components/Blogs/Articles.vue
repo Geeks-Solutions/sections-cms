@@ -25,7 +25,7 @@
                 <NuxtImg :src="object.medias[0].files[0].thumbnail_url" :alt="object.medias[0].seo_tag" :draggable="!isDragScrollEnabled" class="object-cover w-full"
                          width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
                          loading="lazy"/>
               </div>
               <div v-else class="animate-pulse w-full md:w-352px">

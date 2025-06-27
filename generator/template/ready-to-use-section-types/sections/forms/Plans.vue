@@ -2,12 +2,12 @@
   <div ref="plansForm">
 
     <div id="title" class="flex flex-col items-start justify-start mt-8">
-      <label class="mr-4 font-bold">{{ $t("boxTitle") }}</label>
+      <label class="mr-4 font-bold">{{ $t("plans.title") }}</label>
       <LazyEditorWysiwyg :html="settings[0].title[siteLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => settings[0]['titleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateTitle"/>
     </div>
 
     <div id="subTitle" class="flex flex-col items-start justify-start mt-8">
-      <label class="mr-4 font-bold">{{ $t("SubTitle") }}</label>
+      <label class="mr-4 font-bold">{{ $t("plans.subtitle") }}</label>
       <LazyEditorWysiwyg :html="settings[0].subTitle[siteLang]" :css-classes-prop="settings[0].subTitleClasses" @cssClassesChanged="(v) => settings[0]['subTitleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="updateSubTitle"/>
     </div>
 
@@ -15,7 +15,7 @@
     <LazySectionsFormsFieldSets :array-data-pop="settings[0].plans" :fieldset-group="'plans'" :legend-label="$t('plans.plan')" @array-updated="(data) => settings[0]['plans'] = data" @remove-fieldset="(object, idx) => (idx) => {}">
       <template #default="{ plan, idx }">
         <div :id="`media-${idx}`" class="mt-8">
-          <LazyMediasUploadMedia :media-label="$t('Media')" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="settings[0].plans[idx].media && Object.keys(settings[0].plans[idx].media).length > 0 ? [settings[0].plans[idx].media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
+          <LazyMediasUploadMedia :media-label="$t('plans.media')" :upload-text="$t('plans.uploadMedia')" :change-text="$t('plans.changeMedia')" :seo-tag="$t('plans.seoTag')" :media="settings[0].plans[idx].media && Object.keys(settings[0].plans[idx].media).length > 0 ? [settings[0].plans[idx].media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
         </div>
 
         <div class="flex flex-row gap-4">
@@ -67,7 +67,7 @@
             <input
               v-model="settings[0].plans[idx].currency[siteLang]"
               type="text"
-              :placeholder="$t('currency')"
+              :placeholder="$t('plans.currency')"
               class="
             py-4
             pl-6
@@ -229,18 +229,31 @@
       />
     </div>
 
-    <span v-show="!Object.values(errors).every((v) => v === false) && siteLang === 'fr'" id="required-fields" class="text-error text-sm pt-2 pl-2">{{ $t('checkRequiredField') }}</span>
-
   </div>
 </template>
+
+<i18n src="./Plans_i18n.json"></i18n>
 
 <script>
 import {scrollToFirstError} from "@/utils/constants";
 
 export default {
   name: 'Plans',
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     selectedLang: {
+      type: String,
+      default: 'en'
+    },
+    defaultLang: {
       type: String,
       default: 'en'
     },
@@ -440,10 +453,6 @@ export default {
       const valid = true;
       if (!valid) {
         setTimeout(() => document.getElementById('required-fields').scrollIntoView(), 1000)
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
         scrollToFirstError(this.errors)
       }
       return valid;

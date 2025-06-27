@@ -14,7 +14,7 @@
               :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
               width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
               loading="lazy"
           />
           <NuxtImg
@@ -25,7 +25,7 @@
               :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
               width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
               loading="lazy"
           />
           <div v-if="(block.title[lang] || block.text[lang] || block.cta[lang]) && index === currentIndex" class="absolute top-0 w-full h-full">
