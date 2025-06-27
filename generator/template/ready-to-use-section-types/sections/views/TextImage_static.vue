@@ -13,11 +13,12 @@
       <NuxtImg
         v-if="settings[0].media && settings[0].media.url"
         :src="settings[0].media.url"
+        :alt="settings[0].media.seo_tag ? settings[0].media.seo_tag : ''"
         class="w-full"
         :class="'h-full object-contain'"
         width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
         loading="lazy"
       />
 		</div>

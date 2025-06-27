@@ -19,7 +19,7 @@
         :class="{'mobileHidden': image.mediaMobile && image.mediaMobile.url}"
         width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
         loading="lazy"
       />
       <NuxtImg
@@ -29,7 +29,7 @@
         class="w-full h-full object-cover hover:opacity-90 transition-opacity md:hidden"
         width="300"
            height="300"
-           :placeholder="[300, 300, 75, 5]"
+           :placeholder="[300, 300, 75, 5]" format="webp"
         loading="lazy"
       />
     </div>

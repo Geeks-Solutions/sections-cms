@@ -10,7 +10,7 @@
         :placeholder="$t('forms.mapApiKey')"
         :class="sectionsStyle.input"
       />
-      <span v-show="errors[`mapApiKey`] === true && siteLang === defaultLang"
+      <span v-show="errors[`mapApiKey`] === true"
             class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
@@ -55,7 +55,7 @@
                 :placeholder="$t('forms.name')"
                 :class="sectionsStyle.input"
               />
-              <span v-show="errors[`pin-name-${idx}`] === true && siteLang === defaultLang"
+              <span v-show="errors[`pin-name-${idx}`] === true && selectedLang === defaultLang"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
@@ -68,13 +68,13 @@
                 :class="sectionsStyle.input"
                 @input="settings[0].pins[idx] = {...object, type: object.type}"
               />
-              <span v-show="errors[`pin-type-${idx}`] === true && siteLang === defaultLang"
+              <span v-show="errors[`pin-type-${idx}`] === true"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
             <div :id="`pin-media-${idx}`" class="mt-8">
-              <LazyMediasUploadMedia :media-label="$t('Media') + '*'" :upload-text="$t('Upload')" :change-text="$t('Change')" :seo-tag="$t('seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
-              <span v-show="errors[`pin-media-${idx}`] === true && siteLang === defaultLang"
+              <LazyMediasUploadMedia :media-label="$t('forms.media') + '*'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
+              <span v-show="errors[`pin-media-${idx}`] === true"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
@@ -118,7 +118,7 @@
                 :placeholder="$t('forms.name')"
                 :class="sectionsStyle.input"
               />
-              <span v-show="errors[`address-name-${idx}`] === true && siteLang === defaultLang"
+              <span v-show="errors[`address-name-${idx}`] === true && selectedLang === defaultLang"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
@@ -162,7 +162,7 @@
                     :placeholder="$t('forms.pinType')"
                     :filter-label-prop="'value'"
                     :reduce="(option) => option.key"
-                    :filter-options="[...defaultPins, ...settings[0].pins.filter(pin => pin.type !== '' && pin.name[siteLang] !== '').map(pin => {return {key: pin.type, option: pin.name[siteLang], value: pin.name[siteLang], selected: pin.name[siteLang], image: pin.media && pin.media.url ? pin.media.url : '', label: pin.media && pin.media.url ? pin.media.url : ''}})]"
+                    :filter-options="[...defaultPins, ...settings[0].pins.filter(pin => pin.type !== '' && pin.name[selectedLang] !== '').map(pin => {return {key: pin.type, option: pin.name[selectedLang], value: pin.name[selectedLang], selected: pin.name[selectedLang], image: pin.media && pin.media.url ? pin.media.url : '', label: pin.media && pin.media.url ? pin.media.url : ''}})]"
                     :filter-searchable="false"
                     :close-on-select="true"
                     :filter-clearable="true"
@@ -184,7 +184,7 @@
                   </gAutoComplete>
                 </div>
               </div>
-              <span v-show="errors[`address-type-${idx}`] === true && siteLang === defaultLang"
+              <span v-show="errors[`address-type-${idx}`] === true"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
@@ -196,7 +196,7 @@
                 :placeholder="$t('forms.street')"
                 :class="sectionsStyle.input"
               />
-              <span v-show="errors[`address-street-${idx}`] === true && siteLang === defaultLang"
+              <span v-show="errors[`address-street-${idx}`] === true && selectedLang === defaultLang"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
@@ -208,7 +208,7 @@
                 :placeholder="$t('forms.city')"
                 :class="sectionsStyle.input"
               />
-              <span v-show="errors[`address-city-${idx}`] === true && siteLang === defaultLang"
+              <span v-show="errors[`address-city-${idx}`] === true && selectedLang === defaultLang"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
@@ -220,7 +220,7 @@
                 :placeholder="$t('forms.country')"
                 :class="sectionsStyle.input"
               />
-              <span v-show="errors[`address-country-${idx}`] === true && siteLang === defaultLang"
+              <span v-show="errors[`address-country-${idx}`] === true && selectedLang === defaultLang"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
@@ -232,7 +232,7 @@
                 :placeholder="$t('forms.lat')"
                 :class="sectionsStyle.input"
               />
-              <span v-show="errors[`address-lat-${idx}`] === true && siteLang === defaultLang"
+              <span v-show="errors[`address-lat-${idx}`] === true"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
@@ -244,7 +244,7 @@
                 :placeholder="$t('forms.lng')"
                 :class="sectionsStyle.input"
               />
-              <span v-show="errors[`address-lng-${idx}`] === true && siteLang === defaultLang"
+              <span v-show="errors[`address-lng-${idx}`] === true"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
 
@@ -290,14 +290,27 @@
       </div>
     </div>
 
+    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
+
   </div>
 </template>
+
+<i18n src="./Shared_i18n.json"></i18n>
 
 <script>
 import {sectionsStyle, scrollToFirstError} from "../../utils/constants";
 
 export default {
   name: 'GoogleMaps',
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     selectedLang: {
       type: String,
@@ -630,11 +643,7 @@ export default {
         }
       })
 
-      if (!valid) {
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
+      if (!valid && this.selectedLang === this.defaultLang) {
         scrollToFirstError(this.errors)
       }
       return valid;

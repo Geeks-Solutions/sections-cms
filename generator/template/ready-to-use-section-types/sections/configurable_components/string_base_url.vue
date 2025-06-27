@@ -1,11 +1,11 @@
 <template>
   <div class="w-full">
     <div id="base_url" class="flex flex-col items-start justify-start">
-      <label class="mr-4 font-bold">{{ $t("forms.baseUrl")+'*' }}</label>
+      <label class="mr-4 font-bold">{{ $t("baseUrl")+'*' }}</label>
       <input
         v-model="base_url"
         type="text"
-        :placeholder="$t('forms.baseUrl')"
+        :placeholder="$t('baseUrl')"
         :class="inputStyle"
         @input="changeFieldValue"
       />

@@ -48,11 +48,22 @@
   </div>
 </template>
 
+<i18n src="../sections/forms/Blogs_i18n.json"></i18n>
+
 <script>
 import { importAsset } from '~/utils/constants.js'
 
 export default {
   name: "ListPagination",
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   methods: { importAsset },
   props: {
     currentPage: {

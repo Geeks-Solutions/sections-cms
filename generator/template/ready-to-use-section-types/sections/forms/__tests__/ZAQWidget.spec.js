@@ -6,6 +6,17 @@ vi.mock('#app', () => ({
 }))
 
 import { useFetch } from '#app'
+import { createI18n } from 'vue-i18n'
+
+const i18n = createI18n({
+  legacy: false,
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: {},
+    fr: {}
+  }
+})
 
 describe('ZAQWidget', () => {
   let wrapper;
@@ -21,7 +32,8 @@ describe('ZAQWidget', () => {
           globalProperties: {
             $t: vi.fn()
           }
-        }
+        },
+        plugins: [i18n]
       },
       data() {
         return defaultData

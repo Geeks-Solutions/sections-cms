@@ -1,11 +1,11 @@
 <template>
   <div class="w-full">
     <div id="cta_link" class="flex flex-col items-start justify-start">
-      <label class="mr-4 font-bold">{{ $t("forms.ctaLink") }}</label>
+      <label class="mr-4 font-bold">{{ $t("ctaLink") }}</label>
       <input
         v-model="cta_link"
         type="text"
-        :placeholder="$t('forms.ctaLink')"
+        :placeholder="$t('ctaLink')"
         :class="inputStyle"
         @input="changeFieldValue"
       />
