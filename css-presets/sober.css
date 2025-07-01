@@ -1007,6 +1007,10 @@ p.ql-snow p a:not(.ql-a-button):hover, div.ql-snow p a:not(.ql-a-button):hover, 
   object-fit: contain !important;
 }
 
+.text-image article.ql-editor {
+  display: contents;
+}
+
 @media (max-width: 1023px) {
   .text-image > div:nth-child(1) {
     display: flex !important;
