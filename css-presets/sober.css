@@ -888,8 +888,8 @@ p.ql-snow p a:not(.ql-a-button), div.ql-snow p a:not(.ql-a-button), .sections-ct
   max-width: 100%;
   text-decoration: underline;
   color: var(--link-text-color) !important;
-  display: ruby-text;
   background: var(--link-background-color);
+  display: inline-block;
 }
 
 p.ql-snow p a:not(.ql-a-button):hover, div.ql-snow p a:not(.ql-a-button):hover, .sections-cta-link:hover {
