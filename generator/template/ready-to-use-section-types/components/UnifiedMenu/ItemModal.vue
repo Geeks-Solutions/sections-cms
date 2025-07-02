@@ -98,9 +98,14 @@
   </div>
 </template>
 
+<i18n src="../../sections/forms/ServicePackages_i18n.json"></i18n>
+<i18n src="../../sections/forms/RestaurantMenu_i18n.json"></i18n>
+
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { formatPrice } from "@/utils/constants"
+
+const { t: $t } = useI18n({ useScope: 'local' })
 
 const props = defineProps({
   item: {

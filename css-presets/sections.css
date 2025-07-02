@@ -666,6 +666,12 @@ input:not(:placeholder-shown) {
   width: auto !important;
 }
 
+@supports (-webkit-hyphens: none) {
+  .articles .articles-wrapper .card-wrapper img {
+    height: 300px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .simple-menu img.logo {
     width: auto !important;
@@ -676,6 +682,9 @@ input:not(:placeholder-shown) {
     left: 50%;
     transform: translate(-50%, -50%);
     margin-left: 0;
+  }
+  .articles .articles-wrapper .card-wrapper img {
+    height: 300px;
   }
 }
 

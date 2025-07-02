@@ -2,49 +2,49 @@
   <div>
 	<div class="flex flex-col items-start justify-start mt-8">
 	  <div class="flex">
-		<label class="mr-4 font-bold">{{ $t("Title") }}</label>
+		<label class="mr-4 font-bold">{{ $t("forms.title") }}</label>
 	  </div>
 	  <input
 		   v-model="settings[0][selectedLang].title"
 		   type="text"
-		   :placeholder="$t('Title')"
-		   :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.title ? 'border-error' : 'border-FieldGray']"
+		   :placeholder="$t('forms.title')"
+		   :class="['title py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.title && selectedLang === defaultLang ? 'border-error' : 'border-FieldGray']"
 	  />
 	</div>
 
 	<div class="flex flex-col items-start justify-start mt-4">
 	  <div class="flex">
-		<label class="mr-4 font-bold">{{ $t("Subtitle") }}</label>
+		<label class="mr-4 font-bold">{{ $t("forms.subtitle") }}</label>
 	  </div>
 	  <input
 		   v-model="settings[0][selectedLang].subTitle"
 		   type="text"
-		   :placeholder="$t('Subtitle')"
-		   :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.subTitle ? 'border-error' : 'border-FieldGray']"
+		   :placeholder="$t('forms.subtitle')"
+		   :class="['subtitle py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.subTitle && selectedLang === defaultLang ? 'border-error' : 'border-FieldGray']"
 	  />
 	</div>
 
 	<div class="flex flex-col items-start justify-start mt-4">
 	  <div class="flex">
-		<label class="mr-4 font-bold">{{ $t("Button Label") }}</label>
+		<label class="mr-4 font-bold">{{ $t("forms.buttonLabel") }}</label>
 	  </div>
 	  <input
 		   v-model="settings[0][selectedLang].buttonLabel"
 		   type="text"
-		   :placeholder="$t('Button Label')"
-		   :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.buttonLabel ? 'border-error' : 'border-FieldGray']"
+		   :placeholder="$t('forms.buttonLabel')"
+		   :class="['buttonLabel py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.buttonLabel && selectedLang === defaultLang ? 'border-error' : 'border-FieldGray']"
 	  />
 	</div>
 
 	<div class="flex flex-col items-start justify-start mt-4">
 	  <div class="flex">
-		<label class="mr-4 font-bold">{{ $t("Link") }}</label>
+		<label class="mr-4 font-bold">{{ $t("forms.link") }}</label>
 	  </div>
 	  <input
 		   v-model="settings[0][selectedLang].link"
 		   type="text"
-		   :placeholder="$t('Link')"
-		   :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.link ? 'border-error' : 'border-FieldGray']"
+		   :placeholder="$t('forms.link')"
+		   :class="['link py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.link && selectedLang === defaultLang ? 'border-error' : 'border-FieldGray']"
 	  />
 	  <link-description />
 	</div>
@@ -68,14 +68,31 @@
       </div>
     </div>
 
+    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
+
   </div>
 </template>
+
+<i18n src="./Shared_i18n.json"></i18n>
 
 <script>
 export default {
   name: "SimpleCTA",
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local'
+    })
+
+    return {
+      $t: t
+    }
+  },
   props: {
     selectedLang: {
+      type: String,
+      default: 'en'
+    },
+    defaultLang: {
       type: String,
       default: 'en'
     },
@@ -165,19 +182,15 @@ export default {
   methods: {
     validate() {
       let valid = true;
-      if (!this.settings[0].en.buttonLabel) {
+      this.errors.buttonLabel = false;
+      this.errors.link = false;
+      if (!this.settings[0][this.defaultLang].buttonLabel) {
         this.errors.buttonLabel = true;
         valid = false;
       }
-      if (!this.settings[0].en.link) {
+      if (!this.settings[0][this.defaultLang].link) {
         this.errors.link = true;
         valid = false;
-      }
-      if (!valid) {
-        this.$root.$emit("toast", {
-          type: "Error",
-          message: this.$t("fill-required-fields")
-        });
       }
       return valid;
     }

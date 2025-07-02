@@ -28,7 +28,7 @@
             <label class="mr-4 font-medium">{{ $t("RestaurantMenu.categoryName") }}*</label>
             <input v-model="object.name[selectedLang]" type="text" placeholder="Category Name"
               :class="sectionsStyle.input" />
-            <span v-show="errors.categories[idx]?.name === true" class="text-error text-sm pt-2 pl-2">{{
+            <span v-show="errors.categories[idx]?.name === true && selectedLang === defaultLang" class="text-error text-sm pt-2 pl-2">{{
               $t('RestaurantMenu.requiredField') }}</span>
           </div>
 
@@ -90,7 +90,7 @@
               <label class="mr-4 font-medium">{{ $t("RestaurantMenu.itemName") }}*</label>
               <input v-model="object.name[selectedLang]" type="text" placeholder="Item Name"
                 :class="sectionsStyle.input" />
-              <span v-show="getErrorForMenuItem(object.id, 'name') === true" class="text-error text-sm pt-2 pl-2">{{
+              <span v-show="getErrorForMenuItem(object.id, 'name') === true  && selectedLang === defaultLang" class="text-error text-sm pt-2 pl-2">{{
                 $t('RestaurantMenu.requiredField') }}</span>
             </div>
 
@@ -290,8 +290,13 @@
         <input v-model="settings[0].classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
       </div>
     </div>
+
+    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
+
   </div>
 </template>
+
+<i18n src="./RestaurantMenu_i18n.json"></i18n>
 
 <script setup>
 import { ref, reactive, computed, watch, nextTick, onMounted } from 'vue'
@@ -299,9 +304,15 @@ import { v4 as uuidv4 } from 'uuid'
 import { sectionsStyle, scrollToFirstError } from "@/utils/constants"
 import 'vue-select/dist/vue-select.css'
 
+const { t: $t } = useI18n({ useScope: 'local' })
+
 // Props
 const props = defineProps({
   selectedLang: {
+    type: String,
+    default: 'en'
+  },
+  defaultLang: {
     type: String,
     default: 'en'
   },
@@ -631,7 +642,7 @@ const validate = () => {
     }
     errors.categories[idx].name = false
 
-    if (!category.name.en) {
+    if (!category.name[props.defaultLang]) {
       errors.categories[idx].name = true
       valid = false
     }
@@ -644,7 +655,7 @@ const validate = () => {
     errors.menuItems[errorIdx].name = false
     errors.menuItems[errorIdx].price = false
 
-    if (!item.name.en) {
+    if (!item.name[props.defaultLang]) {
       errors.menuItems[errorIdx].name = true
       valid = false
     }

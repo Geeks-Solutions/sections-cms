@@ -2,8 +2,8 @@
   <div class="w-full">
     <div id="default_sort" class="flex flex-col items-start justify-start">
       <label class="mr-4 font-bold">{{ $t("Sort")+'*' }}</label>
-      <span class="text-xs mb-1">{{ $t("forms.sortDesc1") }}</span>
-      <span class="text-xs mb-1">{{ $t("forms.sortDesc2") }}</span>
+      <span class="text-xs mb-1">{{ $t("sortDesc1") }}</span>
+      <span class="text-xs mb-1">{{ $t("sortDesc2") }}</span>
       <input
         v-model="default_sort"
         type="text"
