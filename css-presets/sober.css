@@ -234,8 +234,8 @@ html {
   scroll-behavior: smooth;
   font-size: var(--base-font-size);
 }
-@media screen and (max-width: 768px) {
-  html {
+@container sections-main (max-width: 768px) {
+  html .views {
     font-size: var(--mobile-base-font-size);
   }
 }
