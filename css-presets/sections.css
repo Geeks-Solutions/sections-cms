@@ -978,6 +978,11 @@ section .text-image .row-wrapper {
   padding-left: 1.75rem;
 }
 
+section .product-details {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
 :root {
   --cookie-control-barBackground: #00131F;
   --cookie-control-barTextColor: #fff;
