@@ -1025,6 +1025,11 @@ p.ql-snow p a:not(.ql-a-button):hover, div.ql-snow p a:not(.ql-a-button):hover, 
   height: auto !important;
 }
 
+.product-details {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .region21-wrapper .text-image .row-wrapper.image-right,
 .region22-wrapper .text-image .row-wrapper.image-right,
 .region23-wrapper .text-image .row-wrapper.image-right,
