@@ -265,9 +265,6 @@ export default {
         return this.section.render_data[0].settings
       } else return null
     }
-  },
-  created() {
-    this.$emit('seo-support', true)
   }
 };
 </script>

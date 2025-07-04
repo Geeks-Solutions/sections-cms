@@ -221,8 +221,8 @@ html {
   font-size: var(--base-font-size);
 }
 
-@media screen and (max-width: 768px) {
-  html {
+@container sections-main (max-width: 768px) {
+  html .views {
     font-size: var(--mobile-base-font-size);
   }
 }
@@ -976,6 +976,11 @@ input:not(:placeholder-shown) {
 section .text-image .row-wrapper {
   padding-right: 1.75rem;
   padding-left: 1.75rem;
+}
+
+section .product-details {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 
 :root {

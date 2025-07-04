@@ -1,0 +1,24 @@
+{
+  "en": {
+    "productDetails": {
+      "price": "Price",
+      "currency": "Currency",
+      "mediaType": "Media type",
+      "addMedia": "Add media",
+      "videoEmbedDesc": "Please use the embed URL of the YouTube video",
+      "videoControls": "Youtube video options",
+      "videoOptions": "Youtube video controls used for the video media type when selected to be displayed in the preview"
+    }
+  },
+  "fr": {
+    "productDetails": {
+      "price": "Pix",
+      "currency": "Devise",
+      "mediaType": "Type de média",
+      "addMedia": "Ajouter un média",
+      "videoEmbedDesc": "Veuillez utiliser l’URL d’intégration (embed) de la vidéo YouTube",
+      "videoControls": "Contrôles vidéo YouTube",
+      "videoOptions": "Contrôles vidéo YouTube utilisés pour le type de média vidéo lorsqu'il est sélectionné pour être affiché dans l'aperçu"
+    }
+  }
+}
