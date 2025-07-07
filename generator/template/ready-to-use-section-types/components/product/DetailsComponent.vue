@@ -1,11 +1,11 @@
 <template>
-  <div v-if="product" class="main-wrapper py-2.5">
+  <div v-if="product" class="product-details-wrapper main-wrapper py-2.5">
 
     <div class="flex flex-col md:flex-row justify-center w-full gap-6 row-wrapper">
 
       <div class="flex flex-col md:w-1/2 medias-block">
         <div v-if="mediaPreview && (mediaPreview.mediaType === 'image' || mediaPreview.mediaType === 'imageType')" class="image-preview">
-          <img v-if="mediaPreview.media && mediaPreview.media.url" :src="mediaPreview.media.url" :alt="mediaPreview.media.seo_tag" class="rounded-lg object-cover md:w-[560px] h-[280px] md:h-[448px]" />
+          <img v-if="mediaPreview.media && mediaPreview.media.url" :src="mediaPreview.media.url" :alt="mediaPreview.media.seo_tag" class="rounded-lg md:w-[560px] h-[280px] md:h-[448px]" :style="product.imageFit ? `object-fit: ${product.imageFit};` : ''" />
         </div>
         <div v-if="mediaPreview && mediaPreview.mediaType === 'video'" class="video-preview md:w-[560px] h-[280px] md:h-[448px] content-center">
           <LazyYoutube v-if="mediaPreview.video && mediaPreview.video.url" :src="computedVideoUrl" max-width="1000px" :autoplay="product.autoplay" />
@@ -137,3 +137,18 @@ watch(props.product, () => {
   mediaPreview.value = props.product.productMedias[0]
 })
 </script>
+
+<style>
+section .product-details-wrapper {
+  container: product-details-wrapper / inline-size;
+}
+
+@container product-details-wrapper (max-width: 768px) {
+  .product-details-wrapper .row-wrapper {
+    flex-wrap: wrap;
+  }
+  .product-details-wrapper .medias-block, .product-details-wrapper .details-main-wrapper {
+    width: 100% !important;
+  }
+}
+</style>
