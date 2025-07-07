@@ -4,7 +4,7 @@
     <div class="flex flex-col md:flex-row justify-center w-full gap-6 row-wrapper">
 
       <div class="flex flex-col md:w-1/2 medias-block">
-        <div v-if="mediaPreview && (mediaPreview.mediaType === 'image' || mediaPreview.mediaType === 'imageType')" class="image-preview">
+        <div v-if="mediaPreview && (mediaPreview.mediaType === 'image' || mediaPreview.mediaType === 'imageType')" class="image-preview md:justify-items-start justify-items-center">
           <img v-if="mediaPreview.media && mediaPreview.media.url" :src="mediaPreview.media.url" :alt="mediaPreview.media.seo_tag" class="rounded-lg md:w-[560px] h-[280px] md:h-[448px]" :style="product.imageFit ? `object-fit: ${product.imageFit};` : ''" />
         </div>
         <div v-if="mediaPreview && mediaPreview.mediaType === 'video'" class="video-preview md:w-[560px] h-[280px] md:h-[448px] content-center">
@@ -14,7 +14,7 @@
         <div v-if="product.productMedias" class="flex flex-row gap-3 overflow-x-scroll mt-8 mx-1.5 medias-list">
           <div v-for="(mediaObject, idx) in product.productMedias" :key="`product-image-${idx}`" class="relative medias-list-item">
             <div v-if="mediaObject && mediaObject.mediaType === 'image'" class="medias-list-image">
-              <img v-if="mediaObject.media && mediaObject.media.thumbnail_url" :src="mediaObject.media.thumbnail_url" :alt="mediaObject.media.seo_tag" class="w-[60px] min-w-[60px] h-[60px] object-cover cursor-pointer" draggable="false" :class="(mediaPreview.media && mediaPreview.media?.url === mediaObject.media.url) ? 'p-1 border-2 border-black shadow-md' : ''" @click="mediaPreview = mediaObject" />
+              <img v-if="mediaObject.media && mediaObject.media.thumbnail_url" :src="mediaObject.media.thumbnail_url" :alt="mediaObject.media.seo_tag" class="w-[60px] min-w-[60px] h-[60px] object-contain cursor-pointer" draggable="false" :class="(mediaPreview.media && mediaPreview.media?.url === mediaObject.media.url) ? 'p-1 border-2 border-black shadow-md' : ''" @click="mediaPreview = mediaObject" />
             </div>
             <div v-if="mediaObject && mediaObject.mediaType === 'video'" class="medias-list-video w-[60px] min-w-[60px] h-[60px] content-center pointer-events-auto md:cursor-pointer" :class="(mediaPreview.video && mediaPreview.video?.url === mediaObject.video?.url) ? 'px-1 pt-1 pb-2.5 border-2 border-black shadow-md' : ''" @click="mediaPreview = mediaObject">
               <LazyYoutube v-if="mediaObject.video && mediaObject.video.url" :src="mediaObject.video.url" max-width="60px" class="pointer-events-none">
@@ -150,7 +150,16 @@ section .product-details-wrapper {
   .product-details-wrapper .medias-block, .product-details-wrapper .details-main-wrapper {
     width: 100% !important;
   }
-  .product-details-wrapper .video-preview, .product-details-wrapper .image-preview img {
+  .product-details-wrapper .image-preview img {
+    width: auto !important;
+    height: auto !important;
+  }
+  .product-details-wrapper .image-preview {
+    justify-items: center !important;
+  }
+}
+@container product-details-wrapper (max-width: 1200px) {
+  .product-details-wrapper .video-preview {
     width: auto !important;
     height: auto !important;
   }
