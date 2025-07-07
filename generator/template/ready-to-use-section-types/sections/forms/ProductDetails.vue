@@ -54,7 +54,7 @@
 
     <div class="flex flex-col items-start">
       <label :class="sectionsStyle.fieldLabel">{{ $t('productDetails.videoControls') }}</label>
-      <span class="flex text-start text-sm mb-1">{{ $t('productDetails.videoOptions') }}</span>
+      <span class="flex text-start text-xs mb-1 text-gray-700">{{ $t('productDetails.videoOptions') }}</span>
     </div>
 
     <div class="flex flex-wrap pt-4 pl-6">
@@ -98,6 +98,21 @@
           />
         </label>
       </div>
+    </div>
+
+    <div id="imageFit" class="flex flex-col items-start justify-start mt-8">
+      <label for="dropdown" class="flex section-module-upload-media-label">{{ $t('forms.imageFit') }}</label>
+      <span class="text-start text-xs text-gray-700 mb-1">{{ $t('productDetails.imageFitDesc') }}</span>
+      <select
+        id="dropdown"
+        v-model="settings[0].imageFit"
+        class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="cover">{{ $t('forms.cover') }}</option>
+        <option value="contain">{{ $t('forms.contain') }}</option>
+        <option value="fill">{{ $t('forms.fill') }}</option>
+        <option value="none">{{ $t('forms.none') }}</option>
+      </select>
     </div>
 
     <div id="media" class="flex flex-col mt-4">
@@ -236,6 +251,7 @@ export default {
           loop: false,
           controls: false,
           whiteProgress: false,
+          imageFit: '',
           productMedias: []
         }
       ],
@@ -441,5 +457,33 @@ export default {
 }
 .array-list-fieldsets > div:first-of-type > fieldset:first-of-type span span {
   display: none;
+}
+.toggle-checkbox {
+  width: 40px;
+  height: 20px;
+  appearance: none;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.toggle-checkbox:checked {
+  background: #31a9db;
+}
+.toggle-checkbox:before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.toggle-checkbox:checked:before {
+  transform: translateX(20px);
 }
 </style>

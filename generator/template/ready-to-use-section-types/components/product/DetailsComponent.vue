@@ -11,7 +11,7 @@
           <LazyYoutube v-if="mediaPreview.video && mediaPreview.video.url" :src="computedVideoUrl" max-width="1000px" :autoplay="product.autoplay" />
         </div>
 
-        <div v-if="product.productMedias" class="flex flex-row gap-3 overflow-x-scroll mt-8 medias-list">
+        <div v-if="product.productMedias" class="flex flex-row gap-3 overflow-x-scroll mt-8 mx-1.5 medias-list">
           <div v-for="(mediaObject, idx) in product.productMedias" :key="`product-image-${idx}`" class="relative medias-list-item">
             <div v-if="mediaObject && mediaObject.mediaType === 'image'" class="medias-list-image">
               <img v-if="mediaObject.media && mediaObject.media.thumbnail_url" :src="mediaObject.media.thumbnail_url" :alt="mediaObject.media.seo_tag" class="w-[60px] min-w-[60px] h-[60px] object-cover cursor-pointer" draggable="false" :class="(mediaPreview.media && mediaPreview.media?.url === mediaObject.media.url) ? 'p-1 border-2 border-black shadow-md' : ''" @click="mediaPreview = mediaObject" />
@@ -149,6 +149,10 @@ section .product-details-wrapper {
   }
   .product-details-wrapper .medias-block, .product-details-wrapper .details-main-wrapper {
     width: 100% !important;
+  }
+  .product-details-wrapper .video-preview, .product-details-wrapper .image-preview img {
+    width: auto !important;
+    height: auto !important;
   }
 }
 </style>
