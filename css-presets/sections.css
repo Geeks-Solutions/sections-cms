@@ -218,6 +218,9 @@
 html {
   font-family: "Ubuntu", sans-serif !important;
   scroll-behavior: smooth;
+}
+
+html .sections-main {
   font-size: var(--base-font-size);
 }
 
@@ -354,7 +357,7 @@ section .view-component button.quill-button-container:hover, section .view-compo
   background: var(--hover-secondary-button-background-color) !important;
 }
 
-input {
+.sections-main input {
   font-size: 1rem !important;
   border: 2px solid lightgray;
   height: 55px;
@@ -366,7 +369,7 @@ input {
   padding-left: 0.5rem !important;
 }
 
-input:not(:placeholder-shown) {
+.sections-main input:not(:placeholder-shown) {
   border: solid lightgrey;
 }
 

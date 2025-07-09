@@ -232,6 +232,8 @@
 html {
   font-family: "Poppins", sans-serif !important;
   scroll-behavior: smooth;
+}
+html .sections-main {
   font-size: var(--base-font-size);
 }
 @container sections-main (max-width: 768px) {
@@ -342,7 +344,7 @@ section .view-component button {
   background: var(--hover-primary-button-background-color);
 }
 
-input {
+.sections-main input {
   padding: 0.75rem 0.5rem !important;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -354,7 +356,7 @@ input {
   height: 46px;
 }
 
-input:focus {
+.sections-main input:focus {
   border-color: var(--primary-color); /* Indigo-600 */
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
