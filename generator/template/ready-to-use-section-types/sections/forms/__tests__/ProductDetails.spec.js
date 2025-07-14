@@ -83,10 +83,21 @@ describe('ProductDetails', () => {
         descriptionClasses: '',
         price: null,
         currency: '',
+        currencyPosition: '',
         autoplay: false,
         loop: false,
         controls: false,
         whiteProgress: false,
+        ctaLabel: {
+          en: '',
+          fr: ''
+        },
+        ctaLink: {
+          en: '',
+          fr: ''
+        },
+        sectionsPage: {},
+        linkTarget: '',
         productMedias: []
       }
     ],
@@ -262,7 +273,6 @@ describe('ProductDetails', () => {
       const result = wrapper.vm.validate();
       expect(result).toBe(false);
       expect(wrapper.vm.errors.name).toBe(true);
-      expect(wrapper.vm.errors.description).toBe(true);
       expect(wrapper.vm.errors.price).toBe(true);
       expect(wrapper.vm.errors.currency).toBe(true);
       expect(wrapper.vm.errors.media).toBe(true);
@@ -420,13 +430,6 @@ describe('ProductDetails', () => {
   });
 
   describe('Currency and Media Type Options', () => {
-    test('has correct currency options', () => {
-      expect(wrapper.vm.currencies).toEqual([
-        { key: '€', value: 'EUR' },
-        { key: '$', value: 'USD' }
-      ]);
-    });
-
     test('has correct media type options', () => {
       expect(wrapper.vm.mediaTypes).toHaveLength(2);
       expect(wrapper.vm.mediaTypes[0].key).toBe('image');

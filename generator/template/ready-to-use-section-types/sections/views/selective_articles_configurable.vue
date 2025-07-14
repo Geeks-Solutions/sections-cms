@@ -265,6 +265,10 @@ export default {
         return this.section.render_data[0].settings
       } else return null
     }
-  }
+  },
+  mounted() {
+    const languageSupport = inject('languageSupport')
+    languageSupport?.(this.section.name)
+  },
 };
 </script>

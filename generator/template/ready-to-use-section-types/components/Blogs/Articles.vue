@@ -198,6 +198,10 @@ section .articles {
   container: articles / inline-size;
 }
 
+.articles .articles-wrapper {
+  width: 100%;
+}
+
 @container articles (max-width: 768px) {
   .articles .articles-wrapper {
     grid-template-columns: repeat(1, minmax(0, 1fr)) !important;

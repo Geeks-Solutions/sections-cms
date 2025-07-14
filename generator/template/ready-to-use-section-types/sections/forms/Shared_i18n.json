@@ -166,7 +166,8 @@
       "sortDesc2": "This specifies that the articles should be ordered from the highest ID to the lowest."
     },
     "requiredField": "Required field",
-    "Other": "Other"
+    "Other": "Other",
+    "SectionsPagesError": "Unexpected error: The pages listing couldn't be loaded. Please log out and log back in as admin to resolve the issue"
   },
   "fr": {
     "forms": {
@@ -335,6 +336,7 @@
       "sortDesc2": "Cela spécifie que les articles doivent être classés de l'ID le plus élevé au plus bas."
     },
     "requiredField": "Champ requis",
-    "Other": "Autre"
+    "Other": "Autre",
+    "SectionsPagesError": "Erreur inattendue : La liste de pages n’a pas pu être chargée. Veuillez vous déconnecter puis vous reconnecter en tant qu’administrateur pour résoudre le problème"
   }
 }

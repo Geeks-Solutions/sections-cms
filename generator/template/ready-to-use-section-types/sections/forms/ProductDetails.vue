@@ -14,7 +14,7 @@
     </div>
 
     <div id="description" class="flex flex-col items-start justify-start mt-8">
-      <label :class="sectionsStyle.fieldLabel">{{ $t("forms.description") + '*' }}</label>
+      <label :class="sectionsStyle.fieldLabel">{{ $t("forms.description") }}</label>
       <LazyEditorWysiwyg :html="settings[0].description[selectedLang]" :css-classes-prop="settings[0].descriptionClasses" @cssClassesChanged="(v) => settings[0]['descriptionClasses'] = v" @settingsUpdate="(content) => updateTextDescription(content)"/>
       <span v-if="errors.description === true && selectedLang === defaultLang" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
@@ -31,28 +31,31 @@
             class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
-    <div id="currency" class="my-4 text-start">
-      <label class="flex section-module-upload-media-label">{{ $t('productDetails.currency') + '*' }}</label>
-      <div class="select-style-chooser w-[344px]">
-        <gAutoComplete
-          :main-filter="settings[0].currency"
-          :placeholder="$t('productDetails.currency')"
-          :filter-label-prop="'value'"
-          :reduce="(option) => option.key"
-          :filter-options="currencies"
-          :filter-searchable="false"
-          :close-on-select="true"
-          :filter-clearable="true"
-          :track-by="'key'"
-          @itemSelected="(val) => {settings[0].currency = val;}"
-        >
-        </gAutoComplete>
-      </div>
+    <div id="currency" class="flex flex-col items-start justify-start mt-8">
+      <label :class="sectionsStyle.fieldLabel">{{ $t('productDetails.currency') + '*' }}</label>
+      <input
+        v-model="settings[0].currency"
+        type="text"
+        :placeholder="$t('productDetails.currency')"
+        :class="sectionsStyle.input"
+      />
       <span v-show="errors[`currency`] === true"
             class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
     </div>
 
-    <div class="flex flex-col items-start">
+    <div class="flex flex-col items-start justify-start mt-8">
+      <label for="dropdown" class="block mb-2 text-sm font-medium text-gray-700">{{ $t('productDetails.currencyPosition') }}</label>
+      <select
+        id="dropdown"
+        v-model="settings[0].currencyPosition"
+        class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="left">{{ $t('productDetails.left') }}</option>
+        <option value="right">{{ $t('productDetails.right') }}</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col items-start mt-8">
       <label :class="sectionsStyle.fieldLabel">{{ $t('productDetails.videoControls') }}</label>
       <span class="flex text-start text-xs mb-1 text-gray-700">{{ $t('productDetails.videoOptions') }}</span>
     </div>
@@ -114,6 +117,29 @@
         <option value="none">{{ $t('forms.none') }}</option>
       </select>
     </div>
+
+    <div id="ctaLabel" class="flex flex-col items-start justify-start mt-8">
+      <label :class="sectionsStyle.fieldLabel">{{ $t("forms.ctaLabel") }}</label>
+      <input
+        v-model="settings[0].ctaLabel[selectedLang]"
+        type="text"
+        :placeholder="$t('forms.ctaLabel')"
+        :class="sectionsStyle.input"
+      />
+    </div>
+
+    <LazyFormLink
+      :link-label="$t('forms.ctaLink')"
+      :selected-sections-page="settings[0].sectionsPage[selectedLang]"
+      :other-link="settings[0].ctaLink[selectedLang]"
+      :link-target="settings[0].linkTarget"
+      :sections-pages-label="$t('forms.sectionsPages')"
+      :other-link-label="$t('Other')"
+      :link-target-label="$t('forms.linkTarget')"
+      @sections-page-selected="(val) => {locales.forEach(locale => { settings[0].sectionsPage[locale] = val })}"
+      @update:other-link="(val) => {settings[0].ctaLink[selectedLang] = val}"
+      @link-target-selected="(val) => {settings[0].linkTarget = val}"
+    />
 
     <div id="media" class="flex flex-col mt-4">
 
@@ -247,11 +273,22 @@ export default {
           descriptionClasses: '',
           price: null,
           currency: '',
+          currencyPosition: '',
           autoplay: false,
           loop: false,
           controls: false,
           whiteProgress: false,
           imageFit: '',
+          ctaLabel: {
+            en: '',
+            fr: ''
+          },
+          ctaLink: {
+            en: '',
+            fr: ''
+          },
+          sectionsPage: {},
+          linkTarget: '',
           productMedias: []
         }
       ],
@@ -265,16 +302,6 @@ export default {
       siteLang: 'en',
       sectionsStyle,
       selectedMediaIndex: 0,
-      currencies: [
-        {
-          key: '€',
-          value: 'EUR'
-        },
-        {
-          key: '$',
-          value: 'USD'
-        }
-      ],
       mediaTypes: [
         {
           key: 'image',
@@ -288,6 +315,18 @@ export default {
     }
   },
   watch: {
+    settings(v) {
+      this.locales.forEach(locale => {
+        for(const key of ['sectionsPage', 'ctaLabel', 'ctaLink']) {
+          if (!v[0][key]) {
+            v[0][key] = {}
+          }
+          if (!v[0][key][locale]) {
+            v[0][key][locale] = ''
+          }
+        }
+      })
+    },
     selectedLang(val) {
       this.siteLang = val
     },
@@ -417,10 +456,6 @@ export default {
       this.errors.media = false;
       if (!this.settings[0].name[this.defaultLang]) {
         this.errors.name = true;
-        valid = false;
-      }
-      if (!this.settings[0].description[this.defaultLang] || this.settings[0].description[this.defaultLang] === '<p><br></p>') {
-        this.errors.description = true;
         valid = false;
       }
       if (!this.settings[0].price) {

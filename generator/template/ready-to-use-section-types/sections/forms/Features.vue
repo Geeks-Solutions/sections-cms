@@ -80,7 +80,7 @@ export default {
     mediaFields: [
       {
         type: 'image',
-        name: 'media'
+        name: 'medias'
       },
       {
         type: 'image',
