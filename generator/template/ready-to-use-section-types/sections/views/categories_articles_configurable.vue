@@ -1,5 +1,5 @@
 <template>
-  <div ref="BlogsArticles">
+  <div :ref="section && section.name && section.id ? `${section.name}-${section.id}` : 'BlogsArticles'">
     <div v-if="sectionRenderData">
       <BlogsArticles :section-render-data="sectionRenderData" :section-render-settings="sectionRenderSettings" :total-pages="totalPages" :lang="lang" :default-lang="defaultLang" list-type="listing" @page-changed="(offset) => pageChanged(offset)" />
     </div>
@@ -294,14 +294,9 @@ export default {
     },
     ...mapState(useSectionsStore, ['categoriesTitles'])
   },
-  watch: {
-    sectionRenderData() {
-      if (this.$refs && this.$refs.BlogsArticles && !useCookie('sections-auth-token').value) {
-        this.$nextTick(() => {
-          this.$refs.BlogsArticles.scrollIntoView({ behavior: 'smooth'})
-        })
-      }
-    }
+  mounted() {
+    const languageSupport = inject('languageSupport')
+    languageSupport?.(this.section.name)
   },
   methods: {
     pageChanged(offset) {

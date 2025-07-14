@@ -93,6 +93,10 @@ export default {
   },
   created() {
     this.$emit('seo-support', true)
-  }
+  },
+  mounted() {
+    const languageSupport = inject('languageSupport')
+    languageSupport?.(this.section.name)
+  },
 };
 </script>

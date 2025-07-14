@@ -9,6 +9,7 @@
     <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-medium">{{ $t("forms.logoLink") }}</label>
       <label class="mr-4 font-bold">{{ $t('forms.sectionsPages') }}</label>
+      <span v-if="errorLoadingPagePaths" class="flex text-start text-xs text-error pb-2">{{ $t("SectionsPagesError") }}</span>
       <gAutoComplete
         :main-filter="settings[0].logoPage[selectedLang]"
         :placeholder="$t('forms.aspectRatio')"
@@ -146,6 +147,7 @@
                 <div class="flex flex-col items-start justify-start mt-8">
                   <label class="mr-4 font-medium">{{ menuIdx === 0 && idx === 0 ? $t("forms.link") + '*' : $t("forms.link") }}</label>
                   <label class="mr-4 font-bold">{{ $t('forms.sectionsPages') }}</label>
+                  <span v-if="errorLoadingPagePaths" class="flex text-start text-xs text-error pb-2">{{ $t("SectionsPagesError") }}</span>
                   <gAutoComplete
                     :main-filter="menuContainer.menu[idx].page[selectedLang]"
                     :placeholder="$t('forms.sectionsPages')"
@@ -318,7 +320,8 @@ export default {
       },
       siteLang: 'en',
       sectionsStyle,
-      sectionsPages: []
+      sectionsPages: [],
+      errorLoadingPagePaths: false
     }
   },
   watch: {
@@ -378,6 +381,9 @@ export default {
   },
   async mounted() {
     this.sectionsPages = await getSectionsPages(sectionHeader({token: useCookie('sections-auth-token').value}))
+    if (!this.sectionsPages || this.sectionsPages.length === 0) {
+      this.errorLoadingPagePaths = true
+    }
   },
   methods: {
     addMenuContainer() {

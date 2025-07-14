@@ -266,8 +266,9 @@ export default {
       } else return null
     }
   },
-  created() {
-    this.$emit('seo-support', true)
-  }
+  mounted() {
+    const languageSupport = inject('languageSupport')
+    languageSupport?.(this.section.name)
+  },
 };
 </script>
