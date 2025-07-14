@@ -1,6 +1,6 @@
 <template>
   <div v-if="settings" class="product-details">
-    <ProductDetailsComponent :product="settings" :lang="lang" />
+    <ProductDetailsComponent :product="settings" :lang="lang" :default-lang="defaultLang" />
   </div>
 </template>
 
@@ -14,6 +14,10 @@ export default {
       default: () => {},
     },
     lang: {
+      type: String,
+      default: "en"
+    },
+    defaultLang: {
       type: String,
       default: "en"
     },

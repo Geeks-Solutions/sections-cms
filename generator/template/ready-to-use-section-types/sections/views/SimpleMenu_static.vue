@@ -32,7 +32,7 @@
             {{ menuItem.label[lang] }}
           </p>
         </global-link>
-        <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" />
+        <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" @lang-switched="langSwitched" />
       </li>
     </ul>
     <transition name="mobile-menu-main-wrapper">
@@ -52,7 +52,7 @@
                   {{ menuItem.label[lang] }}
                 </p>
               </global-link>
-              <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" />
+              <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" @lang-switched="langSwitched" />
             </li>
           </ul>
         </div>
@@ -211,6 +211,15 @@ export default {
         return this.section.settings[0];
       } else return this.section.settings
     },
+  },
+  methods: {
+    langSwitched(lang) {
+      this.$emit('refresh-section', {
+        qs: {
+          'language': lang
+        }
+      })
+    }
   }
 };
 </script>

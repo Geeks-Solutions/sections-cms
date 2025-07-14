@@ -92,6 +92,10 @@ export default {
 	  ]
 	}
   },
+  mounted() {
+    const languageSupport = inject('languageSupport')
+    languageSupport?.(this.section.name)
+  },
   methods: {
     categoryClicked(item) {
       let qs
