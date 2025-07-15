@@ -181,6 +181,8 @@
   --h2-color: var(--secondary-color);
   --h3-color: var(--secondary-color);
   --h4-color: var(--secondary-color);
+  --h5-color: var(--secondary-color);
+  --h6-color: var(--secondary-color);
   --primary-button-text-color: white;
   --hover-primary-button-text-color: white;
   --primary-button-background-color: linear-gradient(to right, var(--tw-gradient-stops));
@@ -205,6 +207,8 @@
   --cookie-background-color: #468ef9;
   --hover-cookie-background-color: #468ef9;
   --cookie-p-color: white;
+  --lists-color: inherit;
+  --hover-lists-color: inherit;
 
 
   --cookie-control-modalTextColor: var(--neutral-800);
@@ -263,19 +267,19 @@ section[section-id] h3 {
 }
 section[section-id] h4 {
   font-size: 1.125rem; /* lg */
-  color: var(--h4-color);
+  color: var(--section-h4-color, var(--h4-color));
   font-weight: 500; /* medium */
   margin-bottom: 0.5rem !important;
 }
 section[section-id] h5 {
   font-size: 0.875rem; /* sm */
   font-weight: 500; /* medium */
-  color: var(--section-h5-color, var(--secondary-color));
+  color: var(--section-h5-color, var(--h5-color));
 }
 section[section-id] h6 {
   font-size: 0.25rem; /* sm */
   font-weight: 500; /* medium */
-  color: var(--section-h6-color, var(--secondary-color));
+  color: var(--section-h6-color, var(--h6-color));
 }
 @media (min-width: 640px) { /* sm */
   section h1 {
@@ -1987,6 +1991,30 @@ section[section-id] .simple-cta:hover {
   background: var(--section-hover-background-color, var(--hover-background-color));
 }
 
+section[section-id] ul li::marker, section[section-id] ol li::marker, section[section-id] ul li .ql-ui::before, section[section-id] ol li .ql-ui::before {
+  color: var(--section-lists-color, var(--lists-color));
+}
+
+section[section-id] ul li:hover::marker, section[section-id] ol li:hover::marker, section[section-id] ul li:hover .ql-ui::before, section[section-id] ol li:hover .ql-ui::before {
+  color: var(--section-hover-lists-color, var(--hover-lists-color));
+}
+
+section[section-id] .articles .pagination-wrapper .button-selector .next, .pagination-wrapper .button-selector .previous {
+  color: var(--section-arrow-color);
+}
+
+section[section-id] .articles .pagination-wrapper .button-selector:hover .next, .pagination-wrapper .button-selector:hover .previous {
+  color: var(--section-hover-arrow-color);
+}
+
+section[section-id] .articles .pagination-wrapper .page-number {
+  color: var(--section-number-color) !important;
+}
+
+section[section-id] .articles .pagination-wrapper .page-number:hover, .pagination-wrapper .page-number-selected {
+  color: var(--section-hover-number-color) !important;
+}
+
 /* */
 
 .cookieControl__Modal-enter-active, .cookieControl__Modal-leave-active {
@@ -2414,6 +2442,10 @@ section[section-id] .zaq-widget .chat-btn {
   color: var(--section-primary-color, var(--primary-color)) !important;
 }
 
+section[section-id] .faq .section-wrapper #faq .arrow {
+  color: var(--section-secondary-color, var(--secondary-color));
+}
+
 .faq .section-wrapper h2.title {
   justify-content: start;
   width: 90%;
@@ -2438,7 +2470,7 @@ section[section-id] .zaq-widget .chat-btn {
   padding-bottom: 0.5rem;
 }
 
-.faq .section-wrapper img.arrow.w-6 {
+.faq .section-wrapper div.arrow.w-6 {
   width: 18px !important;
   height: 18px !important;
 }

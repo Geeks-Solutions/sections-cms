@@ -189,6 +189,8 @@
   --h2-color: var(--secondary-color);
   --h3-color: var(--secondary-color);
   --h4-color: var(--secondary-color);
+  --h5-color: var(--secondary-color);
+  --h6-color: var(--secondary-color);
   --primary-button-text-color: var(--secondary-color);
   --hover-primary-button-text-color: var(--secondary-color);
   --primary-button-background-color: #FFF;
@@ -213,6 +215,8 @@
   --cookie-background-color: #00131F;
   --hover-cookie-background-color: #00131F;
   --cookie-p-color: white;
+  --lists-color: inherit;
+  --hover-lists-color: inherit;
 }
 
 html {
@@ -412,6 +416,10 @@ section[section-id] .button-selector:hover {
   border: 1px solid var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color));
   color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color));
   background: var(--section-hover-primary-button-background-color, var(--hover-primary-button-background-color));
+}
+
+section[section-id] .faq .section-wrapper #faq .arrow {
+  color: var(--section-secondary-color, var(--secondary-color));
 }
 
 .faq .section-wrapper .question.expanded {
@@ -992,6 +1000,30 @@ section .text-image .row-wrapper {
 section .product-details {
   padding-left: 1.75rem;
   padding-right: 1.75rem;
+}
+
+section[section-id] ul li::marker, section[section-id] ol li::marker, section[section-id] ul li .ql-ui::before, section[section-id] ol li .ql-ui::before {
+  color: var(--section-lists-color, var(--lists-color));
+}
+
+section[section-id] ul li:hover::marker, section[section-id] ol li:hover::marker, section[section-id] ul li:hover .ql-ui::before, section[section-id] ol li:hover .ql-ui::before {
+  color: var(--section-hover-lists-color, var(--hover-lists-color));
+}
+
+section[section-id] .articles .pagination-wrapper .button-selector .next, .pagination-wrapper .button-selector .previous {
+  color: var(--section-arrow-color);
+}
+
+section[section-id] .articles .pagination-wrapper .button-selector:hover .next, .pagination-wrapper .button-selector:hover .previous {
+  color: var(--section-hover-arrow-color);
+}
+
+section[section-id] .articles .pagination-wrapper .page-number {
+  color: var(--section-number-color) !important;
+}
+
+section[section-id] .articles .pagination-wrapper .page-number:hover, .pagination-wrapper .page-number-selected {
+  color: var(--section-hover-number-color) !important;
 }
 
 :root {
