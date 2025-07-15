@@ -233,49 +233,49 @@ html {
   font-family: "Poppins", sans-serif !important;
   scroll-behavior: smooth;
 }
-html .sections-main {
-  font-size: var(--base-font-size);
+html .sections-main section[section-id] {
+  font-size: var(--section-base-font-size, var(--base-font-size));
 }
 @container sections-main (max-width: 768px) {
-  html .views {
-    font-size: var(--mobile-base-font-size);
+  html .views section[section-id] {
+    font-size: var(--section-mobile-base-font-size, var(--mobile-base-font-size));
   }
 }
 html .GoogleMaps .gm-style {
   font-family: "Poppins", sans-serif !important;
 }
-section h1 {
+section[section-id] h1 {
   font-size: 2.5rem;
-  color: var(--h1-color);
+  color: var(--section-h1-color, var(--h1-color));
   font-weight: bold;
   line-height: 1.25;
   text-transform: capitalize;
 }
-section h2 {
+section[section-id] h2 {
   font-size: 2.25rem; /* 4xl */
-  color: var(--h2-color);
+  color: var(--section-h2-color, var(--h2-color));
   font-weight: 600; /* semibold */
 }
-section h3 {
+section[section-id] h3 {
   font-size: 1.25rem; /* xl */
-  color: var(--h3-color);
+  color: var(--section-h3-color, var(--h3-color));
   font-weight: 600; /* semibold */
 }
-section h4 {
+section[section-id] h4 {
   font-size: 1.125rem; /* lg */
   color: var(--h4-color);
   font-weight: 500; /* medium */
   margin-bottom: 0.5rem !important;
 }
-section h5 {
+section[section-id] h5 {
   font-size: 0.875rem; /* sm */
   font-weight: 500; /* medium */
-  color: var(--secondary-color);
+  color: var(--section-h5-color, var(--secondary-color));
 }
-section h6 {
+section[section-id] h6 {
   font-size: 0.25rem; /* sm */
   font-weight: 500; /* medium */
-  color: var(--secondary-color);
+  color: var(--section-h6-color, var(--secondary-color));
 }
 @media (min-width: 640px) { /* sm */
   section h1 {
@@ -288,11 +288,11 @@ section h6 {
   }
 }
 
-section p {
+section[section-id] p {
   line-height: 1.625;
   letter-spacing: 0.025em;
   --tw-text-opacity: 1;
-  color: var(--p-color);
+  color: var(--section-p-color, var(--p-color));
 }
 
 .section a {
@@ -314,17 +314,21 @@ section .view-component button {
   white-space: normal;
 }
 
-.simple-menu.main ul li.sign-up .global-link p, .whatsapp-checkout-button, .button-selector, section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
+section[section-id] .simple-menu.main ul li.sign-up .global-link p,
+section[section-id] .whatsapp-checkout-button,
+section[section-id] .button-selector,
+section[section-id] .view-component button.quill-button-container,
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
   font-size: 0.875rem; /* sm */
   text-align: center;
   border-width: 1px;
   border-radius: 9999px !important; /* full */
   --tw-border-opacity: 1;
   border: 1px solid !important;
-  border-color: var(--primary-button-border-color) !important;
+  border-color: var(--section-primary-button-border-color, var(--primary-button-border-color)) !important;
   padding: 1rem 2rem !important;
-  color: var(--primary-button-text-color); /* white */
-  background: var(--primary-button-background-color);
+  color: var(--section-primary-button-text-color, var(--primary-button-text-color)); /* white */
+  background: var(--section-primary-button-background-color, var(--primary-button-background-color));
   transition-duration: 300ms;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -332,16 +336,20 @@ section .view-component button {
   max-width: 100%;
 }
 
-.simple-menu.main ul li.sign-up .global-link p:hover, .whatsapp-checkout-button:hover, .button-selector:hover, section .view-component button.quill-button-container:hover, section .view-component button:hover {
+section[section-id] .simple-menu.main ul li.sign-up .global-link p:hover,
+section[section-id] .whatsapp-checkout-button:hover,
+section[section-id] .button-selector:hover,
+section[section-id] .view-component button.quill-button-container:hover,
+section[section-id] .view-component button:hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   --tw-shadow: var(--tw-shadow-colored);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  border-color: var(--hover-primary-button-border-color) !important;
-  color: var(--hover-primary-button-text-color); /* white */
-  background: var(--hover-primary-button-background-color);
+  border-color: var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color)) !important;
+  color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color)); /* white */
+  background: var(--section-hover-primary-button-background-color, var(--hover-primary-button-background-color));
 }
 
 .sections-main input {
@@ -356,8 +364,8 @@ section .view-component button {
   height: 46px;
 }
 
-.sections-main input:focus {
-  border-color: var(--primary-color); /* Indigo-600 */
+.sections-main section[section-id] input:focus {
+  border-color: var(--section-primary-color, var(--primary-color)); /* Indigo-600 */
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
@@ -373,19 +381,19 @@ section .view-component button {
   }
 }
 
-.outline-button-selector {
+section[section-id] .outline-button-selector {
   font-size: 0.875rem;
   text-align: center;
   border-radius: 9999px; /* full */
   padding: 1rem 2rem;
-  background: var(--secondary-button-background-color) !important; /* bg-inherit */
-  border: 1px solid var(--secondary-button-border-color);
+  background: var(--section-secondary-button-background-color, var(--secondary-button-background-color)) !important; /* bg-inherit */
+  border: 1px solid var(--section-secondary-button-border-color, var(--secondary-button-border-color));
   background-clip: text; /* text-gradient effect */
   -webkit-background-clip: text; /* For WebKit browsers */
-  color: var(--secondary-button-text-color);
+  color: var(--section-secondary-button-text-color, var(--secondary-button-text-color));
   transition: box-shadow 0.3s ease-in-out;
   --tw-border-opacity: 1;
-  border-color: var(--secondary-button-border-color);
+  border-color: var(--section-secondary-button-border-color, var(--secondary-button-border-color));
   transition-duration: 300ms;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -393,17 +401,17 @@ section .view-component button {
   max-width: 100%;
 }
 
-.outline-button-selector:hover {
+section[section-id] .outline-button-selector:hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   --tw-shadow: var(--tw-shadow-colored);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  background: var(--hover-secondary-button-background-color); /* bg-inherit */
-  border: 1px solid var(--hover-secondary-button-border-color);
-  color: var(--hover-secondary-button-text-color);
-  border-color: var(--hover-secondary-button-border-color);
+  background: var(--section-hover-secondary-button-background-color, var(--hover-secondary-button-background-color)); /* bg-inherit */
+  border: 1px solid var(--section-hover-secondary-button-border-color, var(--hover-secondary-button-border-color));
+  color: var(--section-hover-secondary-button-text-color, var(--hover-secondary-button-text-color));
+  border-color: var(--section-hover-secondary-button-border-color, var(--hover-secondary-button-border-color));
 }
 
 @media (min-width: 1280px) { /* xl */
@@ -480,12 +488,12 @@ section .view-component button {
   padding: 0 !important;
 }
 
-.SimpleMenu .view-component:has(> .simple-menu.main) {
-  background: var(--background-color) !important;
+section[section-id].SimpleMenu .view-component:has(> .simple-menu.main) {
+  background: var(--section-background-color, var(--background-color)) !important;
 }
 
-.SimpleMenu .view-component:has(> .simple-menu.main):hover {
-  background: var(--hover-background-color) !important;
+section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover {
+  background: var(--section-hover-background-color, var(--hover-background-color)) !important;
 }
 
 .simple-menu.main {
@@ -616,12 +624,12 @@ section .view-component button {
   }
 }
 
-.simple-menu ul li:not(.login):not(.sign-up) .global-link p {
+section[section-id] .simple-menu ul li:not(.login):not(.sign-up) .global-link p {
   padding: 0.5rem 1rem;
   font-size: 0.875rem; /* text-sm */
   background: transparent; /* bg-transparent */
   border-radius: 0.5rem; /* rounded-lg */
-  color: var(--menu-text-color); /* text-[#666666] */
+  color: var(--section-menu-text-color, var(--menu-text-color)); /* text-[#666666] */
   transition: color 0.3s ease; /* focus:shadow-outline, hover:text-gray-900 */
 }
 
@@ -635,8 +643,8 @@ section .view-component button {
   }
 }
 
-.simple-menu ul li:not(.login):not(.sign-up) .global-link p:hover {
-  color: var(--hover-menu-text-color); /* hover:text-gray-900 */
+section[section-id] .simple-menu ul li:not(.login):not(.sign-up) .global-link p:hover {
+  color: var(--section-hover-menu-text-color, var(--hover-menu-text-color)); /* hover:text-gray-900 */
 }
 
 .simple-menu ul li:not(.login):not(.sign-up) .global-link p:focus {
@@ -651,26 +659,26 @@ section .view-component button {
   }
 }
 
-.simple-menu.main ul li.login .global-link p {
+section[section-id] .simple-menu.main ul li.login .global-link p {
   font-size: 0.875rem; /* sm */
   line-height: 1.25rem;
   text-align: center;
   border-radius: 9999px; /* full */
   padding: 0.75rem 2rem;
   background: inherit; /* bg-inherit */
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--section-primary-color, var(--primary-color));
   background-clip: text; /* text-gradient effect */
   -webkit-background-clip: text; /* For WebKit browsers */
   color: transparent;
   transition: box-shadow 0.3s ease-in-out;
   --tw-border-opacity: 1;
-  border-color: var(--primary-color);
+  border-color: var(--section-primary-color, var(--primary-color));
   transition-duration: 300ms;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   width: max-content;
   max-width: 100%;
-  color: var(--primary-color););
+  color: var(--section-primary-color, var(--primary-color));
 }
 
 .simple-menu.main ul li.login .global-link p:hover {
@@ -870,7 +878,9 @@ section .view-component button.quill-button-container {
   border: none;
 }
 
-p.ql-snow p a:not(.ql-a-button), div.ql-snow p a:not(.ql-a-button), .sections-cta-link {
+section[section-id] p.ql-snow p a:not(.ql-a-button),
+section[section-id] div.ql-snow p a:not(.ql-a-button),
+section[section-id] .sections-cta-link {
   font-size: 0.875rem;
   line-height: 1.25rem;
   text-align: center;
@@ -882,28 +892,30 @@ p.ql-snow p a:not(.ql-a-button), div.ql-snow p a:not(.ql-a-button), .sections-ct
   transition: box-shadow 0.3s ease-in-out;
   --tw-border-opacity: 1;
   border: 1px solid !important;
-  border-color: var(--link-border-color) !important;
+  border-color: var(--section-link-border-color, var(--link-border-color)) !important;
   transition-duration: 300ms;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   width: max-content;
   max-width: 100%;
   text-decoration: underline;
-  color: var(--link-text-color) !important;
-  background: var(--link-background-color);
+  color: var(--section-link-text-color, var(--link-text-color)) !important;
+  background: var(--section-link-background-color, var(--link-background-color));
   display: inline-block;
 }
 
-p.ql-snow p a:not(.ql-a-button):hover, div.ql-snow p a:not(.ql-a-button):hover, .sections-cta-link:hover {
+section[section-id] p.ql-snow p a:not(.ql-a-button):hover,
+section[section-id] div.ql-snow p a:not(.ql-a-button):hover,
+section[section-id] .sections-cta-link:hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   --tw-shadow: var(--tw-shadow-colored);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  border-color: var(--hover-link-border-color) !important;
-  color: var(--hover-link-text-color) !important;
-  background: var(--hover-link-background-color);
+  border-color: var(--section-hover-link-border-color, var(--hover-link-border-color)) !important;
+  color: var(--section-hover-link-text-color, var(--hover-link-text-color)) !important;
+  background: var(--section-hover-link-background-color, var(--hover-link-background-color));
 }
 
 
@@ -1116,8 +1128,8 @@ section .ql-editor ul li::before {
   background-color: #d1d5db;
 }
 
-.category-tab.active {
-  background-color: var(--primary-color);
+section[section-id] .category-tab.active {
+  background-color: var(--section-primary-color, var(--primary-color));
   color: #ffffff;
 }
 
@@ -1150,13 +1162,13 @@ section .ql-editor ul li::before {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.menu-item.featured {
-  border-left: 4px solid var(--primary-color);
+section[section-id] .menu-item.featured {
+  border-left: 4px solid var(--section-primary-color, var(--primary-color));
   padding-left: 1rem;
 }
 
-.menu-item-service.featured {
-  border-left: 4px solid var(--primary-color);
+section[section-id] .menu-item-service.featured {
+  border-left: 4px solid var(--section-primary-color, var(--primary-color));
 }
 
 /* Item elements styling */
@@ -1199,13 +1211,13 @@ section .ql-editor ul li::before {
   font-size: 0.75rem;
 }
 
-.badge-featured.badge-restaurant {
-  background-color: var(--primary-color);
+section[section-id] .badge-featured.badge-restaurant {
+  background-color: var(--section-primary-color, var(--primary-color));
   color: white;
 }
 
-.badge-featured.badge-service {
-  background-color: var(--primary-color);
+section[section-id] .badge-featured.badge-service {
+  background-color: var(--section-primary-color, var(--primary-color));
   color: white;
 }
 
@@ -1331,8 +1343,8 @@ section .ql-editor ul li::before {
   transition: all 0.2s;
 }
 
-.cart-item-count {
-  background-color: var(--primary-color);
+section[section-id] .cart-item-count {
+  background-color: var(--section-primary-color, var(--primary-color));
   color: white;
   font-weight: 600;
   font-size: 0.75rem;
@@ -1828,8 +1840,8 @@ section .view-component .restaurant-menu button.item-qty-plus {
 }
 
 /* Featured item styling */
-.restaurant-menu .featured {
-  border-left: 4px solid var(--primary-color);
+section[section-id] .restaurant-menu .featured {
+  border-left: 4px solid var(--section-primary-color, var(--primary-color));
   padding-left: 1rem;
 }
 
@@ -1967,12 +1979,12 @@ section .view-component .restaurant-menu button.item-qty-plus {
   }
 }
 
-.simple-cta {
-  background: var(--background-color);
+section[section-id] .simple-cta {
+  background: var(--section-background-color, var(--background-color));
 }
 
-.simple-cta:hover {
-  background: var(--hover-background-color);
+section[section-id] .simple-cta:hover {
+  background: var(--section-hover-background-color, var(--hover-background-color));
 }
 
 /* */
@@ -2398,8 +2410,8 @@ section .view-component .restaurant-menu button.item-qty-plus {
 
 }
 
-.zaq-widget .chat-btn {
-  color: var(--primary-color) !important;
+section[section-id] .zaq-widget .chat-btn {
+  color: var(--section-primary-color, var(--primary-color)) !important;
 }
 
 .faq .section-wrapper h2.title {
@@ -2525,12 +2537,12 @@ section .view-component .restaurant-menu button.item-qty-plus {
   font-size: 60px !important;
   letter-spacing: 6px;
 }
-.plans.plans-wrapper u {
-  text-decoration-color: var(--link-text-color);
+section[section-id] .plans.plans-wrapper u {
+  text-decoration-color: var(--section-link-text-color, var(--link-text-color));
   text-underline-offset: 12px;
 }
-.plans.plans-wrapper u:hover {
-  text-decoration-color: var(--hover-link-text-color);
+section[section-id] .plans.plans-wrapper u:hover {
+  text-decoration-color: var(--section-hover-link-text-color, var(--hover-link-text-color));
 }
 .plans.plans-wrapper .borderedStyle {
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%2303B1C7' stroke-width='5' stroke-dasharray='14%2c 15' stroke-dashoffset='0' stroke-linecap='butt'/%3e%3c/svg%3e");
@@ -2540,11 +2552,14 @@ section .view-component .restaurant-menu button.item-qty-plus {
   font-weight: 600;
   font-size: 11px;
 }
-.plans.plans-wrapper .price {
+section[section-id] .plans.plans-wrapper .price {
   font-weight: 300;
   font-size: 6rem;
   line-height: 1;
-  color: var(--tertiary-color);
+  color: var(--section-price-color, var(--tertiary-color));
+}
+section[section-id] .plans.plans-wrapper .price:hover {
+  color: var(--section-hover-price-color, var(--tertiary-color));
 }
 .plans.plans-wrapper .currency {
   font-size: 1.25rem;
