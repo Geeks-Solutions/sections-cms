@@ -2015,6 +2015,24 @@ section[section-id] .articles .pagination-wrapper .page-number:hover, .paginatio
   color: var(--section-hover-number-color) !important;
 }
 
+section[section-id] .product-details .price-block .price {
+  font-size: var(--section-price-font-size, 1.875rem) !important;
+  color: var(--section-price-color);
+}
+
+section[section-id] .product-details .price-block .price:hover {
+  color: var(--section-hover-price-color);
+}
+
+section[section-id] .product-details .price-block .currency {
+  font-size: var(--section-currency-font-size, 1.875rem) !important;
+  color: var(--section-currency-color);
+}
+
+section[section-id] .product-details .price-block .currency:hover {
+  color: var(--section-hover-currency-color);
+}
+
 /* */
 
 .cookieControl__Modal-enter-active, .cookieControl__Modal-leave-active {
