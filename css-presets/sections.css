@@ -485,11 +485,11 @@ section[section-id] .faq .section-wrapper #faq .arrow {
 }
 
 .plans.plans-wrapper .plansBox.mostPopular {
-  background: #00131f !important;
+  background: var(--section-plan-background-color, #00131f) !important;
 }
 
 .plans.plans-wrapper .plansBox:hover {
-  background: #00131f !important;
+  background: var(--section-hover-plan-background-color, #00131f) !important;
 }
 
 .plans.plans-wrapper .sectionsPack {
@@ -527,11 +527,17 @@ section[section-id] .faq .section-wrapper #faq .arrow {
   font-size: 11px;
 }
 
-.plans.plans-wrapper .price {
+section[section-id] .plans.plans-wrapper .price {
   font-weight: 300;
   font-size: 6rem;
   line-height: 1;
-  color: #03B1C7;
+  color: var(--section-price-color, #03B1C7);
+}
+section[section-id] .plans.plans-wrapper .plansBox.mostPopular .price {
+  color: var(--section-hover-price-color, #03B1C7);
+}
+section[section-id] .plans.plans-wrapper .plansBox:hover .price {
+  color: var(--section-hover-price-color, #03B1C7);
 }
 
 .plans.plans-wrapper .currency {
@@ -539,24 +545,25 @@ section[section-id] .faq .section-wrapper #faq .arrow {
   line-height: 2.5rem;
   font-weight: 300;
   padding-top: 1.5rem;
+  color: var(--section-currency-color);
 }
 
 .plans.plans-wrapper .plansBox:hover .currency {
   font-size: 1.5rem;
   line-height: 2.0rem;
   font-weight: 300;
-  color: white;
+  color: var(--section-hover-currency-color, white);
 }
 
 .plans.plans-wrapper .plansBox .currency.mostPopular {
   font-size: 1.5rem;
   line-height: 2.0rem;
   font-weight: 300;
-  color: white;
+  color: var(--section-hover-currency-color, white);
 }
 
 .plans.plans-wrapper .plansTitleBox .title {
-  color: black;
+  color: var(--section-title-color, black);
   white-space: nowrap;
   padding-top: 24px;
   overflow: hidden;
@@ -576,39 +583,48 @@ section[section-id] .faq .section-wrapper #faq .arrow {
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 700;
-  color: white;
+  color: var(--section-hover-title-color, white);
 }
 
 .plans.plans-wrapper .plansTitleBox .title.mostPopular {
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 700;
-  color: white;
+  color: var(--section-hover-title-color, white);
 }
 
 .plans.plans-wrapper .plansTitleBox .desc {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 300;
-  color: gray;
+  color: var(--section-description-color, gray);
 }
 
 .plans.plans-wrapper .plansTitleBox .desc p {
-  color: gray;
+  color: var(--section-description-color, gray);
+}
+.plans.plans-wrapper .plansBox:hover .plansTitleBox .desc p, .plans.plans-wrapper .plansBox.mostPopular .plansTitleBox .desc p {
+  color: var(--section-hover-description-color, gray);
 }
 
 .plans.plans-wrapper .date {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 300;
-  color: gray;
+  color: var(--section-frequency-color, gray);
+}
+.plans.plans-wrapper .plansBox:hover .date, .plans.plans-wrapper .plansBox.mostPopular .date {
+  color: var(--section-hover-frequency-color, gray);
 }
 
 .plans.plans-wrapper .cta {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: #03B1C7;
+  color: var(--section-link-color, #03B1C7);
+}
+.plans.plans-wrapper .plansBox:hover .cta, .plans.plans-wrapper .plansBox.mostPopular .cta {
+  color: var(--section-hover-link-color, #03B1C7);
 }
 
 .plans.plans-wrapper .cta-arrow {
@@ -624,13 +640,15 @@ section[section-id] .faq .section-wrapper #faq .arrow {
   font-weight: 500;
   color: white;
 }
-
+.plans.plans-wrapper .plansBox .customFeatures {
+  color: var(--section-features-color);
+}
 .plans.plans-wrapper .plansBox:hover .customFeatures {
-  color: white;
+  color: var(--section-hover-features-color, white);
 }
 
 .plans.plans-wrapper .plansBox .customFeatures.mostPopular {
-  color: white;
+  color: var(--section-hover-features-color, white);
 }
 
 .plans.plans-wrapper .cta-arrow.mostPopular {
@@ -644,24 +662,24 @@ section[section-id] .faq .section-wrapper #faq .arrow {
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 300;
-  color: white;
-  list-style-image: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png");
+  color: var(--section-hover-features-color, white);
+  list-style-image: var(--section-hover-features-icon, url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png"));
 }
 
 .plans.plans-wrapper .plansBox .bp.mostPopular {
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 300;
-  color: white;
-  list-style-image: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png");
+  color: var(--section-hover-features-color, white);
+  list-style-image: var(--section-hover-features-icon, url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png"));
 }
 
 .plans.plans-wrapper .plansBox .bp {
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 300;
-  color: black;
-  list-style-image: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload+%281%29e608936bc6b84240891e198f40cbb96a.png");
+  color: var(--section-features-color, black);
+  list-style-image: var(--section-features-icon, url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload+%281%29e608936bc6b84240891e198f40cbb96a.png"));
 }
 
 .plans.plans-wrapper .features ul li {
