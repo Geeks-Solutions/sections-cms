@@ -2561,10 +2561,11 @@ section[section-id] .faq .section-wrapper #faq .arrow {
 }
 .plans.plans-wrapper .plansBox {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  background: var(--section-plan-background-color, transparent);
 }
 
 .plans.plans-wrapper .plansBox.mostPopular {
-  background: var(--section-plan-background-color, var(--plans-hover)) !important;
+  background: var(--section-hover-plan-background-color, var(--plans-hover)) !important;
 }
 .plans.plans-wrapper .plansBox:hover {
   background: var(--section-hover-plan-background-color, var(--plans-hover)) !important;
