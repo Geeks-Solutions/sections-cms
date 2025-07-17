@@ -209,6 +209,8 @@
   --cookie-p-color: white;
   --lists-color: inherit;
   --hover-lists-color: inherit;
+  --lists-marker-color: inherit;
+  --hover-lists-marker-color: inherit;
 
 
   --cookie-control-modalTextColor: var(--neutral-800);
@@ -1991,12 +1993,20 @@ section[section-id] .simple-cta:hover {
   background: var(--section-hover-background-color, var(--hover-background-color));
 }
 
-section[section-id] ul li::marker, section[section-id] ol li::marker, section[section-id] ul li .ql-ui::before, section[section-id] ol li .ql-ui::before {
+section[section-id] ul li::marker, section[section-id] ol li, section[section-id] ul li .ql-ui, section[section-id] ol li .ql-ui {
   color: var(--section-lists-color, var(--lists-color));
 }
 
-section[section-id] ul li:hover::marker, section[section-id] ol li:hover::marker, section[section-id] ul li:hover .ql-ui::before, section[section-id] ol li:hover .ql-ui::before {
+section[section-id] ul li:hover, section[section-id] ol li:hover, section[section-id] ul li:hover .ql-ui, section[section-id] ol li:hover .ql-ui {
   color: var(--section-hover-lists-color, var(--hover-lists-color));
+}
+
+section[section-id] ul li::marker, section[section-id] ol li::marker, section[section-id] ul li .ql-ui::before, section[section-id] ol li .ql-ui::before {
+  color: var(--section-lists-marker-color, var(--lists-marker-color));
+}
+
+section[section-id] ul li:hover::marker, section[section-id] ol li:hover::marker, section[section-id] ul li:hover .ql-ui::before, section[section-id] ol li:hover .ql-ui::before {
+  color: var(--section-hover-lists-marker-color, var(--hover-lists-marker-color));
 }
 
 section[section-id] .articles .pagination-wrapper .button-selector .next, .pagination-wrapper .button-selector .previous {
