@@ -480,6 +480,14 @@ section[section-id] .faq .section-wrapper #faq .arrow {
   background: white;
 }
 
+.plans.plans-wrapper .plansBox:hover .separator, .plans.plans-wrapper .plansBox.mostPopular .separator {
+  border-color: var(--section-hover-separator-color, #C2C2C2) !important;
+}
+
+.plans.plans-wrapper .plansBox .separator {
+  border-color: var(--section-separator-color, #C2C2C2) !important;
+}
+
 .plans.plans-wrapper .plansBox {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   background: var(--section-plan-background-color, transparent);
