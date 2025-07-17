@@ -306,12 +306,12 @@ section[section-id] .ql-snow article.ql-editor a:not(.ql-a-button):hover {
 
 .simple-cta h2 {
   font-size: 24px;
-  color: white;
+  color: var(--section-h2-color, white);;
 }
 
 .simple-cta p {
   font-size: 18px;
-  color: white;
+  color: var(--section-p-color, white);
 }
 
 section[section-id] .simple-cta {
@@ -326,8 +326,8 @@ section .view-component button {
   white-space:normal;
 }
 
-section[section-id] section .view-component button.quill-button-container,
-section[section-id] section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect),
+section[section-id] .view-component button.quill-button-container,
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect),
 section[section-id] .simple-menu.main .sign-up {
   font-size: 14px !important;
   border: 1px solid var(--section-primary-button-border-color, var(--primary-button-border-color)) !important;
@@ -482,10 +482,11 @@ section[section-id] .faq .section-wrapper #faq .arrow {
 
 .plans.plans-wrapper .plansBox {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  background: var(--section-plan-background-color, transparent);
 }
 
 .plans.plans-wrapper .plansBox.mostPopular {
-  background: var(--section-plan-background-color, #00131f) !important;
+  background: var(--section-hover-plan-background-color, #00131f) !important;
 }
 
 .plans.plans-wrapper .plansBox:hover {
