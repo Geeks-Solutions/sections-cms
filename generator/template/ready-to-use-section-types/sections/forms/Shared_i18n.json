@@ -167,7 +167,11 @@
     },
     "requiredField": "Required field",
     "Other": "Other",
-    "SectionsPagesError": "Unexpected error: The pages listing couldn't be loaded. Please log out and log back in as admin to resolve the issue"
+    "SectionsPagesError": "Unexpected error: The pages listing couldn't be loaded. Please log out and log back in as admin to resolve the issue",
+    "sectionsBuilder": {
+      "globalSettings": "Global section theme settings",
+      "specificSettings": "Specific section theme settings"
+    }
   },
   "fr": {
     "forms": {
@@ -337,6 +341,10 @@
     },
     "requiredField": "Champ requis",
     "Other": "Autre",
-    "SectionsPagesError": "Erreur inattendue : La liste de pages n’a pas pu être chargée. Veuillez vous déconnecter puis vous reconnecter en tant qu’administrateur pour résoudre le problème"
+    "SectionsPagesError": "Erreur inattendue : La liste de pages n’a pas pu être chargée. Veuillez vous déconnecter puis vous reconnecter en tant qu’administrateur pour résoudre le problème",
+    "sectionsBuilder": {
+      "globalSettings": "Paramètres globales du thème de la section",
+      "specificSettings": "Paramètres spécifiques du thème de la section"
+    }
   }
 }

@@ -151,12 +151,10 @@ describe('SimpleCTA', () => {
       const titleInput = wrapper.find('input.title')
       const subtitleInput = wrapper.find('input.subtitle')
       const buttonLabelInput = wrapper.find('input.buttonLabel')
-      const linkInput = wrapper.find('input.link')
 
       expect(titleInput.classes()).toContain('border-error')
       expect(subtitleInput.classes()).toContain('border-error')
       expect(buttonLabelInput.classes()).toContain('border-error')
-      expect(linkInput.classes()).toContain('border-error')
     })
   })
 

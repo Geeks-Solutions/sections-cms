@@ -2,7 +2,7 @@ module.exports = (api, options, rootOptions) => {
     if (options.choice === 'nuxt') {
         api.extendPackage({
             dependencies: {
-                "@geeks.solutions/nuxt-sections": "3.0.8",
+                "@geeks.solutions/nuxt-sections": "3.0.9",
                 "@googlemaps/js-api-loader": "^1.16.6",
                 "@gtm-support/vue-gtm": "^3.1.0",
                 "leaflet": "^1.9.4",
@@ -21,11 +21,12 @@ module.exports = (api, options, rootOptions) => {
                 "@nuxt/eslint": "^1.3.0",
                 "@nuxt/eslint-config": "^1.3.0",
                 "@nuxt/test-utils": "^3.17.2",
-                "@nuxtjs/tailwindcss": "^6.14.0",
                 "@testing-library/vue": "^8.1.0",
+                "@unocss/nuxt": "^66.3.2",
                 "@vue/test-utils": "^2.4.6",
                 "eslint": "^9.25.1",
                 "happy-dom": "^17.4.6",
+                "unocss": "^66.3.2",
                 "vitest": "^3.1.2"
             }
         })
@@ -77,7 +78,7 @@ module.exports.hooks = (api, options) => {
     '@geeks.solutions/nuxt-sections',\r
     '@nuxt/image',\r
     '@nuxtjs/i18n',\r
-    '@nuxtjs/tailwindcss',\r
+    '@unocss/nuxt',\r
     'nuxt-lazytube',\r
     'nuxt3-leaflet',\r
     '@pinia/nuxt'\r],

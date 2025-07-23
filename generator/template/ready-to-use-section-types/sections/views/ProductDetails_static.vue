@@ -78,6 +78,21 @@ export default {
         return this.section.settings[0]
       }
     }
+  },
+  mounted() {
+    const sectionsThemeComponents = null
+    sectionsThemeComponents?.(this.section.name, [
+      {
+        id: 'global',
+        name: this.$t('sectionsBuilder.globalSettings'),
+        path: '/theme/global_settings'
+      },
+      {
+        id: 'specific',
+        name: this.$t('sectionsBuilder.specificSettings'),
+        path: '/theme/ProductDetails_settings'
+      }
+    ])
   }
 };
 </script>

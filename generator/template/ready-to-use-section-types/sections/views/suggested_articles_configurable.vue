@@ -265,6 +265,14 @@ export default {
   mounted() {
     const languageSupport = inject('languageSupport')
     languageSupport?.(this.section.name)
+    const sectionsThemeComponents = null
+    sectionsThemeComponents?.(this.section.name, [
+      {
+        id: 'global',
+        name: this.$t('sectionsBuilder.globalSettings'),
+        path: '/theme/global_settings'
+      }
+    ])
   },
 };
 </script>

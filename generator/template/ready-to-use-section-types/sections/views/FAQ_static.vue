@@ -7,7 +7,16 @@
           <div v-for="(qa, index) in settings.QAs" :key="`qa-${index}`" class="question" :class="[`question-${sectionWeight}`, answerShowing[index] === true ? 'expanded' : 'collapsed']">
             <div class="flex flex-row justify-between" :class="`question-title-${index}-${sectionWeight}`" @click="toggleAnswer(index)">
               <h3 class="question-title">{{ qa[lang].question }}</h3>
-              <img :src="answerShowing[index] === true ? importAsset('/assets/icons/arrowUp.svg') : importAsset('/assets/icons/arrowDown.svg')" alt="arrow" class="arrow w-6" loading="lazy" />
+              <div v-if="answerShowing[index] === true" class="arrow w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                </svg>
+              </div>
+              <div v-else class="arrow w-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </div>
             <div v-if="answerShowing[index] === true" class="answer" :class="[index === 0 ? 'show' : '', `answer-${index}-${sectionWeight}`]">
               <div class="flex w-full justify-start">
@@ -129,6 +138,14 @@ export default {
   },
   mounted() {
     this.initQAs()
+    const sectionsThemeComponents = null
+    sectionsThemeComponents?.(this.section.name, [
+      {
+        id: 'global',
+        name: this.$t('sectionsBuilder.globalSettings'),
+        path: '/theme/global_settings'
+      }
+    ])
   },
   methods: {
     importAsset,
@@ -185,7 +202,10 @@ export default {
   cursor: pointer;
 }
 .section-wrapper #faq .arrow {
-  filter: invert(1);
+  color: #000;
+}
+.section-wrapper #faq .arrow:hover {
+  color: #000;
 }
 
 .section-wrapper #faq .question .answer {
