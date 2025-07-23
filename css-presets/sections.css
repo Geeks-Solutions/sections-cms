@@ -306,9 +306,9 @@ section[section-id] .ql-snow article.ql-editor a:not(.ql-a-button):hover {
   border: 1px solid var(--section-hover-link-border-color, var(--hover-link-border-color));
 }
 
-.simple-cta h2 {
+section[section-id] .simple-cta h2 {
   font-size: 24px;
-  color: var(--section-h2-color, white);;
+  color: var(--section-h2-color, white);
 }
 
 .simple-cta p {
