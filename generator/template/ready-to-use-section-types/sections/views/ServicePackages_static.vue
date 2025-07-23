@@ -105,7 +105,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount, inject } from 'vue'
 
 // Import shared components
 import CartIcon from '../../components/UnifiedMenu/CartIcon.vue'
@@ -620,6 +620,15 @@ onMounted(() => {
 
     document.addEventListener('keydown', handleKeyEvents)
   }
+
+  const sectionsThemeComponents = null
+  sectionsThemeComponents?.(props.section.name, [
+    {
+      id: 'global',
+      name: useI18n().t('sectionsBuilder.globalSettings'),
+      path: '/theme/global_settings'
+    }
+  ])
 })
 
 onBeforeUnmount(() => {

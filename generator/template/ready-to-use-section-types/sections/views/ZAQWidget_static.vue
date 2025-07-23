@@ -60,6 +60,14 @@ export default {
     if (this.settings && this.settings[0].websiteId) {
       this.initializeWidget()
     }
+    const sectionsThemeComponents = null
+    sectionsThemeComponents?.(this.section.name, [
+      {
+        id: 'global',
+        name: this.$t('sectionsBuilder.globalSettings'),
+        path: '/theme/global_settings'
+      }
+    ])
   },
   beforeUnmount() {
     if (window.zaq) {

@@ -196,6 +196,14 @@ export default {
         this.thumbsWrapperWidth = this.$refs.thumbsWrapper.clientWidth
       }
     })
+    const sectionsThemeComponents = null
+    sectionsThemeComponents?.(this.section.name, [
+      {
+        id: 'global',
+        name: this.$t('sectionsBuilder.globalSettings'),
+        path: '/theme/global_settings'
+      }
+    ])
   },
   methods: {
     openPreview(image) {

@@ -36,37 +36,19 @@
 	  />
 	</div>
 
-	<div class="flex flex-col items-start justify-start mt-4">
-	  <div class="flex">
-		<label class="mr-4 font-bold">{{ $t("forms.link") }}</label>
-	  </div>
-	  <input
-		   v-model="settings[0][selectedLang].link"
-		   type="text"
-		   :placeholder="$t('forms.link')"
-		   :class="['link py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.link && selectedLang === defaultLang ? 'border-error' : 'border-FieldGray']"
-	  />
-	  <link-description />
-	</div>
-
-    <div class="my-4">
-      <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-      <div class="select-style-chooser w-[344px]">
-        <gAutoComplete
-          :main-filter="settings[0].linkTarget"
-          :placeholder="$t('forms.linkTarget')"
-          :filter-label-prop="'value'"
-          :reduce="(option) => option.key"
-          :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
-          :filter-searchable="false"
-          :close-on-select="true"
-          :filter-clearable="true"
-          :track-by="'key'"
-          @itemSelected="(val) => {settings[0].linkTarget = val;}"
-        >
-        </gAutoComplete>
-      </div>
-    </div>
+    <LazyFormLink
+      :link-label="$t('forms.link')"
+      :selected-sections-page="settings[0].sectionsPage[selectedLang]"
+      :other-link="settings[0][selectedLang].link"
+      :link-target="settings[0].linkTarget"
+      :sections-pages-label="$t('forms.sectionsPages')"
+      :other-link-label="$t('Other')"
+      :link-target-label="$t('forms.linkTarget')"
+      :link-error="errors.link && selectedLang === defaultLang"
+      @sections-page-selected="(val) => {locales.forEach(locale => { settings[0].sectionsPage[locale] = val })}"
+      @update:other-link="(val) => {settings[0][selectedLang].link = val}"
+      @link-target-selected="(val) => {settings[0].linkTarget = val}"
+    />
 
     <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
 
@@ -119,7 +101,8 @@ export default {
             link: '',
             buttonLabel: ''
           },
-          linkTarget: ''
+          linkTarget: '',
+          sectionsPage: {}
         }
       ],
       errors: {
@@ -133,6 +116,14 @@ export default {
   },
   watch: {
     settings(val) {
+      if (!val[0].sectionsPage) {
+        val[0].sectionsPage = {}
+      }
+      this.locales.forEach(locale => {
+        if (!val[0].sectionsPage[locale]) {
+          val[0].sectionsPage[locale] = ''
+        }
+      })
       if (Array.isArray(val) === false ) {
         this.settings = [val]
       }
@@ -188,7 +179,7 @@ export default {
         this.errors.buttonLabel = true;
         valid = false;
       }
-      if (!this.settings[0][this.defaultLang].link) {
+      if (!this.settings[0][this.defaultLang].link && !this.settings[0].sectionsPage[this.defaultLang]) {
         this.errors.link = true;
         valid = false;
       }

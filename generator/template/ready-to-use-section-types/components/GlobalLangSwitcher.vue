@@ -41,6 +41,7 @@ export default {
       }
       this.$i18n.locale = updatedLang
       this.$i18n.setLocale(updatedLang)
+      this.$emit('lang-switched', updatedLang)
     }
   }
 }

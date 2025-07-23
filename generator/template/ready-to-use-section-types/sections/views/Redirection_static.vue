@@ -47,6 +47,14 @@ export default {
         this.openLink(this.settings[this.lang].redirectionUrl)
       }, Number(this.settings.timeToRedirect) * 1000)
     }
+    const sectionsThemeComponents = null
+    sectionsThemeComponents?.(this.section.name, [
+      {
+        id: 'global',
+        name: this.$t('sectionsBuilder.globalSettings'),
+        path: '/theme/global_settings'
+      }
+    ])
   },
   methods: {
     openLink(link) {
