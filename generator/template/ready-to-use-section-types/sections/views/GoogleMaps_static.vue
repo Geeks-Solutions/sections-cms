@@ -7,7 +7,18 @@
 
     </div>
 
-    <div :ref="`map-${section.weight}`" class="w-full h-[447px] map-wrapper"></div>
+    <div v-if="settings.mediaPreview && settings.mediaPreview.url">
+      <NuxtImg
+        :src="settings.mediaPreview.url"
+        class="w-full"
+        :class="'h-full object-contain'"
+        width="300"
+        height="300"
+        :placeholder="[300, 300, 75, 5]" format="webp"
+        loading="lazy"
+      />
+    </div>
+    <div v-else :ref="`map-${section.weight}`" class="w-full h-[447px] map-wrapper"></div>
 
     <div class="grid md:flex grid-cols-2 md:flex-row md:flex-wrap text-Gray_800 gap-y-5 gap-x-3 md:gap-3 mt-8 md:ml-4 pins-wrapper">
       <div v-for="(pin, pinIdx) in settings.pins" :key="`pin-${pinIdx}`" class="flex flex-col items-start gap-1">
@@ -97,6 +108,66 @@ export default {
     weight: {
       type: String,
       default: ""
+    },
+    viewStructure: {
+      settings: [
+        {
+          mapApiKey: '',
+          content: {
+            en: '',
+            fr: ''
+          },
+          contentClasses: '',
+          zoom: 'fit_pins',
+          addresses: [
+            {
+              name: {
+                en: 'string',
+                fr: 'string'
+              },
+              description: {
+                en: 'string',
+                fr: 'string'
+              },
+              phone: '',
+              email: '',
+              type: '',
+              street: {
+                en: '',
+                fr: ''
+              },
+              city: {
+                en: '',
+                fr: ''
+              },
+              country: {
+                en: '',
+                fr: ''
+              },
+              lat: '',
+              lng: ''
+            }
+          ],
+          pins: [
+            {
+              name: {
+                en: '',
+                fr: ''
+              },
+              type: '',
+              media: {},
+              description: {
+                en: '',
+                fr: ''
+              }
+            }
+          ],
+          medias: [],
+          mediaPreview: {
+            url: 'https://s3.eu-west-3.amazonaws.com/geeks-apps/sections%2Fsections_gmap_previewe4048b6a52a342f28cd77f57eac6c7e9.webp'
+          }
+        }
+      ]
     }
   },
   data() {
@@ -155,6 +226,14 @@ export default {
     }
   },
   async mounted() {
+    const sectionsThemeComponents = null
+    sectionsThemeComponents?.(this.section.name, [
+      {
+        id: 'global',
+        name: this.$t('sectionsBuilder.globalSettings'),
+        path: '/theme/global_settings'
+      }
+    ])
     await this.initAddresses()
   },
   methods: {

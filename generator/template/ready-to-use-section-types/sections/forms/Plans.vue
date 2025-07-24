@@ -171,43 +171,19 @@
           />
         </div>
 
-        <div class="flex flex-col items-start justify-start mt-8">
-          <label class="mr-4 font-bold">{{ $t("plans.ctaLink") }}</label>
-          <input
-            v-model="settings[0].plans[idx].ctaLink[siteLang]"
-            type="text"
-            :placeholder="$t('plans.ctaLink')"
-            class="
-            py-4
-            pl-6
-            border border-FieldGray
-            rounded-xl
-            h-[48px]
-            w-[344px]
-            focus:outline-none
-          "
-          />
-          <link-description />
-        </div>
+        <LazyFormLink
+          :link-label="$t('plans.ctaLink')"
+          :selected-sections-page="settings[0].plans[idx].sectionsPage[siteLang]"
+          :other-link="settings[0].plans[idx].ctaLink[siteLang]"
+          :link-target="settings[0].plans[idx].ctaLinkTarget"
+          :sections-pages-label="$t('forms.sectionsPages')"
+          :other-link-label="$t('Other')"
+          :link-target-label="$t('forms.linkTarget')"
+          @sections-page-selected="(val) => {locales.forEach(locale => { settings[0].plans[idx].sectionsPage[locale] = val })}"
+          @update:other-link="(val) => {settings[0].plans[idx].ctaLink[siteLang] = val}"
+          @link-target-selected="(val) => {settings[0].plans[idx].ctaLinkTarget = val}"
+        />
 
-        <div class="my-4">
-          <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-          <div class="select-style-chooser w-[344px]">
-            <gAutoComplete
-              :main-filter="settings[0].plans[idx].ctaLinkTarget"
-              :placeholder="$t('forms.linkTarget')"
-              :filter-label-prop="'value'"
-              :reduce="(option) => option.key"
-              :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
-              :filter-searchable="false"
-              :close-on-select="true"
-              :filter-clearable="true"
-              :track-by="'key'"
-              @itemSelected="(val) => {settings[0].plans[idx].ctaLinkTarget = val;}"
-            >
-            </gAutoComplete>
-          </div>
-        </div>
       </template>
     </LazySectionsFormsFieldSets>
 
@@ -232,6 +208,7 @@
   </div>
 </template>
 
+<i18n src="./Shared_i18n.json"></i18n>
 <i18n src="./Plans_i18n.json"></i18n>
 
 <script>
@@ -305,6 +282,20 @@ export default {
     }
   },
   watch: {
+    settings: {
+      handler(v) {
+        this.locales.forEach(locale => {
+          this.settings[0].plans.forEach(plan => {
+            if (!plan.sectionsPage) {
+              plan.sectionsPage = {}
+            }
+            if (!plan.sectionsPage[locale]) {
+              plan.sectionsPage[locale] = ''
+            }
+          })
+        })
+      }
+    },
     selectedLang: {
       handler(val) {
         this.siteLang = val
@@ -389,6 +380,7 @@ export default {
             en: '',
             fr: ''
           },
+          sectionsPage: {},
           ctaLinkTarget: '',
           features: {
             en: '',

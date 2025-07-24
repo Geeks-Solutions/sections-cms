@@ -189,6 +189,8 @@
   --h2-color: var(--secondary-color);
   --h3-color: var(--secondary-color);
   --h4-color: var(--secondary-color);
+  --h5-color: var(--secondary-color);
+  --h6-color: var(--secondary-color);
   --primary-button-text-color: var(--secondary-color);
   --hover-primary-button-text-color: var(--secondary-color);
   --primary-button-background-color: #FFF;
@@ -213,6 +215,10 @@
   --cookie-background-color: #00131F;
   --hover-cookie-background-color: #00131F;
   --cookie-p-color: white;
+  --lists-color: inherit;
+  --hover-lists-color: inherit;
+  --lists-marker-color: inherit;
+  --hover-lists-marker-color: inherit;
 }
 
 html {
@@ -220,47 +226,49 @@ html {
   scroll-behavior: smooth;
 }
 
-html .sections-main {
-  font-size: var(--base-font-size);
+html .sections-main section[section-id] {
+  font-size: var(--section-base-font-size, var(--base-font-size));
 }
 
 @container sections-main (max-width: 768px) {
-  html .views {
-    font-size: var(--mobile-base-font-size);
+  html .views section[section-id] {
+    font-size: var(--section-mobile-base-font-size, var(--mobile-base-font-size));
   }
 }
 
-section h1 {
+section[section-id] h1 {
   font-size: 36px;
-  color: var(--h1-color);
+  color: var(--section-h1-color, var(--h1-color));
   font-weight: bolder;
 }
 
-section h2 {
-  color: var(--h2-color);
+section[section-id] h2 {
+  color: var(--section-h2-color, var(--h2-color));
   font-size: 24px;
 }
 
-section h3 {
-  color: var(--h3-color);
+section[section-id] h3 {
+  color: var(--section-h3-color, var(--h3-color));
   font-size: 22px;
 }
 
-section h4 {
-  color: var(--h4-color);
+section[section-id] h4 {
+  color: var(--section-h4-color, var(--h4-color));
   font-size: 16px;
 }
 
-section h5 {
+section[section-id] h5 {
+  color: var(--section-h5-color, var(--h5-color));
   font-size: 12px;
 }
 
-section h6 {
+section[section-id] h6 {
+  color: var(--section-h6-color, var(--h6-color));
   font-size: 10px;
 }
 
 section p {
-  color: var(--p-color);
+  color: var(--section-p-color, var(--p-color));
   font-size: 18px;
 }
 
@@ -280,81 +288,87 @@ section ol {
   padding: revert;
 }
 
-section .wys-wrapper .ql-snow a:not(.ql-a-button), section .ql-snow article.ql-editor a:not(.ql-a-button) {
-  color: var(--link-text-color);
-  border-color: var(--link-border-color);
-  background: var(--link-background-color);
+section[section-id] .wys-wrapper .ql-snow a:not(.ql-a-button),
+section[section-id] .ql-snow article.ql-editor a:not(.ql-a-button) {
+  color: var(--section-link-text-color, var(--link-text-color));
+  border-color: var(--section-link-border-color, var(--link-border-color));
+  background: var(--section-link-background-color, var(--link-background-color));
   font-size: 14px;
-  border: 1px solid var(--link-border-color);
+  border: 1px solid var(--section-link-border-color, var(--link-border-color));
 }
 
-section .wys-wrapper .ql-snow a:not(.ql-a-button):hover, section .ql-snow article.ql-editor a:not(.ql-a-button):hover {
-  color: var(--hover-link-text-color);
-  border-color: var(--hover-link-border-color);
-  background: var(--hover-link-background-color);
+section[section-id] .wys-wrapper .ql-snow a:not(.ql-a-button):hover,
+section[section-id] .ql-snow article.ql-editor a:not(.ql-a-button):hover {
+  color: var(--section-hover-link-text-color, var(--hover-link-text-color));
+  border-color: var(--section-hover-link-border-color, var(--hover-link-border-color));
+  background: var(--section-hover-link-background-color, var(--hover-link-background-color));
   font-size: 14px;
-  border: 1px solid var(--hover-link-border-color);
+  border: 1px solid var(--section-hover-link-border-color, var(--hover-link-border-color));
 }
 
-.simple-cta h2 {
+section[section-id] .simple-cta h2 {
   font-size: 24px;
-  color: white;
+  color: var(--section-h2-color, white);
 }
 
 .simple-cta p {
   font-size: 18px;
-  color: white;
+  color: var(--section-p-color, white);
 }
 
-.simple-cta {
-  background: var(--background-color);
+section[section-id] .simple-cta {
+  background: var(--section-background-color, var(--background-color));
 }
 
-.simple-cta:hover {
-  background: var(--hover-background-color);
+section[section-id] .simple-cta:hover {
+  background: var(--section-hover-background-color, var(--hover-background-color));
 }
 
 section .view-component button {
   white-space:normal;
 }
 
-section .view-component button.quill-button-container, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect), .simple-menu.main .sign-up {
+section[section-id] .view-component button.quill-button-container,
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect),
+section[section-id] .simple-menu.main .sign-up {
   font-size: 14px !important;
-  border: 1px solid var(--primary-button-border-color) !important;
+  border: 1px solid var(--section-primary-button-border-color, var(--primary-button-border-color)) !important;
   border-radius: 6px !important;
   padding: 8px 8px !important;
-  color: var(--primary-button-text-color) !important;
-  background: var(--primary-button-background-color) !important;
+  color: var(--section-primary-button-text-color, var(--primary-button-text-color)) !important;
+  background: var(--section-primary-button-background-color, var(--primary-button-background-color)) !important;
 }
 
-.simple-menu.main .sign-up a p {
-  color: var(--primary-button-text-color) !important;
+section[section-id] .simple-menu.main .sign-up a p {
+  color: var(--section-primary-button-text-color, var(--primary-button-text-color)) !important;
 }
 
-section .view-component button.quill-button-container:hover, section .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover, .simple-menu.main .sign-up:hover {
-  border: 1px solid var(--hover-primary-button-border-color) !important;
-  color: var(--hover-primary-button-text-color) !important;
-  background: var(--hover-primary-button-background-color) !important;
+section[section-id] .view-component button.quill-button-container:hover,
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover,
+section[section-id] .simple-menu.main .sign-up:hover {
+  border: 1px solid var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color)) !important;
+  color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color)) !important;
+  background: var(--section-hover-primary-button-background-color, var(--hover-primary-button-background-color)) !important;
 }
 
-.simple-menu.main .sign-up:hover a p {
-  color: var(--hover-primary-button-text-color) !important;
+section[section-id] .simple-menu.main .sign-up:hover a p {
+  color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color)) !important;
 }
 
-.simple-cta .button-selector {
+section[section-id] .simple-cta .button-selector {
   font-size: 14px;
-  border: 1px solid var(--secondary-button-border-color);
+  border: 1px solid var(--section-secondary-button-border-color, var(--secondary-button-border-color));
   border-radius: 6px;
   padding: 8px;
-  color: var(--secondary-button-text-color);
+  color: var(--section-secondary-button-text-color, var(--secondary-button-text-color));
   margin-right: 198px;
-  background: var(--secondary-button-background-color) !important;
+  background: var(--section-secondary-button-background-color, var(--secondary-button-background-color)) !important;
 }
 
-.simple-cta .button-selector:hover {
-  border: 1px solid var(--hover-secondary-button-border-color);
-  color: var(--hover-secondary-button-text-color);
-  background: var(--hover-secondary-button-background-color) !important;
+section[section-id] .simple-cta .button-selector:hover {
+  border: 1px solid var(--section-hover-secondary-button-border-color, var(--hover-secondary-button-border-color));
+  color: var(--section-hover-secondary-button-text-color, var(--hover-secondary-button-text-color));
+  background: var(--section-hover-secondary-button-background-color, var(--hover-secondary-button-background-color)) !important;
 }
 
 .sections-main input {
@@ -388,22 +402,26 @@ section .view-component button.quill-button-container:hover, section .view-compo
   align-self: start !important;
 }
 
-.button-selector {
+section[section-id] .button-selector {
   font-size: 14px;
-  border: 1px solid var(--primary-button-border-color);
+  border: 1px solid var(--section-primary-button-border-color, var(--primary-button-border-color));
   border-radius: 6px;
   padding: 8px;
-  color: var(--primary-button-text-color);
+  color: var(--section-primary-button-text-color, var(--primary-button-text-color));
   height: max-content;
   white-space: nowrap;
   align-self: center;
-  background: var(--primary-button-background-color);
+  background: var(--section-primary-button-background-color, var(--primary-button-background-color));
 }
 
-.button-selector:hover {
-  border: 1px solid var(--hover-primary-button-border-color);
-  color: var(--hover-primary-button-text-color);
-  background: var(--hover-primary-button-background-color);
+section[section-id] .button-selector:hover {
+  border: 1px solid var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color));
+  color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color));
+  background: var(--section-hover-primary-button-background-color, var(--hover-primary-button-background-color));
+}
+
+section[section-id] .faq .section-wrapper #faq .arrow {
+  color: var(--section-secondary-color, var(--secondary-color));
 }
 
 .faq .section-wrapper .question.expanded {
@@ -464,16 +482,25 @@ section .view-component button.quill-button-container:hover, section .view-compo
   background: white;
 }
 
+.plans.plans-wrapper .plansBox:hover .separator, .plans.plans-wrapper .plansBox.mostPopular .separator {
+  border-color: var(--section-hover-separator-color, #C2C2C2) !important;
+}
+
+.plans.plans-wrapper .plansBox .separator {
+  border-color: var(--section-separator-color, #C2C2C2) !important;
+}
+
 .plans.plans-wrapper .plansBox {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  background: var(--section-plan-background-color, transparent);
 }
 
 .plans.plans-wrapper .plansBox.mostPopular {
-  background: #00131f !important;
+  background: var(--section-hover-plan-background-color, #00131f) !important;
 }
 
 .plans.plans-wrapper .plansBox:hover {
-  background: #00131f !important;
+  background: var(--section-hover-plan-background-color, #00131f) !important;
 }
 
 .plans.plans-wrapper .sectionsPack {
@@ -511,11 +538,17 @@ section .view-component button.quill-button-container:hover, section .view-compo
   font-size: 11px;
 }
 
-.plans.plans-wrapper .price {
+section[section-id] .plans.plans-wrapper .price {
   font-weight: 300;
   font-size: 6rem;
   line-height: 1;
-  color: #03B1C7;
+  color: var(--section-price-color, #03B1C7);
+}
+section[section-id] .plans.plans-wrapper .plansBox.mostPopular .price {
+  color: var(--section-hover-price-color, #03B1C7);
+}
+section[section-id] .plans.plans-wrapper .plansBox:hover .price {
+  color: var(--section-hover-price-color, #03B1C7);
 }
 
 .plans.plans-wrapper .currency {
@@ -523,24 +556,25 @@ section .view-component button.quill-button-container:hover, section .view-compo
   line-height: 2.5rem;
   font-weight: 300;
   padding-top: 1.5rem;
+  color: var(--section-currency-color);
 }
 
 .plans.plans-wrapper .plansBox:hover .currency {
   font-size: 1.5rem;
   line-height: 2.0rem;
   font-weight: 300;
-  color: white;
+  color: var(--section-hover-currency-color, white);
 }
 
 .plans.plans-wrapper .plansBox .currency.mostPopular {
   font-size: 1.5rem;
   line-height: 2.0rem;
   font-weight: 300;
-  color: white;
+  color: var(--section-hover-currency-color, white);
 }
 
 .plans.plans-wrapper .plansTitleBox .title {
-  color: black;
+  color: var(--section-title-color, black);
   white-space: nowrap;
   padding-top: 24px;
   overflow: hidden;
@@ -560,39 +594,48 @@ section .view-component button.quill-button-container:hover, section .view-compo
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 700;
-  color: white;
+  color: var(--section-hover-title-color, white);
 }
 
 .plans.plans-wrapper .plansTitleBox .title.mostPopular {
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 700;
-  color: white;
+  color: var(--section-hover-title-color, white);
 }
 
 .plans.plans-wrapper .plansTitleBox .desc {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 300;
-  color: gray;
+  color: var(--section-description-color, gray);
 }
 
 .plans.plans-wrapper .plansTitleBox .desc p {
-  color: gray;
+  color: var(--section-description-color, gray);
+}
+.plans.plans-wrapper .plansBox:hover .plansTitleBox .desc p, .plans.plans-wrapper .plansBox.mostPopular .plansTitleBox .desc p {
+  color: var(--section-hover-description-color, gray);
 }
 
 .plans.plans-wrapper .date {
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 300;
-  color: gray;
+  color: var(--section-frequency-color, gray);
+}
+.plans.plans-wrapper .plansBox:hover .date, .plans.plans-wrapper .plansBox.mostPopular .date {
+  color: var(--section-hover-frequency-color, gray);
 }
 
 .plans.plans-wrapper .cta {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: #03B1C7;
+  color: var(--section-link-color, #03B1C7);
+}
+.plans.plans-wrapper .plansBox:hover .cta, .plans.plans-wrapper .plansBox.mostPopular .cta {
+  color: var(--section-hover-link-color, #03B1C7);
 }
 
 .plans.plans-wrapper .cta-arrow {
@@ -608,13 +651,15 @@ section .view-component button.quill-button-container:hover, section .view-compo
   font-weight: 500;
   color: white;
 }
-
+.plans.plans-wrapper .plansBox .customFeatures {
+  color: var(--section-features-color);
+}
 .plans.plans-wrapper .plansBox:hover .customFeatures {
-  color: white;
+  color: var(--section-hover-features-color, white);
 }
 
 .plans.plans-wrapper .plansBox .customFeatures.mostPopular {
-  color: white;
+  color: var(--section-hover-features-color, white);
 }
 
 .plans.plans-wrapper .cta-arrow.mostPopular {
@@ -628,24 +673,24 @@ section .view-component button.quill-button-container:hover, section .view-compo
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 300;
-  color: white;
-  list-style-image: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png");
+  color: var(--section-hover-features-color, white);
+  list-style-image: var(--section-hover-features-icon, url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png"));
 }
 
 .plans.plans-wrapper .plansBox .bp.mostPopular {
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 300;
-  color: white;
-  list-style-image: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png");
+  color: var(--section-hover-features-color, white);
+  list-style-image: var(--section-hover-features-icon, url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png"));
 }
 
 .plans.plans-wrapper .plansBox .bp {
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 300;
-  color: black;
-  list-style-image: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload+%281%29e608936bc6b84240891e198f40cbb96a.png");
+  color: var(--section-features-color, black);
+  list-style-image: var(--section-features-icon, url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload+%281%29e608936bc6b84240891e198f40cbb96a.png"));
 }
 
 .plans.plans-wrapper .features ul li {
@@ -729,8 +774,8 @@ section .view-component button.quill-button-container:hover, section .view-compo
   color: #03B1C7;
 }
 
-.simple-menu.main .lang {
-  background: var(--primary-color);
+section[section-id] .simple-menu.main .lang {
+  background: var(--section-primary-color, var(--primary-color));
   color: white;
   font-weight: 300;
   width: 30px;
@@ -746,13 +791,13 @@ section .view-component button.quill-button-container:hover, section .view-compo
   color: #61035B;
 }
 
-.simple-menu.main ul li a p {
+section[section-id] .simple-menu.main ul li a p {
   font-size: 16px;
-  color: var(--menu-text-color);
+  color: var(--section-menu-text-color, var(--menu-text-color));
 }
 
-.simple-menu.main ul li a p:hover {
-  color: var(--hover-menu-text-color);
+section[section-id] .simple-menu.main ul li a p:hover {
+  color: var(--section-hover-menu-text-color, var(--hover-menu-text-color));
 }
 
 .simple-menu h3 {
@@ -984,6 +1029,56 @@ section .text-image .row-wrapper {
 section .product-details {
   padding-left: 1.75rem;
   padding-right: 1.75rem;
+}
+
+section[section-id] ul li::marker, section[section-id] ol li, section[section-id] ul li .ql-ui, section[section-id] ol li .ql-ui {
+  color: var(--section-lists-color, var(--lists-color));
+}
+
+section[section-id] ul li:hover, section[section-id] ol li:hover, section[section-id] ul li:hover .ql-ui, section[section-id] ol li:hover .ql-ui {
+  color: var(--section-hover-lists-color, var(--hover-lists-color));
+}
+
+section[section-id] ul li::marker, section[section-id] ol li::marker, section[section-id] ul li .ql-ui::before, section[section-id] ol li .ql-ui::before {
+  color: var(--section-lists-marker-color, var(--lists-marker-color));
+}
+
+section[section-id] ul li:hover::marker, section[section-id] ol li:hover::marker, section[section-id] ul li:hover .ql-ui::before, section[section-id] ol li:hover .ql-ui::before {
+  color: var(--section-hover-lists-marker-color, var(--hover-lists-marker-color));
+}
+
+section[section-id] .articles .pagination-wrapper .button-selector .next, .pagination-wrapper .button-selector .previous {
+  color: var(--section-arrow-color);
+}
+
+section[section-id] .articles .pagination-wrapper .button-selector:hover .next, .pagination-wrapper .button-selector:hover .previous {
+  color: var(--section-hover-arrow-color);
+}
+
+section[section-id] .articles .pagination-wrapper .page-number {
+  color: var(--section-number-color) !important;
+}
+
+section[section-id] .articles .pagination-wrapper .page-number:hover, .pagination-wrapper .page-number-selected {
+  color: var(--section-hover-number-color) !important;
+}
+
+section[section-id] .product-details .price-block .price {
+  font-size: var(--section-price-font-size, 1.875rem) !important;
+  color: var(--section-price-color);
+}
+
+section[section-id] .product-details .price-block .price:hover {
+  color: var(--section-hover-price-color);
+}
+
+section[section-id] .product-details .price-block .currency {
+  font-size: var(--section-currency-font-size, 1.875rem) !important;
+  color: var(--section-currency-color);
+}
+
+section[section-id] .product-details .price-block .currency:hover {
+  color: var(--section-hover-currency-color);
 }
 
 :root {

@@ -26,7 +26,7 @@
 				  </div>
 				</div>
 			  </div>
-			  <div class="flex items-center border-b border-FieldGray pb-4">
+			  <div class="flex items-center border-b border-FieldGray pb-4 separator">
 				<div class="flex justify-center border rounded-full w-[100px] h-[100px] mr-6 img-wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
 				  <NuxtImg v-if="plan.media && (plan.media.files && plan.media.files[0].url) || (plan.media && plan.media.url && plan.media.url !== '')" :src="plan.media.url && plan.media.url !== '' ? plan.media.url : plan.media.files[0].url" :alt="plan.media.seo_tag" class="p-2"
                    width="300"
@@ -59,11 +59,8 @@
 				  </ul>
 				</div>
 				<div class="flex justify-center cursor-pointer">
-				  <global-link :link="plan.ctaLink" :lang="lang" :default-lang="defaultLang" :form-link-target="plan.ctaLinkTarget">
+				  <global-link :link="!plan.sectionsPage || (plan.sectionsPage && (plan.sectionsPage[lang] === 'other' || !plan.sectionsPage[lang])) ? plan.ctaLink : plan.sectionsPage && plan.sectionsPage[lang] ? { ...plan.sectionsPage, en: '/' + plan.sectionsPage.en, fr: '/' + plan.sectionsPage.fr } : '#'" :lang="lang" :default-lang="defaultLang" :form-link-target="plan.ctaLinkTarget">
 					<div class="flex">
-					  <div v-if="(plan.ctaLabel && plan.ctaLabel[lang]) || (settings.globalCtaLabel && settings.globalCtaLabel[lang])" class="pr-2 cta-arrow" :class="{'mostPopular' : plan.mostPopular === true}">
-						=>
-					  </div>
 					  <div class="cta">
 						{{ plan.ctaLabel && plan.ctaLabel[lang] ? plan.ctaLabel[lang] : settings.globalCtaLabel && settings.globalCtaLabel[lang] ? settings.globalCtaLabel[lang] : '' }}
 					  </div>
@@ -322,6 +319,19 @@ export default {
   },
   mounted() {
 	this.adjustBoxesHeight()
+    const sectionsThemeComponents = null
+    sectionsThemeComponents?.(this.section.name, [
+      {
+        id: 'global',
+        name: this.$t('sectionsBuilder.globalSettings'),
+        path: '/theme/global_settings'
+      },
+      {
+        id: 'specific',
+        name: this.$t('sectionsBuilder.specificSettings'),
+        path: '/theme/Plans_settings'
+      }
+    ])
   },
   methods: {
 	adjustBoxesHeight() {

@@ -172,35 +172,19 @@
         />
       </div>
 
-      <div class="flex flex-col items-start justify-start mt-8">
-        <label :class="sectionsStyle.fieldLabel">{{ $t("forms.ctaLink") }}</label>
-        <input
-          v-model="settings[0].videoCtaLink[selectedLang]"
-          type="text"
-          :placeholder="$t('forms.ctaLink')"
-          :class="sectionsStyle.input"
-        />
-        <link-description />
-      </div>
+      <LazyFormLink
+        :link-label="$t('forms.ctaLink')"
+        :selected-sections-page="settings[0].sectionsPage[selectedLang]"
+        :other-link="settings[0].videoCtaLink[selectedLang]"
+        :link-target="settings[0].videoCtaLinkTarget"
+        :sections-pages-label="$t('forms.sectionsPages')"
+        :other-link-label="$t('Other')"
+        :link-target-label="$t('forms.linkTarget')"
+        @sections-page-selected="(val) => {locales.forEach(locale => { settings[0].sectionsPage[locale] = val })}"
+        @update:other-link="(val) => {settings[0].videoCtaLink[selectedLang] = val}"
+        @link-target-selected="(val) => {settings[0].videoCtaLinkTarget = val}"
+      />
 
-      <div class="my-4">
-        <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-        <div class="select-style-chooser w-[344px]">
-          <gAutoComplete
-            :main-filter="settings[0].videoCtaLinkTarget"
-            :placeholder="$t('forms.linkTarget')"
-            :filter-label-prop="'value'"
-            :reduce="(option) => option.key"
-            :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
-            :filter-searchable="false"
-            :close-on-select="true"
-            :filter-clearable="true"
-            :track-by="'key'"
-            @itemSelected="(val) => {settings[0].videoCtaLinkTarget = val;}"
-          >
-          </gAutoComplete>
-        </div>
-      </div>
     </div>
 
     <div class="flex flex-row justify-center mt-8">
@@ -269,35 +253,19 @@
             />
           </div>
 
-          <div class="flex flex-col items-start justify-start mt-8">
-            <label :class="sectionsStyle.fieldLabel">{{ $t("forms.ctaLink") }}</label>
-            <input
-              v-model="object.ctaLink[selectedLang]"
-              type="text"
-              :placeholder="$t('forms.ctaLink')"
-              :class="sectionsStyle.input"
-            />
-            <link-description />
-          </div>
+          <LazyFormLink
+            :link-label="$t('forms.ctaLink')"
+            :selected-sections-page="object.sectionsPage[selectedLang]"
+            :other-link="object.ctaLink[selectedLang]"
+            :link-target="object.ctaLinkTarget"
+            :sections-pages-label="$t('forms.sectionsPages')"
+            :other-link-label="$t('Other')"
+            :link-target-label="$t('forms.linkTarget')"
+            @sections-page-selected="(val) => {locales.forEach(locale => { object.sectionsPage[locale] = val })}"
+            @update:other-link="(val) => {object.ctaLink[selectedLang] = val}"
+            @link-target-selected="(val) => {object.ctaLinkTarget = val}"
+          />
 
-          <div class="my-4">
-            <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-            <div class="select-style-chooser w-[344px]">
-              <gAutoComplete
-                :main-filter="object.ctaLinkTarget"
-                :placeholder="$t('forms.linkTarget')"
-                :filter-label-prop="'value'"
-                :reduce="(option) => option.key"
-                :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
-                :filter-searchable="false"
-                :close-on-select="true"
-                :filter-clearable="true"
-                :track-by="'key'"
-                @itemSelected="(val) => {object.ctaLinkTarget = val;}"
-              >
-              </gAutoComplete>
-            </div>
-          </div>
         </template>
       </LazySectionsFormsFieldSets>
 
@@ -419,6 +387,7 @@ export default {
             en: '',
             fr: ''
           },
+          sectionsPage: {},
           videoCtaLink: {
             en: '',
             fr: ''
@@ -444,6 +413,7 @@ export default {
                 en: '',
                 fr: ''
               },
+              sectionsPage: {},
               ctaLinkTarget: '',
               media: {
                 media_id: "",
@@ -495,6 +465,20 @@ export default {
     },
     settings: {
       handler(v) {
+        this.locales.forEach(locale => {
+          if (!this.settings[0].sectionsPage) {
+            this.settings[0].sectionsPage = {}
+          }
+          this.settings[0].sectionsPage[locale] = ''
+          this.settings[0].carousels.forEach(carousel => {
+            if (!carousel.sectionsPage) {
+              carousel.sectionsPage = {}
+            }
+            if (!carousel.sectionsPage[locale]) {
+              carousel.sectionsPage[locale] = ''
+            }
+          })
+        })
         if (v && v[0] && v[0].carousels === undefined) {
           this.settings[0]['carousels'] = []
           this.settings[0].medias = []
@@ -580,6 +564,7 @@ export default {
           en: '',
           fr: ''
         },
+        sectionsPage: {},
         ctaLinkTarget: '',
         media: {
           media_id: "",

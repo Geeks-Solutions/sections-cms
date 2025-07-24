@@ -138,6 +138,14 @@ export default {
   },
   mounted() {
     this.setEqualHeights()
+    const sectionsThemeComponents = null
+    sectionsThemeComponents?.(this.section.name, [
+      {
+        id: 'global',
+        name: this.$t('sectionsBuilder.globalSettings'),
+        path: '/theme/global_settings'
+      }
+    ])
   },
   methods: {
     setEqualHeights() {

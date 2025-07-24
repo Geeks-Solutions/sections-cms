@@ -6,58 +6,18 @@
       <span class="flex text-xs text-Gray_800">{{ $t("forms.logoIconDesc") }}</span>
     </div>
 
-    <div class="flex flex-col items-start justify-start mt-8">
-      <label class="mr-4 font-medium">{{ $t("forms.logoLink") }}</label>
-      <label class="mr-4 font-bold">{{ $t('forms.sectionsPages') }}</label>
-      <span v-if="errorLoadingPagePaths" class="flex text-start text-xs text-error pb-2">{{ $t("SectionsPagesError") }}</span>
-      <gAutoComplete
-        :main-filter="settings[0].logoPage[selectedLang]"
-        :placeholder="$t('forms.aspectRatio')"
-        :filter-label-prop="'page'"
-        :reduce="(option) => option.path"
-        :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
-        :filter-searchable="false"
-        :close-on-select="true"
-        :filter-clearable="true"
-        :track-by="'path'"
-        @itemSelected="
-                  (val) => {
-                    locales.forEach(locale => { settings[0].logoPage[locale] = val })
-                  }
-                "
-      >
-      </gAutoComplete>
-    </div>
-
-    <div v-if="settings[0].logoPage[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
-      <label class="mr-4 font-medium">{{ $t("Other") }}</label>
-      <link-description class="pb-1"/>
-      <input
-        v-model="settings[0].logoLink[selectedLang]"
-        type="text"
-        :placeholder="$t('forms.link')"
-        :class="sectionsStyle.input"
-      />
-    </div>
-
-    <div class="my-4">
-      <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-      <div class="select-style-chooser w-[344px]">
-        <gAutoComplete
-          :main-filter="settings[0].logoLinkTarget"
-          :placeholder="$t('forms.linkTarget')"
-          :filter-label-prop="'value'"
-          :reduce="(option) => option.key"
-          :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
-          :filter-searchable="false"
-          :close-on-select="true"
-          :filter-clearable="true"
-          :track-by="'key'"
-          @itemSelected="(val) => {settings[0].logoLinkTarget = val;}"
-        >
-        </gAutoComplete>
-      </div>
-    </div>
+    <LazyFormLink
+      :link-label="$t('forms.logoLink')"
+      :selected-sections-page="settings[0].logoPage[selectedLang]"
+      :other-link="settings[0].logoLink[selectedLang]"
+      :link-target="settings[0].logoLinkTarget"
+      :sections-pages-label="$t('forms.sectionsPages')"
+      :other-link-label="$t('Other')"
+      :link-target-label="$t('forms.linkTarget')"
+      @sections-page-selected="(val) => {locales.forEach(locale => { settings[0].logoPage[locale] = val })}"
+      @update:other-link="(val) => {settings[0].logoLink[selectedLang] = val}"
+      @link-target-selected="(val) => {settings[0].logoLinkTarget = val}"
+    />
 
     <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-medium">{{ $t("forms.logoCssClasses") }}</label>
@@ -144,62 +104,19 @@
               </div>
 
               <div v-if="menuContainer.menu[idx].languageMenu !== true">
-                <div class="flex flex-col items-start justify-start mt-8">
-                  <label class="mr-4 font-medium">{{ menuIdx === 0 && idx === 0 ? $t("forms.link") + '*' : $t("forms.link") }}</label>
-                  <label class="mr-4 font-bold">{{ $t('forms.sectionsPages') }}</label>
-                  <span v-if="errorLoadingPagePaths" class="flex text-start text-xs text-error pb-2">{{ $t("SectionsPagesError") }}</span>
-                  <gAutoComplete
-                    :main-filter="menuContainer.menu[idx].page[selectedLang]"
-                    :placeholder="$t('forms.sectionsPages')"
-                    :filter-label-prop="'page'"
-                    :reduce="(option) => option.path"
-                    :filter-options="[...sectionsPages, {id: 'other', page: 'Other', path: 'other'}]"
-                    :filter-searchable="false"
-                    :close-on-select="true"
-                    :filter-clearable="true"
-                    :track-by="'path'"
-                    @itemSelected="
-                  (val) => {
-                    locales.forEach(locale => { menuContainer.menu[idx].page[locale] = val })
-                  }
-                "
-                  >
-                  </gAutoComplete>
-                </div>
-
-                <div v-if="object.page[selectedLang] === 'other'" class="flex flex-col items-start justify-start mt-8">
-                  <label class="mr-4 font-medium">{{ $t("Other") }}</label>
-                  <link-description class="pb-1"/>
-                  <input
-                    v-model="object.link[selectedLang]"
-                    type="text"
-                    :placeholder="$t('forms.link')"
-                    :class="sectionsStyle.input"
-                  />
-                </div>
-                <span v-show="menuIdx === 0 && idx === 0 && errors.menu[idx].link === true && selectedLang === defaultLang"
-                      class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
-              </div>
-
-              <div v-if="menuContainer.menu[idx].languageMenu !== true">
-                <div class="my-4">
-                  <label class="flex section-module-upload-media-label">{{ $t('forms.linkTarget') }}</label>
-                  <div class="select-style-chooser w-[344px]">
-                    <gAutoComplete
-                      :main-filter="menuContainer.menu[idx].linkTarget"
-                      :placeholder="$t('forms.linkTarget')"
-                      :filter-label-prop="'value'"
-                      :reduce="(option) => option.key"
-                      :filter-options="[{key: '_self', value: $t('forms.selfTarget')}, {key: '_blank', value: $t('forms.blankTarget')}]"
-                      :filter-searchable="false"
-                      :close-on-select="true"
-                      :filter-clearable="true"
-                      :track-by="'key'"
-                      @itemSelected="(val) => {menuContainer.menu[idx].linkTarget = val;}"
-                    >
-                    </gAutoComplete>
-                  </div>
-                </div>
+                <LazyFormLink
+                  :link-label="menuIdx === 0 && idx === 0 ? $t('forms.link') + '*' : $t('forms.link')"
+                  :selected-sections-page="menuContainer.menu[idx].page[selectedLang]"
+                  :other-link="object.link[selectedLang]"
+                  :link-target="menuContainer.menu[idx].linkTarget"
+                  :sections-pages-label="$t('forms.sectionsPages')"
+                  :other-link-label="$t('Other')"
+                  :link-target-label="$t('forms.linkTarget')"
+                  :link-error="menuIdx === 0 && idx === 0 && errors.menu[idx].link === true && selectedLang === defaultLang"
+                  @sections-page-selected="(val) => {locales.forEach(locale => { menuContainer.menu[idx].page[locale] = val })}"
+                  @update:other-link="(val) => {object.link[selectedLang] = val}"
+                  @link-target-selected="(val) => {menuContainer.menu[idx].linkTarget = val}"
+                />
               </div>
             </template>
           </LazySectionsFormsFieldSets>
@@ -240,8 +157,7 @@
 <i18n src="./Shared_i18n.json"></i18n>
 
 <script>
-import {sectionHeader, useCookie} from "#imports";
-import {getSectionsPages, sectionsStyle, scrollToFirstError} from "@/utils/constants";
+import {sectionsStyle, scrollToFirstError} from "@/utils/constants";
 import 'vue-select/dist/vue-select.css';
 
 export default {
@@ -320,7 +236,6 @@ export default {
       },
       siteLang: 'en',
       sectionsStyle,
-      sectionsPages: [],
       errorLoadingPagePaths: false
     }
   },
@@ -377,12 +292,6 @@ export default {
       }
       this.settings[0]['media'] = media
       this.$emit('closeMediaModal')
-    }
-  },
-  async mounted() {
-    this.sectionsPages = await getSectionsPages(sectionHeader({token: useCookie('sections-auth-token').value}))
-    if (!this.sectionsPages || this.sectionsPages.length === 0) {
-      this.errorLoadingPagePaths = true
     }
   },
   methods: {
