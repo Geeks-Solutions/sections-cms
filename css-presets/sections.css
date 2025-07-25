@@ -402,7 +402,8 @@ section[section-id] .simple-cta .button-selector:hover {
   align-self: start !important;
 }
 
-section[section-id] .button-selector {
+section[section-id] .button-selector,
+.cookieControl__Bar .button-selector {
   font-size: 14px;
   border: 1px solid var(--section-primary-button-border-color, var(--primary-button-border-color));
   border-radius: 6px;
@@ -414,7 +415,8 @@ section[section-id] .button-selector {
   background: var(--section-primary-button-background-color, var(--primary-button-background-color));
 }
 
-section[section-id] .button-selector:hover {
+section[section-id] .button-selector:hover,
+.cookieControl__Bar .button-selector:hover {
   border: 1px solid var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color));
   color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color));
   background: var(--section-hover-primary-button-background-color, var(--hover-primary-button-background-color));
@@ -1211,7 +1213,7 @@ section[section-id] .product-details .price-block .currency:hover {
   max-height: 64px;
   width: auto;
   min-width: auto;
-  border-radius: 16px;
+  border-radius: 16px !important;
   height: auto;
   min-height: auto;
 }
