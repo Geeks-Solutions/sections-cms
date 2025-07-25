@@ -323,6 +323,7 @@ section .view-component button {
 section[section-id] .simple-menu.main ul li.sign-up .global-link p,
 section[section-id] .whatsapp-checkout-button,
 section[section-id] .button-selector,
+.cookieControl__Bar .button-selector,
 section[section-id] .view-component button.quill-button-container,
 section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
   font-size: 0.875rem; /* sm */
@@ -345,6 +346,7 @@ section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-ho
 section[section-id] .simple-menu.main ul li.sign-up .global-link p:hover,
 section[section-id] .whatsapp-checkout-button:hover,
 section[section-id] .button-selector:hover,
+.cookieControl__Bar .button-selector:hover,
 section[section-id] .view-component button.quill-button-container:hover,
 section[section-id] .view-component button:hover {
   --tw-ring-shadow: 0 0 #0000;
