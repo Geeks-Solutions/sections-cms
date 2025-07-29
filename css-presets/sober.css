@@ -348,7 +348,8 @@ section[section-id] .whatsapp-checkout-button:hover,
 section[section-id] .button-selector:hover,
 .cookieControl__Bar .button-selector:hover,
 section[section-id] .view-component button.quill-button-container:hover,
-section[section-id] .view-component button:hover {
+section[section-id] .view-component button:hover,
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
@@ -370,6 +371,10 @@ section[section-id] .view-component button:hover {
   width: 100%;
   box-sizing: border-box;
   height: 46px;
+}
+
+.sections-main input.item-qty-value {
+  border: 0;
 }
 
 .sections-main section[section-id] input:focus {
@@ -1492,10 +1497,14 @@ section[section-id] .cart-item-count {
   margin-top: 0.5rem;
 }
 
-section .view-component .restaurant-menu .cart-item-controls button,
-section .view-component .restaurant-menu .cart-item-header button,
-section .view-component .restaurant-menu button.item-qty-minus,
-section .view-component .restaurant-menu button.item-qty-plus {
+section[section-id] .view-component .restaurant-menu .cart-item-controls button,
+section[section-id] .view-component .restaurant-menu .cart-item-header button,
+section[section-id] .view-component .restaurant-menu button.item-qty-minus,
+section[section-id] .view-component .restaurant-menu button.item-qty-plus,
+section[section-id] .view-component .service-packages .cart-item-controls button,
+section[section-id] .view-component .service-packages .cart-item-header button,
+section[section-id] .view-component .service-packages button.item-qty-minus,
+section[section-id] .view-component .service-packages button.item-qty-plus {
   width: 2rem !important;
   height: 2rem !important;
   display: flex;
