@@ -177,6 +177,7 @@
   --hover-background-color: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%);
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
+  --base-font-family: "Poppins", sans-serif;
   --h1-color: var(--primary-color);
   --h2-color: var(--secondary-color);
   --h3-color: var(--secondary-color);
@@ -236,8 +237,10 @@
   --cookie-control-checkboxDisabledCircleBackground: #fff;
 }
 html {
-  font-family: "Poppins", sans-serif !important;
   scroll-behavior: smooth;
+}
+html .sections-main section[section-id] {
+  font-family: var(--base-font-family) !important;
 }
 html .sections-main section[section-id] {
   font-size: var(--section-base-font-size, var(--base-font-size));
