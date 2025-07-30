@@ -185,6 +185,7 @@
   --hover-background-color: #00131F;
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
+  --base-font-family: "Ubuntu", sans-serif;
   --h1-color: var(--primary-color);
   --h2-color: var(--secondary-color);
   --h3-color: var(--secondary-color);
@@ -222,10 +223,11 @@
 }
 
 html {
-  font-family: "Ubuntu", sans-serif !important;
   scroll-behavior: smooth;
 }
-
+html .sections-main section[section-id] {
+  font-family: var(--base-font-family) !important;
+}
 html .sections-main section[section-id] {
   font-size: var(--section-base-font-size, var(--base-font-size));
 }
