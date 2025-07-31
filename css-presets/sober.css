@@ -639,6 +639,11 @@ section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover {
     margin-bottom: 0; /* lg:space-y-0 */
   }
 }
+section[section-id] .simple-menu .menu-group-label {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: var(--section-menu-text-color, var(--menu-text-color));
+}
 
 section[section-id] .simple-menu ul li:not(.login):not(.sign-up) .global-link p {
   padding: 0.5rem 1rem;
