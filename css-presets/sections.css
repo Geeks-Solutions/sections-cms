@@ -817,6 +817,12 @@ section[section-id] .simple-menu.main ul li a p:hover {
   padding-bottom: 8px;
 }
 
+section[section-id] .simple-menu .menu-group-label {
+  margin-left: 40px;
+  font-weight: 600;
+  color: var(--section-menu-text-color, var(--menu-text-color));
+}
+
 .simple-menu ul {
   margin-left: 15px
 }
