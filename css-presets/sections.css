@@ -410,6 +410,10 @@ section[section-id] .simple-cta .button-selector:hover {
   align-self: start !important;
 }
 
+.cookieControl__Modal .button-selector {
+  padding: 8px;
+}
+
 section[section-id] .button-selector,
 .cookieControl__Bar .button-selector {
   font-size: 14px;
@@ -1035,6 +1039,10 @@ section[section-id] .simple-menu .menu-group-label {
   .logo-wrapper {
     display: contents;
   }
+}
+
+.simple-menu.footer .ul-container-wrapper {
+  align-content: start !important;
 }
 
 .simple-menu.footer {
