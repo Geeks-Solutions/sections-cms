@@ -327,6 +327,7 @@ section[section-id] .simple-menu.main ul li.sign-up .global-link p,
 section[section-id] .whatsapp-checkout-button,
 section[section-id] .button-selector,
 .cookieControl__Bar .button-selector,
+.cookieControl__Modal .button-selector,
 section[section-id] .view-component button.quill-button-container,
 section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
   font-size: 0.875rem; /* sm */
@@ -350,6 +351,7 @@ section[section-id] .simple-menu.main ul li.sign-up .global-link p:hover,
 section[section-id] .whatsapp-checkout-button:hover,
 section[section-id] .button-selector:hover,
 .cookieControl__Bar .button-selector:hover,
+.cookieControl__Modal .button-selector:hover,
 section[section-id] .view-component button.quill-button-container:hover,
 section[section-id] .view-component button:hover,
 section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover {
@@ -764,6 +766,10 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
 .simple-menu.main .mobile-menu-main-wrapper.fixed {
   position: unset !important;
   background: transparent !important;
+}
+
+.simple-menu.footer .ul-container-wrapper {
+  align-content: start !important;
 }
 
 .simple-menu.footer {
