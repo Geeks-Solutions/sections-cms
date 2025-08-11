@@ -64,8 +64,12 @@
   </div>
 </template>
 
+<i18n src="../../sections/forms/RestaurantMenu_i18n.json"></i18n>
+
 <script setup>
 import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount, inject } from 'vue'
+
+const { t: $t } = useI18n({ useScope: 'local' })
 
 // Import components directly for better Nuxt 3 compatibility
 import CartIcon from '../../components/UnifiedMenu/CartIcon.vue'
@@ -499,6 +503,11 @@ onMounted(() => {
       id: 'global',
       name: useI18n().t('sectionsBuilder.globalSettings'),
       path: '/theme/global_settings'
+    },
+    {
+      id: 'specific',
+      name: useI18n().t('sectionsBuilder.specificSettings'),
+      path: '/theme/RestaurantMenu_settings'
     }
   ])
 })
