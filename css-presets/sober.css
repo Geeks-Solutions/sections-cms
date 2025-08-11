@@ -177,6 +177,7 @@
   --hover-background-color: linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%);
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
+  --base-font-family: "Poppins", sans-serif;
   --h1-color: var(--primary-color);
   --h2-color: var(--secondary-color);
   --h3-color: var(--secondary-color);
@@ -236,8 +237,10 @@
   --cookie-control-checkboxDisabledCircleBackground: #fff;
 }
 html {
-  font-family: "Poppins", sans-serif !important;
   scroll-behavior: smooth;
+}
+html .sections-main section[section-id] {
+  font-family: var(--base-font-family) !important;
 }
 html .sections-main section[section-id] {
   font-size: var(--section-base-font-size, var(--base-font-size));
@@ -324,6 +327,7 @@ section[section-id] .simple-menu.main ul li.sign-up .global-link p,
 section[section-id] .whatsapp-checkout-button,
 section[section-id] .button-selector,
 .cookieControl__Bar .button-selector,
+.cookieControl__Modal .button-selector,
 section[section-id] .view-component button.quill-button-container,
 section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
   font-size: 0.875rem; /* sm */
@@ -347,8 +351,10 @@ section[section-id] .simple-menu.main ul li.sign-up .global-link p:hover,
 section[section-id] .whatsapp-checkout-button:hover,
 section[section-id] .button-selector:hover,
 .cookieControl__Bar .button-selector:hover,
+.cookieControl__Modal .button-selector:hover,
 section[section-id] .view-component button.quill-button-container:hover,
-section[section-id] .view-component button:hover {
+section[section-id] .view-component button:hover,
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
@@ -370,6 +376,10 @@ section[section-id] .view-component button:hover {
   width: 100%;
   box-sizing: border-box;
   height: 46px;
+}
+
+.sections-main input.item-qty-value {
+  border: 0;
 }
 
 .sections-main section[section-id] input:focus {
@@ -631,6 +641,11 @@ section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover {
     margin-bottom: 0; /* lg:space-y-0 */
   }
 }
+section[section-id] .simple-menu .menu-group-label {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: var(--section-menu-text-color, var(--menu-text-color));
+}
 
 section[section-id] .simple-menu ul li:not(.login):not(.sign-up) .global-link p {
   padding: 0.5rem 1rem;
@@ -751,6 +766,10 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
 .simple-menu.main .mobile-menu-main-wrapper.fixed {
   position: unset !important;
   background: transparent !important;
+}
+
+.simple-menu.footer .ul-container-wrapper {
+  align-content: start !important;
 }
 
 .simple-menu.footer {
@@ -1492,10 +1511,14 @@ section[section-id] .cart-item-count {
   margin-top: 0.5rem;
 }
 
-section .view-component .restaurant-menu .cart-item-controls button,
-section .view-component .restaurant-menu .cart-item-header button,
-section .view-component .restaurant-menu button.item-qty-minus,
-section .view-component .restaurant-menu button.item-qty-plus {
+section[section-id] .view-component .restaurant-menu .cart-item-controls button,
+section[section-id] .view-component .restaurant-menu .cart-item-header button,
+section[section-id] .view-component .restaurant-menu button.item-qty-minus,
+section[section-id] .view-component .restaurant-menu button.item-qty-plus,
+section[section-id] .view-component .service-packages .cart-item-controls button,
+section[section-id] .view-component .service-packages .cart-item-header button,
+section[section-id] .view-component .service-packages button.item-qty-minus,
+section[section-id] .view-component .service-packages button.item-qty-plus {
   width: 2rem !important;
   height: 2rem !important;
   display: flex;
