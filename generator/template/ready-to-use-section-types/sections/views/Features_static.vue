@@ -156,14 +156,6 @@ export default {
             if (containerWrapper && containerWrapper.clientWidth >= 1024) {
               const items = this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`);
               if (items.length) {
-                let maxHeight = 0;
-
-                // Reset heights before recalculating
-                items.forEach(item => {
-                  item.style.height = 'auto'
-                  return item
-                });
-
                 // Wait for images to load before setting heights
                 const images = [...containerWrapper.querySelectorAll("img")];
                 let loadedCount = 0;
@@ -190,10 +182,17 @@ export default {
                 }
 
                 function adjustHeights() {
+                  let maxHeight = 0;
+
                   items.forEach(item => {
+                    // Measure without removing height first
+                    const prevHeight = item.style.height;
+                    item.style.height = 'auto';
                     maxHeight = Math.max(maxHeight, item.offsetHeight);
+                    item.style.height = prevHeight;
                   });
 
+                  // Now apply the new height
                   items.forEach(item => {
                     item.style.height = `${maxHeight}px`;
                   });
