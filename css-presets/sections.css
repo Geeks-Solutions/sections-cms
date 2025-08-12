@@ -1268,6 +1268,10 @@ section[section-id] .category-tab.active {
   color: #ffffff;
 }
 
+.sections-main .item-modal-content input {
+  padding-left: 0 !important;
+}
+
 /* Category header styling */
 .category-name {
   font-size: 1.5rem;
