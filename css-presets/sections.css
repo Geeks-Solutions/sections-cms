@@ -1270,6 +1270,7 @@ section[section-id] .category-tab.active {
 
 .sections-main .item-modal-content input {
   padding-left: 0 !important;
+  height: 46px;
 }
 
 /* Category header styling */
