@@ -148,7 +148,7 @@
 
           <div class="my-4">
             <label class="flex section-module-upload-media-label">{{ $t('productDetails.mediaType') }}</label>
-            <div class="select-style-chooser w-[344px]">
+            <div class="select-style-chooser">
               <gAutoComplete
                 :main-filter="object.mediaType"
                 :placeholder="$t('productDetails.mediaType')"
