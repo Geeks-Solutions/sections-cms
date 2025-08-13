@@ -65,13 +65,6 @@
             <input v-model="object.url" type="url" :placeholder="$t('LinkTree.urlPlaceholder')"
               :class="sectionsStyle.input" />
           </div>
-
-          <div v-if="object.platform === 'custom'" class="flex flex-col items-start justify-start mt-4">
-            <label class="mr-4 font-medium">{{ $t("LinkTree.customIcon") }}</label>
-            <input v-model="object.customIcon" type="text" :placeholder="$t('LinkTree.customIconPlaceholder')"
-              :class="sectionsStyle.input" />
-            <span class="text-xs text-Gray_800">{{ $t("LinkTree.customIconDesc") }}</span>
-          </div>
         </template>
       </LazySectionsFormsFieldSets>
 
