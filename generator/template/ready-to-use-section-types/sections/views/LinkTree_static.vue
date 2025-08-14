@@ -5,7 +5,7 @@
       <div v-if="settings && settings.profileImage && settings.profileImage.url"
         class="profile-picture text-center mb-6">
         <NuxtImg :src="settings.profileImage.url"
-          :alt="(settings.profileImage.seo_tag) || profileTitle || 'Profile Picture'" width="120" height="120"
+          :alt="(settings.profileImage.seo_tag) || profileTitle" width="120" height="120"
           class="profile-img h-30 w-30 object-cover rounded-full mx-auto" placeholder quality="80" format="webp" preload
           fetchpriority="high" />
       </div>
@@ -93,10 +93,7 @@
 
 
 <script setup>
-import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
-
-// Define emits (if needed)
-// const emit = defineEmits(['update:section'])
+import { ref, computed, watch, onMounted } from 'vue'
 
 // Props with proper default structure
 const props = defineProps({
@@ -170,23 +167,7 @@ const props = defineProps({
 // Add reactive state for client-side rendering
 const isClient = ref(false)
 
-// I18n with error handling
-let $t
-try {
-  const { t } = useI18n({ useScope: 'local' })
-  $t = t
-} catch (error) {
-  // Fallback for missing translations
-  $t = (key) => {
-    const fallbacks = {
-      'LinkTree.files': 'Files',
-      'LinkTree.contact': 'Contact',
-      'LinkTree.requiredField': 'This field is required',
-      'LinkTree.seoTag': 'SEO Tag'
-    }
-    return fallbacks[key] || key
-  }
-}
+const { t: $t } = useI18n({ useScope: 'local' })
 
 // Theme definitions
 const themes = {
@@ -447,13 +428,6 @@ const getSocialIconSVG = (platform) => {
   return svgIcons[platform?.toLowerCase()] || svgIcons.custom
 }
 
-const handleKeyEvents = (e) => {
-  // Handle escape key for any modals in the future
-  if (e.key === 'Escape') {
-    // Handle modal closures if needed
-  }
-}
-
 // Watchers
 watch(() => settings.value, (newValue) => {
   if (newValue) {
@@ -505,218 +479,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.social-links,
-.contact-info {
-  width: 100% !important;
-  justify-items: unset !important;
-}
-
 .profile-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.profile-bio {
-  font-size: 18px;
-  font-weight: 200;
-}
-
-.linktree-section {
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.linktree-container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  position: relative;
-  z-index: 1;
-}
-
-/* Profile Picture */
-.profile-img {
-  transition: transform 0.3s ease;
-}
-
-.profile-img:hover {
-  transform: scale(1.05);
-}
-
-/* Social Links - Cleaner, more polished buttons */
-.social-link {
-  padding: 18px 24px !important;
-  margin: 8px 0 !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  color: inherit !important;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  font-size: 16px;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.social-link:hover {
-  background: rgba(255, 255, 255, 0.25) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.social-icon {
-  margin-right: 14px !important;
-  padding-right: 0 !important;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.social-icon svg {
-  width: 22px !important;
-  height: 22px !important;
-  fill: currentColor;
-}
-
-/* Contact Section */
-.contact-info {
-  background: none !important;
-  padding: 0 !important;
-}
-
-.contact-title {
-  font-size: 1.75rem !important;
-  font-weight: 700 !important;
-  margin-bottom: 24px !important;
-  color: inherit !important;
-}
-
-.contact-item {
-  margin: 10px 0 !important;
-}
-
-.contact-link {
-  padding: 18px 24px !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  color: inherit !important;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  font-size: 16px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.contact-link:hover {
-  background: rgba(255, 255, 255, 0.25) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.contact-icon {
-  margin-right: 14px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-}
-
-/* Non-clickable address links */
-.contact-link:not([href]) {
-  cursor: default;
-}
-
-.contact-link:not([href]):hover {
-  transform: translateY(-2px) !important;
-  background: rgba(255, 255, 255, 0.25) !important;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-/* Files Section */
-.files-section {
-  background: none !important;
-  padding: 0 !important;
-}
-
-.files-title {
-  font-size: 1.75rem !important;
-  font-weight: 700 !important;
-  margin-bottom: 24px !important;
-  color: inherit !important;
-}
-
-.file-link {
-  padding: 18px 24px !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  color: inherit !important;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  font-size: 16px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin: 10px 0;
-}
-
-.file-link:hover {
-  background: rgba(255, 255, 255, 0.25) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.file-icon {
-  margin-right: 16px;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-}
-
-/* Responsive Design */
-@media (max-width: 640px) {
-
-  .social-link,
-  .contact-link,
-  .file-link {
-    padding: 16px 20px !important;
-    font-size: 15px;
-  }
-
-  .contact-title,
-  .files-title {
-    font-size: 1.5rem !important;
-  }
-}
-
-@media (max-width: 480px) {
-
-  .social-link,
-  .contact-link,
-  .file-link {
-    padding: 14px 18px !important;
-    font-size: 14px;
-  }
-
-  .contact-title,
-  .files-title {
-    font-size: 1.3rem !important;
-  }
 }
 </style>
