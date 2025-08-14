@@ -40,7 +40,7 @@
 
     <div class="my-4">
       <label v-if="linkTargetLabel" class="flex section-module-upload-media-label">{{ linkTargetLabel }}</label>
-      <div class="select-style-chooser w-[344px]">
+      <div class="select-style-chooser">
         <gAutoComplete
           :main-filter="linkTarget"
           :placeholder="linkTargetLabel"

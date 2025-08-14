@@ -52,7 +52,7 @@
             <div class="cart-item-controls flex justify-between items-center">
               <!-- Quantity controls -->
               <div class="quantity-control-wrapper flex items-center">
-                <label class="cart-item-label">{{ isService ? $t('ServicePackages.qty') :
+                <label class="cart-item-label qty-label">{{ isService ? $t('ServicePackages.qty') :
                   $t('RestaurantMenu.qty') }}:</label>
                 <div class="cart-qty-control">
                   <button @click="$emit('decrement', index)" class="cart-qty-minus">

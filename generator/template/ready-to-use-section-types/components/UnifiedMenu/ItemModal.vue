@@ -64,7 +64,7 @@
 
           <!-- Quantity control - Updated to match mockup -->
           <div class="flex items-center mb-2">
-            <label class="input-label mr-4">{{ isService ? $t('ServicePackages.quantity') :
+            <label class="input-label qty-label mr-4">{{ isService ? $t('ServicePackages.quantity') :
               $t('RestaurantMenu.quantity') }}:</label>
             <div class="custom-quantity-control flex items-center">
               <button @click="decrementQuantity" class="item-qty-minus flex items-center justify-center rounded-full">
@@ -80,7 +80,7 @@
 
           <!-- Special instructions - Updated styling -->
           <div class="mb-4">
-            <label class="input-label block mb-2">{{ isService ? $t('ServicePackages.specialRequests') :
+            <label class="input-label special-instructions block mb-2">{{ isService ? $t('ServicePackages.specialRequests') :
               $t('RestaurantMenu.specialInstructions') }}:</label>
             <textarea :value="notes" @input="$emit('update-notes', $event.target.value)"
               class="special-request-textarea p-4 border rounded-lg w-full"
