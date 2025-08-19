@@ -21,7 +21,7 @@
 
     <div class="my-4">
       <label class="flex section-module-upload-media-label">{{ $t('forms.mapZoom') }}</label>
-      <div class="select-style-chooser w-[344px]">
+      <div class="select-style-chooser">
         <gAutoComplete
           :main-filter="settings[0].zoom"
           :placeholder="$t('forms.mapZoom')"
@@ -156,7 +156,7 @@
               <div class="flex flex-col items-start my-4">
                 <label :class="sectionsStyle.fieldLabel">{{ $t("forms.pinType") + '*' }}</label>
                 <span class="text-sm pb-2">{{ $t('forms.addPinsFirst') }}</span>
-                <div class="select-style-chooser w-[344px]">
+                <div class="select-style-chooser">
                   <gAutoComplete
                     :main-filter="settings[0].addresses[idx].type"
                     :placeholder="$t('forms.pinType')"

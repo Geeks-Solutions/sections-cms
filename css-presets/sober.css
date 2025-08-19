@@ -1205,20 +1205,39 @@ section[section-id] .menu-item-service.featured {
 }
 
 .item-price {
+  color: var(--section-price-color);
+  font-size: var(--section-price-font-size);
+  font-weight: 500;
+}
+.item-price:hover {
+  color: var(--section-hover-price-color);
   font-weight: 500;
 }
 
 .item-price-regular {
+  color: var(--section-price-color);
+  font-size: var(--section-price-font-size);
   text-decoration: line-through;
+}
+.item-price-regular:hover {
+  color: var(--section-hover-price-color);
 }
 
 .item-price-discounted {
-  color: #dc2626;
+  color: var(--section-discounted-price-color, #dc2626);
+  font-size: var(--section-discounted-price-font-size, 16px);
   font-weight: 700;
+}
+.item-price-discounted:hover {
+  color: var(--section-hover-discounted-price-color, #dc2626);
 }
 
 .item-duration {
+  color: var(--section-duration-color);
   font-size: 0.875rem;
+}
+.item-duration:hover {
+  color: var(--section-hover-duration-color);
 }
 
 .item-description {
@@ -1249,12 +1268,20 @@ section[section-id] .badge-featured.badge-service {
 }
 
 .badge-discount {
+  color: var(--section-off-color);
   font-size: 0.75rem;
   font-weight: 500;
 }
+.badge-discount:hover {
+  color: var(--section-hover-off-color);
+}
 
 .badge-availability {
+  color: var(--section-limited-availability-color);
   font-size: 0.75rem;
+}
+.badge-availability:hover {
+  color: var(--section-hover-limited-availability-color);
 }
 
 /* Modal styling */
@@ -1279,12 +1306,14 @@ section[section-id] .badge-featured.badge-service {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(229, 231, 235, 0.5);
+  color: var(--section-close-icon-color);
+  background-color: var(--section-close-icon-background-color, rgba(229, 231, 235, 0.5));
   transition: background-color 0.2s;
 }
 
 .modal-close-button:hover {
-  background-color: rgba(229, 231, 235, 0.8);
+  color: var(--section-hover-close-icon-color);
+  background-color: var(--section-hover-close-icon-background-color, rgba(229, 231, 235, 0.8));
 }
 
 .modal-item-name {
@@ -1295,6 +1324,19 @@ section[section-id] .badge-featured.badge-service {
 .modal-item-price {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.restaurant-menu .modal-item-price {
+  color: var(--section-price-color);
+}
+.restaurant-menu .modal-item-price:hover {
+  color: var(--section-hover-price-color);
+}
+.service-packages .modal-item-price {
+  color: var(--section-discounted-price-color);
+}
+.service-packages .modal-item-price:hover {
+  color: var(--section-hover-discounted-price-color);
 }
 
 .modal-item-description {
@@ -1415,13 +1457,36 @@ section[section-id] .cart-item-count {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f1f1f1;
+  color: var(--section-close-icon-color);
+  background-color: var(--section-close-icon-background-color, #f1f1f1);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .cart-close-button:hover {
-  background-color: #e5e5e5;
+  color: var(--section-hover-close-icon-color);
+  background-color: var(--section-hover-close-icon-background-color, #e5e5e5);
+}
+
+.cart-qty-value, .item-qty-value {
+  color: var(--section-quantity-number-color);
+}
+.cart-qty-value:hover, .item-qty-value:hover {
+  color: var(--section-hover-quantity-number-color);
+}
+
+.qty-label {
+  color: var(--section-quantity-label-color);
+}
+.qty-label:hover {
+  color: var(--section-hover-quantity-label-color);
+}
+
+.special-instructions {
+  color: var(--section-special-instructions-color);
+}
+.special-instructions:hover {
+  color: var(--section-hover-special-instructions-color);
 }
 
 .cart-close-icon {
@@ -1558,8 +1623,12 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 }
 
 .cart-item-price {
+  color: var(--section-price-color);
   font-size: 1.05rem;
   font-weight: 600;
+}
+.cart-item-price:hover {
+  color: var(--section-hover-price-color);
 }
 
 .cart-discounted-price {
@@ -1569,14 +1638,21 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 }
 
 .cart-item-price-original {
+  color: var(--section-price-color);
   font-size: 0.875rem;
   text-decoration: line-through;
+}
+.cart-item-price-original:hover {
+  color: var(--section-hover-price-color);
 }
 
 .cart-item-price-discounted {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #ef4444;
+  color: var(--section-discounted-price-color, #ef4444);
+}
+.cart-item-price-discounted:hover {
+  color: var(--section-hover-discounted-price-color, #ef4444);
 }
 
 /* Notes */
@@ -1613,6 +1689,13 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 .cart-summary-value {
   font-size: 1rem;
   font-weight: 500;
+  color: var(--section-price-color);
+}
+.cart-subtotal-value:hover,
+.cart-summary-value:hover {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--section-hover-price-color);
 }
 
 .cart-total {
@@ -1630,6 +1713,10 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 .cart-total-value {
   font-size: 1.5rem;
   font-weight: 700;
+  color: var(--section-price-color) !important;
+}
+.cart-total-value:hover {
+  color: var(--section-hover-price-color) !important;
 }
 
 /* Checkout button */
@@ -2018,7 +2105,7 @@ section[section-id] .simple-cta:hover {
   background: var(--section-hover-background-color, var(--hover-background-color));
 }
 
-section[section-id] ul li::marker, section[section-id] ol li, section[section-id] ul li .ql-ui, section[section-id] ol li .ql-ui {
+section[section-id] ul li, section[section-id] ol li, section[section-id] ul li .ql-ui, section[section-id] ol li .ql-ui {
   color: var(--section-lists-color, var(--lists-color));
 }
 
@@ -2685,8 +2772,8 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   text-overflow: ellipsis;
   text-align: start;
 }
-.plans.plans-wrapper .plansTitleBox .title.w-80px {
-  width: 155px;
+.plans.plans-wrapper .plansTitleBox .title {
+  width: 155px !important;
 }
 .plans.plans-wrapper .mr-6.img-wrapper {
   margin-right: 1.0rem !important;

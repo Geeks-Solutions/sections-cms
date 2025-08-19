@@ -104,8 +104,12 @@
   </div>
 </template>
 
+<i18n src="../../sections/forms/ServicePackages_i18n.json"></i18n>
+
 <script setup>
 import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount, inject } from 'vue'
+
+const { t: $t } = useI18n({ useScope: 'local' })
 
 // Import shared components
 import CartIcon from '../../components/UnifiedMenu/CartIcon.vue'
@@ -627,6 +631,11 @@ onMounted(() => {
       id: 'global',
       name: useI18n().t('sectionsBuilder.globalSettings'),
       path: '/theme/global_settings'
+    },
+    {
+      id: 'specific',
+      name: useI18n().t('sectionsBuilder.specificSettings'),
+      path: '/theme/ServicePackages_settings'
     }
   ])
 })
