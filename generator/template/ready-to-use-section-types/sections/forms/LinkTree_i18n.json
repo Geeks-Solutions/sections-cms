@@ -1,6 +1,7 @@
 {
   "en": {
     "LinkTree": {
+      "requiredField": "This field is required",
       "profilePicture": "Profile Picture",
       "uploadProfilePicture": "Upload Profile Picture",
       "changeProfilePicture": "Change Profile Picture",
@@ -83,6 +84,7 @@
   },
   "fr": {
     "LinkTree": {
+      "requiredField": "Ce champ est requis",
       "profilePicture": "Photo de profil",
       "uploadProfilePicture": "Télécharger une photo de profil",
       "changeProfilePicture": "Changer la photo de profil",
