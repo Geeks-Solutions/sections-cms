@@ -57,13 +57,19 @@
           <div class="flex flex-col items-start justify-start mt-4">
             <label class="mr-4 font-medium">{{ $t("LinkTree.linkText") }}*</label>
             <input v-model="object.linkText[selectedLang]" type="text" :placeholder="$t('LinkTree.linkTextPlaceholder')"
-              :class="sectionsStyle.input" />
+              :class="[sectionsStyle.input, errors.socialLinks[idx]?.linkText ? 'error' : '']" />
+            <span v-show="errors.socialLinks[idx]?.linkText === true" class="text-error text-sm pt-2 pl-2">
+              {{ $t('LinkTree.requiredField') }}
+            </span>
           </div>
 
           <div class="flex flex-col items-start justify-start mt-4">
             <label class="mr-4 font-medium">{{ $t("LinkTree.url") }}*</label>
             <input v-model="object.url" type="url" :placeholder="$t('LinkTree.urlPlaceholder')"
-              :class="sectionsStyle.input" />
+              :class="[sectionsStyle.input, errors.socialLinks[idx]?.url ? 'error' : '']" />
+            <span v-show="errors.socialLinks[idx]?.url === true" class="text-error text-sm pt-2 pl-2">
+              {{ $t('LinkTree.requiredField') }}
+            </span>
           </div>
         </template>
       </LazySectionsFormsFieldSets>
@@ -140,14 +146,19 @@
         <label class="mr-4 font-medium mb-2">{{ $t("LinkTree.selectTheme") }}</label>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-3 w-full">
           <div v-for="theme in availableThemes" :key="theme.id" @click="selectTheme(theme.id)" :class="[
-            'theme-card cursor-pointer p-4 rounded-lg border-2 transition-all',
+            'theme-card cursor-pointer p-4 rounded-lg border-2 transition-all duration-200 hover:shadow-md',
             settings[0].selectedTheme === theme.id
-              ? 'border-blue-500 bg-blue-50'
-              : 'border-gray-200 hover:border-gray-300'
+              ? 'border-blue-500 bg-blue-50 shadow-lg ring-2 ring-blue-200'
+              : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
           ]">
-            <div class="theme-preview w-full h-16 rounded mb-2" :style="{ background: theme.preview }"></div>
-            <h4 class="font-medium text-sm text-center">{{ $t(`LinkTree.themes.${theme.id}`) }}</h4>
-            <p class="text-xs text-gray-500 text-center mt-1">{{ $t(`LinkTree.themes.${theme.id}Desc`) }}</p>
+            <div class="theme-preview w-full h-16 rounded mb-2 shadow-sm" :style="{ background: theme.preview }"></div>
+            <h4 class="font-medium text-sm text-center" :class="settings[0].selectedTheme === theme.id ? 'text-blue-700' : 'text-gray-700'">
+              {{ $t(`LinkTree.themes.${theme.id}`) }}
+            </h4>
+            <p class="text-xs text-center mt-1" :class="settings[0].selectedTheme === theme.id ? 'text-blue-600' : 'text-gray-500'">
+              {{ $t(`LinkTree.themes.${theme.id}Desc`) }}
+            </p>
+
           </div>
         </div>
       </div>
@@ -296,6 +307,17 @@ const currentMediaType = ref(null)
 // Methods
 const updateSocialLinks = (data) => {
   settings.value[0].socialLinks = data
+  // Update errors array when social links change
+  initializeSocialLinkErrors()
+}
+
+const initializeSocialLinkErrors = () => {
+  // Ensure errors array matches the length of social links
+  const socialLinksLength = settings.value[0].socialLinks.length
+  errors.socialLinks = Array.from({ length: socialLinksLength }, () => ({
+    linkText: false,
+    url: false
+  }))
 }
 
 const updateMediasArray = (media) => {
@@ -374,10 +396,19 @@ const addSocialLink = () => {
   })
 
   settings.value[0].socialLinks.push(socialLink)
+  
+  // Add error tracking for the new social link
+  errors.socialLinks.push({
+    linkText: false,
+    url: false
+  })
 }
 
 const removeSocialLink = (idx) => {
   settings.value[0].socialLinks = settings.value[0].socialLinks.filter((link, i) => idx !== i)
+  
+  // Remove corresponding error tracking
+  errors.socialLinks = errors.socialLinks.filter((error, i) => idx !== i)
 }
 
 const validate = () => {
@@ -385,12 +416,28 @@ const validate = () => {
 
   // Reset errors
   errors.generalSettings.title = false
+  initializeSocialLinkErrors()
 
   // Validate title (required)
   if (!settings.value[0].title.en) {
     errors.generalSettings.title = true
     valid = false
   }
+
+  // Validate social links
+  settings.value[0].socialLinks.forEach((link, index) => {
+    // Check if linkText is required and missing
+    if (!link.linkText[props.selectedLang] || link.linkText[props.selectedLang].trim() === '') {
+      errors.socialLinks[index].linkText = true
+      valid = false
+    }
+
+    // Check if URL is required and missing
+    if (!link.url || link.url.trim() === '') {
+      errors.socialLinks[index].url = true
+      valid = false
+    }
+  })
 
   // Clean up empty media objects
   if (settings.value[0].profileImage && (Object.keys(settings.value[0].profileImage).length === 0 || !settings.value[0].profileImage.media_id || !settings.value[0].profileImage.url)) {
@@ -444,6 +491,7 @@ watch(() => settings.value[0], (newSettings) => {
 // Lifecycle
 onMounted(() => {
   initializeLocalizedFields()
+  initializeSocialLinkErrors()
 })
 
 // Expose methods that might be called from parent
@@ -460,9 +508,20 @@ defineExpose({
 
 .theme-card {
   min-height: 100px;
+  position: relative;
 }
 
 .theme-preview {
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced hover effects for theme cards */
+.theme-card:hover {
+  transform: translateY(-2px);
+}
+
+.theme-card.border-blue-500 {
+  transform: translateY(-2px);
+  border-color: #002cff;
 }
 </style>

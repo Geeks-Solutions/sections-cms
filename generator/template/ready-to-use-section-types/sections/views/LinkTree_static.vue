@@ -22,10 +22,14 @@
       </div>
 
       <!-- Social Links -->
-      <div v-if="socialLinks && socialLinks.length > 0" class="social-links mb-8 w-[25%] mx-auto justify-items-center">
-        <a v-for="(link, index) in socialLinks" :key="`social-${index}`" :href="link.url" target="_blank"
-          rel="noopener noreferrer" class="social-link button-selector flex px-4 my-4"
-          :class="[`social-link-${link.platform}`]">
+      <div v-if="socialLinks && socialLinks.length > 0" class="social-links mb-8">
+        <a v-for="(link, index) in socialLinks" :key="`social-${index}`" 
+          :href="link.url || '#'" 
+          :target="link.url ? '_blank' : '_self'"
+          :rel="link.url ? 'noopener noreferrer' : ''"
+          class="social-link button-selector flex px-4 my-4 w-full"
+          :class="[`social-link-${link.platform}`, { 'disabled-link': !link.url }]"
+          @click="!link.url && $event.preventDefault()">
           <span class="social-icon pr-2" :class="[`social-icon-${link.platform}`]">
             <!-- Use ClientOnly wrapper for SVG content -->
             <ClientOnly>
@@ -55,32 +59,30 @@
       </div>
 
       <!-- Contact Information -->
-      <div v-if="hasContactInfo" class="contact-info mb-8 w-[25%] mx-auto justify-items-center">
-        <h3 class="contact-title font-semibold mb-5 text-center">
+      <div v-if="hasContactInfo" class="contact-info mb-8">
+        <h3 class="contact-title font-semibold mb-5 text-center ">
           {{ $t('LinkTree.contact') }}
         </h3>
 
         <div class="contact-items">
-          <div v-if="settings.email" class="contact-item my-4 button-selector">
-            <a :href="`mailto:${settings.email}`" class="contact-link">
-              <span class="contact-icon">📧</span>
+          <div v-if="settings.email" class="contact-item my-4 button-selector w-full text-left">
+            <a :href="`mailto:${settings.email}`" class="contact-link flex items-center">
+              <span class="contact-icon mr-2">📧</span>
               <span>{{ settings.email }}</span>
             </a>
           </div>
 
-          <div v-if="settings.phone" class="contact-item my-4 button-selector">
-            <a :href="`tel:${settings.phone}`" class="contact-link">
-              <span class="contact-icon">📱</span>
+          <div v-if="settings.phone" class="contact-item my-4 button-selector w-full text-left">
+            <a :href="`tel:${settings.phone}`" class="contact-link flex items-center">
+              <span class="contact-icon mr-2">📱</span>
               <span>{{ settings.phone }}</span>
             </a>
           </div>
 
-          <div v-if="settings.address && settings.address[lang]" class="contact-item mb-3">
-            <div class="contact-link">
-              <span class="contact-icon">📍</span>
-              <div class="address-content flex-1">
-                <div v-html="settings.address[lang]"></div>
-              </div>
+          <div v-if="settings.address && settings.address[lang]" class="contact-item mb-3 button-selector w-full text-left">
+            <div class="contact-link flex items-center">
+              <span class="contact-icon mr-2">📍</span>
+              <span>{{ settings.address[lang]}}</span>
             </div>
           </div>
         </div>
@@ -291,12 +293,11 @@ const profileBio = computed(() => {
   return settings.value?.bio?.[props.lang] || ''
 })
 
+// Updated social links computed to show links with text even if URL is empty
 const socialLinks = computed(() => {
   if (!settings.value?.socialLinks || !Array.isArray(settings.value.socialLinks)) return []
   return settings.value.socialLinks.filter(link =>
     link &&
-    link.url &&
-    link.url.trim() !== '' &&
     link.linkText &&
     link.linkText[props.lang] &&
     link.linkText[props.lang].trim() !== ''
@@ -480,5 +481,10 @@ onMounted(() => {
 
 <style scoped>
 .profile-title {
+}
+
+.social-links,.contact-info {
+  width: 25%;
+  margin: 0 auto;
 }
 </style>
