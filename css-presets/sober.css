@@ -2110,7 +2110,7 @@ section[section-id] .linktree-section:hover {
   background: var(--section-hover-background-color, var(--hover-background-color));
 }
 
-@container linktree-section (max-width: 768px) {
+@container linktree-section (max-width: 1024px) {
   .linktree-section .linktree-container .contact-info, .linktree-section .linktree-container .social-links {
     width: 75%;
   }
@@ -2573,7 +2573,7 @@ section[section-id] .product-details .price-block .currency:hover {
 }
 
 @media (max-width: 640px) {
-  main .region6-wrapper {
+  main .region6-wrapper:not():has(.linktree-section) {
     display: flex !important;;
     flex-direction: column !important;
     padding: 0 2rem;

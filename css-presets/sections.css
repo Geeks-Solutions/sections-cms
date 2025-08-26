@@ -1041,6 +1041,10 @@ section[section-id] .simple-menu .menu-group-label {
   }
 }
 
+.simple-menu.main .ul-container-wrapper {
+  align-self: center;
+}
+
 .simple-menu.footer .ul-container-wrapper {
   align-content: start !important;
 }
@@ -2227,7 +2231,7 @@ section[section-id] .linktree-section:hover {
   background: var(--section-hover-background-color, var(--hover-background-color));
 }
 
-@container linktree-section (max-width: 768px) {
+@container linktree-section (max-width: 1024px) {
   .linktree-section .linktree-container .contact-info, .linktree-section .linktree-container .social-links {
     width: 75%;
   }
