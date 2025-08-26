@@ -404,7 +404,7 @@ section[section-id] .outline-button-selector {
   text-align: center;
   border-radius: 9999px; /* full */
   padding: 1rem 2rem;
-  background: var(--section-secondary-button-background-color, var(--secondary-button-background-color)) !important; /* bg-inherit */
+  background: var(--section-secondary-button-background-color, var(--secondary-button-background-color)) !important;
   border: 1px solid var(--section-secondary-button-border-color, var(--secondary-button-border-color));
   background-clip: text; /* text-gradient effect */
   -webkit-background-clip: text; /* For WebKit browsers */
@@ -426,7 +426,7 @@ section[section-id] .outline-button-selector:hover {
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   --tw-shadow: var(--tw-shadow-colored);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  background: var(--section-hover-secondary-button-background-color, var(--hover-secondary-button-background-color)); /* bg-inherit */
+  background: var(--section-hover-secondary-button-background-color, var(--hover-secondary-button-background-color)) !important;
   border: 1px solid var(--section-hover-secondary-button-border-color, var(--hover-secondary-button-border-color));
   color: var(--section-hover-secondary-button-text-color, var(--hover-secondary-button-text-color));
   border-color: var(--section-hover-secondary-button-border-color, var(--hover-secondary-button-border-color));
