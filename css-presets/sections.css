@@ -1255,17 +1255,23 @@ section[section-id] .product-details .price-block .currency:hover {
 
 /* Category tabs styling */
 .category-tab {
-  background-color: #e5e7eb;
+  background: var(--section-categories-background-color, #e5e7eb);
   transition: all 0.2s;
+  color: var(--section-categories-text-color);
 }
-
 .category-tab:hover {
-  background-color: #d1d5db;
+  background: var(--section-hover-categories-background-color, #d1d5db);
+  color: var(--section-hover-categories-text-color);
 }
 
 section[section-id] .category-tab.active {
-  background-color: var(--section-primary-color, var(--primary-color));
-  color: #ffffff;
+  background: var(--section-categories-active-background-color, var(--section-primary-color, var(--primary-color)));
+  color: var(--section-categories-active-text-color, #ffffff);
+}
+
+section[section-id] .category-tab.active:hover {
+  background: var(--section-hover-categories-active-background-color, var(--section-primary-color, var(--primary-color)));
+  color: var(--section-hover-categories-active-text-color, #ffffff);
 }
 
 .service-packages .category-tab.active {
@@ -1529,8 +1535,13 @@ section[section-id] .badge-featured.badge-service {
 }
 
 .cart-button {
-  background-color: white;
+  background: var(--section-cart-icon-background-color, white);
+  color: var(--section-cart-icon-color);
   transition: all 0.2s;
+}
+.cart-button:hover {
+  background: var(--section-hover-cart-icon-background-color, white);
+  color: var(--section-hover-cart-icon-color);
 }
 
 section[section-id] .cart-item-count {
@@ -1868,7 +1879,8 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 
 /* Social media links */
 .social-link {
-  background-color: #f3f4f6;
+  background: var(--section-social-network-icon-background-color, #f3f4f6);
+  color: var(--section-social-network-icon-color);
   transition: all 0.3s;
 }
 
@@ -2008,35 +2020,35 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
   }
 
   .social-link-instagram:hover {
-    background: linear-gradient(
+    background: var(--section-hover-social-network-icon-background-color, linear-gradient(
             45deg,
             #f09433 0%,
             #e6683c 25%,
             #dc2743 50%,
             #cc2366 75%,
             #bc1888 100%
-    );
-    color: white;
+    ));
+    color: var(--section-hover-social-network-icon-color, white);
   }
 
   .social-link-facebook:hover {
-    background-color: #4267b2;
-    color: white;
+    background: var(--section-hover-social-network-icon-background-color, #4267b2);
+    color: var(--section-hover-social-network-icon-color, white);
   }
 
   .social-link-tiktok:hover {
-    background-color: #000000;
-    color: white;
+    background: var(--section-hover-social-network-icon-background-color, #000000);
+    color: var(--section-hover-social-network-icon-color, white);
   }
 
   .social-link-twitter:hover {
-    background-color: #1da1f2;
-    color: white;
+    background: var(--section-hover-social-network-icon-background-color, #1da1f2);
+    color: var(--section-hover-social-network-icon-color, white);
   }
 
   .social-link-youtube:hover {
-    background-color: #ff0000;
-    color: white;
+    background: var(--section-hover-social-network-icon-background-color, #ff0000);
+    color: var(--section-hover-social-network-icon-color, white);
   }
 }
 
