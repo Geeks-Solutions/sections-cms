@@ -475,6 +475,15 @@ onMounted(() => {
       settings.value.textColor = '#ffffff'
     }
   }
+
+  const sectionsThemeComponents = null
+  sectionsThemeComponents?.(props.section.name, [
+    {
+      id: 'global',
+      name: useI18n().t('sectionsBuilder.globalSettings'),
+      path: '/theme/global_settings'
+    }
+  ])
 })
 
 </script>
