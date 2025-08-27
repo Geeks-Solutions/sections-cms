@@ -2138,6 +2138,7 @@ section[section-id] .simple-cta:hover {
 
 section[section-id] ul li, section[section-id] ol li, section[section-id] ul li .ql-ui, section[section-id] ol li .ql-ui {
   color: var(--section-lists-color, var(--lists-color));
+  direction: ltr;
 }
 
 section[section-id] ul li:hover, section[section-id] ol li:hover, section[section-id] ul li:hover .ql-ui, section[section-id] ol li:hover .ql-ui {
