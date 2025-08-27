@@ -1,6 +1,10 @@
 <template>
   <div v-if="settings" class="service-packages py-2.5" :class="[settings.classes, `business-${settings.businessType}`]"
     :style="{ backgroundColor: settings.backgroundColor || 'transparent' }">
+
+    <!-- Shopping Cart Icon -->
+    <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
+
     <div class="md:px-4">
       <!-- Business Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
@@ -19,9 +23,6 @@
           {{ settings.pageSubtitle[lang] }}
         </p>
       </div>
-
-      <!-- Shopping Cart Icon -->
-      <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
 
       <div style="display: none;" aria-hidden="true">
         <SocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :i18n="$t"

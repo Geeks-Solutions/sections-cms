@@ -1,6 +1,9 @@
 <template>
   <div v-if="settings" class="restaurant-menu py-2.5" :class="settings.classes">
     <div>
+      <!-- Shopping Cart Icon - Only render the icon, not full cart -->
+      <CartIcon :total-items="totalItems" @click="toggleCart" />
+
       <!-- Restaurant Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
         <NuxtImg :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Restaurant Logo'" width="96" height="96"
@@ -16,9 +19,6 @@
           {{ menuSubtitle }}
         </p>
       </div>
-
-      <!-- Shopping Cart Icon - Only render the icon, not full cart -->
-      <CartIcon :total-items="totalItems" @click="toggleCart" />
 
       <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
         :whatsapp-number="settings.whatsappNumber || ''"

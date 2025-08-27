@@ -1,5 +1,5 @@
 <template>
-  <div class="cart-icon fixed right-4 z-50" :class="isAdmin ? 'top-16' : 'top-4'" @click="$emit('click')">
+  <div class="cart-icon sticky top-16 right-4 z-50 ml-auto mt-10 w-max" @click="$emit('click')">
     <div class="relative">
       <div class="cart-button p-3 rounded-full shadow-md hover:cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -32,7 +32,11 @@ defineProps({
   }
 })
 
-const isAdmin = useCookie('sections-auth-token').value
-
 defineEmits(['click'])
 </script>
+
+<style>
+.view-component:has(.restaurant-menu), .view-component:has(.service-packages) {
+  overflow: unset;
+}
+</style>
