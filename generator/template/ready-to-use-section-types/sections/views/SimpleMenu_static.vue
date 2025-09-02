@@ -9,9 +9,10 @@
                  :default-lang="defaultLang"
                  :form-link-target="settings.logoLinkTarget"
                  class="logo-wrapper">
-      <NuxtImg
+      <GUniversalViewer
         :src="settings.media.url"
         :alt="settings.media.seo_tag ? settings.media.seo_tag : ''"
+        :type="settings.media.metadata?.type || 'image'"
         class="logo w-fit"
         width="300"
            height="300"
@@ -21,20 +22,23 @@
       />
     </global-link>
     <h3 v-if="settings.menuLabel && settings.menuLabel[lang]">{{ settings.menuLabel[lang] }}</h3>
-    <ul v-for="(menuContainer, menuIdx) in settings.menus" :key="`simple-menu-ul-container-${menuIdx}`" :class="[menuContainer.menuContainerClasses, `ul-container-${menuIdx}`]">
-      <li v-for="(menuItem, idx) in menuContainer.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'lang': menuItem.languageMenu === true}, {'mobileHidden': idx >= 0}]">
-        <global-link v-if="menuItem.languageMenu !== true"
-                     :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
-                     :lang="lang"
-                     :default-lang="defaultLang"
-                     :form-link-target="menuItem.linkTarget">
-          <p>
-            {{ menuItem.label[lang] }}
-          </p>
-        </global-link>
-        <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" @lang-switched="langSwitched" />
-      </li>
-    </ul>
+    <div v-for="(menuContainer, menuIdx) in settings.menus" :key="`simple-menu-ul-container-${menuIdx}`" class="ul-container-wrapper content-center">
+      <div v-if="menuContainer.menuGroupLabel && menuContainer.menuGroupLabel[lang]" class="menu-group-label">{{ menuContainer.menuGroupLabel[lang] }}</div>
+      <ul :class="[menuContainer.menuContainerClasses, `ul-container-${menuIdx}`]">
+        <li v-for="(menuItem, idx) in menuContainer.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'lang': menuItem.languageMenu === true}, {'mobileHidden': idx >= 0}]">
+          <global-link v-if="menuItem.languageMenu !== true"
+                       :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
+                       :lang="lang"
+                       :default-lang="defaultLang"
+                       :form-link-target="menuItem.linkTarget">
+            <p>
+              {{ menuItem.label[lang] }}
+            </p>
+          </global-link>
+          <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" @lang-switched="langSwitched" />
+        </li>
+      </ul>
+    </div>
     <transition name="mobile-menu-main-wrapper">
       <div v-show="mobileMenu === true" class="fixed inset-0 mobile-menu-main-wrapper bg-white" :class="{'visibleMenu' : mobileMenu === true}">
         <div class="mobile-menu-wrapper">

@@ -10,15 +10,17 @@
 
         <div class="flex flex-col items-center image-wrapper">
           <div class="image-wrapper-inner" :class="`image-wrapper-inner-${idx}`">
-            <NuxtImg
+            <GUniversalViewer
               v-if="container.media && container.media.url"
               :src="container.media.url"
               :alt="container.media.seo_tag ? container.media.seo_tag : ''"
-              class="p-4 w-fit"
+              :type="container.media.metadata?.type || 'image'"
+              class="p-4"
+              :class="container.media.metadata?.type === 'lottie' ? 'w-[150px] h-[150px]' : 'w-fit'"
               width="300"
-           height="300"
+              height="300"
               sizes="100%"
-           :placeholder="[300, 300, 75, 5]" format="webp"
+              :placeholder="[300, 300, 75, 5]" format="webp"
               loading="lazy"
             />
           </div>

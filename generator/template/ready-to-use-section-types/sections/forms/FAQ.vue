@@ -84,6 +84,8 @@
 
 <script>
 
+import { assignMediaObject } from '@/utils/constants.js'
+
 export default {
   name: "FAQ",
   setup() {
@@ -164,20 +166,8 @@ export default {
       }
     },
     selectedMedia(mediaObject) {
-      const media = {
-        media_id: "",
-        url: "",
-        seo_tag: "",
-        filename: "",
-        headers: {}
-      };
-      media.media_id = mediaObject.id;
-      media.url = mediaObject.files[0].url;
-      media.seo_tag = mediaObject.seo_tag;
-      media.filename = mediaObject.files[0].filename;
-      if (mediaObject.files[0].headers) {
-        media.headers = mediaObject.files[0].headers
-      }
+      let media = {}
+      media = assignMediaObject(mediaObject)
       this.settings[this.selectedMediaIndex]['media'] = media
       this.$emit('closeMediaModal')
     }

@@ -12,7 +12,10 @@
 
         <!-- Item image -->
         <div v-if="item && item.image && item.image.url" :class="isService ? 'h-64' : 'h-52'">
-          <NuxtImg :src="item.image.url" :alt="item.image.seo_tag || (item.name && item.name[lang])"
+          <GUniversalViewer
+            :src="item.image.url"
+            :alt="item.image.seo_tag || (item.name && item.name[lang])"
+            :type="item.image.metadata?.type || 'image'"
             class="modal-image w-full h-full object-cover rounded-t-lg" width="400" height="160" :modifiers="{
               width: 400,
               height: 160,

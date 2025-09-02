@@ -2,10 +2,11 @@
   <div v-if="selectedLayout === 'thumbnails'" class="space-y-4 thumbnails-wrapper">
     <div class="aspect-w-16 aspect-h-9 overflow-hidden slides-container"
          :style="settings[0].containerHeight ? `height: ${settings[0].containerHeight};` : ``">
-      <NuxtImg
+      <GUniversalViewer
         v-if="images[currentSlide].media && images[currentSlide].media.url"
         :src="images[currentSlide].media.url"
         :alt="images[currentSlide].media.seo_tag ? images[currentSlide].media.seo_tag : ''"
+        :type="images[currentSlide].media.metadata?.type || 'image'"
         class="w-full h-full cursor-pointer"
         :class="{'mobileHidden': images[currentSlide].mediaMobile && images[currentSlide].mediaMobile.url}"
         :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
@@ -15,10 +16,11 @@
         loading="lazy"
         @click="$emit('openPreview', images[currentSlide])"
       />
-      <NuxtImg
+      <GUniversalViewer
         v-if="images[currentSlide].mediaMobile && images[currentSlide].mediaMobile.url"
         :src="images[currentSlide].mediaMobile.url"
         :alt="images[currentSlide].mediaMobile.seo_tag ? images[currentSlide].mediaMobile.seo_tag : ''"
+        :type="images[currentSlide].mediaMobile.metadata?.type || 'image'"
         class="w-full h-full cursor-pointer md:hidden"
         :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
         width="300"
@@ -44,10 +46,11 @@
                 ]"
             @click="$emit('updateCurrentSlide', imageIdx)"
           >
-            <NuxtImg
+            <GUniversalViewer
               v-if="image.media && image.media.url"
               :src="image.media.url"
               :alt="image.media.seo_tag ? image.media.seo_tag : ''"
+              :type="image.media.metadata?.type || 'image'"
               class="w-full h-full object-cover"
               :class="[{'opacity-70': currentSlide !== imageIdx}, {'mobileHidden': image.mediaMobile && image.mediaMobile.url}]"
               width="300"
@@ -58,10 +61,11 @@
               @touchmove="handleTouchMove"
               @touchend="handleThumbnailsTouchEnd"
             />
-            <NuxtImg
+            <GUniversalViewer
               v-if="image.mediaMobile && image.mediaMobile.url"
               :src="image.mediaMobile.url"
               :alt="image.mediaMobile.seo_tag ? image.mediaMobile.seo_tag : ''"
+              :type="image.mediaMobile.metadata?.type || 'image'"
               class="w-full h-full object-cover md:hidden"
               :class="{'opacity-70': currentSlide !== imageIdx}"
               width="300"

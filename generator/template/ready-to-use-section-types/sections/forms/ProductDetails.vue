@@ -204,7 +204,7 @@
 <i18n src="./ProductDetails_i18n.json"></i18n>
 
 <script>
-import {sectionsStyle, scrollToFirstError} from "@/utils/constants";
+import { sectionsStyle, scrollToFirstError, assignMediaObject } from '@/utils/constants'
 
 export default {
   name: 'TextImage',
@@ -331,21 +331,9 @@ export default {
       this.siteLang = val
     },
     selectedMedia(mediaObject) {
-      const media = {
-        media_id: "",
-        url: "",
-        seo_tag: "",
-        filename: "",
-        headers: {}
-      };
-      media.media_id = mediaObject.id;
-      media.url = mediaObject.files[0].url;
-      media.thumbnail_url = mediaObject.files[0].thumbnail_url;
-      media.seo_tag = mediaObject.seo_tag;
-      media.filename = mediaObject.files[0].filename;
-      if (mediaObject.files[0].headers) {
-        media.headers = mediaObject.files[0].headers
-      }
+      let media = {}
+      media = assignMediaObject(mediaObject)
+
       const mediaIndex = this.private_data.medias.findIndex(media => media.media_id === mediaObject.id)
       if (mediaIndex !== -1) {
         this.private_data.medias[mediaIndex] = media
@@ -375,6 +363,7 @@ export default {
                 media_id: productMedia.media.media_id,
                 seo_tag: productMedia.media.seo_tag,
                 url: productMedia.media.url,
+                metadata: productMedia.media.metadata,
                 thumbnail_url: productMedia.media.thumbnail_url
               } : undefined
             })

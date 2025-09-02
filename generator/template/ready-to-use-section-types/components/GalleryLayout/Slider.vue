@@ -11,10 +11,11 @@
           class="w-full flex-shrink-0 cursor-pointer flex items-center justify-center"
           @click="$emit('openPreview', image)"
         >
-          <NuxtImg
+          <GUniversalViewer
             v-if="image.media && image.media.url"
             :src="image.media.url"
             :alt="image.media.seo_tag ? image.media.seo_tag : ''"
+            :type="image.media.metadata?.type || 'image'"
             class="w-full h-full"
             :class="{'mobileHidden': image.mediaMobile && image.mediaMobile.url}"
             :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
@@ -26,10 +27,11 @@
             @touchmove="handleTouchMove"
             @touchend="handleTouchEnd"
           />
-          <NuxtImg
+          <GUniversalViewer
             v-if="image.mediaMobile && image.mediaMobile.url"
             :src="image.mediaMobile.url"
             :alt="image.mediaMobile.seo_tag ? image.mediaMobile.seo_tag : ''"
+            :type="image.mediaMobile.metadata?.type || 'image'"
             class="w-full h-full md:hidden"
             :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
             width="300"

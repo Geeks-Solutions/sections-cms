@@ -28,10 +28,11 @@
       </div>
       <div v-if="settings.imagePosition !== 'none'" class="w-full md:w-auto gap-4 imageWrapper">
         <div :class="'flex h-[240px] md:h-[360px] md:row-span-2 md:mt-6'">
-          <NuxtImg
+          <GUniversalViewer
             v-if="settings.media && settings.media.url"
             :src="settings.media.url"
             :alt="settings.media.seo_tag ? settings.media.seo_tag : ''"
+            :type="settings.media.metadata?.type || 'image'"
             class="w-full"
             :class="'h-full object-contain'"
             width="300"

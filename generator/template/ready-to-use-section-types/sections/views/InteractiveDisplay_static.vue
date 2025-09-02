@@ -6,26 +6,28 @@
          @touchend="handleTouchEnd">
       <div class="carousel-inner h-full">
         <div v-for="(block, index) in migratedSettings" :key="`carousel-media-block-${index}`" class="relative h-full" :class="`carousel-slide ${index === currentIndex ? 'active' : ''}`">
-          <NuxtImg
+          <GUniversalViewer
               v-if="block.media && block.media.url"
               :src="block.media.url"
               :alt="block.media.seo_tag ? block.media.seo_tag : ''"
+              :type="block.media.metadata?.type || 'image'"
               class="w-full h-full mobileHidden"
               :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
               width="300"
-           height="300"
-           :placeholder="[300, 300, 75, 5]" format="webp"
+              height="300"
+              :placeholder="[300, 300, 75, 5]" format="webp"
               loading="lazy"
           />
-          <NuxtImg
+          <GUniversalViewer
               v-if="block.mediaMobile && block.mediaMobile.url"
               :src="block.mediaMobile.url"
               :alt="block.mediaMobile.seo_tag ? block.mediaMobile.seo_tag : ''"
+              :type="block.mediaMobile.metadata?.type || 'image'"
               class="w-full h-full md:h-auto object-cover md:hidden"
               :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
               width="300"
-           height="300"
-           :placeholder="[300, 300, 75, 5]" format="webp"
+              height="300"
+              :placeholder="[300, 300, 75, 5]" format="webp"
               loading="lazy"
           />
           <div v-if="(block.title[lang] || block.text[lang] || block.cta[lang]) && index === currentIndex" class="absolute top-0 w-full h-full">
@@ -63,7 +65,7 @@
 
       <div v-if="((settings[0].videoTitle && settings[0].videoTitle[lang]) || (settings[0].videoText && settings[0].videoText[lang]) || (settings[0].videoCta && settings[0].videoCta[lang]))" class="absolute top-0 w-full h-full pointer-events-none">
         <div class="flex flex-col h-full justify-center items-center space-y-10">
-          <div class="flex flex-col gap-2 md:gap-4">
+          <div class="flex flex-col gap-2 md:gap-4 pointer-events-auto">
             <h2 v-if="settings[0].videoTitle[lang]">
               <gWysiwygContent tag="span" :wrapper-classes="settings[0].videoTitleClasses" :classes="`text-center overflow-hidden p-0`" :html-content="settings[0].videoTitle[lang]" />
             </h2>

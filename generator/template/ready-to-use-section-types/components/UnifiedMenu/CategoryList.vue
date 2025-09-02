@@ -5,7 +5,10 @@
         <div class="flex items-center border-b pb-2 mb-6">
           <!-- Category Icon -->
           <div v-if="category.icon && category.icon.url" class="mr-3">
-            <NuxtImg :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
+            <GUniversalViewer
+              :src="category.icon.url"
+              :alt="category.icon.seo_tag || category.name[lang]"
+              :type="category.icon.metadata?.type || 'image'"
               class="icon-image max-w-full max-h-full object-contain" width="32" height="32" loading="lazy" :modifiers="{
                 width: 32,
                 height: 32,
@@ -36,7 +39,10 @@
 
               <!-- Item Image -->
               <div v-if="item.image && item.image.url" class="item-image-wrapper md:mr-4 mb-4 md:mb-0 flex-shrink-0">
-                <NuxtImg :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]"
+                <GUniversalViewer
+                  :src="item.image.url"
+                  :alt="item.image.seo_tag || item.name[lang]"
+                  :type="item.image.metadata?.type || 'image'"
                   class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" preload
                   fetchpriority="high" />
               </div>

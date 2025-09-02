@@ -298,7 +298,7 @@
 <i18n src="./Shared_i18n.json"></i18n>
 
 <script>
-import {sectionsStyle, scrollToFirstError} from "../../utils/constants";
+import { sectionsStyle, scrollToFirstError, assignMediaObject } from '../../utils/constants'
 
 export default {
   name: 'GoogleMaps',
@@ -440,26 +440,8 @@ export default {
       this.siteLang = val
     },
     selectedMedia(mediaObject) {
-      const media = {
-        media_id: "",
-        url: "",
-        seo_tag: "",
-        files: [
-          {
-            filename: "",
-            url: ""
-          }
-        ],
-        headers: {}
-      };
-      media.files[0].url = mediaObject.files[0].url;
-      media.files[0].filename = mediaObject.files[0].filename;
-      media.media_id = mediaObject.id;
-      media.url = mediaObject.files[0].url;
-      media.seo_tag = mediaObject.seo_tag;
-      if (mediaObject.files[0].headers) {
-        media.headers = mediaObject.files[0].headers
-      }
+      let media = {}
+      media = assignMediaObject(mediaObject)
       if (this.settings[0].pins[this.mediaFieldIndex].media.media_id) {
         const mediaIndex = this.settings[0].medias.findIndex(media => media.media_id === this.settings[0].pins[this.mediaFieldIndex].media.media_id)
         if (mediaIndex !== -1) {

@@ -11,10 +11,11 @@
               ]"
       @click="$emit('openPreview', image)"
     >
-      <NuxtImg
+      <GUniversalViewer
         v-if="image.media && image.media.url"
         :src="image.media.url"
         :alt="image.media.seo_tag ? image.media.seo_tag : ''"
+        :type="image.media.metadata?.type || 'image'"
         class="w-full h-full object-cover hover:opacity-90 transition-opacity"
         :class="{'mobileHidden': image.mediaMobile && image.mediaMobile.url}"
         width="300"
@@ -22,10 +23,11 @@
            :placeholder="[300, 300, 75, 5]" format="webp"
         loading="lazy"
       />
-      <NuxtImg
+      <GUniversalViewer
         v-if="image.mediaMobile && image.mediaMobile.url"
         :src="image.mediaMobile.url"
         :alt="image.mediaMobile.seo_tag ? image.mediaMobile.seo_tag : ''"
+        :type="image.mediaMobile.metadata?.type || 'image'"
         class="w-full h-full object-cover hover:opacity-90 transition-opacity md:hidden"
         width="300"
            height="300"
