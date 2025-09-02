@@ -4,11 +4,12 @@
     <div class="flex flex-col md:flex-row justify-center w-full gap-6 row-wrapper">
 
       <div class="flex flex-col md:w-1/2 medias-block items-center">
-        <div v-if="mediaPreview && (mediaPreview.mediaType === 'image' || mediaPreview.mediaType === 'imageType')" class="image-preview md:justify-items-start justify-items-center md:cursor-pointer" @click="openPreview(mediaPreview)">
-          <NuxtImg
+        <div v-if="mediaPreview && Object.keys(mediaPreview).length > 0 && (mediaPreview.mediaType === 'image' || mediaPreview.mediaType === 'imageType')" class="image-preview md:justify-items-start justify-items-center md:cursor-pointer" @click="openPreview(mediaPreview)">
+          <GUniversalViewer
             v-if="mediaPreview.media && mediaPreview.media.url"
             :src="mediaPreview.media.url"
             :alt="mediaPreview.media.seo_tag"
+            :type="mediaPreview.media.metadata?.type || 'image'"
             class="rounded-lg md:w-[560px] h-[280px] md:h-[310px]"
             :style="product.imageFit ? `object-fit: ${product.imageFit};` : ''"
             width="300"
@@ -23,9 +24,11 @@
         <div v-if="product.productMedias && product.productMedias.length > 1" class="flex flex-row gap-3 overflow-x-scroll max-w-full mt-4 mx-1.5 medias-list">
           <div v-for="(mediaObject, idx) in product.productMedias" :key="`product-image-${idx}`" class="relative medias-list-item">
             <div v-if="mediaObject && mediaObject.mediaType === 'image'" class="medias-list-image">
-              <NuxtImg
-                v-if="mediaObject.media && mediaObject.media.thumbnail_url"
-                :src="mediaObject.media.thumbnail_url" :alt="mediaObject.media.seo_tag"
+              <GUniversalViewer
+                v-if="(mediaObject.media && mediaObject.media.thumbnail_url) || (mediaObject.media && mediaObject.media.url)"
+                :src="mediaObject.media.metadata?.type === 'lottie' ? mediaObject.media.url : mediaObject.media.thumbnail_url"
+                :alt="mediaObject.media.seo_tag"
+                :type="mediaObject.media.metadata?.type || 'image'"
                 class="w-[60px] min-w-[60px] h-[60px] object-contain cursor-pointer"
                 draggable="false"
                 :class="(mediaPreview.media && mediaPreview.media?.url === mediaObject.media.url) ? 'p-1 border-2 border-black shadow-md' : ''"
@@ -33,7 +36,7 @@
                 height="300"
                 :placeholder="[300, 300, 75, 5]" format="webp"
                 loading="lazy"
-                @click="mediaPreview = mediaObject" />
+                @click="showPreview(mediaObject)" />
             </div>
             <div v-if="mediaObject && mediaObject.mediaType === 'video'" class="medias-list-video w-[60px] min-w-[60px] h-[60px] content-center pointer-events-auto md:cursor-pointer" :class="(mediaPreview.video && mediaPreview.video?.url === mediaObject.video?.url) ? 'px-1 pt-1 pb-2.5 border-2 border-black shadow-md' : ''" @click="mediaPreview = mediaObject">
               <LazyYoutube v-if="mediaObject.video && mediaObject.video.url" :src="mediaObject.video.url" max-width="60px" class="pointer-events-none">
@@ -84,10 +87,11 @@
     >
       <div class="relative w-full max-w-4xl max-h-screen overflow-visible shadow-xl preview-image-inner">
         <div class="relative flex justify-center items-center p-4 preview-image-wrapper-inner">
-          <NuxtImg
+          <GUniversalViewer
             v-if="selectedImage && selectedImage.media && selectedImage.media.url"
             :src="selectedImage.media.url"
             :alt="selectedImage.media.seo_tag ? selectedImage.media.seo_tag : ''"
+            :type="selectedImage.media.metadata?.type || 'image'"
             class="w-auto max-w-full max-h-[80vh] object-contain transition-transform duration-200"
             :style="{ transform: `scale(${zoom})` }"
             width="300"
@@ -225,6 +229,12 @@ function closePreview() {
 function handleZoom(event) {
   const delta = event.deltaY > 0 ? -0.1 : 0.1
   zoom.value = Math.max(1, Math.min(3, zoom.value + delta))
+}
+
+const showPreview = async (mediaObject) => {
+  mediaPreview.value = {}
+  await nextTick()
+  mediaPreview.value = mediaObject
 }
 
 mediaPreview.value = props.product.productMedias[0]

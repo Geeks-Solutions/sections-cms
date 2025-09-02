@@ -9,7 +9,10 @@
         <div class="flex items-center justify-center">
           <div v-if="category.icon && category.icon.url"
             class="icon-container mr-1 flex-shrink-0 w-5 h-5 flex items-center justify-center">
-            <NuxtImg :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
+            <GUniversalViewer
+              :src="category.icon.url"
+              :alt="category.icon.seo_tag || category.name[lang]"
+              :type="category.icon.metadata?.type || 'image'"
               class="icon-image max-w-full max-h-full object-contain" width="20" height="20" loading="lazy" :modifiers="{
                 width: 20,
                 height: 20,

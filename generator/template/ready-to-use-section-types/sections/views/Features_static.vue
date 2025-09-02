@@ -10,15 +10,17 @@
 
         <div class="flex flex-col items-center image-wrapper">
           <div class="image-wrapper-inner" :class="`image-wrapper-inner-${idx}`">
-            <NuxtImg
+            <GUniversalViewer
               v-if="container.media && container.media.url"
               :src="container.media.url"
               :alt="container.media.seo_tag ? container.media.seo_tag : ''"
-              class="p-4 w-fit"
+              :type="container.media.metadata?.type || 'image'"
+              class="p-4"
+              :class="container.media.metadata?.type === 'lottie' ? 'w-[150px] h-[150px]' : 'w-fit'"
               width="300"
-           height="300"
+              height="300"
               sizes="100%"
-           :placeholder="[300, 300, 75, 5]" format="webp"
+              :placeholder="[300, 300, 75, 5]" format="webp"
               loading="lazy"
             />
           </div>
@@ -156,14 +158,6 @@ export default {
             if (containerWrapper && containerWrapper.clientWidth >= 1024) {
               const items = this.$el.querySelectorAll(`.image-main-wrapper-${this.sectionWeight}`);
               if (items.length) {
-                let maxHeight = 0;
-
-                // Reset heights before recalculating
-                items.forEach(item => {
-                  item.style.height = 'auto'
-                  return item
-                });
-
                 // Wait for images to load before setting heights
                 const images = [...containerWrapper.querySelectorAll("img")];
                 let loadedCount = 0;
@@ -190,10 +184,17 @@ export default {
                 }
 
                 function adjustHeights() {
+                  let maxHeight = 0;
+
                   items.forEach(item => {
+                    // Measure without removing height first
+                    const prevHeight = item.style.height;
+                    item.style.height = 'auto';
                     maxHeight = Math.max(maxHeight, item.offsetHeight);
+                    item.style.height = prevHeight;
                   });
 
+                  // Now apply the new height
                   items.forEach(item => {
                     item.style.height = `${maxHeight}px`;
                   });

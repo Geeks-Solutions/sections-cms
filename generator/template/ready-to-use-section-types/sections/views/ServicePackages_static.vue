@@ -1,10 +1,17 @@
 <template>
   <div v-if="settings" class="service-packages py-2.5" :class="[settings.classes, `business-${settings.businessType}`]"
     :style="{ backgroundColor: settings.backgroundColor || 'transparent' }">
+
+    <!-- Shopping Cart Icon -->
+    <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
+
     <div class="md:px-4">
       <!-- Business Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
-        <NuxtImg :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Business Logo'"
+        <GUniversalViewer
+          :src="settings.logo.url"
+          :alt="settings.logo.seo_tag || 'Business Logo'"
+          :type="settings.logo.metadata?.type || 'image'"
           class="h-24 object-contain mx-auto" width="96" height="96" preload fetchpriority="high" quality="80"
           format="webp" fit="contain" />
       </div>
@@ -19,9 +26,6 @@
           {{ settings.pageSubtitle[lang] }}
         </p>
       </div>
-
-      <!-- Shopping Cart Icon -->
-      <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
 
       <div style="display: none;" aria-hidden="true">
         <SocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :i18n="$t"
@@ -104,8 +108,12 @@
   </div>
 </template>
 
+<i18n src="../../sections/forms/ServicePackages_i18n.json"></i18n>
+
 <script setup>
 import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount, inject } from 'vue'
+
+const { t: $t } = useI18n({ useScope: 'local' })
 
 // Import shared components
 import CartIcon from '../../components/UnifiedMenu/CartIcon.vue'
@@ -627,6 +635,11 @@ onMounted(() => {
       id: 'global',
       name: useI18n().t('sectionsBuilder.globalSettings'),
       path: '/theme/global_settings'
+    },
+    {
+      id: 'specific',
+      name: useI18n().t('sectionsBuilder.specificSettings'),
+      path: '/theme/ServicePackages_settings'
     }
   ])
 })

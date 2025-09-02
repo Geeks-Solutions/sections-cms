@@ -28,11 +28,18 @@
 			  </div>
 			  <div class="flex items-center border-b border-FieldGray pb-4 separator">
 				<div class="flex justify-center border rounded-full w-[100px] h-[100px] mr-6 img-wrapper" :class="{'mostPopular' : plan.mostPopular === true}">
-				  <NuxtImg v-if="plan.media && (plan.media.files && plan.media.files[0].url) || (plan.media && plan.media.url && plan.media.url !== '')" :src="plan.media.url && plan.media.url !== '' ? plan.media.url : plan.media.files[0].url" :alt="plan.media.seo_tag" class="p-2"
-                   width="300"
-           height="300"
-           :placeholder="[300, 300, 75, 5]" format="webp"
-                   loading="lazy"/>
+				  <GUniversalViewer
+            v-if="plan.media && (plan.media.files && plan.media.files[0].url) || (plan.media && plan.media.url && plan.media.url !== '')"
+            :src="plan.media.url && plan.media.url !== '' ? plan.media.url : plan.media.files[0].url"
+            :alt="plan.media.seo_tag"
+            :type="plan.media.metadata?.type || 'image'"
+            class="p-2"
+            width="300"
+            height="300"
+            :placeholder="[300, 300, 75, 5]"
+            format="webp"
+            loading="lazy"
+          />
 				</div>
 				<div class="w-[140px] plansTitleBox ql-snow">
 				  <div class="title w-[80px]" :class="{'mostPopular' : plan.mostPopular === true}" :title="plan.title[lang]">{{ plan.title[lang] }}</div>

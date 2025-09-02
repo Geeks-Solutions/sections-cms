@@ -18,7 +18,7 @@
           <LazyMediasUploadMedia :media-label="$t('plans.media')" :upload-text="$t('plans.uploadMedia')" :change-text="$t('plans.changeMedia')" :seo-tag="$t('plans.seoTag')" :media="settings[0].plans[idx].media && Object.keys(settings[0].plans[idx].media).length > 0 ? [settings[0].plans[idx].media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
         </div>
 
-        <div class="flex flex-row gap-4">
+        <div class="flex flex-col md:flex-row md:gap-4">
           <div :id="`title-${idx}`" class="flex flex-col items-start justify-start mt-8">
             <label class="mr-4 font-bold">{{ $t("plans.title") }}</label>
             <input
@@ -31,7 +31,8 @@
             border border-FieldGray
             rounded-xl
             h-[48px]
-            w-[220px]
+            w-full
+            md:w-[220px]
             focus:outline-none
           "
             />
@@ -61,7 +62,7 @@
           <LazyEditorWysiwyg :html="settings[0].plans[idx].description[siteLang]" :css-classes-prop="settings[0].plans[idx].classes" @cssClassesChanged="(v) => plan['classes'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateDescription(content, idx)"/>
         </div>
 
-        <div class="flex flex-row gap-4">
+        <div class="flex flex-col md:flex-row md:gap-4">
           <div :id="`currency-${idx}`" class="flex flex-col items-start justify-start mt-8">
             <label class="mr-4 font-bold">{{ $t("plans.currency") }}</label>
             <input
@@ -74,7 +75,8 @@
             border border-FieldGray
             rounded-xl
             h-[48px]
-            w-[220px]
+            w-full
+            md:w-[220px]
             focus:outline-none
           "
             />
@@ -92,7 +94,8 @@
             border border-FieldGray
             rounded-xl
             h-[48px]
-            w-[220px]
+            w-full
+            md:w-[220px]
             focus:outline-none
           "
             />
@@ -111,7 +114,7 @@
             border border-FieldGray
             rounded-xl
             h-[48px]
-            w-[344px]
+            w-full
             focus:outline-none
           "
           />
@@ -129,7 +132,7 @@
             border border-FieldGray
             rounded-xl
             h-[48px]
-            w-[344px]
+            w-full
             focus:outline-none
           "
           />
@@ -146,7 +149,7 @@
             border border-FieldGray
             rounded-xl
             h-[200px]
-            w-[344px]
+            w-full
             focus:outline-none
           "
           />
@@ -165,7 +168,7 @@
             border border-FieldGray
             rounded-xl
             h-[48px]
-            w-[344px]
+            w-full
             focus:outline-none
           "
           />
@@ -212,7 +215,7 @@
 <i18n src="./Plans_i18n.json"></i18n>
 
 <script>
-import {scrollToFirstError} from "@/utils/constants";
+import { assignMediaObject, scrollToFirstError } from '@/utils/constants'
 
 export default {
   name: 'Plans',
@@ -312,26 +315,8 @@ export default {
       immediate: true
     },
     selectedMedia(mediaObject) {
-      const media = {
-        media_id: "",
-        url: "",
-        seo_tag: "",
-        files: [
-          {
-            filename: "",
-            url: ""
-          }
-        ],
-        headers: {}
-      };
-      media.files[0].url = mediaObject.files[0].url;
-      media.files[0].filename = mediaObject.files[0].filename;
-      media.media_id = mediaObject.id;
-      media.url = mediaObject.files[0].url;
-      media.seo_tag = mediaObject.seo_tag;
-      if (mediaObject.files[0].headers) {
-        media.headers = mediaObject.files[0].headers
-      }
+      let media = {}
+      media = assignMediaObject(mediaObject)
       if (this.settings[0].plans[this.mediaFieldIndex].media.media_id) {
         const mediaIndex = this.settings[0].medias.findIndex(media => media.media_id === this.settings[0].plans[this.mediaFieldIndex].media.media_id)
         if (mediaIndex !== -1) {
@@ -395,12 +380,7 @@ export default {
             media_id: "",
             url: "",
             seo_tag: "",
-            files: [
-              {
-                filename: "",
-                url: ""
-              }
-            ]
+            filename: ""
           }
         })
       }

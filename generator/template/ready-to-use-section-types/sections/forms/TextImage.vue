@@ -103,7 +103,7 @@
 <i18n src="./Shared_i18n.json"></i18n>
 
 <script>
-import {sectionsStyle, scrollToFirstError} from "@/utils/constants";
+import { sectionsStyle, scrollToFirstError, assignMediaObject } from '@/utils/constants'
 
 export default {
   name: 'TextImage',
@@ -186,20 +186,8 @@ export default {
       this.siteLang = val
     },
     selectedMedia(mediaObject) {
-      const media = {
-        media_id: "",
-        url: "",
-        seo_tag: "",
-        filename: "",
-        headers: {}
-      };
-      media.media_id = mediaObject.id;
-      media.url = mediaObject.files[0].url;
-      media.seo_tag = mediaObject.seo_tag;
-      media.filename = mediaObject.files[0].filename;
-      if (mediaObject.files[0].headers) {
-        media.headers = mediaObject.files[0].headers
-      }
+      let media = {}
+      media = assignMediaObject(mediaObject)
       this.settings[this.selectedMediaIndex]['media'] = media
       this.$emit('closeMediaModal')
     }

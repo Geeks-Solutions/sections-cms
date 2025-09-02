@@ -1041,6 +1041,10 @@ section[section-id] .simple-menu .menu-group-label {
   }
 }
 
+.simple-menu.main .ul-container-wrapper {
+  align-self: center;
+}
+
 .simple-menu.footer .ul-container-wrapper {
   align-content: start !important;
 }
@@ -1191,7 +1195,7 @@ section .product-details {
   padding-right: 1.75rem;
 }
 
-section[section-id] ul li::marker, section[section-id] ol li, section[section-id] ul li .ql-ui, section[section-id] ol li .ql-ui {
+section[section-id] ul li, section[section-id] ol li, section[section-id] ul li .ql-ui, section[section-id] ol li .ql-ui {
   color: var(--section-lists-color, var(--lists-color));
 }
 
@@ -1251,21 +1255,32 @@ section[section-id] .product-details .price-block .currency:hover {
 
 /* Category tabs styling */
 .category-tab {
-  background-color: #e5e7eb;
+  background: var(--section-categories-background-color, #e5e7eb);
   transition: all 0.2s;
+  color: var(--section-categories-text-color);
 }
-
 .category-tab:hover {
-  background-color: #d1d5db;
+  background: var(--section-hover-categories-background-color, #d1d5db);
+  color: var(--section-hover-categories-text-color);
 }
 
 section[section-id] .category-tab.active {
-  background-color: var(--section-primary-color, var(--primary-color));
-  color: #ffffff;
+  background: var(--section-categories-active-background-color, var(--section-primary-color, var(--primary-color)));
+  color: var(--section-categories-active-text-color, #ffffff);
+}
+
+section[section-id] .category-tab.active:hover {
+  background: var(--section-hover-categories-active-background-color, var(--section-primary-color, var(--primary-color)));
+  color: var(--section-hover-categories-active-text-color, #ffffff);
 }
 
 .service-packages .category-tab.active {
   color: #ffffff;
+}
+
+.sections-main .item-modal-content input {
+  padding-left: 0 !important;
+  height: 46px;
 }
 
 /* Category header styling */
@@ -1316,13 +1331,40 @@ section[section-id] .menu-item-service.featured {
   text-decoration: line-through;
 }
 
+.item-price {
+  color: var(--section-price-color);
+  font-size: var(--section-price-font-size);
+  font-weight: 500;
+}
+.item-price:hover {
+  color: var(--section-hover-price-color);
+  font-weight: 500;
+}
+
+.item-price-regular {
+  color: var(--section-price-color);
+  font-size: var(--section-price-font-size);
+  text-decoration: line-through;
+}
+.item-price-regular:hover {
+  color: var(--section-hover-price-color);
+}
+
 .item-price-discounted {
-  color: #dc2626;
+  color: var(--section-discounted-price-color, #dc2626);
+  font-size: var(--section-discounted-price-font-size, 16px);
   font-weight: 700;
+}
+.item-price-discounted:hover {
+  color: var(--section-hover-discounted-price-color, #dc2626);
 }
 
 .item-duration {
+  color: var(--section-duration-color);
   font-size: 0.875rem;
+}
+.item-duration:hover {
+  color: var(--section-hover-duration-color);
 }
 
 .item-description {
@@ -1353,12 +1395,20 @@ section[section-id] .badge-featured.badge-service {
 }
 
 .badge-discount {
+  color: var(--section-off-color);
   font-size: 0.75rem;
   font-weight: 500;
 }
+.badge-discount:hover {
+  color: var(--section-hover-off-color);
+}
 
 .badge-availability {
+  color: var(--section-limited-availability-color);
   font-size: 0.75rem;
+}
+.badge-availability:hover {
+  color: var(--section-hover-limited-availability-color);
 }
 
 /* Modal styling */
@@ -1383,12 +1433,14 @@ section[section-id] .badge-featured.badge-service {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(229, 231, 235, 0.5);
+  color: var(--section-close-icon-color);
+  background: var(--section-close-icon-background-color, rgba(229, 231, 235, 0.5));
   transition: background-color 0.2s;
 }
 
 .modal-close-button:hover {
-  background-color: rgba(229, 231, 235, 0.8);
+  color: var(--section-hover-close-icon-color);
+  background: var(--section-hover-close-icon-background-color, rgba(229, 231, 235, 0.8));
 }
 
 .modal-item-name {
@@ -1399,6 +1451,19 @@ section[section-id] .badge-featured.badge-service {
 .modal-item-price {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.restaurant-menu .modal-item-price {
+  color: var(--section-price-color);
+}
+.restaurant-menu .modal-item-price:hover {
+  color: var(--section-hover-price-color);
+}
+.service-packages .modal-item-price {
+  color: var(--section-discounted-price-color);
+}
+.service-packages .modal-item-price:hover {
+  color: var(--section-hover-discounted-price-color);
 }
 
 .modal-item-description {
@@ -1470,8 +1535,13 @@ section[section-id] .badge-featured.badge-service {
 }
 
 .cart-button {
-  background-color: white;
+  background: var(--section-cart-icon-background-color, white);
+  color: var(--section-cart-icon-color);
   transition: all 0.2s;
+}
+.cart-button:hover {
+  background: var(--section-hover-cart-icon-background-color, white);
+  color: var(--section-hover-cart-icon-color);
 }
 
 section[section-id] .cart-item-count {
@@ -1519,13 +1589,36 @@ section[section-id] .cart-item-count {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f1f1f1;
+  color: var(--section-close-icon-color);
+  background: var(--section-close-icon-background-color, #f1f1f1);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .cart-close-button:hover {
-  background-color: #e5e5e5;
+  color: var(--section-hover-close-icon-color);
+  background: var(--section-hover-close-icon-background-color, #e5e5e5);
+}
+
+.cart-qty-value, .item-qty-value {
+  color: var(--section-quantity-number-color);
+}
+.cart-qty-value:hover, .item-qty-value:hover {
+  color: var(--section-hover-quantity-number-color);
+}
+
+.qty-label {
+  color: var(--section-quantity-label-color);
+}
+.qty-label:hover {
+  color: var(--section-hover-quantity-label-color);
+}
+
+.special-instructions {
+  color: var(--section-special-instructions-color);
+}
+.special-instructions:hover {
+  color: var(--section-hover-special-instructions-color);
 }
 
 .cart-close-icon {
@@ -1662,8 +1755,12 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 }
 
 .cart-item-price {
+  color: var(--section-price-color);
   font-size: 1.05rem;
   font-weight: 600;
+}
+.cart-item-price:hover {
+  color: var(--section-hover-price-color);
 }
 
 .cart-discounted-price {
@@ -1673,14 +1770,21 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 }
 
 .cart-item-price-original {
+  color: var(--section-price-color);
   font-size: 0.875rem;
   text-decoration: line-through;
+}
+.cart-item-price-original:hover {
+  color: var(--section-hover-price-color);
 }
 
 .cart-item-price-discounted {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #ef4444;
+  color: var(--section-discounted-price-color, #ef4444);
+}
+.cart-item-price-discounted:hover {
+  color: var(--section-hover-discounted-price-color, #ef4444);
 }
 
 /* Notes */
@@ -1717,6 +1821,13 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 .cart-summary-value {
   font-size: 1rem;
   font-weight: 500;
+  color: var(--section-price-color);
+}
+.cart-subtotal-value:hover,
+.cart-summary-value:hover {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--section-hover-price-color);
 }
 
 .cart-total {
@@ -1734,6 +1845,10 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 .cart-total-value {
   font-size: 1.5rem;
   font-weight: 700;
+  color: var(--section-price-color) !important;
+}
+.cart-total-value:hover {
+  color: var(--section-hover-price-color) !important;
 }
 
 /* Checkout button */
@@ -1764,7 +1879,8 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 
 /* Social media links */
 .social-link {
-  background-color: #f3f4f6;
+  background: var(--section-social-network-icon-background-color, #f3f4f6);
+  color: var(--section-social-network-icon-color);
   transition: all 0.3s;
 }
 
@@ -1904,35 +2020,35 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
   }
 
   .social-link-instagram:hover {
-    background: linear-gradient(
+    background: var(--section-hover-social-network-icon-background-color, linear-gradient(
             45deg,
             #f09433 0%,
             #e6683c 25%,
             #dc2743 50%,
             #cc2366 75%,
             #bc1888 100%
-    );
-    color: white;
+    ));
+    color: var(--section-hover-social-network-icon-color, white);
   }
 
   .social-link-facebook:hover {
-    background-color: #4267b2;
-    color: white;
+    background: var(--section-hover-social-network-icon-background-color, #4267b2);
+    color: var(--section-hover-social-network-icon-color, white);
   }
 
   .social-link-tiktok:hover {
-    background-color: #000000;
-    color: white;
+    background: var(--section-hover-social-network-icon-background-color, #000000);
+    color: var(--section-hover-social-network-icon-color, white);
   }
 
   .social-link-twitter:hover {
-    background-color: #1da1f2;
-    color: white;
+    background: var(--section-hover-social-network-icon-background-color, #1da1f2);
+    color: var(--section-hover-social-network-icon-color, white);
   }
 
   .social-link-youtube:hover {
-    background-color: #ff0000;
-    color: white;
+    background: var(--section-hover-social-network-icon-background-color, #ff0000);
+    color: var(--section-hover-social-network-icon-color, white);
   }
 }
 
@@ -2113,7 +2229,6 @@ section[section-id] .restaurant-menu .featured {
     max-height: 200px !important; /* Adjust as needed */
   }
 }
-
 
 :root {
   --cookie-control-barBackground: #00131F;

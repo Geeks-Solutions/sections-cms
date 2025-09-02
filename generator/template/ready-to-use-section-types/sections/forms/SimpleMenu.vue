@@ -57,6 +57,15 @@
 
       <LazySectionsFormsFieldSets :array-data-pop="settings[0].menus" :fieldset-group="'menu-container'" :legend-label="$t('forms.menu')" @array-updated="(data) => updatedMenuContainerArr(data)" @remove-fieldset="(object, idx) => removeMenuContainer(idx)">
         <template #default="{ object: menuContainer, idx: menuIdx }">
+          <div class="flex flex-col items-start justify-start mt-8">
+            <label class="mr-4 font-medium">{{ $t("forms.menuLabel") }}</label>
+            <input
+              v-model="menuContainer.menuGroupLabel[selectedLang]"
+              type="text"
+              :placeholder="$t('forms.menuLabel')"
+              :class="sectionsStyle.input"
+            />
+          </div>
           <LazySectionsFormsFieldSets :array-data-pop="menuContainer.menu" :fieldset-group="'menu'" :legend-label="`${$t('forms.menu')} #${menuIdx + 1} - ${$t('forms.link')}`" class="mt-6" @array-updated="(data) => updatedArr(data, menuIdx)" @remove-fieldset="(object, idxItem) => removeMenuItem(menuIdx, idxItem)">
             <template #default="{ object, idx }">
               <div class="flex flex-col items-start justify-start mt-8">
@@ -157,7 +166,7 @@
 <i18n src="./Shared_i18n.json"></i18n>
 
 <script>
-import {sectionsStyle, scrollToFirstError} from "@/utils/constants";
+import { sectionsStyle, scrollToFirstError, assignMediaObject } from '@/utils/constants'
 import 'vue-select/dist/vue-select.css';
 
 export default {
@@ -211,6 +220,7 @@ export default {
           classes: '',
           menus: [
             {
+              menuGroupLabel: {},
               menuContainerClasses: '',
               menu: [
                 {
@@ -264,6 +274,14 @@ export default {
         if (!v[0].logoPage[locale]) {
           v[0].logoLink[locale] = ''
         }
+        v[0].menus.forEach(menuGroup => {
+          if (!menuGroup.menuGroupLabel) {
+            menuGroup.menuGroupLabel = {}
+          }
+          if (!menuGroup.menuGroupLabel[locale]) {
+            menuGroup.menuGroupLabel[locale] = ''
+          }
+        })
       })
       if (!v[0].menus) {
         v[0]['menus'] = []
@@ -276,20 +294,8 @@ export default {
       }
     },
     selectedMedia(mediaObject) {
-      const media = {
-        media_id: "",
-        url: "",
-        seo_tag: "",
-        filename: "",
-        headers: {}
-      };
-      media.media_id = mediaObject.id;
-      media.url = mediaObject.files[0].url;
-      media.seo_tag = mediaObject.seo_tag;
-      media.filename = mediaObject.files[0].filename;
-      if (mediaObject.files[0].headers) {
-        media.headers = mediaObject.files[0].headers
-      }
+      let media = {}
+      media = assignMediaObject(mediaObject)
       this.settings[0]['media'] = media
       this.$emit('closeMediaModal')
     }
@@ -297,6 +303,7 @@ export default {
   methods: {
     addMenuContainer() {
       const menuContainer = {
+        menuGroupLabel: {},
         menuContainerClasses: '',
         menu: [
           {

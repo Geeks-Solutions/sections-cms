@@ -29,10 +29,11 @@
         >
           <div class="relative w-full max-w-4xl max-h-screen overflow-visible shadow-xl preview-image-inner">
             <div class="relative flex justify-center items-center p-4 preview-image-wrapper-inner">
-              <NuxtImg
+              <GUniversalViewer
                 v-if="selectedImage && selectedImage.media && selectedImage.media.url"
                 :src="selectedImage.media.url"
                 :alt="selectedImage.media.seo_tag ? selectedImage.media.seo_tag : ''"
+                :type="selectedImage.media.metadata?.type || 'image'"
                 class="w-auto max-w-full max-h-[80vh] object-contain transition-transform duration-200"
                 :class="{'mobileHidden': selectedImage && selectedImage.mediaMobile && selectedImage.mediaMobile.url}"
                 :style="{ transform: `scale(${zoom})` }"
@@ -42,10 +43,11 @@
                 loading="lazy"
                 @wheel.prevent="handleZoom"
               />
-              <NuxtImg
+              <GUniversalViewer
                 v-if="selectedImage && selectedImage.mediaMobile && selectedImage.mediaMobile.url"
                 :src="selectedImage.mediaMobile.url"
                 :alt="selectedImage.mediaMobile.seo_tag ? selectedImage.mediaMobile.seo_tag : ''"
+                :type="selectedImage.mediaMobile.metadata?.type || 'image'"
                 class="w-auto max-w-full max-h-[80vh] object-contain transition-transform duration-200 md:hidden"
                 :style="{ transform: `scale(${zoom})` }"
                 width="300"

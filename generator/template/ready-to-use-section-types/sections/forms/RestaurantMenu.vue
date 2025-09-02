@@ -301,7 +301,7 @@
 <script setup>
 import { ref, reactive, computed, watch, nextTick, onMounted } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
-import { sectionsStyle, scrollToFirstError } from "@/utils/constants"
+import { sectionsStyle, scrollToFirstError, assignMediaObject } from '@/utils/constants'
 import 'vue-select/dist/vue-select.css'
 
 const { t: $t } = useI18n({ useScope: 'local' })
@@ -701,22 +701,8 @@ const validate = () => {
 watch(() => props.selectedMedia, (mediaObject) => {
   if (!mediaObject) return
 
-  const media = {
-    media_id: "",
-    url: "",
-    seo_tag: "",
-    filename: "",
-    headers: {}
-  }
-
-  media.media_id = mediaObject.id
-  media.url = mediaObject.files[0].url
-  media.seo_tag = mediaObject.seo_tag
-  media.filename = mediaObject.files[0].filename
-
-  if (mediaObject.files[0].headers) {
-    media.headers = mediaObject.files[0].headers
-  }
+  let media = {}
+  media = assignMediaObject(mediaObject)
 
   if (currentMediaType.value === 'logo') {
     settings.value[0].logo = media

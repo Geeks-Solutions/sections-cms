@@ -12,7 +12,10 @@
 
         <!-- Item image -->
         <div v-if="item && item.image && item.image.url" :class="isService ? 'h-64' : 'h-52'">
-          <NuxtImg :src="item.image.url" :alt="item.image.seo_tag || (item.name && item.name[lang])"
+          <GUniversalViewer
+            :src="item.image.url"
+            :alt="item.image.seo_tag || (item.name && item.name[lang])"
+            :type="item.image.metadata?.type || 'image'"
             class="modal-image w-full h-full object-cover rounded-t-lg" width="400" height="160" :modifiers="{
               width: 400,
               height: 160,
@@ -64,7 +67,7 @@
 
           <!-- Quantity control - Updated to match mockup -->
           <div class="flex items-center mb-2">
-            <label class="input-label mr-4">{{ isService ? $t('ServicePackages.quantity') :
+            <label class="input-label qty-label mr-4">{{ isService ? $t('ServicePackages.quantity') :
               $t('RestaurantMenu.quantity') }}:</label>
             <div class="custom-quantity-control flex items-center">
               <button @click="decrementQuantity" class="item-qty-minus flex items-center justify-center rounded-full">
@@ -80,7 +83,7 @@
 
           <!-- Special instructions - Updated styling -->
           <div class="mb-4">
-            <label class="input-label block mb-2">{{ isService ? $t('ServicePackages.specialRequests') :
+            <label class="input-label special-instructions block mb-2">{{ isService ? $t('ServicePackages.specialRequests') :
               $t('RestaurantMenu.specialInstructions') }}:</label>
             <textarea :value="notes" @input="$emit('update-notes', $event.target.value)"
               class="special-request-textarea p-4 border rounded-lg w-full"
