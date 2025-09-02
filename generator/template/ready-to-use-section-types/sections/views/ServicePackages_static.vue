@@ -8,7 +8,10 @@
     <div class="md:px-4">
       <!-- Business Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
-        <NuxtImg :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Business Logo'"
+        <GUniversalViewer
+          :src="settings.logo.url"
+          :alt="settings.logo.seo_tag || 'Business Logo'"
+          :type="settings.logo.metadata?.type || 'image'"
           class="h-24 object-contain mx-auto" width="96" height="96" preload fetchpriority="high" quality="80"
           format="webp" fit="contain" />
       </div>

@@ -8,8 +8,10 @@
     </div>
 
     <div v-if="settings.mediaPreview && settings.mediaPreview.url">
-      <NuxtImg
+      <GUniversalViewer
         :src="settings.mediaPreview.url"
+        :alt="settings.mediaPreview.seo_tag ? settings.mediaPreview.seo_tag : ''"
+        :type="settings.mediaPreview.metadata?.type || 'image'"
         class="w-full"
         :class="'h-full object-contain'"
         width="300"

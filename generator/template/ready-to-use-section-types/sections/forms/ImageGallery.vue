@@ -79,7 +79,7 @@
 <i18n src="./Shared_i18n.json"></i18n>
 
 <script>
-import {scrollToFirstError, sectionsStyle} from "@/utils/constants";
+import { assignMediaObject, scrollToFirstError, sectionsStyle } from '@/utils/constants'
 
 export default {
   name: 'InteractiveDisplay',
@@ -165,21 +165,10 @@ export default {
       this.siteLang = val
     },
     selectedMedia(mediaObject) {
-      const media = {
-        media_id: "",
-        url: "",
-        seo_tag: "",
-        filename: "",
-        headers: {}
-      };
-      media.media_id = mediaObject.id;
-      media.url = mediaObject.files[0].url;
-      media.seo_tag = mediaObject.seo_tag;
-      media.filename = mediaObject.files[0].filename;
-      if (mediaObject.files[0].headers) {
-        media.headers = mediaObject.files[0].headers
-      }
-      this.settings[0].gallery[this.selectedMediaIndex][this.selectedMediaKey] = { ...media, metadata: mediaObject.files[0].metadata }
+      let media = {}
+      console.log('mediaObject', mediaObject)
+      media = assignMediaObject(mediaObject)
+      this.settings[0].gallery[this.selectedMediaIndex][this.selectedMediaKey] = { ...media }
       const index = this.settings[0].medias.findIndex(m => m.media_id === media.media_id);
       if (index !== -1) {
         this.settings[0].medias[index] = media

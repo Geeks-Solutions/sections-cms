@@ -10,15 +10,16 @@
 	  </div>
 	  <div v-if="settings[0].imagePosition !== 'none'" class="w-full gap-4" :class="{'md:w-auto': !settings[0].videoLink}">
 		<div v-if="!settings[0].videoLink" :class="['flex h-[240px] md:h-[360px] md:row-span-2 md:mt-6 image-wrapper']">
-      <NuxtImg
+      <GUniversalViewer
         v-if="settings[0].media && settings[0].media.url"
         :src="settings[0].media.url"
         :alt="settings[0].media.seo_tag ? settings[0].media.seo_tag : ''"
+        :type="settings[0].media.metadata?.type || 'image'"
         class="w-full"
         :class="'h-full object-contain'"
         width="300"
-           height="300"
-           :placeholder="[300, 300, 75, 5]" format="webp"
+        height="300"
+        :placeholder="[300, 300, 75, 5]" format="webp"
         loading="lazy"
       />
 		</div>

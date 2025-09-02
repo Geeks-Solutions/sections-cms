@@ -11,7 +11,10 @@
 
         <!-- Item Image -->
         <div v-if="item.image && item.image.url" class="item-image-wrapper md:mr-4 mb-4 md:mb-0 flex-shrink-0">
-          <NuxtImg :src="item.image.url" :alt="item.image.seo_tag || item.name[lang]"
+          <GUniversalViewer
+            :src="item.image.url"
+            :alt="item.image.seo_tag || item.name[lang]"
+            :type="item.image.metadata?.type || 'image'"
             class="w-full md:w-20 h-auto md:h-20 max-h-40 object-cover rounded" width="80" height="80" preload
             fetchpriority="high" :modifiers="{
               width: 80,

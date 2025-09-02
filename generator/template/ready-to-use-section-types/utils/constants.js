@@ -107,7 +107,7 @@ export async function getSectionsPages(sectionHeader) {
                 headers: sectionHeader
             }
         )
-        if (pagesResponse && pagesResponse.data) {
+        if (pagesResponse && pagesResponse.data && pagesResponse.status.value && pagesResponse.status.value === "success") {
             return pagesResponse.data
         } else return []
     } catch {
@@ -244,3 +244,41 @@ export const importAsset = (path) => {
     return ''
   }
 };
+
+export const parseHtml = (html) => {
+  try {
+    let parsedHtml = ""
+    if (process.client) {
+      const doc = new DOMParser().parseFromString(html, 'text/html')
+      parsedHtml = doc.body.textContent || ''
+    } else {
+      // Simple fallback for SSR
+      parsedHtml = html.replace(/<[^>]*>?/gm, '').trim()
+    }
+    return parsedHtml
+  } catch {
+    return ''
+  }
+}
+
+export const assignMediaObject = (mediaObject) => {
+  const media = {
+    media_id: "",
+    url: "",
+    thumbnail_url: "",
+    seo_tag: "",
+    metadata: "",
+    filename: "",
+    headers: {}
+  }
+  media.media_id = mediaObject.id
+  media.url = mediaObject.files[0].url
+  media.thumbnail_url = mediaObject.files[0].thumbnail_url
+  media.seo_tag = mediaObject.seo_tag
+  media.filename = mediaObject.files[0].filename
+  if (mediaObject.files[0].headers) {
+    media.headers = mediaObject.files[0].headers
+  }
+  media.metadata = mediaObject.metadata
+  return media
+}
