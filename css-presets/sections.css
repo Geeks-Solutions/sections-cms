@@ -2230,6 +2230,26 @@ section[section-id] .restaurant-menu .featured {
   }
 }
 
+.linktree-section {
+  container-type: inline-size;
+  container-name: linktree-section;
+}
+
+section[section-id] .linktree-section {
+  background: var(--section-background-color, var(--background-color));
+}
+
+section[section-id] .linktree-section:hover {
+  background: var(--section-hover-background-color, var(--hover-background-color));
+}
+
+@container linktree-section (max-width: 1024px) {
+  .linktree-section .linktree-container .contact-info, .linktree-section .linktree-container .social-links {
+    width: 75%;
+  }
+}
+
+
 :root {
   --cookie-control-barBackground: #00131F;
   --cookie-control-barTextColor: #fff;
