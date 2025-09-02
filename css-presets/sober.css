@@ -1313,13 +1313,13 @@ section[section-id] .badge-featured.badge-service {
   align-items: center;
   justify-content: center;
   color: var(--section-close-icon-color);
-  background-color: var(--section-close-icon-background-color, rgba(229, 231, 235, 0.5));
+  background: var(--section-close-icon-background-color, rgba(229, 231, 235, 0.5));
   transition: background-color 0.2s;
 }
 
 .modal-close-button:hover {
   color: var(--section-hover-close-icon-color);
-  background-color: var(--section-hover-close-icon-background-color, rgba(229, 231, 235, 0.8));
+  background: var(--section-hover-close-icon-background-color, rgba(229, 231, 235, 0.8));
 }
 
 .modal-item-name {
@@ -1469,14 +1469,14 @@ section[section-id] .cart-item-count {
   align-items: center;
   justify-content: center;
   color: var(--section-close-icon-color);
-  background-color: var(--section-close-icon-background-color, #f1f1f1);
+  background: var(--section-close-icon-background-color, #f1f1f1);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .cart-close-button:hover {
   color: var(--section-hover-close-icon-color);
-  background-color: var(--section-hover-close-icon-background-color, #e5e5e5);
+  background: var(--section-hover-close-icon-background-color, #e5e5e5);
 }
 
 .cart-qty-value, .item-qty-value {
