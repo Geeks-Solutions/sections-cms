@@ -345,3 +345,7 @@ Standard props for view components:
 *   Component Naming: `PascalCase` for file names and registration.
 
 By following these guidelines, you'll help create high-quality, consistent, and maintainable sections for the project.
+
+### Section Theming
+
+* You can also contribute to section theming feature to create custom theme forms for your section following [this guide](./SECTION_THEME_CONTRIBUTION.md)

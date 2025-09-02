@@ -282,3 +282,17 @@ export const assignMediaObject = (mediaObject) => {
   media.metadata = mediaObject.metadata
   return media
 }
+
+export async function callDynamicFunction(filePath, fnName, ...args) {
+    try {
+        const builderHooksJavascript = importJs(filePath);
+        if (builderHooksJavascript && typeof builderHooksJavascript[fnName] === "function") {
+            return builderHooksJavascript[fnName](...args);
+        } else {
+            return null;
+        }
+    } catch {
+        return null
+    }
+}
+
