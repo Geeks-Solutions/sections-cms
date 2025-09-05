@@ -506,11 +506,11 @@ section[section-id] .outline-button-selector:hover {
   padding: 0 !important;
 }
 
-section[section-id].SimpleMenu .view-component:has(> .simple-menu.main) {
+section[section-id].SimpleMenu .view-component:has(> .simple-menu.main), section[section-id].creation-view-standard .simple-menu.main {
   background: var(--section-background-color, var(--background-color)) !important;
 }
 
-section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover {
+section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover, section[section-id].creation-view-standard .simple-menu.main:hover {
   background: var(--section-hover-background-color, var(--hover-background-color)) !important;
 }
 
