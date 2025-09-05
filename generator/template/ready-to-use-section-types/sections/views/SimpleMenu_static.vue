@@ -45,20 +45,23 @@
           <div class="mobile-menu-close-wrapper" @click="mobileMenu = false">
             <div class="mobile-menu-close"></div>
           </div>
-          <ul>
-            <li v-for="(menuItem, idx) in settings.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'logo': idx === 0}, {'lang': menuItem.languageMenu === true}]" @click="mobileMenu = !mobileMenu">
-              <global-link v-if="menuItem.languageMenu !== true"
-                           :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
-                           :lang="lang"
-                           :default-lang="defaultLang"
-                           :form-link-target="menuItem.linkTarget">
-                <p>
-                  {{ menuItem.label[lang] }}
-                </p>
-              </global-link>
-              <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" @lang-switched="langSwitched" />
-            </li>
-          </ul>
+          <div v-for="(menuContainer, menuIdx) in settings.menus" :key="`simple-menu-ul-container-${menuIdx}`" class="ul-container-wrapper content-center">
+            <div v-if="menuContainer.menuGroupLabel && menuContainer.menuGroupLabel[lang]" class="menu-group-label mobile">{{ menuContainer.menuGroupLabel[lang] }}</div>
+            <ul :class="[menuContainer.menuContainerClasses, `ul-container-${menuIdx}`]">
+              <li v-for="(menuItem, idx) in menuContainer.menu" :key="`simple-menu-${idx}`" :class="[menuItem.menuItemClasses, {'logo': idx === 0}, {'lang': menuItem.languageMenu === true}]" @click="mobileMenu = !mobileMenu">
+                <global-link v-if="menuItem.languageMenu !== true"
+                             :link="menuItem.page[lang] === 'other' ? menuItem.link : { ...menuItem.page, en: '/' + menuItem.page.en, fr: '/' + menuItem.page.fr }"
+                             :lang="lang"
+                             :default-lang="defaultLang"
+                             :form-link-target="menuItem.linkTarget">
+                  <p>
+                    {{ menuItem.label[lang] }}
+                  </p>
+                </global-link>
+                <global-lang-switcher v-else :label="menuItem.label && menuItem.label[lang] ? menuItem.label[lang] : ''" :lang="lang" :default-lang="defaultLang" @lang-switched="langSwitched" />
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </transition>
