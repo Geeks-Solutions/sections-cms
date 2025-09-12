@@ -329,7 +329,7 @@ section[section-id] .button-selector,
 .cookieControl__Bar .button-selector,
 .cookieControl__Modal .button-selector,
 section[section-id] .view-component button.quill-button-container,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect) {
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]) {
   font-size: 0.875rem; /* sm */
   text-align: center;
   border-width: 1px;
@@ -354,7 +354,7 @@ section[section-id] .button-selector:hover,
 .cookieControl__Modal .button-selector:hover,
 section[section-id] .view-component button.quill-button-container:hover,
 section[section-id] .view-component button:hover,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):hover {
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);
@@ -506,11 +506,11 @@ section[section-id] .outline-button-selector:hover {
   padding: 0 !important;
 }
 
-section[section-id].SimpleMenu .view-component:has(> .simple-menu.main), section[section-id].creation-view-standard .simple-menu.main {
+section[section-id], section[section-id].SimpleMenu .view-component:has(> .simple-menu.main), section[section-id].creation-view-standard .simple-menu.main {
   background: var(--section-background-color, var(--background-color)) !important;
 }
 
-section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover, section[section-id].creation-view-standard .simple-menu.main:hover {
+section[section-id]:hover, section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover, section[section-id].creation-view-standard .simple-menu.main:hover {
   background: var(--section-hover-background-color, var(--hover-background-color)) !important;
 }
 
@@ -2689,10 +2689,6 @@ section[section-id] .faq .section-wrapper #faq .arrow {
   .region42-wrapper .faq div.faq-row-wrapper .imageWrapper {
     width: 100% !important;
   }
-}
-
-.plans.plans-wrapper {
-  background: white;
 }
 
 .plans.plans-wrapper .plansBox:hover .separator, .plans.plans-wrapper .plansBox.mostPopular .separator {
