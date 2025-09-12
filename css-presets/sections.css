@@ -181,8 +181,8 @@
 :root {
   --primary-color: #03B1C7 !important;
   --secondary-color: #00131F !important;
-  --background-color: #00131F;
-  --hover-background-color: #00131F;
+  --background-color: unset;
+  --hover-background-color: unset;
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
   --base-font-family: "Ubuntu", sans-serif;
@@ -236,6 +236,10 @@ html .sections-main section[section-id] {
   html .views section[section-id] {
     font-size: var(--section-mobile-base-font-size, var(--mobile-base-font-size));
   }
+}
+
+html .GoogleMaps .gm-style {
+  font-family: var(--section-base-font-family, var(--base-font-family)) !important;
 }
 
 section[section-id] h1 {
@@ -318,12 +322,20 @@ section[section-id] .simple-cta h2 {
   color: var(--section-p-color, white);
 }
 
-section[section-id], section[section-id] .simple-cta {
-  background: var(--section-background-color, var(--background-color));
+section[section-id] {
+  background: var(--section-background-color, var(--background-color)) !important;
 }
 
-section[section-id]:hover, section[section-id] .simple-cta:hover {
-  background: var(--section-hover-background-color, var(--hover-background-color));
+section[section-id]:hover {
+  background: var(--section-hover-background-color, var(--hover-background-color)) !important;
+}
+
+section[section-id] .simple-cta {
+  background: var(--section-background-color, var(--background-color, #00131F));
+}
+
+section[section-id] .simple-cta:hover {
+  background: var(--section-hover-background-color, var(--hover-background-color, #00131F));
 }
 
 section .view-component button {
@@ -332,7 +344,7 @@ section .view-component button {
 
 section[section-id] .view-component button.quill-button-container,
 section[section-id] .whatsapp-checkout-button,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]),
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]),
 section[section-id] .simple-menu.main .sign-up {
   font-size: 14px !important;
   border: 1px solid var(--section-primary-button-border-color, var(--primary-button-border-color)) !important;
@@ -348,7 +360,7 @@ section[section-id] .simple-menu.main .sign-up a p {
 
 section[section-id] .view-component button.quill-button-container:hover,
 section[section-id] .whatsapp-checkout-button:hover,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):hover,
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]):hover,
 section[section-id] .simple-menu.main .sign-up:hover {
   border: 1px solid var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color)) !important;
   color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color)) !important;
@@ -2050,12 +2062,12 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 
 /* Restaurant menu specific styles */
 .restaurant-menu {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--section-base-font-family, var(--base-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)) !important;
 }
 
 /* Service packages specific styles */
 .service-packages {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--section-base-font-family, var(--base-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)) !important;
 }
 
 /* Business type specific styling */
