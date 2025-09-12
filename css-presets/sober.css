@@ -329,7 +329,7 @@ section[section-id] .button-selector,
 .cookieControl__Bar .button-selector,
 .cookieControl__Modal .button-selector,
 section[section-id] .view-component button.quill-button-container,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]) {
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]):not([title="Raccourcis clavier"]):not([title="Faites glisser Pegman sur la carte pour ouvrir Street View"]) {
   font-size: 0.875rem; /* sm */
   text-align: center;
   border-width: 1px;
@@ -354,7 +354,7 @@ section[section-id] .button-selector:hover,
 .cookieControl__Modal .button-selector:hover,
 section[section-id] .view-component button.quill-button-container:hover,
 section[section-id] .view-component button:hover,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]):hover {
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]):not([title="Raccourcis clavier"]):not([title="Faites glisser Pegman sur la carte pour ouvrir Street View"]):hover {
   --tw-ring-shadow: 0 0 #0000;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-shadow-color: rgb(12 102 238 / 0.5);

@@ -344,7 +344,7 @@ section .view-component button {
 
 section[section-id] .view-component button.quill-button-container,
 section[section-id] .whatsapp-checkout-button,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]),
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]):not([title="Raccourcis clavier"]):not([title="Faites glisser Pegman sur la carte pour ouvrir Street View"]),
 section[section-id] .simple-menu.main .sign-up {
   font-size: 14px !important;
   border: 1px solid var(--section-primary-button-border-color, var(--primary-button-border-color)) !important;
@@ -360,7 +360,7 @@ section[section-id] .simple-menu.main .sign-up a p {
 
 section[section-id] .view-component button.quill-button-container:hover,
 section[section-id] .whatsapp-checkout-button:hover,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]):hover,
+section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]):not([title="Raccourcis clavier"]):not([title="Faites glisser Pegman sur la carte pour ouvrir Street View"]):hover,
 section[section-id] .simple-menu.main .sign-up:hover {
   border: 1px solid var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color)) !important;
   color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color)) !important;
