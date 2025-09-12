@@ -557,9 +557,7 @@ export default {
       });
     },
     removePinBlock(idx) {
-      if (this.settings[0].pins.length > 1) {
-        this.settings[0].pins = this.settings[0].pins.filter((blc, i) => idx !== i);
-      }
+      this.settings[0].pins = this.settings[0].pins.filter((blc, i) => idx !== i);
     },
     validate() {
       if (Array.isArray(this.settings)) {
