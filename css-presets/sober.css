@@ -240,7 +240,7 @@ html {
   scroll-behavior: smooth;
 }
 html .sections-main section[section-id] {
-  font-family: var(--base-font-family) !important;
+  font-family: var(--section-base-font-family, var(--base-font-family)) !important;
 }
 html .sections-main section[section-id] {
   font-size: var(--section-base-font-size, var(--base-font-size));
