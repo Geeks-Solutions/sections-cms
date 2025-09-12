@@ -1,7 +1,7 @@
 <template>
   <div v-if="settings" class="plans plans-wrapper">
 
-	<div class="mt-18 pb-20 sectionsPack">
+	<div class="pb-20 sectionsPack">
 
 	  <div class="flex w-full ql-snow">
       <gWysiwygContent tag="div" class="w-full" :wrapper-classes="settings.titleClasses" :classes="`mt-14 md:w-full w-fit title`" :html-content="settings.title[lang]" />

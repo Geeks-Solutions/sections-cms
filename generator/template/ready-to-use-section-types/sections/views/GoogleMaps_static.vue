@@ -1,5 +1,5 @@
 <template>
-  <div v-if="settings" class="GoogleMaps mb-16 py-2.5 md:mx-auto max-w-7xl">
+  <div v-if="settings" class="GoogleMaps py-2.5 md:mx-auto max-w-7xl">
 
     <div class="flex flex-col w-full mx-auto pb-10 map-content">
 
@@ -340,10 +340,10 @@ export default {
           <p v-if="${addr.street && addr.street[this.lang]}">
             ${addr.street[this.lang]}
           </p>
-          <a v-if="${addr.phone}" href="tel:${addr.phone}" class="pt-4 underline md:cursor-pointer phone sections-cta-link">
+          <a href="tel:${addr.phone}" class="pt-4 underline md:cursor-pointer phone sections-cta-link" style="${addr.phone ? '' : 'display: none;'}">
             ${addr.phone}
           </a>
-          <a v-if="${addr.email}" href="mailto:${addr.email}" class="underline md:cursor-pointer email sections-cta-link">
+          <a href="mailto:${addr.email}" class="underline md:cursor-pointer email sections-cta-link" style="${addr.email ? '' : 'display: none;'}">
             ${addr.email}
           </a>
 <a href="http://maps.google.com/maps?saddr=&daddr=(${addr.lat}, ${addr.lng})" target="_blank" id="getDirections" class="directions-btn button-selector">${directLabel}</a>
