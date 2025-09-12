@@ -48,7 +48,7 @@
           <div>
 
             <div :id="`pin-name-${idx}`" class="flex flex-col items-start justify-start mt-8">
-              <label :class="sectionsStyle.fieldLabel">{{ $t("forms.name") + '*' }}</label>
+              <label :class="sectionsStyle.fieldLabel">{{ $t("forms.name") }}</label>
               <input
                 v-model="object.name[selectedLang]"
                 type="text"
@@ -60,7 +60,7 @@
             </div>
 
             <div :id="`pin-type-${idx}`" class="flex flex-col items-start justify-start mt-8">
-              <label :class="sectionsStyle.fieldLabel">{{ $t("forms.pinType") + '*' }}</label>
+              <label :class="sectionsStyle.fieldLabel">{{ $t("forms.pinType") }}</label>
               <input
                 v-model="object.type"
                 type="text"
@@ -73,7 +73,7 @@
             </div>
 
             <div :id="`pin-media-${idx}`" class="mt-8">
-              <LazyMediasUploadMedia :media-label="$t('forms.media') + '*'" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
+              <LazyMediasUploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="object.media && Object.keys(object.media).length > 0 ? [object.media] : []" @uploadContainerClicked="uploadMedia(idx)" @removeUploadedImage="mediaFieldIndex = idx; removeMedia(idx)" />
               <span v-show="errors[`pin-media-${idx}`] === true"
                     class="text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
             </div>
@@ -606,21 +606,6 @@ export default {
         }
         if (!address.country[this.defaultLang]) {
           this.errors[`address-country-${idx}`] = true;
-          valid = false;
-        }
-      })
-
-      this.settings[0].pins.forEach((pin, idx) => {
-        if (!pin.name[this.defaultLang]) {
-          this.errors[`pin-name-${idx}`] = true;
-          valid = false;
-        }
-        if (!pin.type) {
-          this.errors[`pin-type-${idx}`] = true;
-          valid = false;
-        }
-        if (!pin.media || !pin.media.url) {
-          this.errors[`pin-media-${idx}`] = true;
           valid = false;
         }
       })
