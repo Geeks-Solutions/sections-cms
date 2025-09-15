@@ -323,11 +323,11 @@ section[section-id] .simple-cta h2 {
 }
 
 section[section-id] {
-  background: var(--section-background-color, var(--background-color)) !important;
+  background: var(--zone-background-color, var(--section-background-color, var(--background-color))) !important;
 }
 
 section[section-id]:hover {
-  background: var(--section-hover-background-color, var(--hover-background-color)) !important;
+  background: var(--zone-hover-background-color, var(--section-hover-background-color, var(--hover-background-color))) !important;
 }
 
 section[section-id] .simple-cta {
