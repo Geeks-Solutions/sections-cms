@@ -511,11 +511,11 @@ section[section-id] .outline-button-selector:hover {
 }
 
 section[section-id] {
-  background: var(--section-background-color, var(--background-color)) !important;
+  background: var(--zone-background-color, var(--section-background-color, var(--background-color))) !important;
 }
 
 section[section-id]:hover {
-  background: var(--section-hover-background-color, var(--hover-background-color)) !important;
+  background: var(--zone-hover-background-color, var(--section-hover-background-color, var(--hover-background-color))) !important;
 }
 
 section[section-id].SimpleMenu .view-component:has(> .simple-menu.main), section[section-id].creation-view-standard .simple-menu.main {
