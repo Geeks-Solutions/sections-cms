@@ -518,6 +518,11 @@ section[section-id]:hover {
   background: var(--section-hover-background-color, var(--hover-background-color)) !important;
 }
 
+section[section-id] .view-component .wys-wrapper, section[section-id] .view-component:not(:has(.wys-wrapper)) {
+  place-items: var(--section-place-items);
+  place-self: var(--section-place-items);
+}
+
 section[zone-id] {
   background: var(--zone-background-color) !important;
 }
