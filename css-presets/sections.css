@@ -330,9 +330,16 @@ section[section-id]:hover {
   background: var(--section-hover-background-color, var(--hover-background-color)) !important;
 }
 
-section[section-id] .view-component .wys-wrapper, section[section-id] .view-component:not(:has(.wys-wrapper)) {
-  place-items: var(--section-place-items);
-  place-self: var(--section-place-items);
+section[section-id] {
+  justify-items: var(--section-place-items);
+}
+
+section[zone-id] section[section-id] .view-component .wys-wrapper {
+  width: unset;
+}
+
+section[section-id].TextImage .section-view, section[section-id].GoogleMaps .section-view {
+  width: 100%;
 }
 
 section[zone-id] {
