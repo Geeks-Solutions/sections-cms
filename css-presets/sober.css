@@ -511,11 +511,19 @@ section[section-id] .outline-button-selector:hover {
 }
 
 section[section-id] {
-  background: var(--zone-background-color, var(--section-background-color, var(--background-color))) !important;
+  background: var(--section-background-color, var(--background-color)) !important;
 }
 
 section[section-id]:hover {
-  background: var(--zone-hover-background-color, var(--section-hover-background-color, var(--hover-background-color))) !important;
+  background: var(--section-hover-background-color, var(--hover-background-color)) !important;
+}
+
+section[zone-id] {
+  background: var(--zone-background-color) !important;
+}
+
+section[zone-id]:hover {
+  background: var(--zone-hover-background-color) !important;
 }
 
 section[section-id].SimpleMenu .view-component:has(> .simple-menu.main), section[section-id].creation-view-standard .simple-menu.main {
@@ -2564,14 +2572,6 @@ section[section-id] .product-details .price-block .currency:hover {
 }
 .cookieControl__ControlButton:hover svg {
   color: var(--primary-color);
-}
-
-
-
-.region6-wrapper {
-  max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 @media (max-width: 640px) {
