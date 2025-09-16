@@ -803,6 +803,10 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
 
 .simple-menu.footer {
   width: 100%; /* w-full (default), md:w-full, lg:w-full */
+}
+
+.simple-menu.footer.bordered {
+  border: none;
   border: 1px solid #dddddd;
   border-right-width: 0;
   border-left-width: 0;
