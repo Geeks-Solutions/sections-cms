@@ -350,6 +350,31 @@ section[zone-id]:hover {
   background: var(--zone-hover-background-color) !important;
 }
 
+section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"] {
+  font-size: var(--section-list-social-icon-size, 30px);
+  background: var(--section-list-social-color, var(--primary-color)) !important;
+  margin: 0.5rem 1rem;
+}
+
+section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"]:hover {
+  background: var(--section-hover-list-social-color, var(--primary-color)) !important;
+}
+
+section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"] p {
+  color: transparent !important;
+}
+
+section[section-id].SimpleMenu .groups-wrapper {
+  display: flex;
+  flex-direction: var(--section-list-groups-flex-direction, column);
+  justify-content: center;
+}
+
+section[section-id].SimpleMenu .group-items {
+  display: flex;
+  flex-direction: var(--section-list-items-flex-direction, column);
+}
+
 section[section-id] .simple-cta {
   background: var(--section-background-color, var(--background-color, #00131F));
 }
