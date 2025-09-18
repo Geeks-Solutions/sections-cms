@@ -534,6 +534,9 @@ section[section-id].TextImage .section-view, section[section-id].GoogleMaps .sec
 
 section[zone-id] {
   background: var(--zone-background-color) !important;
+  align-items: var(--zone-vertical-alignment);
+  justify-content: var(--zone-horizontal-alignment);
+  padding: var(--zone-padding-top, 0) var(--zone-padding-right, 0) var(--zone-padding-bottom, 0) var(--zone-padding-left, 0);
 }
 
 section[zone-id]:hover {
@@ -1952,6 +1955,18 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
   }
   .modal-item-name {
     font-size: 1.2em;
+  }
+}
+
+@container extended-layout-preview (max-width: 768px) {
+  section[zone-id] {
+    padding: var(--zone-mobile-padding-top, 0) var(--zone-mobile-padding-right, 0) var(--zone-mobile-padding-bottom, 0) var(--zone-mobile-padding-left, 0);
+  }
+}
+
+@container top-right-left-bottom-layout-preview (max-width: 768px) {
+  section[zone-id] {
+    padding: var(--zone-mobile-padding-top, 0) var(--zone-mobile-padding-right, 0) var(--zone-mobile-padding-bottom, 0) var(--zone-mobile-padding-left, 0);
   }
 }
 

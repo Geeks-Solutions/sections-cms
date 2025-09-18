@@ -330,6 +330,8 @@ section[section-id]:hover {
   background: var(--section-hover-background-color, var(--hover-background-color)) !important;
 }
 
+
+
 section[section-id] {
   justify-items: var(--section-place-items);
 }
@@ -342,8 +344,13 @@ section[section-id].TextImage .section-view, section[section-id].GoogleMaps .sec
   width: 100%;
 }
 
+
+
 section[zone-id] {
   background: var(--zone-background-color) !important;
+  align-items: var(--zone-vertical-alignment);
+  justify-content: var(--zone-horizontal-alignment);
+  padding: var(--zone-padding-top, 0) var(--zone-padding-right, 0) var(--zone-padding-bottom, 0) var(--zone-padding-left, 0);
 }
 
 section[zone-id]:hover {
@@ -800,6 +807,18 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   }
   .articles .articles-wrapper .card-wrapper img {
     height: 300px;
+  }
+}
+
+@container extended-layout-preview (max-width: 768px) {
+  section[zone-id] {
+    padding: var(--zone-mobile-padding-top, 0) var(--zone-mobile-padding-right, 0) var(--zone-mobile-padding-bottom, 0) var(--zone-mobile-padding-left, 0);
+  }
+}
+
+@container top-right-left-bottom-layout-preview (max-width: 768px) {
+  section[zone-id] {
+    padding: var(--zone-mobile-padding-top, 0) var(--zone-mobile-padding-right, 0) var(--zone-mobile-padding-bottom, 0) var(--zone-mobile-padding-left, 0);
   }
 }
 
