@@ -518,6 +518,7 @@ section[section-id]:hover {
   background: var(--section-hover-background-color, var(--hover-background-color)) !important;
 }
 
+
 section[section-id] {
   justify-items: var(--section-place-items);
 }
@@ -530,6 +531,7 @@ section[section-id].TextImage .section-view, section[section-id].GoogleMaps .sec
   width: 100%;
 }
 
+
 section[zone-id] {
   background: var(--zone-background-color) !important;
 }
@@ -538,12 +540,37 @@ section[zone-id]:hover {
   background: var(--zone-hover-background-color) !important;
 }
 
+section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"] {
+  font-size: var(--section-list-social-icon-size, 30px);
+  background: var(--section-list-social-color, var(--primary-color)) !important;
+  margin: 0.5rem 1rem;
+}
+
+section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"]:hover {
+  background: var(--section-hover-list-social-color, var(--primary-color)) !important;
+}
+
+section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"] p {
+  color: transparent !important;
+}
+
 section[section-id].SimpleMenu .view-component:has(> .simple-menu.main), section[section-id].creation-view-standard .simple-menu.main {
   background: var(--section-background-color, var(--background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%))) !important;
 }
 
 section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover, section[section-id].creation-view-standard .simple-menu.main:hover {
   background: var(--section-hover-background-color, var(--hover-background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%))) !important;
+}
+
+section[section-id].SimpleMenu .groups-wrapper {
+  display: flex;
+  flex-direction: var(--section-list-groups-flex-direction, column);
+  justify-content: center;
+}
+
+section[section-id].SimpleMenu .group-items {
+  display: flex;
+  flex-direction: var(--section-list-items-flex-direction, column);
 }
 
 .simple-menu.main {
@@ -624,7 +651,7 @@ section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover, s
 @media (min-width: 1024px) { /* lg */
   .simple-menu.main ul {
     display: flex;
-    flex-direction: row; /* lg:flex-row */
+    flex-direction: row !important; /* lg:flex-row */
     justify-content: flex-start; /* lg:justify-end */
     align-items: center; /* lg:items-center */
     padding-bottom: 0; /* lg:pb-0 */
