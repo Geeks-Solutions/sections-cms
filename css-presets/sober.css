@@ -543,17 +543,33 @@ section[zone-id]:hover {
   background: var(--zone-hover-background-color) !important;
 }
 
-section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"] {
+section[section-id] .simple-menu {
+  display: flex;
+  align-items: center;
+  flex-direction: var(--section-list-logo-alignment);
+}
+
+section[section-id] .simple-menu .ul-container-wrapper {
+  border: var(--section-menu-group-border-thickness) var(--section-menu-group-border-type);
+  border-radius: var(--section-menu-group-border-radius);
+  border-color: var(--section-menu-group-border-color);
+}
+
+section[section-id] .simple-menu .ul-container-wrapper:hover {
+  border-color: var(--section-hover-menu-group-border-color);
+}
+
+section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"], section[section-id] .simple-menu .ul-container-wrapper [class*="i-ic-baseline-"] {
   font-size: var(--section-list-social-icon-size, 30px);
   background: var(--section-list-social-color, var(--primary-color)) !important;
   margin: 0.5rem 1rem;
 }
 
-section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"]:hover {
+section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"]:hover, section[section-id] .simple-menu .ul-container-wrapper [class*="i-ic-baseline-"]:hover {
   background: var(--section-hover-list-social-color, var(--primary-color)) !important;
 }
 
-section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"] p {
+section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"] p, section[section-id] .simple-menu .ul-container-wrapper [class*="i-ic-baseline-"] p {
   color: transparent !important;
 }
 
