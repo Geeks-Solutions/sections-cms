@@ -518,35 +518,62 @@ section[section-id]:hover {
   background: var(--section-hover-background-color, var(--hover-background-color)) !important;
 }
 
-
-section[section-id] {
-  justify-items: var(--section-place-items);
-}
-
-section[zone-id] section[section-id] .view-component .wys-wrapper {
-  width: unset;
-}
-
-section[section-id].TextImage .section-view, section[section-id].GoogleMaps .section-view {
-  width: 100%;
-}
-
-
 section[zone-id] {
   background: var(--zone-background-color) !important;
   align-items: var(--zone-vertical-alignment);
   justify-content: var(--zone-horizontal-alignment);
-  padding: var(--zone-padding-top, 0) var(--zone-padding-right, 0) var(--zone-padding-bottom, 0) var(--zone-padding-left, 0);
+  padding-top: var(--zone-padding-top, 0);
+  padding-right: var(--zone-padding-right, 0);
+  padding-bottom: var(--zone-padding-bottom, 0);
+  padding-left: var(--zone-padding-left, 0);
 }
 
 section[zone-id]:hover {
   background: var(--zone-hover-background-color) !important;
 }
 
+.region-element[region-id] {
+  align-self: var(--region-vertical-alignment);
+}
+
+.region-element[region-id] section[section-id] {
+  justify-self: var(--region-horizontal-alignment);
+}
+
+.top-wrapper.region-element[region-id],
+.bottom-wrapper.region-element[region-id],
+.region1-wrapper.region-element[region-id],
+.region3-wrapper.region-element[region-id],
+.region5-wrapper.region-element[region-id],
+.region7-wrapper.region-element[region-id] {
+  width: var(--region-width, 100%) !important;
+}
+
+.region21-wrapper.region-element[region-id],
+.region22-wrapper.region-element[region-id],
+.region34-wrapper.region-element[region-id],
+.region24-wrapper.region-element[region-id] {
+  width: var(--region-width, 25%) !important;
+}
+
+.left-wrapper.region-element[region-id],
+.right-wrapper.region-element[region-id],
+.region41-wrapper.region-element[region-id],
+.region42-wrapper.region-element[region-id] {
+  width: var(--region-width, 50%) !important;
+}
+
+.region61-wrapper.region-element[region-id],
+.region62-wrapper.region-element[region-id],
+.region63-wrapper.region-element[region-id] {
+  width: var(--region-width, 33.3333333333%) !important;
+}
+
 section[section-id] .simple-menu {
   display: flex;
   align-items: center;
   flex-direction: var(--section-list-logo-alignment);
+  overflow-y: hidden;
 }
 
 section[section-id] .simple-menu .ul-container-wrapper {
@@ -1976,13 +2003,25 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 
 @container extended-layout-preview (max-width: 768px) {
   section[zone-id] {
-    padding: var(--zone-mobile-padding-top, 0) var(--zone-mobile-padding-right, 0) var(--zone-mobile-padding-bottom, 0) var(--zone-mobile-padding-left, 0);
+    padding-top: var(--zone-mobile-padding-top, 0);
+    padding-right: var(--zone-mobile-padding-right, 0);
+    padding-bottom: var(--zone-mobile-padding-bottom, 0);
+    padding-left: var(--zone-mobile-padding-left, 0);
+  }
+  section[class*="-wrapper"].region-element[region-id] {
+    width: var(--region-mobile-width) !important;
   }
 }
 
 @container top-right-left-bottom-layout-preview (max-width: 768px) {
   section[zone-id] {
-    padding: var(--zone-mobile-padding-top, 0) var(--zone-mobile-padding-right, 0) var(--zone-mobile-padding-bottom, 0) var(--zone-mobile-padding-left, 0);
+    padding-top: var(--zone-mobile-padding-top, 0);
+    padding-right: var(--zone-mobile-padding-right, 0);
+    padding-bottom: var(--zone-mobile-padding-bottom, 0);
+    padding-left: var(--zone-mobile-padding-left, 0);
+  }
+  section[class*="-wrapper"].region-element[region-id] {
+    width: var(--region-mobile-width) !important;
   }
 }
 
