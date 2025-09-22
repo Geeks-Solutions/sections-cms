@@ -382,9 +382,13 @@ section[zone-id]:hover {
 
 section[section-id] .simple-menu {
   display: flex;
-  align-items: center;
-  flex-direction: var(--section-list-logo-alignment);
+  flex-direction: var(--section-list-logo-alignment, column);
   overflow-y: hidden;
+  gap: 5px;
+}
+
+section[section-id] .simple-menu.main .ul-container-wrapper {
+  align-self: stretch;
 }
 
 section[section-id] .simple-menu .ul-container-wrapper {
@@ -411,10 +415,14 @@ section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-
   color: transparent !important;
 }
 
+section[section-id].SimpleMenu .simple-menu.main .groups-wrapper {
+  justify-content: center;
+}
+
 section[section-id].SimpleMenu .groups-wrapper {
   display: flex;
   flex-direction: var(--section-list-groups-flex-direction, column);
-  justify-content: center;
+  gap: 10px;
 }
 
 section[section-id].SimpleMenu .group-items {
@@ -848,6 +856,18 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   .articles .articles-wrapper .card-wrapper img {
     height: 300px;
   }
+  section[section-id].SimpleMenu .simple-menu.main:has(.visibleMenu) .groups-wrapper {
+    display: none;
+  }
+  section[section-id].SimpleMenu .simple-menu.main .groups-wrapper:not(:has(.mobile-top)) {
+    display: none;
+  }
+  section[section-id].SimpleMenu .simple-menu.main .groups-wrapper:not(:has(.mobile-top)) .group-items:not(:has(.mobile-top)) {
+    display: none;
+  }
+  section[section-id].SimpleMenu .simple-menu.main .groups-wrapper .ul-container-wrapper:not(:has(.mobile-top)) {
+    display: none;
+  }
 }
 
 @container extended-layout-preview (max-width: 768px) {
@@ -859,6 +879,12 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   }
   section[class*="-wrapper"].region-element[region-id] {
     width: var(--region-mobile-width) !important;
+  }
+  section[section-id] .simple-menu .ul-container-wrapper {
+    padding: 5px;
+  }
+  section[section-id].SimpleMenu .simple-menu.footer .groups-wrapper {
+    flex-direction: column !important;
   }
 }
 
@@ -872,6 +898,12 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   section[class*="-wrapper"].region-element[region-id] {
     width: var(--region-mobile-width) !important;
   }
+  section[section-id] .simple-menu .ul-container-wrapper {
+    padding: 5px;
+  }
+  section[section-id].SimpleMenu .simple-menu.footer .groups-wrapper {
+    flex-direction: column !important;
+  }
 }
 
 .simple-menu.main {
@@ -881,7 +913,7 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   padding-right: 0.5rem !important;
   padding-left: 0.5rem !important;
   display: flex;
-  flex-direction: row;
+  flex-direction: var(--section-list-logo-alignment, row) !important;
   width: 100%;
   justify-content: space-between;
   background-position: bottom;
@@ -889,13 +921,18 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   background-repeat: repeat-x;
 }
 
+.simple-menu ul {
+  gap: 10px;
+  padding-right: 32px;
+}
+
 .simple-menu.main ul {
   display: flex;
+  flex-direction: var(--section-list-items-flex-direction, row) !important;
   justify-content: end;
   place-items: center;
   gap: 35px;
   padding-right: 32px;
-  padding-left: 0 !important;
   margin: unset;
   margin-left: auto !important;
 }
@@ -973,7 +1010,7 @@ section[section-id] .simple-menu .menu-group-label {
 }
 
 .simple-menu.main .mobile-menu-main-wrapper ul {
-  flex-direction: column;
+  flex-direction: column !important;
   background: white;
   align-items: start !important;
   padding-left: 0;
@@ -1012,9 +1049,13 @@ section[section-id] .simple-menu .menu-group-label {
 
 .simple-menu.main .mobile-menu-main-wrapper .mobile-menu-wrapper {
   overflow-y: scroll;
+  overflow-x: hidden;
   max-height: 100vh;
   height: 100%;
   background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .simple-menu.main .mobile-menu-main-wrapper .mobile-menu-close-wrapper {
@@ -1295,9 +1336,6 @@ section[section-id] .simple-menu .menu-group-label {
 }
 
 @media (max-width: 640px) {
-  .simple-menu.footer .global-link p {
-    padding-left: 0 !important;
-  }
   .simple-menu.footer ul {
     padding: 16px 0;
   }
@@ -1306,6 +1344,7 @@ section[section-id] .simple-menu .menu-group-label {
   }
   .simple-menu.footer {
     border-bottom-width: 0;
+    flex-direction: column !important;
   }
 }
 
