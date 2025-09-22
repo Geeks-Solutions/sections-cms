@@ -498,6 +498,7 @@ section[section-id] .outline-button-selector:hover {
   padding-top: 1.5rem; /* py-6 */
   padding-bottom: 1.5rem; /* py-6 */
   width: 12rem; /* w-24 */
+  min-width: 50px;
 }
 
 @media (min-width: 1280px) { /* xl */
@@ -588,6 +589,12 @@ section[section-id] .simple-menu:has(.visibleMenu) .groups-wrapper:not(:has(.mob
 
 section[section-id] .simple-menu.main .ul-container-wrapper {
   align-self: stretch;
+  width: max-content;
+}
+
+section[section-id] .simple-menu.main .mobile-menu-main-wrapper .ul-container-wrapper {
+  align-self: stretch;
+  width: 100%;
 }
 
 section[section-id] .simple-menu .ul-container-wrapper {
@@ -724,6 +731,7 @@ section[section-id].SimpleMenu .group-items {
     padding-bottom: 0; /* lg:pb-0 */
     gap: 0.5rem; /* xl:space-x-2 */
     margin-left: 2rem;
+    width: max-content;
   }
 }
 
@@ -869,6 +877,7 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin: 5px;
 }
 
 .simple-menu.main .mobile-menu-main-wrapper .mobile-menu-close-wrapper {
@@ -954,6 +963,7 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
 .simple-menu.footer img.logo {
   margin-top: 0.25rem; /* py-6 */
   width: 12rem;
+  min-width: 50px;
 }
 
 .simple-menu.footer ul.socials  {

@@ -396,6 +396,7 @@ section[section-id] .simple-menu .ul-container-wrapper {
   border: var(--section-menu-group-border-thickness) var(--section-menu-group-border-type);
   border-radius: var(--section-menu-group-border-radius);
   border-color: var(--section-menu-group-border-color);
+  width: max-content;
 }
 
 section[section-id] .simple-menu .ul-container-wrapper:hover {
@@ -834,7 +835,14 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   max-height: 58px;
   margin-left: 48px;
   max-width: 70%;
+  min-width: 50px;
   width: auto !important;
+}
+
+@container extended-layout-preview (max-width: 1200px) {
+  .simple-menu img.logo {
+    margin-left: 5px;
+  }
 }
 
 @supports (-webkit-hyphens: none) {
@@ -868,6 +876,12 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   }
   section[section-id].SimpleMenu .simple-menu.main .groups-wrapper .ul-container-wrapper:not(:has(.mobile-top)) {
     display: none;
+  }
+  section[section-id] .simple-menu .ul-container-wrapper {
+    width: 100%;
+  }
+  section[section-id].SimpleMenu .simple-menu.main ul.group-items:has(.mobile-top) {
+    flex-direction: row !important;
   }
 }
 
@@ -1018,7 +1032,6 @@ section[section-id] .simple-menu .menu-group-label {
 
 .simple-menu.main .mobile-menu-main-wrapper ul {
   flex-direction: column !important;
-  background: white;
   align-items: start !important;
   padding-left: 0;
   gap: 0;
