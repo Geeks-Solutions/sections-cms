@@ -878,7 +878,8 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
     display: none;
   }
   section[section-id] .simple-menu .ul-container-wrapper {
-    width: 100%;
+    margin: 5px auto;
+    width: 340px;
   }
   section[section-id].SimpleMenu .simple-menu.main ul.group-items:has(.mobile-top) {
     flex-direction: row !important;
