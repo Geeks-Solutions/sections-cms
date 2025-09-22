@@ -783,6 +783,9 @@ section[section-id].SimpleMenu .group-items {
   section[section-id].SimpleMenu .simple-menu.main .groups-wrapper .ul-container-wrapper:not(:has(.mobile-top)) {
     display: none;
   }
+  section[section-id].SimpleMenu .simple-menu.main ul.group-items:has(.mobile-top) {
+    flex-direction: row !important;
+  }
 }
 
 @media (min-width: 1024px) { /* lg */
@@ -2070,6 +2073,7 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
   }
   section[section-id].SimpleMenu .simple-menu.footer .groups-wrapper {
     flex-direction: column !important;
+    width: 100%;
   }
   .region-element[region-id] {
     align-self: unset;
