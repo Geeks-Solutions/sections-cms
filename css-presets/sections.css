@@ -878,6 +878,9 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
     display: none;
   }
   section[section-id] .simple-menu .ul-container-wrapper {
+    width: 100%;
+  }
+  section[section-id] .simple-menu .mobile-menu-main-wrapper .ul-container-wrapper {
     margin: 5px auto;
     width: 340px;
   }
