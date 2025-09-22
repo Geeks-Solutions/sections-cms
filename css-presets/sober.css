@@ -538,6 +538,7 @@ section[zone-id]:hover {
 
 .region-element[region-id] section[section-id] {
   justify-self: var(--region-horizontal-alignment);
+  width: 100%;
 }
 
 .top-wrapper.region-element[region-id],
@@ -2060,6 +2061,9 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
   section[section-id].SimpleMenu .simple-menu.footer .groups-wrapper {
     flex-direction: column !important;
   }
+  .region-element[region-id] {
+    align-self: unset;
+  }
 }
 
 @container top-right-left-bottom-layout-preview (max-width: 768px) {
@@ -2077,6 +2081,9 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
   }
   section[section-id].SimpleMenu .simple-menu.footer .groups-wrapper {
     flex-direction: column !important;
+  }
+  .region-element[region-id] {
+    align-self: unset;
   }
 }
 
