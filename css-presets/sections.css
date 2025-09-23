@@ -509,7 +509,7 @@ section[section-id] .simple-cta .button-selector:hover {
   border: solid lightgrey;
 }
 
-@media only screen and (max-width: 1200px) {
+@container sections-main only screen and (max-width: 1200px) {
   .simple-cta .button-selector {
     margin-right: 0;
     padding-right: 2vmin;
@@ -851,7 +851,7 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   }
 }
 
-@media screen and (max-width: 768px) {
+@container sections-main (max-width: 768px) {
   .simple-menu img.logo {
     width: auto !important;
   }
@@ -1105,6 +1105,24 @@ section[section-id] .simple-menu .menu-group-label {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.simple-menu.main .icon-wrapper {
+  display: flex !important;
+}
+@container sections-main (max-width: 1024px) {
+  .mobileHidden {
+    display: none !important;
+  }
+}
+
+@container sections-main (min-width: 1024px) {
+  .simple-menu.main .icon-wrapper {
+    display: none !important;
+  }
+  .simple-menu.main .groups-wrapper ul.group-items {
+    max-width: 800px;
+    flex-wrap: wrap;
+  }
+}
 
 .simple-menu.main .icon {
   width: 50px;
@@ -1112,7 +1130,7 @@ section[section-id] .simple-menu .menu-group-label {
   background-image: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2FScreenshot+2025-01-24+092651e4a7de1586c9472cb238492b5682470e.png") !important;
 }
 
-@media only screen and (max-width: 994px) {
+@container sections-main (max-width: 994px) {
   .simple-menu.main ul {
     padding: 0 !important;
     margin-left: unset !important;
@@ -1315,7 +1333,7 @@ section[section-id] .simple-menu .menu-group-label {
   padding: 0 32px;
 }
 
-@media (min-width: 640px) { /* sm */
+@container sections-main (min-width: 640px) { /* sm */
   .simple-menu.footer {
     width: 100%; /* sm:w-1/2 */
     flex-direction: row; /* sm:flex-row */
@@ -1339,7 +1357,7 @@ section[section-id] .simple-menu .menu-group-label {
   margin-bottom: 1.0rem;
 }
 
-@media (min-width: 640px) {
+@container sections-main (min-width: 640px) {
   .simple-menu.footer .logo-wrapper {
     display: none;
     margin-bottom: 0;
@@ -1350,7 +1368,7 @@ section[section-id] .simple-menu .menu-group-label {
   }
 }
 
-@media (min-width: 1280px) {
+@container sections-main (min-width: 1280px) {
   .simple-menu.footer .logo-wrapper {
     display: block;
   }
@@ -1359,7 +1377,7 @@ section[section-id] .simple-menu .menu-group-label {
   }
 }
 
-@media (max-width: 640px) {
+@container sections-main (max-width: 640px) {
   .simple-menu.footer ul {
     padding: 16px 0;
   }
@@ -2147,7 +2165,7 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 
 
 /* Mobile-specific social link styling */
-@media (max-width: 768px) {
+@container sections-main (max-width: 768px) {
   .social-link-instagram {
     background: linear-gradient(
             45deg,
@@ -2201,7 +2219,7 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 }
 
 /* Desktop hover effects for social links */
-@media (min-width: 769px) {
+@container sections-main (min-width: 769px) {
   .social-link:hover {
     transform: scale(1.1);
   }
@@ -2316,7 +2334,7 @@ section[section-id] .restaurant-menu .featured {
 }
 
 /* Media query for larger screens - two columns */
-@media (min-width: 1024px) {
+@container sections-main (min-width: 1024px) {
   .category-container-query .item-grid {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -2350,7 +2368,7 @@ section[section-id] .restaurant-menu .featured {
   flex-direction: column;
 }
 
-@media (min-width: 768px) {
+@container sections-main (min-width: 768px) {
   .category-container-query .menu-item {
     flex-direction: row;
   }
@@ -2388,7 +2406,7 @@ section[section-id] .restaurant-menu .featured {
 }
 
 /* Menu item image styles for mobile and small containers */
-@media (max-width: 767px) {
+@container sections-main (max-width: 767px) {
   .item-image-wrapper {
     width: 100%;
     margin-right: 0;
@@ -2831,7 +2849,7 @@ section[section-id] .restaurant-menu .featured {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-@media screen and (max-width: 768px) {
+@container sections-main (max-width: 768px) {
   .cookieControl__Bar {
     flex-direction: column;
     left: 0;
