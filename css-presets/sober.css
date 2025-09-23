@@ -258,8 +258,13 @@ html .sections-main section[section-id] {
     flex-direction: row !important;
   }
   .simple-menu.main {
-    flex-direction: row-reverse !important;
+    flex-direction: row !important;
     justify-content: space-between;
+  }
+  .simple-menu.main .groups-wrapper:has(.mobile-top) ul, .simple-menu.main .groups-wrapper:has(.mobile-top) ul li {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    margin-right: 6px;
   }
 }
 html .GoogleMaps .gm-style {
@@ -298,12 +303,12 @@ section[section-id] h6 {
   font-weight: 500; /* medium */
   color: var(--section-h6-color, var(--h6-color));
 }
-@media (min-width: 640px) { /* sm */
+@container sections-main (min-width: 640px) { /* sm */
   section h1 {
     font-size: 3em; /* 5xl */
   }
 }
-@media (min-width: 1280px) { /* xl */
+@container sections-main (min-width: 1280px) { /* xl */
   section h1 {
     font-size: 3.75em; /* 6xl */
   }
@@ -408,7 +413,7 @@ section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-ho
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-@media (min-width: 1280px) { /* xl */
+@container sections-main (min-width: 1280px) { /* xl */
   .whatsapp-checkout-button, .button-selector {
     padding-left: 2.5rem; /* px-10 */
     padding-right: 2.5rem; /* px-10 */
@@ -448,7 +453,7 @@ section[section-id] .outline-button-selector:hover {
   border-color: var(--section-hover-secondary-button-border-color, var(--hover-secondary-button-border-color));
 }
 
-@media (min-width: 1280px) { /* xl */
+@container sections-main (min-width: 1280px) { /* xl */
   .outline-button-selector {
     padding-left: 2.5rem; /* px-10 */
     padding-right: 2.5rem; /* px-10 */
@@ -513,7 +518,7 @@ section[section-id] .outline-button-selector:hover {
   min-width: 50px;
 }
 
-@media (min-width: 1280px) { /* xl */
+@container sections-main (min-width: 1280px) { /* xl */
   .simple-menu img.logo {
     width: 12rem; /* w-28 */
   }
@@ -674,9 +679,13 @@ section[section-id].SimpleMenu .group-items {
 }
 
 
-@media (min-width: 1024px) { /* lg */
+@container sections-main (min-width: 1024px) { /* lg */
   .simple-menu.main {
     align-items: center; /* lg:items-center */
+  }
+  .simple-menu.main .groups-wrapper ul.group-items {
+    max-width: 800px;
+    flex-wrap: wrap;
   }
 }
 
@@ -705,7 +714,7 @@ section[section-id].SimpleMenu .group-items {
   flex-wrap: wrap;
 }
 
-@media (max-width: 1024px) {
+@container sections-main (max-width: 1024px) {
   .simple-menu.main ul {
     display: none;
   }
@@ -734,7 +743,7 @@ section[section-id].SimpleMenu .group-items {
   }
 }
 
-@media (min-width: 1024px) { /* lg */
+@container sections-main (min-width: 1024px) { /* lg */
   .simple-menu.main ul {
     display: flex;
     flex-direction: var(--section-list-items-flex-direction, row) !important; /* lg:flex-row */
@@ -747,7 +756,7 @@ section[section-id].SimpleMenu .group-items {
   }
 }
 
-@media (min-width: 1280px) { /* xl */
+@container sections-main (min-width: 1280px) { /* xl */
   .simple-menu.main ul {
     gap: 0.5rem; /* space-x-2 for larger screens */
   }
@@ -771,7 +780,7 @@ section[section-id].SimpleMenu .group-items {
   margin-left: 0.125rem;
 }
 
-@media (max-width: 1024px) {
+@container sections-main (max-width: 1024px) {
   .simple-menu.main .mobile-menu-main-wrapper ul li.login {
     margin-top: 1.25rem;
     margin-left: 0;
@@ -794,7 +803,7 @@ section[section-id].SimpleMenu .group-items {
   }
 }
 
-@media (min-width: 1024px) { /* lg */
+@container sections-main (min-width: 1024px) { /* lg */
   .simple-menu.main ul li {
     margin-bottom: 0; /* lg:space-y-0 */
   }
@@ -818,7 +827,7 @@ section[section-id] .simple-menu ul li:not(.login):not(.sign-up) .global-link p 
   padding-left: 0.5rem !important;
 }
 
-@media (max-width: 1024px) {
+@container sections-main (max-width: 1024px) {
   .simple-menu.main .mobile-menu-main-wrapper ul li:not(.login):not(.sign-up) .global-link p {
     padding: 0.5rem 0rem;
   }
@@ -833,7 +842,7 @@ section[section-id] .simple-menu ul li:not(.login):not(.sign-up) .global-link p:
   box-shadow: 0 4px 6px rgba(12, 102, 238, 0.5); /* focus:shadow-outline */
 }
 
-@media (min-width: 1280px) { /* xl */
+@container sections-main (min-width: 1280px) { /* xl */
   .simple-menu.main ul li.sign-up .global-link p {
     padding-left: 2.5rem; /* px-10 */
     padding-right: 2.5rem; /* px-10 */
@@ -871,7 +880,7 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-@media (min-width: 1280px) { /* xl */
+@container sections-main (min-width: 1280px) { /* xl */
   .simple-menu.main ul li.login .global-link p {
     padding-left: 2.5rem; /* px-10 */
     padding-right: 2.5rem; /* px-10 */
@@ -913,6 +922,8 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
   min-width: 24px;
   width: 24px;
   height: 24px;
+  position: absolute;
+  right: 32px;
   background: url("https://s3.eu-west-3.amazonaws.com/geeks-apps/sections%2Fsvgviewer-png-output__1_b5c8f860cee540e68eb6e34ce895b192.png");
 }
 
@@ -920,7 +931,7 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
   display: flex !important;
 }
 
-@media (min-width: 1024px) {
+@container sections-main (min-width: 1024px) {
   .simple-menu.main .icon-wrapper {
     display: none !important;
   }
@@ -1025,7 +1036,7 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
   padding: 0 32px;
 }
 
-@media (min-width: 640px) { /* sm */
+@container sections-main (min-width: 640px) { /* sm */
   .simple-menu.footer {
     width: 100%; /* sm:w-1/2 */
     flex-direction: row; /* sm:flex-row */
@@ -1049,7 +1060,7 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
   margin-bottom: 1.0rem;
 }
 
-@media (min-width: 640px) {
+@container sections-main (min-width: 640px) {
   .simple-menu.footer .logo-wrapper {
     display: none;
     margin-bottom: 0;
@@ -1060,7 +1071,7 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
   }
 }
 
-@media (min-width: 1280px) {
+@container sections-main (min-width: 1280px) {
   .simple-menu.footer .logo-wrapper {
     display: block;
   }
@@ -1119,7 +1130,7 @@ section[section-id] .sections-cta-link:hover {
 
 
 
-@media (max-width: 640px) {
+@container sections-main (max-width: 640px) {
   p.ql-snow p a {
     display: flex;
     width: 100%;
@@ -1158,7 +1169,7 @@ section[section-id] .sections-cta-link:hover {
   justify-content: left !important;
 }
 
-@media (min-width: 640px) { /* sm breakpoint */
+@container sections-main (min-width: 640px) { /* sm breakpoint */
   .text-image > div:nth-child(1) {
     padding-left: 0.5rem; /* Equivalent to sm:px-2 */
     padding-right: 0.5rem; /* Equivalent to sm:px-2 */
@@ -1175,7 +1186,7 @@ section[section-id] .sections-cta-link:hover {
   gap: 2rem; /* Equivalent to space-y-8 */
 }
 
-@media (min-width: 640px) { /* sm breakpoint */
+@container sections-main (min-width: 640px) { /* sm breakpoint */
   .text-image > div:nth-child(1) > div:nth-child(1) {
     gap: 1.5rem; /* Equivalent to sm:space-y-6 */
     padding-left: 1.5rem; /* Equivalent to sm:px-6 */
@@ -1183,7 +1194,7 @@ section[section-id] .sections-cta-link:hover {
   }
 }
 
-@media (min-width: 1024px) { /* lg breakpoint */
+@container sections-main (min-width: 1024px) { /* lg breakpoint */
   .text-image > div:nth-child(1) > div:nth-child(1) {
     grid-column: span 6; /* Equivalent to lg:col-span-6 */
   }
@@ -1193,13 +1204,13 @@ section[section-id] .sections-cta-link:hover {
   grid-column: span 12; /* Equivalent to col-span-12 */
 }
 
-@media (min-width: 640px) { /* sm breakpoint */
+@container sections-main (min-width: 640px) { /* sm breakpoint */
   .text-image > div:nth-child(1) > div:nth-child(2) {
     display: block; /* Equivalent to sm:block */
   }
 }
 
-@media (min-width: 1024px) { /* lg breakpoint */
+@container sections-main (min-width: 1024px) { /* lg breakpoint */
   .text-image > div:nth-child(1) > div:nth-child(2) {
     grid-column: span 6; /* Equivalent to lg:col-span-6 */
   }
@@ -1222,7 +1233,7 @@ section[section-id] .sections-cta-link:hover {
   display: contents;
 }
 
-@media (max-width: 1023px) {
+@container sections-main (max-width: 1023px) {
   .text-image > div:nth-child(1) {
     display: flex !important;
     flex-direction: column-reverse !important;
@@ -2018,7 +2029,7 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 }
 
 /* Mobile-specific social link styling */
-@media (max-width: 768px) {
+@container sections-main (max-width: 768px) {
   .social-link-instagram {
     background: linear-gradient(
             45deg,
@@ -2115,7 +2126,7 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 }
 
 /* Desktop hover effects for social links */
-@media (min-width: 769px) {
+@container sections-main (min-width: 769px) {
   .social-link:hover {
     transform: scale(1.1);
   }
@@ -2226,7 +2237,7 @@ section[section-id] .restaurant-menu .featured {
 }
 
 /* Media query for larger screens - two columns */
-@media (min-width: 1024px) {
+@container sections-main (min-width: 1024px) {
   .category-container-query .item-grid {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -2260,7 +2271,7 @@ section[section-id] .restaurant-menu .featured {
   flex-direction: column;
 }
 
-@media (min-width: 768px) {
+@container sections-main (min-width: 768px) {
   .category-container-query .menu-item {
     flex-direction: row;
   }
@@ -2298,7 +2309,7 @@ section[section-id] .restaurant-menu .featured {
 }
 
 /* Menu item image styles for mobile and small containers */
-@media (max-width: 767px) {
+@container sections-main (max-width: 767px) {
   .item-image-wrapper {
     width: 100%;
     margin-right: 0;
@@ -2685,7 +2696,7 @@ section[section-id] .product-details .price-block .currency:hover {
 .cookieControl__BlockedIframe p, .cookieControl__BlockedIframe a {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
-@media screen and (max-width: 768px) {
+@container sections-main screen and (max-width: 768px) {
   .cookieControl__Bar {
     flex-direction: column;
     left: 0;
@@ -2776,7 +2787,7 @@ section[section-id] .product-details .price-block .currency:hover {
   color: var(--primary-color);
 }
 
-@media (max-width: 640px) {
+@container sections-main (max-width: 640px) {
   main .region6-wrapper {
     display: flex !important;;
     flex-direction: column !important;
@@ -2853,7 +2864,7 @@ section[section-id] .faq .section-wrapper #faq .arrow {
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
-@media (min-width: 768px) {
+@container sections-main (min-width: 768px) {
   .faq div.faq-row-wrapper {
     width: 100%;
     display: flex;
@@ -3111,7 +3122,7 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   gap: 8px;
 }
 
-@media (max-width: 1024px) {
+@container sections-main (max-width: 1024px) {
   .GoogleMaps .address-wrapper {
     display: flex !important;
     flex-direction: column;
@@ -3121,6 +3132,9 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   }
   .GoogleMaps .address-details .links {
     align-items: start;
+  }
+  .mobileHidden {
+    display: none !important;
   }
 }
 
