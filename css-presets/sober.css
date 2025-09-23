@@ -249,6 +249,18 @@ html .sections-main section[section-id] {
   html .views section[section-id] {
     font-size: var(--section-mobile-base-font-size, var(--mobile-base-font-size));
   }
+  section[section-id] .simple-menu.footer {
+    align-items: start;
+  }
+}
+@container sections-main (max-width: 1024px) {
+  section[section-id].SimpleMenu .simple-menu.main ul.group-items:has(.mobile-top) {
+    flex-direction: row !important;
+  }
+  .simple-menu.main {
+    flex-direction: row-reverse !important;
+    justify-content: space-between;
+  }
 }
 html .GoogleMaps .gm-style {
   font-family: var(--section-base-font-family, var(--base-font-family)) !important;
@@ -768,9 +780,6 @@ section[section-id].SimpleMenu .group-items {
     margin-top: 1.25rem;
     margin-left: 0.75rem;
   }
-  .simple-menu.main {
-    flex-direction: row !important;
-  }
   section[section-id].SimpleMenu .simple-menu.main:has(.visibleMenu) .groups-wrapper {
     display: none;
   }
@@ -782,9 +791,6 @@ section[section-id].SimpleMenu .group-items {
   }
   section[section-id].SimpleMenu .simple-menu.main .groups-wrapper .ul-container-wrapper:not(:has(.mobile-top)) {
     display: none;
-  }
-  section[section-id].SimpleMenu .simple-menu.main ul.group-items:has(.mobile-top) {
-    flex-direction: row !important;
   }
 }
 
@@ -904,11 +910,9 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
 }
 
 .simple-menu.main .icon-wrapper {
+  min-width: 24px;
   width: 24px;
   height: 24px;
-  position: absolute;
-  top: 44px;
-  right: 32px;
   background: url("https://s3.eu-west-3.amazonaws.com/geeks-apps/sections%2Fsvgviewer-png-output__1_b5c8f860cee540e68eb6e34ce895b192.png");
 }
 
@@ -2003,6 +2007,15 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
   border: none;
 }
 
+.item-image-wrapper img {
+  width: 12rem !important;
+  height: 12rem !important;
+  object-fit: contain !important;
+}
+
+.menu-item .item-content {
+  align-content: center;
+}
 
 /* Mobile-specific social link styling */
 @media (max-width: 768px) {
@@ -2295,7 +2308,7 @@ section[section-id] .restaurant-menu .featured {
   .item-image-wrapper img {
     width: 100% !important;
     height: auto !important;
-    max-height: 200px !important; /* Adjust this value as needed */
+    max-height: unset !important; /* Adjust this value as needed */
   }
 }
 
@@ -2310,7 +2323,7 @@ section[section-id] .restaurant-menu .featured {
   .item-image-wrapper img {
     width: 100% !important;
     height: auto !important;
-    max-height: 200px !important; /* Adjust as needed */
+    max-height: unset !important; /* Adjust as needed */
   }
 }
 
