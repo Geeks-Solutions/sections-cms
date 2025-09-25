@@ -596,7 +596,7 @@ section[section-id] .simple-menu {
   gap: 5px;
 }
 
-section[section-id].SimpleMenu .simple-menu:has(.visibleMenu) {
+section[section-id] .simple-menu:has(.visibleMenu) {
   flex-direction: column !important;
 }
 
@@ -715,9 +715,6 @@ section[section-id].SimpleMenu .group-items {
 }
 
 @container sections-main (max-width: 1024px) {
-  .simple-menu.main ul {
-    display: none;
-  }
   .simple-menu.main .mobile-menu-main-wrapper ul {
     display: flex;
   }
@@ -789,16 +786,19 @@ section[section-id].SimpleMenu .group-items {
     margin-top: 1.25rem;
     margin-left: 0.75rem;
   }
-  section[section-id].SimpleMenu .simple-menu.main:has(.visibleMenu) .groups-wrapper {
+  section[section-id] .simple-menu.main:has(.visibleMenu) .groups-wrapper {
     display: none;
   }
-  section[section-id].SimpleMenu .simple-menu.main .groups-wrapper:not(:has(.mobile-top)) {
+  section[section-id] .simple-menu.main .groups-wrapper:not(:has(.mobile-top)) {
     display: none;
   }
-  section[section-id].SimpleMenu .simple-menu.main .groups-wrapper:not(:has(.mobile-top)) .group-items:not(:has(.mobile-top)) {
+  section[section-id] .simple-menu.main .groups-wrapper:not(:has(.mobile-top)) .menu-group-label {
     display: none;
   }
-  section[section-id].SimpleMenu .simple-menu.main .groups-wrapper .ul-container-wrapper:not(:has(.mobile-top)) {
+  section[section-id] .simple-menu.main .groups-wrapper:not(:has(.mobile-top)) .group-items:not(:has(.mobile-top)) {
+    display: none;
+  }
+  section[section-id] .simple-menu.main .groups-wrapper .ul-container-wrapper:not(:has(.mobile-top)) {
     display: none;
   }
 }
@@ -1062,7 +1062,6 @@ section[section-id] .simple-menu.main ul li.login .global-link p {
 
 @container sections-main (min-width: 640px) {
   .simple-menu.footer .logo-wrapper {
-    display: none;
     margin-bottom: 0;
   }
   .simple-menu.footer ul {
