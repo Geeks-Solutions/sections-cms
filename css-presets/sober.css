@@ -715,6 +715,9 @@ section[section-id].SimpleMenu .group-items {
 }
 
 @container sections-main (max-width: 1024px) {
+  section[section-id].SimpleMenu .simple-menu.main:has(.visibleMenu) {
+    align-items: start;
+  }
   .simple-menu.main .mobile-menu-main-wrapper ul {
     display: flex;
   }
