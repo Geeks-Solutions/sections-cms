@@ -2698,7 +2698,7 @@ section[section-id] .product-details .price-block .currency:hover {
 .cookieControl__BlockedIframe p, .cookieControl__BlockedIframe a {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
-@container sections-main screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .cookieControl__Bar {
     flex-direction: column;
     left: 0;

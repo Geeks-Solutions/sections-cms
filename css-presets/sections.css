@@ -2849,7 +2849,7 @@ section[section-id] .restaurant-menu .featured {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-@container sections-main (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .cookieControl__Bar {
     flex-direction: column;
     left: 0;
