@@ -1,7 +1,7 @@
 <template>
-  <div class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
-    <div class="item-modal-content rounded-lg shadow-xl max-w-lg w-full" :class="{ 'max-w-2xl': isService }">
-      <div class="relative">
+  <div class="modal-overlay fixed inset-0 z-50 flex md:items-center justify-center p-4 overflow-y-scroll md:overflow-y-unset">
+    <div class="item-modal-content rounded-lg shadow-xl max-w-2xl w-full h-max" :class="{ 'max-w-2xl': isService }">
+      <div class="relative flex flex-col md:flex-row md:w-full">
         <!-- Close button -->
         <div @click="$emit('close')" class="modal-close-button absolute top-3 right-3 z-10 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -11,19 +11,19 @@
         </div>
 
         <!-- Item image -->
-        <div v-if="item && item.image && item.image.url" :class="isService ? 'h-64' : 'h-52'">
+        <div v-if="item && item.image && item.image.url" class="md:w-1/2" :class="isService ? 'md:h-unset' : 'md:h-unset'">
           <GUniversalViewer
             :src="item.image.url"
             :alt="item.image.seo_tag || (item.name && item.name[lang])"
             :type="item.image.metadata?.type || 'image'"
-            class="modal-image w-full h-full object-cover rounded-t-lg" width="400" height="160" :modifiers="{
+            class="modal-image w-full h-full object-cover rounded-t-lg md:rounded-t-none md:rounded-bl-lg md:rounded-tl-lg" width="400" height="160" :modifiers="{
               width: 400,
               height: 160,
               fit: 'cover'
             }" />
         </div>
 
-        <div class="p-6">
+        <div class="md:w-1/2 p-6">
           <!-- Item header -->
           <div class="flex flex-col justify-between items-start mb-2">
             <h3 class="modal-item-name">{{ item.name[lang] }}</h3>
