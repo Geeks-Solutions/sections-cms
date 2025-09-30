@@ -187,7 +187,7 @@
   --mobile-base-font-size: 16px;
   --base-font-family: "Ubuntu", sans-serif;
   --h1-color: var(--primary-color);
-  --h2-color: var(--secondary-color);
+  --h2-color: unset;
   --h3-color: var(--secondary-color);
   --h4-color: var(--secondary-color);
   --h5-color: var(--secondary-color);
@@ -249,7 +249,7 @@ section[section-id] h1 {
 }
 
 section[section-id] h2 {
-  color: var(--section-h2-color, var(--h2-color));
+  color: var(--section-h2-color, var(--h2-color, --secondary-color));
   font-size: 24px;
 }
 
@@ -314,7 +314,7 @@ section[section-id] .ql-snow article.ql-editor a:not(.ql-a-button):hover {
 
 section[section-id] .simple-cta h2 {
   font-size: 24px;
-  color: var(--section-h2-color, white);
+  color: var(--section-h2-color, var(--h2-color, white));
 }
 
 .simple-cta p {
@@ -886,6 +886,15 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   }
   section[section-id].SimpleMenu .simple-menu.main ul.group-items:has(.mobile-top) {
     flex-direction: row !important;
+  }
+  section[section-id].SimpleMenu .simple-menu.footer .groups-wrapper {
+    flex-direction: column !important;
+  }
+  section[section-id].SimpleMenu .simple-menu.footer .group-items {
+    flex-direction: column !important;
+  }
+  section[section-id].SimpleMenu .simple-menu.footer .menu-group-label {
+    margin-left: 0;
   }
 }
 
