@@ -242,6 +242,13 @@ html .GoogleMaps .gm-style {
   font-family: var(--section-base-font-family, var(--base-font-family)) !important;
 }
 
+main.sections-main {
+  background: var(--background-color);
+}
+main.sections-main:hover {
+  background: var(--hover-background-color, var(--background-color));
+}
+
 section[section-id] h1 {
   font-size: 36px;
   color: var(--section-h1-color, var(--h1-color));
@@ -323,11 +330,11 @@ section[section-id] .simple-cta h2 {
 }
 
 section[section-id] {
-  background: var(--section-background-color, var(--background-color)) !important;
+  background: var(--section-background-color) !important;
 }
 
 section[section-id]:hover {
-  background: var(--section-hover-background-color, var(--hover-background-color)) !important;
+  background: var(--section-hover-background-color) !important;
 }
 
 section[zone-id] {
@@ -433,11 +440,11 @@ section[section-id].SimpleMenu .group-items {
 }
 
 section[section-id] .simple-cta {
-  background: var(--section-background-color, var(--background-color, #00131F));
+  background: var(--section-background-color, #00131F);
 }
 
 section[section-id] .simple-cta:hover {
-  background: var(--section-hover-background-color, var(--hover-background-color, #00131F));
+  background: var(--section-hover-background-color, #00131F);
 }
 
 section .view-component button {
