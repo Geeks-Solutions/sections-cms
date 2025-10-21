@@ -276,6 +276,9 @@ main.sections-main {
 main.sections-main:hover {
   background: var(--hover-background-color, var(--background-color));
 }
+main.sections-main .sections-config {
+  align-content: var(--vertical-align-content);
+}
 section[section-id] h1 {
   font-size: 2.5em;
   color: var(--section-h1-color, var(--h1-color));
