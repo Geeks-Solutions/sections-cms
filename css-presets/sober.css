@@ -270,6 +270,15 @@ html .sections-main section[section-id] {
 html .GoogleMaps .gm-style {
   font-family: var(--section-base-font-family, var(--base-font-family)) !important;
 }
+main.sections-main {
+  background: var(--background-color);
+}
+main.sections-main:hover {
+  background: var(--hover-background-color, var(--background-color));
+}
+main.sections-main .sections-config {
+  align-content: var(--vertical-align-content);
+}
 section[section-id] h1 {
   font-size: 2.5em;
   color: var(--section-h1-color, var(--h1-color));
@@ -529,11 +538,11 @@ section[section-id] .outline-button-selector:hover {
 }
 
 section[section-id] {
-  background: var(--section-background-color, var(--background-color)) !important;
+  background: var(--section-background-color) !important;
 }
 
 section[section-id]:hover {
-  background: var(--section-hover-background-color, var(--hover-background-color)) !important;
+  background: var(--section-hover-background-color) !important;
 }
 
 section[zone-id] {
@@ -639,11 +648,11 @@ section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-
 }
 
 section[section-id].SimpleMenu .view-component:has(> .simple-menu.main), section[section-id].creation-view-standard .simple-menu.main {
-  background: var(--section-background-color, var(--background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%))) !important;
+  background: var(--section-background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%)) !important;
 }
 
 section[section-id].SimpleMenu .view-component:has(> .simple-menu.main):hover, section[section-id].creation-view-standard .simple-menu.main:hover {
-  background: var(--section-hover-background-color, var(--hover-background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%))) !important;
+  background: var(--section-hover-background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%)) !important;
 }
 
 section[section-id].SimpleMenu .simple-menu.main .groups-wrapper {
@@ -2341,11 +2350,11 @@ section[section-id] .restaurant-menu .featured {
 }
 
 section[section-id] .simple-cta {
-  background: var(--section-background-color, var(--background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%)));
+  background: var(--section-background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%));
 }
 
 section[section-id] .simple-cta:hover {
-  background: var(--section-hover-background-color, var(--hover-background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%)));
+  background: var(--section-hover-background-color, linear-gradient(169.4deg,rgba(57,132,244,.1) -6.01%,rgba(12,211,255,.1) 36.87%,rgba(47,124,240,.1) 78.04%,rgba(14,101,232,.1) 103.77%));
 }
 
 section[section-id] ul li, section[section-id] ol li, section[section-id] ul li .ql-ui, section[section-id] ol li .ql-ui {
