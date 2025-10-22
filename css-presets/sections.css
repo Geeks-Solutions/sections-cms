@@ -248,7 +248,7 @@ main.sections-main {
 main.sections-main:hover {
   background: var(--hover-background-color, var(--background-color));
 }
-main.sections-main .sections-config {
+main.sections-main .views-content-wrapper {
   align-content: var(--vertical-align-content);
 }
 
