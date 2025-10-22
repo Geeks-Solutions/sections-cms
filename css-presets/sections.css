@@ -306,7 +306,7 @@ section ol {
 
 section[section-id] .wys-wrapper .ql-snow a:not(.ql-a-button),
 section[section-id] .ql-snow article.ql-editor a:not(.ql-a-button) {
-  color: var(--section-link-text-color, var(--link-text-color));
+  color: var(--section-link-text-color, var(--link-text-color)) !important;
   border-color: var(--section-link-border-color, var(--link-border-color));
   background: var(--section-link-background-color, var(--link-background-color));
   font-size: 14px;
