@@ -6,8 +6,8 @@ module.exports = [
         type: 'list',
         message: 'What version of sections would you like to install on your project:',
         choices: [
-            { name: 'Nuxt version (with SSR support)', value: 'nuxt' },
-            { name: 'Vue version', value: 'vue' },
+            { name: 'NuxtJS version (with SSR support)', value: 'nuxt' },
+            { name: 'VueJS version', value: 'vue' },
         ],
     },
     {

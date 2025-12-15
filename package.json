@@ -1,7 +1,7 @@
 {
   "name": "@geeks.solutions/vue-cli-plugin-sections",
-  "version": "1.0.3",
-  "description": "vue-cli plugin to add vue-sections",
+  "version": "1.0.4",
+  "description": "vue-cli plugin to setup nuxt-sections and install sections to your project",
   "main": "index.js",
   "types": "./types.d.ts",
   "scripts": {
@@ -10,13 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Geeks-Solutions/vue-cli-plugin-sections"
+    "url": "https://github.com/Geeks-Solutions/sections-cms"
   },
   "keywords": [
     "vue",
     "vue-cli",
     "geeks-solutions",
     "vue-sections",
+    "nux-sections",
     "sections"
   ],
   "author": "Geeks Solutions info@geeks.solutions (https://www.geeks.solutions)",
