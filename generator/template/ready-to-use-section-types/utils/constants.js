@@ -8,8 +8,13 @@ export const BLOGS_SECTION_PAGE_PATH = '/blogs'
 export function getTranslation(settings, lang, primaryKey, frKey) {
   if (settings[lang]) {
     if (lang === 'fr') {
-      return settings[lang][primaryKey] === '' ? settings[frKey] : settings[lang][primaryKey]
-    } else return settings[lang][primaryKey] === '' ? settings[primaryKey] : settings[lang][primaryKey]
+      return settings[lang][primaryKey] === ''
+        ? settings[frKey]
+        : settings[lang][primaryKey]
+    } else
+      return settings[lang][primaryKey] === ''
+        ? settings[primaryKey]
+        : settings[lang][primaryKey]
   } else return lang === 'fr' ? settings[frKey] : settings[primaryKey]
 }
 
@@ -17,21 +22,39 @@ export function getArray(settings, lang, primaryKey, frKey) {
   if (settings[lang]) {
     if (lang === 'fr') {
       if (settings[lang][primaryKey] != null) {
-        return settings[lang][primaryKey] === '' ? settings[frKey] === '' ? [] : settings[frKey].split('-') : settings[lang][primaryKey].split('-')
+        return settings[lang][primaryKey] === ''
+          ? settings[frKey] === ''
+            ? []
+            : settings[frKey].split('-')
+          : settings[lang][primaryKey].split('-')
       }
-    } else return settings[lang][primaryKey] === '' ? settings[primaryKey] === '' ? [] : settings[primaryKey].split('-') : settings[lang][primaryKey].split('-')
-  } else return lang === 'fr' ? (settings[frKey] && settings[frKey] !== '') ? settings[frKey].split('-') : [] : (settings[primaryKey] && settings[primaryKey] !== '') ? settings[primaryKey].split('-') : []
+    } else
+      return settings[lang][primaryKey] === ''
+        ? settings[primaryKey] === ''
+          ? []
+          : settings[primaryKey].split('-')
+        : settings[lang][primaryKey].split('-')
+  } else
+    return lang === 'fr'
+      ? settings[frKey] && settings[frKey] !== ''
+        ? settings[frKey].split('-')
+        : []
+      : settings[primaryKey] && settings[primaryKey] !== ''
+        ? settings[primaryKey].split('-')
+        : []
 }
 
 export function getFormsKeysTranslation(val) {
   if (val.en) {
     for (let i = 0; i < Object.keys(val.en).length; i++) {
-      if (val.en[Object.keys(val.en)[i]] === '') val.en[Object.keys(val.en)[i]] = val[Object.keys(val.en)[i]]
+      if (val.en[Object.keys(val.en)[i]] === '')
+        val.en[Object.keys(val.en)[i]] = val[Object.keys(val.en)[i]]
     }
   }
   if (val.fr) {
     for (let i = 0; i < Object.keys(val.fr).length; i++) {
-      if (val.fr[Object.keys(val.fr)[i]] === '') val.fr[Object.keys(val.fr)[i]] = val[Object.keys(val.fr)[i] + '_fr']
+      if (val.fr[Object.keys(val.fr)[i]] === '')
+        val.fr[Object.keys(val.fr)[i]] = val[Object.keys(val.fr)[i] + '_fr']
     }
   }
 }
@@ -43,18 +66,29 @@ export function extractQsValue(key, path, ctTitles = false) {
     finalPath = path
   } else {
     const route = useRoute()
-    finalPath = route.path;
+    finalPath = route.path
   }
-  if (finalPath && finalPath.includes('categories_titles') && ctTitles === true) {
-    return decodeURIComponent(finalPath.substring(finalPath.indexOf('categories_titles[]=') + 20, finalPath.length))
+  if (
+    finalPath &&
+    finalPath.includes('categories_titles') &&
+    ctTitles === true
+  ) {
+    return decodeURIComponent(
+      finalPath.substring(
+        finalPath.indexOf('categories_titles[]=') + 20,
+        finalPath.length,
+      ),
+    )
   } else if (finalPath && finalPath.includes(key)) {
-    return decodeURIComponent(finalPath.match(new RegExp(`${key}=([^/]+)`))?.[1])
+    return decodeURIComponent(
+      finalPath.match(new RegExp(`${key}=([^/]+)`))?.[1],
+    )
   } else return ''
 }
 
 export function parseTime(timestamp) {
-  const timestampInMs = timestamp * 1000;
-  const date = new Date(timestampInMs);
+  const timestampInMs = timestamp * 1000
+  const date = new Date(timestampInMs)
   return date.toLocaleDateString('en-GB', {
     day: '2-digit',
     month: 'short',
@@ -65,30 +99,35 @@ export function parseTime(timestamp) {
 export function copyText(text) {
   try {
     navigator.clipboard.writeText(text)
-  } catch {
-  }
+  } catch {}
 }
 
 // Function to update the query string value of a specific key
 export function updateQueryStringValue(path, params, autoRedirect = true) {
   try {
-    let newPath = decodeURIComponent(path);
-    Object.keys(params).forEach(key => {
-      const newValue = params[key];
-      const regex = new RegExp(`(/${key}=)[^/]*`);
+    let newPath = decodeURIComponent(path)
+    Object.keys(params).forEach((key) => {
+      const newValue = params[key]
+      const regex = new RegExp(`(/${key}=)[^/]*`)
       if (newValue === null) {
-        newPath = newPath.replace(regex, ``);
+        newPath = newPath.replace(regex, ``)
       } else if (newPath.match(regex)) {
-        newPath = newPath.replace(regex, `/${key}=${newValue}`);
+        newPath = newPath.replace(regex, `/${key}=${newValue}`)
       } else if (newPath.includes('categories_titles')) {
-        newPath = newPath.replace(newPath.substring(newPath.indexOf('categories_titles'), newPath.length), `${key}=${newValue}`);
+        newPath = newPath.replace(
+          newPath.substring(
+            newPath.indexOf('categories_titles'),
+            newPath.length,
+          ),
+          `${key}=${newValue}`,
+        )
       } else {
-        newPath += `/${key}=${newValue}`;
+        newPath += `/${key}=${newValue}`
       }
-    });
-    window.history.replaceState(null, '', newPath);
+    })
+    window.history.replaceState(null, '', newPath)
     if (autoRedirect && autoRedirect === true) {
-      const router = useRouter();
+      const router = useRouter()
       router.push(newPath)
     }
     return newPath
@@ -98,16 +137,21 @@ export function updateQueryStringValue(path, params, autoRedirect = true) {
 }
 
 export async function getSectionsPages(sectionHeader) {
-  const app = useNuxtApp();
+  const app = useNuxtApp()
   try {
     const pagesResponse = await useFetch(
       `${app.$sections.serverUrl}/project/${app.$sections.projectId}/pages`,
       {
         method: 'GET',
-        headers: sectionHeader
-      }
+        headers: sectionHeader,
+      },
     )
-    if (pagesResponse && pagesResponse.data && pagesResponse.status.value && pagesResponse.status.value === "success") {
+    if (
+      pagesResponse &&
+      pagesResponse.data &&
+      pagesResponse.status.value &&
+      pagesResponse.status.value === 'success'
+    ) {
       return pagesResponse.data
     } else return []
   } catch {
@@ -118,26 +162,31 @@ export async function getSectionsPages(sectionHeader) {
 export function scrollToFirstError(errors) {
   for (const key of Object.keys(errors)) {
     if (errors[key] && !Array.isArray(errors[key])) {
-      const targetElement = document.getElementById(key);
+      const targetElement = document.getElementById(key)
       if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "smooth" });
+        targetElement.scrollIntoView({ behavior: 'smooth' })
       }
-      break;
+      break
     }
   }
 }
 
 export const sectionsStyle = {
-  input: 'py-4 pl-6 border border-FieldGray rounded-xl h-[48px] w-full focus:outline-none',
-  textarea: 'py-4 pl-6 border border-FieldGray rounded-xl w-full focus:outline-none resize-none h-32',
+  input:
+    'py-4 pl-6 border border-FieldGray rounded-xl h-[48px] w-full focus:outline-none',
+  textarea:
+    'py-4 pl-6 border border-FieldGray rounded-xl w-full focus:outline-none resize-none h-32',
   fieldLabel: 'font-bold',
   wysiwygHtml: 'ql-editor ql-snow h-auto',
   pageSectionStyle: 'md:mx-auto max-w-7xl md:px-2 sm:px-6 lg:px-8 mx-4',
-  sectionsPagePad: 'md:mx-auto max-w-[1440px] md:pl-[15px] md:pr-[15px]'
+  sectionsPagePad: 'md:mx-auto max-w-[1440px] md:pl-[15px] md:pr-[15px]',
 }
 
 export function openLink(link) {
-  window.open(link, link[0] === "#" ? '_self' : link.includes('https://') ? '_blank' : '_self')
+  window.open(
+    link,
+    link[0] === '#' ? '_self' : link.includes('https://') ? '_blank' : '_self',
+  )
 }
 
 export function linkSanitizer(link) {
@@ -150,7 +199,7 @@ export function linkSanitizer(link) {
 export function fallBackLink(link, lang) {
   if (typeof link === 'string') {
     link = {
-      [lang]: link
+      [lang]: link,
     }
   }
   if (link && !link[lang]) {
@@ -173,13 +222,13 @@ export function linkTarget(link) {
 export function isAnchorOrExternalLink(link) {
   if (link && link[0] === '#') {
     return true
-  } else return (link && link.includes('http'));
+  } else return link && link.includes('http')
 }
 
 export function emitGlobalEvent(link, target, event) {
   try {
     event.preventDefault()
-  } catch { }
+  } catch {}
   if (isGlobalEvent(link)) {
     const { $event } = useNuxtApp()
     $event(link)
@@ -193,29 +242,43 @@ export function isGlobalEvent(link) {
 export const globalEvents = []
 
 export function formatPrice(price) {
-  return (Math.round(price * 100) / 100).toFixed(2);
+  return (Math.round(price * 100) / 100).toFixed(2)
 }
 
-export function generateWhatsAppMessage(cart, type, lang, i18n, currencySymbol = '$', total = 0) {
-  const isService = type === 'service';
+export function generateWhatsAppMessage(
+  cart,
+  type,
+  lang,
+  i18n,
+  currencySymbol = '$',
+  total = 0,
+) {
+  const isService = type === 'service'
 
   // If cart is empty, return a default message
   if (!cart || cart.length === 0) {
     return isService
-      ? i18n('whatsapp.defaultServiceMessage') || 'Hello! I would like to book a service.'
-      : i18n('whatsapp.defaultOrderMessage') || 'Hello! I would like to place an order.'
+      ? i18n('whatsapp.defaultServiceMessage') ||
+          'Hello! I would like to book a service.'
+      : i18n('whatsapp.defaultOrderMessage') ||
+          'Hello! I would like to place an order.'
   }
 
   // Create header message
   const headerMessage = isService
-    ? i18n('whatsapp.serviceCartHeader') || 'Hello! I would like to book the following services:'
-    : i18n('whatsapp.orderCartHeader') || 'Hello! I would like to order the following items:'
+    ? i18n('whatsapp.serviceCartHeader') ||
+      'Hello! I would like to book the following services:'
+    : i18n('whatsapp.orderCartHeader') ||
+      'Hello! I would like to order the following items:'
 
   let message = `${headerMessage}\n\n`
 
   // Add each item to the message
   cart.forEach((item, index) => {
-    const itemName = typeof item.name === 'object' ? item.name[lang] || item.name.en : item.name
+    const itemName =
+      typeof item.name === 'object'
+        ? item.name[lang] || item.name.en
+        : item.name
     message += `${index + 1}. ${itemName}`
 
     if (item.quantity > 1) {
@@ -240,19 +303,18 @@ export function generateWhatsAppMessage(cart, type, lang, i18n, currencySymbol =
   return message
 }
 
-
 export const importAsset = (path) => {
   try {
-    const images = import.meta.glob("/assets/icons/**/*", { eager: true });
-    return images[path].default;
+    const images = import.meta.glob('/assets/icons/**/*', { eager: true })
+    return images[path].default
   } catch {
     return ''
   }
-};
+}
 
 export const parseHtml = (html) => {
   try {
-    let parsedHtml = ""
+    let parsedHtml = ''
     if (process.client) {
       const doc = new DOMParser().parseFromString(html, 'text/html')
       parsedHtml = doc.body.textContent || ''
@@ -268,13 +330,13 @@ export const parseHtml = (html) => {
 
 export const assignMediaObject = (mediaObject) => {
   const media = {
-    media_id: "",
-    url: "",
-    thumbnail_url: "",
-    seo_tag: "",
-    metadata: "",
-    filename: "",
-    headers: {}
+    media_id: '',
+    url: '',
+    thumbnail_url: '',
+    seo_tag: '',
+    metadata: '',
+    filename: '',
+    headers: {},
   }
   media.media_id = mediaObject.id
   media.url = mediaObject.files[0].url
@@ -290,14 +352,16 @@ export const assignMediaObject = (mediaObject) => {
 
 export async function callDynamicFunction(filePath, fnName, ...args) {
   try {
-    const builderHooksJavascript = importJs(filePath);
-    if (builderHooksJavascript && typeof builderHooksJavascript[fnName] === "function") {
-      return builderHooksJavascript[fnName](...args);
+    const builderHooksJavascript = importJs(filePath)
+    if (
+      builderHooksJavascript &&
+      typeof builderHooksJavascript[fnName] === 'function'
+    ) {
+      return builderHooksJavascript[fnName](...args)
     } else {
-      return null;
+      return null
     }
   } catch {
     return null
   }
 }
-

@@ -49,7 +49,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     slotNames: {
@@ -68,20 +67,20 @@ export default {
           'region6-1',
           'region6-2',
           'region6-3',
-          'region7'
+          'region7',
         ]
       },
     },
     lang: {
       type: String,
-      default: ''
+      default: '',
     },
     locales: {
       type: Array,
       default() {
         return []
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>

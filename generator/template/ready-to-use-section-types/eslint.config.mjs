@@ -6,6 +6,6 @@ export default [
       'no-useless-escape': 'off',
       'vue/no-v-html': 'off',
       'vue/no-use-v-if-with-v-for': 'off',
-    }
-  }
+    },
+  },
 ]

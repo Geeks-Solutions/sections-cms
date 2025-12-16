@@ -6,7 +6,7 @@ import {
   presetWebFonts,
   presetWind3,
   transformerDirectives,
-  transformerVariantGroup
+  transformerVariantGroup,
 } from 'unocss'
 
 export default defineConfig({
@@ -31,19 +31,19 @@ export default defineConfig({
       mediaGrey: '#6E6E6E',
       mediaUnLocked: '#DDEBFF',
       mediaLocked: '#FFE5DD',
-      blue: '#03b1c7'
+      blue: '#03b1c7',
     },
     spacing: {
       '15': '3.9rem',
-      '4.5': '1.1rem'
+      '4.5': '1.1rem',
     },
     boxShadow: {
-      DEFAULT: '4px 2px 10px rgba(0, 0, 0, 0.1)'
-    }
+      DEFAULT: '4px 2px 10px rgba(0, 0, 0, 0.1)',
+    },
   },
   presets: [
     presetWind3({
-      important: true
+      important: true,
     }),
     presetAttributify(),
     presetIcons(),
@@ -121,11 +121,8 @@ export default defineConfig({
         .section-modal-content .h2, .section-modal-content .h4 {
           height: auto !important;
         }
-      `
-    }
+      `,
+    },
   ],
-  transformers: [
-    transformerDirectives(),
-    transformerVariantGroup(),
-  ],
+  transformers: [transformerDirectives(), transformerVariantGroup()],
 })

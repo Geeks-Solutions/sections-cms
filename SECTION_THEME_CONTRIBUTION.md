@@ -10,13 +10,13 @@ The project exposes the following global CSS variables:
 
 ```css
 :root {
-  --primary-color: #03B1C7;
-  --secondary-color: #00131F;
-  --background-color: #00131F;
-  --hover-background-color: #00131F;
+  --primary-color: #03b1c7;
+  --secondary-color: #00131f;
+  --background-color: #00131f;
+  --hover-background-color: #00131f;
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
-  --base-font-family: "Ubuntu", sans-serif;
+  --base-font-family: 'Ubuntu', sans-serif;
 
   --h1-color: var(--primary-color);
   --h2-color: var(--secondary-color);
@@ -27,8 +27,8 @@ The project exposes the following global CSS variables:
 
   --primary-button-text-color: var(--secondary-color);
   --hover-primary-button-text-color: var(--secondary-color);
-  --primary-button-background-color: #FFF;
-  --hover-primary-button-background-color: #FFF;
+  --primary-button-background-color: #fff;
+  --hover-primary-button-background-color: #fff;
   --primary-button-border-color: transparent;
   --hover-primary-button-border-color: transparent;
 
@@ -48,11 +48,11 @@ The project exposes the following global CSS variables:
 
   --p-color: var(--secondary-color);
 
-  --menu-text-color: #00131F;
-  --hover-menu-text-color: #00131F;
+  --menu-text-color: #00131f;
+  --hover-menu-text-color: #00131f;
 
-  --cookie-background-color: #00131F;
-  --hover-cookie-background-color: #00131F;
+  --cookie-background-color: #00131f;
+  --hover-cookie-background-color: #00131f;
   --cookie-p-color: white;
 
   --lists-color: inherit;
@@ -60,14 +60,13 @@ The project exposes the following global CSS variables:
   --lists-marker-color: inherit;
   --hover-lists-marker-color: inherit;
 }
-````
+```
 
 ### Notes:
 
-* Each variable is used **globally**.
-* You can create **section-specific overrides** by appending `--section` and a unique section identifier. For example:
-
-    * `--section-primary-color` will override `--primary-color` inside a specific section.
+- Each variable is used **globally**.
+- You can create **section-specific overrides** by appending `--section` and a unique section identifier. For example:
+  - `--section-primary-color` will override `--primary-color` inside a specific section.
 
 ---
 
@@ -79,29 +78,38 @@ Note that `[section-id]` in the example below can be used as is, and it points t
 ### Example:
 
 ```css
-section[section-id] .button-selector, section[section-id] button {
+section[section-id] .button-selector,
+section[section-id] button {
   font-size: 14px;
   border: 1px solid var(--section-primary-button-border-color, var(--primary-button-border-color));
   border-radius: 6px;
   padding: 8px 16px;
   color: var(--section-primary-button-text-color, var(--primary-button-text-color));
-  background: var(--section-primary-button-background-color, var(--primary-button-background-color));
+  background: var(
+    --section-primary-button-background-color,
+    var(--primary-button-background-color)
+  );
 }
-section[section-id] .button-selector:hover, section[section-id] button:hover {
+section[section-id] .button-selector:hover,
+section[section-id] button:hover {
   font-size: 14px;
-  border: 1px solid var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color));
+  border: 1px solid
+    var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color));
   border-radius: 6px;
   padding: 8px 16px;
   color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color));
-  background: var(--section-hover-primary-button-background-color, var(--hover-primary-button-background-color));
+  background: var(
+    --section-hover-primary-button-background-color,
+    var(--hover-primary-button-background-color)
+  );
 }
 ```
 
 **Explanation:**
 
-* `var(--section-primary-button-text-color, var(--primary-button-text-color))`
+- `var(--section-primary-button-text-color, var(--primary-button-text-color))`
   This uses the section-specific variable if defined, otherwise falls back to the global variable.
-* The same pattern applies to all other variables.
+- The same pattern applies to all other variables.
 
 ---
 
@@ -110,6 +118,7 @@ section[section-id] .button-selector:hover, section[section-id] button:hover {
 1. **Always use the `var()` syntax** to reference variables.
 2. **Avoid hardcoding colors or font sizes** unless necessary.
 3. **Use section-specific variables** to customize specific areas without affecting the entire site.
+
 ---
 
 # Creating a Section Theme Form
@@ -118,82 +127,66 @@ To add a custom **theme form** for your section, follow these steps:
 
 1. **Create your form component**
 
-  * Go to the `sections/theme` folder.
-  * Create a Nuxt 3 form component for your section.
-  * Your component **must follow the same structure, data, and approach** as the existing theme forms.
-  * Use these examples for reference:
-
-    * [`sections/theme/RestaurantMenu_settings.vue`](generator/template/ready-to-use-section-types/sections/theme/RestaurantMenu_settings.vue)
-    * [`sections/theme/ServicePackages_settings.vue`](generator/template/ready-to-use-section-types/sections/theme/ServicePackages_settings.vue)
+- Go to the `sections/theme` folder.
+- Create a Nuxt 3 form component for your section.
+- Your component **must follow the same structure, data, and approach** as the existing theme forms.
+- Use these examples for reference:
+  - [`sections/theme/RestaurantMenu_settings.vue`](generator/template/ready-to-use-section-types/sections/theme/RestaurantMenu_settings.vue)
+  - [`sections/theme/ServicePackages_settings.vue`](generator/template/ready-to-use-section-types/sections/theme/ServicePackages_settings.vue)
 
 2. **Understand the `callDynamicFunction` utility**
 
-  * You’ll see the function `callDynamicFunction` being used.
-  * **Use it as is** – do not reimplement it.
-  * Its purpose is to call a CMS Cloud function that applies your form values directly to the section preview.
+- You’ll see the function `callDynamicFunction` being used.
+- **Use it as is** – do not reimplement it.
+- Its purpose is to call a CMS Cloud function that applies your form values directly to the section preview.
 
-   For context (not for implementation inside the CMS), here’s what happens internally when `applySettingsToCSS` is called:
+For context (not for implementation inside the CMS), here’s what happens internally when `applySettingsToCSS` is called:
 
-   ```js
-   const applySettingsToCSS = (settings, section, tab, reset, replace) => {
-     const styleEl = document.getElementById(`dynamic-section-${tab}-theme-css-vars`)
-     if (styleEl) {
-       if (reset === true) {
-         const regex = new RegExp(
-           `section\\[section-id="${section.id}"\\]\\s*\\{[^}]*\\}\\s*`,
-           'gm'
-         )
-         styleEl.innerHTML = styleEl.innerHTML.replaceAll(regex, '')
-       } else if (replace === true) {
-         const regex = new RegExp(
-           `section\\[section-id="${section.id}"\\]\\s*\\{[^}]*\\}\\s*`,
-           'gm'
-         )
-         styleEl.innerHTML = styleEl.innerHTML.replaceAll(
-           regex,
-           buildSectionCSS(settings, section.id)
-         )
-       } else {
-         styleEl.innerHTML += buildSectionCSS(settings, section.id)
-         const regex = new RegExp(
-           `section\\[section-id="${section.id}"\\]\\s*\\{[^}]*\\}\\s*`,
-           'gm'
-         )
-         styleEl.innerHTML = styleEl.innerHTML.replaceAll(
-           regex,
-           buildSectionCSS(settings, section.id)
-         )
-       }
-     } else {
-       const style = document.createElement('style')
-       style.id = `dynamic-section-${tab}-theme-css-vars`
-       document.head.appendChild(style)
-     }
-   }
-   ```
+```js
+const applySettingsToCSS = (settings, section, tab, reset, replace) => {
+  const styleEl = document.getElementById(`dynamic-section-${tab}-theme-css-vars`)
+  if (styleEl) {
+    if (reset === true) {
+      const regex = new RegExp(`section\\[section-id="${section.id}"\\]\\s*\\{[^}]*\\}\\s*`, 'gm')
+      styleEl.innerHTML = styleEl.innerHTML.replaceAll(regex, '')
+    } else if (replace === true) {
+      const regex = new RegExp(`section\\[section-id="${section.id}"\\]\\s*\\{[^}]*\\}\\s*`, 'gm')
+      styleEl.innerHTML = styleEl.innerHTML.replaceAll(regex, buildSectionCSS(settings, section.id))
+    } else {
+      styleEl.innerHTML += buildSectionCSS(settings, section.id)
+      const regex = new RegExp(`section\\[section-id="${section.id}"\\]\\s*\\{[^}]*\\}\\s*`, 'gm')
+      styleEl.innerHTML = styleEl.innerHTML.replaceAll(regex, buildSectionCSS(settings, section.id))
+    }
+  } else {
+    const style = document.createElement('style')
+    style.id = `dynamic-section-${tab}-theme-css-vars`
+    document.head.appendChild(style)
+  }
+}
+```
 
 3. **Register your theme form with the section view**
 
-  * After creating your section theme form, you must register it from your section’s view component.
-  * Adding the following code will show a **brush icon** next to your section options.
-  * Clicking this icon opens the form tabs, which include your new theme component.
+- After creating your section theme form, you must register it from your section’s view component.
+- Adding the following code will show a **brush icon** next to your section options.
+- Clicking this icon opens the form tabs, which include your new theme component.
 
-   Example inside your `onMounted` hook:
+Example inside your `onMounted` hook:
 
-   ```js
-   onMounted(() => {
-     const sectionsThemeComponents = inject('sectionsThemeComponents')
-     sectionsThemeComponents?.(props.section.name, [
-       {
-         id: 'global',
-         name: useI18n().t('sectionsBuilder.globalSettings'),
-         path: '/theme/global_settings'
-       }, // Keep this as is — it’s automatically handled by CMS Cloud
-       {
-         id: 'specific',
-         name: useI18n().t('sectionsBuilder.specificSettings'),
-         path: '/theme/ServicePackages_settings'
-       } // Update this to point to your custom theme form component
-     ])
-   })
-   ```
+```js
+onMounted(() => {
+  const sectionsThemeComponents = inject('sectionsThemeComponents')
+  sectionsThemeComponents?.(props.section.name, [
+    {
+      id: 'global',
+      name: useI18n().t('sectionsBuilder.globalSettings'),
+      path: '/theme/global_settings',
+    }, // Keep this as is — it’s automatically handled by CMS Cloud
+    {
+      id: 'specific',
+      name: useI18n().t('sectionsBuilder.specificSettings'),
+      path: '/theme/ServicePackages_settings',
+    }, // Update this to point to your custom theme form component
+  ])
+})
+```

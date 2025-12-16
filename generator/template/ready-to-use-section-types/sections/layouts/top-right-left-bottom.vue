@@ -20,7 +20,6 @@
 </template>
 
 <script>
-
 export default {
   props: {
     slotNames: {
@@ -31,15 +30,15 @@ export default {
     },
     lang: {
       type: String,
-      default: ''
+      default: '',
     },
     locales: {
       type: Array,
       default() {
         return []
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <label class="mr-4 font-bold">{{ 'Full article page'+'*' }}</label>
+    <label class="mr-4 font-bold">{{ 'Full article page' + '*' }}</label>
     <gAutoComplete
       :main-filter="article_page_path"
       :placeholder="$t('forms.aspectRatio')"
@@ -12,28 +12,39 @@
       :filter-clearable="true"
       :track-by="'path'"
       @itemSelected="
-                  (val) => {
-                    selectOption(val)
-                  }
-                "
+        (val) => {
+          selectOption(val)
+        }
+      "
     >
     </gAutoComplete>
   </div>
 </template>
 
 <script>
-import {getSectionsPages} from "~/utils/constants.js";
+import { getSectionsPages } from '~/utils/constants.js'
 import { useCookie, sectionHeader } from '#imports'
 
 export default {
-  name: "LinkArticlePagePath",
-  props: ["options", "optionsData", "field", "customFormData", "sectionsUserId", "reference", "selectedLang", "locales", "optionValues"],
+  name: 'LinkArticlePagePath',
+  props: [
+    'options',
+    'optionsData',
+    'field',
+    'customFormData',
+    'sectionsUserId',
+    'reference',
+    'selectedLang',
+    'locales',
+    'optionValues',
+  ],
   data() {
     return {
       configurableReference: null,
-      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
-      article_page_path: "",
-      sectionsPages: []
+      inputStyle:
+        'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
+      article_page_path: '',
+      sectionsPages: [],
     }
   },
   watch: {
@@ -41,16 +52,18 @@ export default {
       handler(value) {
         this.configurableReference = value.value
         if (this.configurableReference.optionsData.article_page_path) {
-          this.article_page_path = this.configurableReference.optionsData.article_page_path
+          this.article_page_path =
+            this.configurableReference.optionsData.article_page_path
         }
       },
       deep: true,
-      immediate: true
-    }
-
+      immediate: true,
+    },
   },
   async mounted() {
-    this.sectionsPages = await getSectionsPages(sectionHeader({token: useCookie('sections-auth-token').value}))
+    this.sectionsPages = await getSectionsPages(
+      sectionHeader({ token: useCookie('sections-auth-token').value }),
+    )
   },
   methods: {
     isSelected(path) {
@@ -60,10 +73,9 @@ export default {
       this.article_page_path = value
       this.configurableReference.optionsData.article_page_path = value
       this.configurableReference.options[0].article_page_path = value
-    }
-  }
+    },
+  },
 }
-
 </script>
 
 <style>

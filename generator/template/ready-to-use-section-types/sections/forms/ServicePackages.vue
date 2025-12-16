@@ -1,448 +1,840 @@
 <template>
   <div class="p-4">
     <div class="flex flex-col items-start justify-start mt-4">
-      <label class="mr-4 font-medium">{{ $t("ServicePackages.viewMode") }}</label>
+      <label class="mr-4 font-medium">{{
+        $t('ServicePackages.viewMode')
+      }}</label>
       <div class="flex items-center mt-2">
         <label class="flex items-center cursor-pointer mr-4">
-          <input type="radio" v-model="settings[0].viewMode" value="list" class="mr-2 h-[20px] w-[20px]" />
-          <span>{{ $t("ServicePackages.listView") }}</span>
+          <input
+            type="radio"
+            v-model="settings[0].viewMode"
+            value="list"
+            class="mr-2 h-[20px] w-[20px]"
+          />
+          <span>{{ $t('ServicePackages.listView') }}</span>
         </label>
         <label class="flex items-center cursor-pointer">
-          <input type="radio" v-model="settings[0].viewMode" value="category" class="mr-2 h-[20px] w-[20px]" />
-          <span>{{ $t("ServicePackages.categoryView") }}</span>
+          <input
+            type="radio"
+            v-model="settings[0].viewMode"
+            value="category"
+            class="mr-2 h-[20px] w-[20px]"
+          />
+          <span>{{ $t('ServicePackages.categoryView') }}</span>
         </label>
       </div>
-      <span class="text-xs text-Gray_800 mt-1">{{ $t("ServicePackages.viewModeDesc") }}</span>
+      <span class="text-xs text-Gray_800 mt-1">{{
+        $t('ServicePackages.viewModeDesc')
+      }}</span>
     </div>
 
     <!-- Business Type Section -->
     <div class="flex flex-col items-start justify-start mt-8">
-      <label class="mr-4 font-medium">{{ $t("ServicePackages.businessType") }}</label>
+      <label class="mr-4 font-medium">{{
+        $t('ServicePackages.businessType')
+      }}</label>
       <div class="flex items-center mt-2">
         <label class="flex items-center cursor-pointer mr-4">
-          <input type="radio" v-model="settings[0].businessType" value="travel" class="mr-2 h-[20px] w-[20px]" />
-          <span>{{ $t("ServicePackages.travelAgency") }}</span>
+          <input
+            type="radio"
+            v-model="settings[0].businessType"
+            value="travel"
+            class="mr-2 h-[20px] w-[20px]"
+          />
+          <span>{{ $t('ServicePackages.travelAgency') }}</span>
         </label>
         <label class="flex items-center cursor-pointer mr-4">
-          <input type="radio" v-model="settings[0].businessType" value="spa" class="mr-2 h-[20px] w-[20px]" />
-          <span>{{ $t("ServicePackages.spa") }}</span>
+          <input
+            type="radio"
+            v-model="settings[0].businessType"
+            value="spa"
+            class="mr-2 h-[20px] w-[20px]"
+          />
+          <span>{{ $t('ServicePackages.spa') }}</span>
         </label>
         <label class="flex items-center cursor-pointer">
-          <input type="radio" v-model="settings[0].businessType" value="salon" class="mr-2 h-[20px] w-[20px]" />
-          <span>{{ $t("ServicePackages.salon") }}</span>
+          <input
+            type="radio"
+            v-model="settings[0].businessType"
+            value="salon"
+            class="mr-2 h-[20px] w-[20px]"
+          />
+          <span>{{ $t('ServicePackages.salon') }}</span>
         </label>
       </div>
-      <span class="text-xs text-Gray_800 mt-1">{{ $t("ServicePackages.businessTypeDesc") }}</span>
+      <span class="text-xs text-Gray_800 mt-1">{{
+        $t('ServicePackages.businessTypeDesc')
+      }}</span>
     </div>
 
     <!-- Categories Section -->
     <div id="categories" class="flex flex-col mt-8 pt-4 border-t">
-      <h3 class="text-lg font-semibold mb-4">{{ $t("ServicePackages.categories") }}</h3>
-      <span class="text-xs text-Gray_800 mb-4">{{ $t("ServicePackages.categoriesDesc") }}</span>
+      <h3 class="text-lg font-semibold mb-4">
+        {{ $t('ServicePackages.categories') }}
+      </h3>
+      <span class="text-xs text-Gray_800 mb-4">{{
+        $t('ServicePackages.categoriesDesc')
+      }}</span>
 
-      <LazySectionsFormsFieldSets :array-data-pop="settings[0].categories" :fieldset-group="'categories'"
+      <LazySectionsFormsFieldSets
+        :array-data-pop="settings[0].categories"
+        :fieldset-group="'categories'"
         :legend-label="$t('ServicePackages.category') || 'Category'"
         @array-updated="(data) => $set(settings[0], 'categories', data)"
-        @remove-fieldset="(object, idx) => removeCategory(idx)">
+        @remove-fieldset="(object, idx) => removeCategory(idx)"
+      >
         <template #default="{ object, idx }">
           {{ loadItemDetailsText(object) }}
           <div class="flex flex-col items-start justify-start mt-4">
-            <label class="mr-4 font-medium">{{ $t("ServicePackages.categoryName") }}*</label>
-            <input v-model="object.name[selectedLang]" type="text" placeholder="Category Name"
-              :class="sectionsStyle.input" />
-            <span v-show="errors.categories[idx].name === true && selectedLang === defaultLang" class="text-error text-sm pt-2 pl-2">{{
-              $t('ServicePackages.requiredField') }}</span>
+            <label class="mr-4 font-medium"
+              >{{ $t('ServicePackages.categoryName') }}*</label
+            >
+            <input
+              v-model="object.name[selectedLang]"
+              type="text"
+              placeholder="Category Name"
+              :class="sectionsStyle.input"
+            />
+            <span
+              v-show="
+                errors.categories[idx].name === true &&
+                selectedLang === defaultLang
+              "
+              class="text-error text-sm pt-2 pl-2"
+              >{{ $t('ServicePackages.requiredField') }}</span
+            >
           </div>
 
           <!-- Category Icon -->
           <div class="mb-4 mt-4">
-            <LazyMediasUploadMedia :media-label="$t('ServicePackages.categoryIcon')"
-              :upload-text="$t('ServicePackages.uploadIcon')" :change-text="$t('ServicePackages.changeIcon')"
+            <LazyMediasUploadMedia
+              :media-label="$t('ServicePackages.categoryIcon')"
+              :upload-text="$t('ServicePackages.uploadIcon')"
+              :change-text="$t('ServicePackages.changeIcon')"
               :seo-tag="$t('ServicePackages.seoTag')"
-              :media="object.icon && Object.keys(object.icon).length > 0 ? [object.icon] : []"
-              @uploadContainerClicked="openCategoryIconModal(object.id, object.icon && Object.keys(object.icon).length > 0 ? object.icon.media_id : null)"
-              @removeUploadedImage="removeCategoryIcon(object.id)" />
-            <span class="flex text-xs text-Gray_800">{{ $t("ServicePackages.categoryIconDesc") }}</span>
+              :media="
+                object.icon && Object.keys(object.icon).length > 0
+                  ? [object.icon]
+                  : []
+              "
+              @uploadContainerClicked="
+                openCategoryIconModal(
+                  object.id,
+                  object.icon && Object.keys(object.icon).length > 0
+                    ? object.icon.media_id
+                    : null,
+                )
+              "
+              @removeUploadedImage="removeCategoryIcon(object.id)"
+            />
+            <span class="flex text-xs text-Gray_800">{{
+              $t('ServicePackages.categoryIconDesc')
+            }}</span>
           </div>
 
           <div class="flex flex-col items-start justify-start mt-4">
-            <label class="mr-4 font-medium">{{ $t("ServicePackages.categoryDescription") }}</label>
-            <textarea v-model="object.description[selectedLang]" type="text" placeholder="Category Description"
-              :class="sectionsStyle.textarea" rows="3"></textarea>
+            <label class="mr-4 font-medium">{{
+              $t('ServicePackages.categoryDescription')
+            }}</label>
+            <textarea
+              v-model="object.description[selectedLang]"
+              type="text"
+              placeholder="Category Description"
+              :class="sectionsStyle.textarea"
+              rows="3"
+            ></textarea>
           </div>
 
           <div class="flex flex-col items-start justify-start mt-4">
-            <label class="mr-4 font-medium">{{ $t("ServicePackages.cssClasses") }}</label>
-            <span class="text-xs text-Gray_800">{{ $t("ServicePackages.cssClassesDesc") }}</span>
-            <input v-model="object.classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
+            <label class="mr-4 font-medium">{{
+              $t('ServicePackages.cssClasses')
+            }}</label>
+            <span class="text-xs text-Gray_800">{{
+              $t('ServicePackages.cssClassesDesc')
+            }}</span>
+            <input
+              v-model="object.classes"
+              type="text"
+              placeholder="CSS Classes"
+              :class="sectionsStyle.input"
+            />
           </div>
-
         </template>
       </LazySectionsFormsFieldSets>
 
-      <div class="add-button underline cursor-pointer mt-2" @click="addCategory()">
-        <div class="p3 bold text">{{ $t("ServicePackages.addCategory") }}</div>
+      <div
+        class="add-button underline cursor-pointer mt-2"
+        @click="addCategory()"
+      >
+        <div class="p3 bold text">{{ $t('ServicePackages.addCategory') }}</div>
       </div>
     </div>
 
     <!-- Service Items Section -->
     <div id="service-items" class="flex flex-col mt-8 pt-8 border-t">
-      <h3 class="text-lg font-semibold mb-4">{{ $t("ServicePackages.serviceItems") }}</h3>
-      <span class="text-xs text-Gray_800 mb-4">{{ $t("ServicePackages.serviceItemsDesc") }}</span>
+      <h3 class="text-lg font-semibold mb-4">
+        {{ $t('ServicePackages.serviceItems') }}
+      </h3>
+      <span class="text-xs text-Gray_800 mb-4">{{
+        $t('ServicePackages.serviceItemsDesc')
+      }}</span>
 
       <!-- Category Selector for Service Items -->
       <div class="flex flex-col items-start justify-start mb-6">
-        <label class="mr-4 font-medium mb-2">{{ $t("ServicePackages.selectCategory") }}</label>
+        <label class="mr-4 font-medium mb-2">{{
+          $t('ServicePackages.selectCategory')
+        }}</label>
         <div class="select-style-chooser w-[344px]">
-          <gAutoComplete :main-filter="selectedCategoryId" :placeholder="$t('ServicePackages.selectCategory')"
-            :filter-label-prop="'name'" :reduce="(option) => option.id" :filter-options="getCategoryOptions()"
-            :filter-searchable="true" :close-on-select="true" :filter-clearable="true" :track-by="'id'"
-            @itemSelected="(val) => { selectedCategoryId = val; }">
+          <gAutoComplete
+            :main-filter="selectedCategoryId"
+            :placeholder="$t('ServicePackages.selectCategory')"
+            :filter-label-prop="'name'"
+            :reduce="(option) => option.id"
+            :filter-options="getCategoryOptions()"
+            :filter-searchable="true"
+            :close-on-select="true"
+            :filter-clearable="true"
+            :track-by="'id'"
+            @itemSelected="
+              (val) => {
+                selectedCategoryId = val
+              }
+            "
+          >
           </gAutoComplete>
         </div>
       </div>
 
       <div v-if="selectedCategoryId">
-        <LazySectionsFormsFieldSets :key="'service-items-' + selectedCategoryId + '-' + selectedLang"
-          :array-data-pop="getServiceItemsByCategory(selectedCategoryId)" :fieldset-group="'serviceItems'"
+        <LazySectionsFormsFieldSets
+          :key="'service-items-' + selectedCategoryId + '-' + selectedLang"
+          :array-data-pop="getServiceItemsByCategory(selectedCategoryId)"
+          :fieldset-group="'serviceItems'"
           :legend-label="$t('ServicePackages.serviceItem') || 'Service Item'"
-          @array-updated="(data) => updateServiceItemsForCategory(selectedCategoryId, data)"
-          @remove-fieldset="(object, idx) => removeServiceItem(object.id)">
+          @array-updated="
+            (data) => updateServiceItemsForCategory(selectedCategoryId, data)
+          "
+          @remove-fieldset="(object, idx) => removeServiceItem(object.id)"
+        >
           <template #default="{ object }">
             <!-- Item Name -->
             <div class="flex flex-col items-start justify-start mt-4">
-              <label class="mr-4 font-medium">{{ $t("ServicePackages.itemName") }}*</label>
-              <input v-model="object.name[selectedLang]" type="text" placeholder="Item Name"
-                :class="sectionsStyle.input" />
-              <span v-show="getErrorForServiceItem(object.id, 'name') === true && selectedLang === defaultLang" class="text-error text-sm pt-2 pl-2">{{
-                $t('ServicePackages.requiredField') }}</span>
+              <label class="mr-4 font-medium"
+                >{{ $t('ServicePackages.itemName') }}*</label
+              >
+              <input
+                v-model="object.name[selectedLang]"
+                type="text"
+                placeholder="Item Name"
+                :class="sectionsStyle.input"
+              />
+              <span
+                v-show="
+                  getErrorForServiceItem(object.id, 'name') === true &&
+                  selectedLang === defaultLang
+                "
+                class="text-error text-sm pt-2 pl-2"
+                >{{ $t('ServicePackages.requiredField') }}</span
+              >
             </div>
 
             <!-- Item Description -->
             <div class="flex flex-col items-start justify-start mt-4">
-              <label class="mr-4 font-medium">{{ $t("ServicePackages.itemDescription") }}</label>
-              <textarea v-model="object.description[selectedLang]" type="text" placeholder="Item Description"
-                :class="sectionsStyle.textarea" rows="3"></textarea>
+              <label class="mr-4 font-medium">{{
+                $t('ServicePackages.itemDescription')
+              }}</label>
+              <textarea
+                v-model="object.description[selectedLang]"
+                type="text"
+                placeholder="Item Description"
+                :class="sectionsStyle.textarea"
+                rows="3"
+              ></textarea>
             </div>
 
             <!-- Item Price -->
             <div class="flex flex-col items-start justify-start mt-4">
-              <label class="mr-4 font-medium">{{ $t("ServicePackages.itemPrice") }}*</label>
-              <input v-model="object.price" type="number" min="0" step="0.01" placeholder="Price"
-                :class="sectionsStyle.input" />
-              <span v-show="getErrorForServiceItem(object.id, 'price') === true" class="text-error text-sm pt-2 pl-2">{{
-                $t('ServicePackages.requiredField') }}</span>
+              <label class="mr-4 font-medium"
+                >{{ $t('ServicePackages.itemPrice') }}*</label
+              >
+              <input
+                v-model="object.price"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Price"
+                :class="sectionsStyle.input"
+              />
+              <span
+                v-show="getErrorForServiceItem(object.id, 'price') === true"
+                class="text-error text-sm pt-2 pl-2"
+                >{{ $t('ServicePackages.requiredField') }}</span
+              >
             </div>
 
             <div class="flex flex-col items-start justify-start mt-4">
               <div class="flex items-center">
-                <input v-model="object.hasDiscount" type="checkbox" id="hasDiscount" class="h-5 w-5 mr-2" />
+                <input
+                  v-model="object.hasDiscount"
+                  type="checkbox"
+                  id="hasDiscount"
+                  class="h-5 w-5 mr-2"
+                />
                 <label for="hasDiscount" class="mr-4 font-medium">
-                  {{ $t("ServicePackages.hasDiscount") }}
+                  {{ $t('ServicePackages.hasDiscount') }}
                 </label>
               </div>
               <span class="text-xs text-Gray_800 mb-2">
-                {{ $t("ServicePackages.hasDiscountDesc") }}
+                {{ $t('ServicePackages.hasDiscountDesc') }}
               </span>
             </div>
 
             <!-- Discounted Price (only shows when hasDiscount is checked) -->
-            <div v-if="object.hasDiscount" class="flex flex-col items-start justify-start mt-4">
-              <label class="mr-4 font-medium">{{ $t("ServicePackages.discountedPrice") }}*</label>
-              <input v-model="object.discountedPrice" type="number" min="0" step="0.01" placeholder="Discounted Price"
-                :class="sectionsStyle.input" />
-              <span v-show="getErrorForServiceItem(object.id, 'discountedPrice') === true"
-                class="text-error text-sm pt-2 pl-2">{{
-                  $t('ServicePackages.requiredField') }}</span>
+            <div
+              v-if="object.hasDiscount"
+              class="flex flex-col items-start justify-start mt-4"
+            >
+              <label class="mr-4 font-medium"
+                >{{ $t('ServicePackages.discountedPrice') }}*</label
+              >
+              <input
+                v-model="object.discountedPrice"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Discounted Price"
+                :class="sectionsStyle.input"
+              />
+              <span
+                v-show="
+                  getErrorForServiceItem(object.id, 'discountedPrice') === true
+                "
+                class="text-error text-sm pt-2 pl-2"
+                >{{ $t('ServicePackages.requiredField') }}</span
+              >
             </div>
 
             <!-- Item Duration -->
             <div class="flex flex-col items-start justify-start mt-4">
-              <label class="mr-4 font-medium">{{ $t("ServicePackages.itemDuration") }}</label>
-              <input v-model="object.duration[selectedLang]" type="text" placeholder="e.g. 1 hour, 3 days"
-                :class="sectionsStyle.input" />
+              <label class="mr-4 font-medium">{{
+                $t('ServicePackages.itemDuration')
+              }}</label>
+              <input
+                v-model="object.duration[selectedLang]"
+                type="text"
+                placeholder="e.g. 1 hour, 3 days"
+                :class="sectionsStyle.input"
+              />
             </div>
 
             <!-- Item Details (for bullet points) -->
             <div class="flex flex-col items-start justify-start mt-4">
-              <label class="mr-4 font-medium">{{ $t("ServicePackages.itemDetails") }}</label>
-              <span class="text-xs text-Gray_800 mb-2">{{ $t("ServicePackages.itemDetailsDesc") }}</span>
-              <textarea v-model="itemDetailsTextMap[object.id][selectedLang]" type="text"
-                placeholder="One detail per line" :class="sectionsStyle.textarea" rows="4"
-                @input="updateItemDetails(object)"></textarea>
+              <label class="mr-4 font-medium">{{
+                $t('ServicePackages.itemDetails')
+              }}</label>
+              <span class="text-xs text-Gray_800 mb-2">{{
+                $t('ServicePackages.itemDetailsDesc')
+              }}</span>
+              <textarea
+                v-model="itemDetailsTextMap[object.id][selectedLang]"
+                type="text"
+                placeholder="One detail per line"
+                :class="sectionsStyle.textarea"
+                rows="4"
+                @input="updateItemDetails(object)"
+              ></textarea>
             </div>
 
             <!-- Item Image -->
             <div class="mb-4 mt-4">
-              <LazyMediasUploadMedia :media-label="$t('ServicePackages.itemImage') || 'Item Image'"
-                :upload-text="$t('ServicePackages.uploadMedia') || 'Upload Image'"
-                :change-text="$t('ServicePackages.changeMedia') || 'Change Image'"
+              <LazyMediasUploadMedia
+                :media-label="$t('ServicePackages.itemImage') || 'Item Image'"
+                :upload-text="
+                  $t('ServicePackages.uploadMedia') || 'Upload Image'
+                "
+                :change-text="
+                  $t('ServicePackages.changeMedia') || 'Change Image'
+                "
                 :seo-tag="$t('ServicePackages.seoTag') || 'SEO Tag'"
-                :media="object.image && Object.keys(object.image).length > 0 ? [object.image] : []"
-                @uploadContainerClicked="openMediaModal(object.id, object.image && Object.keys(object.image).length > 0 ? object.image.media_id : null)"
-                @removeUploadedImage="removeItemImage(object.id)" />
-              <span class="flex text-xs text-Gray_800">{{ $t("ServicePackages.itemImageDesc") }}</span>
+                :media="
+                  object.image && Object.keys(object.image).length > 0
+                    ? [object.image]
+                    : []
+                "
+                @uploadContainerClicked="
+                  openMediaModal(
+                    object.id,
+                    object.image && Object.keys(object.image).length > 0
+                      ? object.image.media_id
+                      : null,
+                  )
+                "
+                @removeUploadedImage="removeItemImage(object.id)"
+              />
+              <span class="flex text-xs text-Gray_800">{{
+                $t('ServicePackages.itemImageDesc')
+              }}</span>
             </div>
 
             <!-- Availability -->
             <div class="flex flex-col items-start justify-start mt-4">
-              <label class="mr-4 font-medium">{{ $t("ServicePackages.availability") }}</label>
+              <label class="mr-4 font-medium">{{
+                $t('ServicePackages.availability')
+              }}</label>
               <div class="flex items-center mt-2">
-                <select v-model="object.availability" :class="sectionsStyle.input" class="h-[55px]">
-                  <option value="available">{{ $t("ServicePackages.fullyAvailable") }}</option>
-                  <option value="limited">{{ $t("ServicePackages.limitedAvailability") }}</option>
+                <select
+                  v-model="object.availability"
+                  :class="sectionsStyle.input"
+                  class="h-[55px]"
+                >
+                  <option value="available">
+                    {{ $t('ServicePackages.fullyAvailable') }}
+                  </option>
+                  <option value="limited">
+                    {{ $t('ServicePackages.limitedAvailability') }}
+                  </option>
                 </select>
               </div>
             </div>
 
             <!-- Featured Item -->
             <div class="flex flex-col items-start justify-start mt-4">
-              <label class="mr-4 font-medium">{{ $t("ServicePackages.featuredItem") }}</label>
+              <label class="mr-4 font-medium">{{
+                $t('ServicePackages.featuredItem')
+              }}</label>
               <div class="flex items-center">
-                <input v-model="object.featured" type="checkbox" class="h-5 w-5 mr-2" />
-                <span class="text-xs text-Gray_800">{{ $t("ServicePackages.featuredItemDesc") }}</span>
+                <input
+                  v-model="object.featured"
+                  type="checkbox"
+                  class="h-5 w-5 mr-2"
+                />
+                <span class="text-xs text-Gray_800">{{
+                  $t('ServicePackages.featuredItemDesc')
+                }}</span>
               </div>
             </div>
 
             <!-- CSS Classes -->
             <div class="flex flex-col items-start justify-start mt-4">
-              <label class="mr-4 font-medium">{{ $t("ServicePackages.cssClasses") }}</label>
-              <span class="text-xs text-Gray_800">{{ $t("ServicePackages.cssClassesDesc") }}</span>
-              <input v-model="object.classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
+              <label class="mr-4 font-medium">{{
+                $t('ServicePackages.cssClasses')
+              }}</label>
+              <span class="text-xs text-Gray_800">{{
+                $t('ServicePackages.cssClassesDesc')
+              }}</span>
+              <input
+                v-model="object.classes"
+                type="text"
+                placeholder="CSS Classes"
+                :class="sectionsStyle.input"
+              />
             </div>
           </template>
         </LazySectionsFormsFieldSets>
 
-        <div class="add-button underline cursor-pointer mt-2" @click="addServiceItem(selectedCategoryId)">
-          <div class="p3 bold text">{{ $t("ServicePackages.addServiceItem") }}</div>
+        <div
+          class="add-button underline cursor-pointer mt-2"
+          @click="addServiceItem(selectedCategoryId)"
+        >
+          <div class="p3 bold text">
+            {{ $t('ServicePackages.addServiceItem') }}
+          </div>
         </div>
       </div>
       <div v-else class="text-center py-4 text-gray-500">
-        {{ $t("ServicePackages.selectCategoryFirst") }}
+        {{ $t('ServicePackages.selectCategoryFirst') }}
       </div>
     </div>
 
     <!-- General Settings -->
     <div class="flex flex-col items-start justify-start mt-8 pt-8 border-t">
-      <h3 class="text-lg font-semibold mb-4">{{ $t("ServicePackages.generalSettings") }}</h3>
+      <h3 class="text-lg font-semibold mb-4">
+        {{ $t('ServicePackages.generalSettings') }}
+      </h3>
 
       <!-- Business Logo -->
       <div class="mb-6">
-        <LazyMediasUploadMedia :media-label="$t('ServicePackages.businessLogo') || 'Business Logo'"
+        <LazyMediasUploadMedia
+          :media-label="$t('ServicePackages.businessLogo') || 'Business Logo'"
           :upload-text="$t('ServicePackages.uploadLogo') || 'Upload Logo'"
           :change-text="$t('ServicePackages.changeLogo') || 'Change Logo'"
           :seo-tag="$t('ServicePackages.seoTag') || 'SEO Tag'"
-          :media="settings[0].logo && Object.keys(settings[0].logo).length > 0 ? [settings[0].logo] : []"
-          @uploadContainerClicked="openLogoModal(settings[0].logo && Object.keys(settings[0].logo).length > 0 ? settings[0].logo.media_id : null)"
-          @removeUploadedImage="removeLogo()" />
-        <span class="flex text-xs text-Gray_800">{{ $t("ServicePackages.logoDesc") }}</span>
+          :media="
+            settings[0].logo && Object.keys(settings[0].logo).length > 0
+              ? [settings[0].logo]
+              : []
+          "
+          @uploadContainerClicked="
+            openLogoModal(
+              settings[0].logo && Object.keys(settings[0].logo).length > 0
+                ? settings[0].logo.media_id
+                : null,
+            )
+          "
+          @removeUploadedImage="removeLogo()"
+        />
+        <span class="flex text-xs text-Gray_800">{{
+          $t('ServicePackages.logoDesc')
+        }}</span>
       </div>
 
       <div class="flex flex-col items-start justify-start mt-4">
-        <label class="mr-4 font-medium">{{ $t("ServicePackages.pageTitle") }}</label>
-        <input v-model="settings[0].pageTitle[selectedLang]" type="text" placeholder="Page Title"
-          :class="sectionsStyle.input" />
+        <label class="mr-4 font-medium">{{
+          $t('ServicePackages.pageTitle')
+        }}</label>
+        <input
+          v-model="settings[0].pageTitle[selectedLang]"
+          type="text"
+          placeholder="Page Title"
+          :class="sectionsStyle.input"
+        />
       </div>
 
       <div class="flex flex-col items-start justify-start mt-4">
-        <label class="mr-4 font-medium">{{ $t("ServicePackages.pageSubtitle") }}</label>
-        <input v-model="settings[0].pageSubtitle[selectedLang]" type="text" placeholder="Page Subtitle"
-          :class="sectionsStyle.input" />
+        <label class="mr-4 font-medium">{{
+          $t('ServicePackages.pageSubtitle')
+        }}</label>
+        <input
+          v-model="settings[0].pageSubtitle[selectedLang]"
+          type="text"
+          placeholder="Page Subtitle"
+          :class="sectionsStyle.input"
+        />
       </div>
 
       <div class="flex flex-col items-start justify-start mt-4">
-        <label class="mr-4 font-medium">{{ $t("ServicePackages.currencySymbol") }}</label>
-        <input v-model="settings[0].currencySymbol" type="text" placeholder="$" :class="sectionsStyle.input" />
+        <label class="mr-4 font-medium">{{
+          $t('ServicePackages.currencySymbol')
+        }}</label>
+        <input
+          v-model="settings[0].currencySymbol"
+          type="text"
+          placeholder="$"
+          :class="sectionsStyle.input"
+        />
       </div>
 
       <div class="flex flex-col items-start justify-start mt-8 pt-8 border-t">
-        <h3 class="text-lg font-semibold mb-4">{{ $t("ServicePackages.feeSettings") }}</h3>
+        <h3 class="text-lg font-semibold mb-4">
+          {{ $t('ServicePackages.feeSettings') }}
+        </h3>
 
         <div class="flex flex-col items-start justify-start mt-4">
           <div class="flex items-center mb-2">
-            <input v-model="settings[0].enableTax" type="checkbox" id="enableTax" class="h-5 w-5 mr-2" />
+            <input
+              v-model="settings[0].enableTax"
+              type="checkbox"
+              id="enableTax"
+              class="h-5 w-5 mr-2"
+            />
             <label for="enableTax" class="mr-4 font-medium">
-              {{ $t("ServicePackages.enableTax") }}
+              {{ $t('ServicePackages.enableTax') }}
             </label>
           </div>
           <span class="text-xs text-Gray_800 mb-2">
-            {{ $t("ServicePackages.enableTaxDesc") }}
+            {{ $t('ServicePackages.enableTaxDesc') }}
           </span>
         </div>
 
-        <div v-if="settings[0].enableTax" class="flex flex-col items-start justify-start mt-4">
+        <div
+          v-if="settings[0].enableTax"
+          class="flex flex-col items-start justify-start mt-4"
+        >
           <label class="mr-4 font-medium">
-            {{ $t("ServicePackages.taxRate") }}*
+            {{ $t('ServicePackages.taxRate') }}*
           </label>
-          <input id="taxRate" v-model.number="settings[0].taxRate" type="number" min="0" max="100" step="0.01"
-            placeholder="Enter tax rate (e.g. 10.00)" :class="sectionsStyle.input" />
-          <span v-show="errors.generalSettings.taxRate === true" class="text-error text-sm pt-2 pl-2">
+          <input
+            id="taxRate"
+            v-model.number="settings[0].taxRate"
+            type="number"
+            min="0"
+            max="100"
+            step="0.01"
+            placeholder="Enter tax rate (e.g. 10.00)"
+            :class="sectionsStyle.input"
+          />
+          <span
+            v-show="errors.generalSettings.taxRate === true"
+            class="text-error text-sm pt-2 pl-2"
+          >
             {{ $t('ServicePackages.requiredField') }}
           </span>
           <span class="text-xs text-Gray_800">
-            {{ $t("ServicePackages.taxRateDesc") }}
+            {{ $t('ServicePackages.taxRateDesc') }}
           </span>
         </div>
 
         <div class="flex flex-col items-start justify-start mt-4">
           <div class="flex items-center mb-2">
-            <input v-model="settings[0].enableServiceFee" type="checkbox" id="enableServiceFee" class="h-5 w-5 mr-2" />
+            <input
+              v-model="settings[0].enableServiceFee"
+              type="checkbox"
+              id="enableServiceFee"
+              class="h-5 w-5 mr-2"
+            />
             <label for="enableServiceFee" class="mr-4 font-medium">
-              {{ $t("ServicePackages.enableServiceFee") }}
+              {{ $t('ServicePackages.enableServiceFee') }}
             </label>
           </div>
           <span class="text-xs text-Gray_800 mb-2">
-            {{ $t("ServicePackages.enableServiceFeeDesc") }}
+            {{ $t('ServicePackages.enableServiceFeeDesc') }}
           </span>
         </div>
 
-        <div v-if="settings[0].enableServiceFee" class="flex flex-col items-start justify-start mt-4">
+        <div
+          v-if="settings[0].enableServiceFee"
+          class="flex flex-col items-start justify-start mt-4"
+        >
           <label class="mr-4 font-medium">
-            {{ $t("ServicePackages.serviceFeeRate") }}*
+            {{ $t('ServicePackages.serviceFeeRate') }}*
           </label>
-          <input id="serviceFeeRate" v-model.number="settings[0].serviceFeeRate" type="number" min="0" max="100"
-            step="0.01" placeholder="Enter service fee rate (e.g. 5.00)" :class="sectionsStyle.input" />
-          <span v-show="errors.generalSettings.serviceFeeRate === true" class="text-error text-sm pt-2 pl-2">
+          <input
+            id="serviceFeeRate"
+            v-model.number="settings[0].serviceFeeRate"
+            type="number"
+            min="0"
+            max="100"
+            step="0.01"
+            placeholder="Enter service fee rate (e.g. 5.00)"
+            :class="sectionsStyle.input"
+          />
+          <span
+            v-show="errors.generalSettings.serviceFeeRate === true"
+            class="text-error text-sm pt-2 pl-2"
+          >
             {{ $t('ServicePackages.requiredField') }}
           </span>
           <span class="text-xs text-Gray_800">
-            {{ $t("ServicePackages.serviceFeeRateDesc") }}
+            {{ $t('ServicePackages.serviceFeeRateDesc') }}
           </span>
         </div>
       </div>
 
       <div class="flex flex-col items-start justify-start mt-4">
-        <label class="mr-4 font-medium">{{ $t("ServicePackages.cssClasses") }}</label>
-        <span class="text-xs text-Gray_800">{{ $t("ServicePackages.cssClassesDesc") }}</span>
-        <input v-model="settings[0].classes" type="text" placeholder="CSS Classes" :class="sectionsStyle.input" />
+        <label class="mr-4 font-medium">{{
+          $t('ServicePackages.cssClasses')
+        }}</label>
+        <span class="text-xs text-Gray_800">{{
+          $t('ServicePackages.cssClassesDesc')
+        }}</span>
+        <input
+          v-model="settings[0].classes"
+          type="text"
+          placeholder="CSS Classes"
+          :class="sectionsStyle.input"
+        />
       </div>
-
     </div>
 
     <div class="flex flex-col items-start justify-start mt-8 pt-8 border-t">
-      <h3 class="text-lg font-semibold mb-4">{{ $t("socialMedia.socialMedia") }}</h3>
-      <span class="text-xs text-Gray_800 mb-4">{{ $t("socialMedia.socialMediaDesc") }}</span>
+      <h3 class="text-lg font-semibold mb-4">
+        {{ $t('socialMedia.socialMedia') }}
+      </h3>
+      <span class="text-xs text-Gray_800 mb-4">{{
+        $t('socialMedia.socialMediaDesc')
+      }}</span>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         <!-- Instagram -->
         <div class="flex flex-col items-start justify-start">
           <label class="flex items-center mb-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#E1306C"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="mr-2"
+            >
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
               <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
             </svg>
-            <span class="font-medium">{{ $t("socialMedia.instagram") }}</span>
+            <span class="font-medium">{{ $t('socialMedia.instagram') }}</span>
           </label>
-          <input v-model="settings[0].socialMedia.instagram" type="text"
-            placeholder="https://instagram.com/yourusername" :class="sectionsStyle.input" />
+          <input
+            v-model="settings[0].socialMedia.instagram"
+            type="text"
+            placeholder="https://instagram.com/yourusername"
+            :class="sectionsStyle.input"
+          />
         </div>
 
         <!-- Facebook -->
         <div class="flex flex-col items-start justify-start">
           <label class="flex items-center mb-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="#4267B2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#4267B2"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="mr-2"
+            >
+              <path
+                d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+              ></path>
             </svg>
-            <span class="font-medium">{{ $t("socialMedia.facebook") }}</span>
+            <span class="font-medium">{{ $t('socialMedia.facebook') }}</span>
           </label>
-          <input v-model="settings[0].socialMedia.facebook" type="text" placeholder="https://facebook.com/yourpage"
-            :class="sectionsStyle.input" />
+          <input
+            v-model="settings[0].socialMedia.facebook"
+            type="text"
+            placeholder="https://facebook.com/yourpage"
+            :class="sectionsStyle.input"
+          />
         </div>
 
         <!-- TikTok -->
         <div class="flex flex-col items-start justify-start">
           <label class="flex items-center mb-1">
-            <svg width="24" height="24" fill="black" viewBox="0 0 24 24" aria-hidden="true">
+            <svg
+              width="24"
+              height="24"
+              fill="black"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
               <path
-                d="M12.14 2h2.41c.11 1.2.48 2.21 1.08 3.02a5.57 5.57 0 0 0 3.16 2c.1 0 .22 0 .32.02v2.38a6.5 6.5 0 0 1-3.55-1.07v5.47c0 2.55-1.98 4.75-4.49 5.15a4.77 4.77 0 0 1-5.48-4.71 4.86 4.86 0 0 1 5.56-5.16v2.36a2.42 2.42 0 0 0-2.27 2.54 2.37 2.37 0 0 0 2.71 2.22c1.14-.16 2.01-1.2 2.01-2.38V2z" />
+                d="M12.14 2h2.41c.11 1.2.48 2.21 1.08 3.02a5.57 5.57 0 0 0 3.16 2c.1 0 .22 0 .32.02v2.38a6.5 6.5 0 0 1-3.55-1.07v5.47c0 2.55-1.98 4.75-4.49 5.15a4.77 4.77 0 0 1-5.48-4.71 4.86 4.86 0 0 1 5.56-5.16v2.36a2.42 2.42 0 0 0-2.27 2.54 2.37 2.37 0 0 0 2.71 2.22c1.14-.16 2.01-1.2 2.01-2.38V2z"
+              />
             </svg>
-            <span class="font-medium">{{ $t("socialMedia.tiktok") }}</span>
+            <span class="font-medium">{{ $t('socialMedia.tiktok') }}</span>
           </label>
-          <input v-model="settings[0].socialMedia.tiktok" type="text" placeholder="https://tiktok.com/@yourusername"
-            :class="sectionsStyle.input" />
+          <input
+            v-model="settings[0].socialMedia.tiktok"
+            type="text"
+            placeholder="https://tiktok.com/@yourusername"
+            :class="sectionsStyle.input"
+          />
         </div>
 
         <!-- WhatsApp -->
         <div class="flex flex-col items-start justify-start">
           <div class="flex items-center mb-2">
-            <input v-model="settings[0].showWhatsApp" type="checkbox" id="showWhatsApp" class="h-5 w-5 mr-2" />
+            <input
+              v-model="settings[0].showWhatsApp"
+              type="checkbox"
+              id="showWhatsApp"
+              class="h-5 w-5 mr-2"
+            />
             <label for="showWhatsApp" class="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#22c55e" viewBox="0 0 16 16">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="#22c55e"
+                viewBox="0 0 16 16"
+              >
                 <path
-                  d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
+                  d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"
+                />
               </svg>
-              <span class="font-medium ml-2">{{ $t("socialMedia.whatsapp") }}</span>
+              <span class="font-medium ml-2">{{
+                $t('socialMedia.whatsapp')
+              }}</span>
             </label>
           </div>
 
           <div v-if="settings[0].showWhatsApp" class="w-full">
-            <input v-model="settings[0].whatsappNumber" type="text" placeholder="+1234567890"
-              :class="sectionsStyle.input" class="mb-2" />
-            <span class="text-xs text-Gray_800 mb-2 block">{{ $t("socialMedia.whatsappNumberDesc") }}</span>
-            <label class="block text-sm font-medium mb-1">
-              {{ $t("socialMedia.whatsappMessage") }} ({{ selectedLang.toUpperCase() }})
-            </label>
-            <input :key="'whatsapp-message-input-' + selectedLang" v-model="settings[0].whatsappMessage[selectedLang]"
+            <input
+              v-model="settings[0].whatsappNumber"
               type="text"
-              :placeholder="selectedLang === 'en' ? 'Hello! I would like to book a service.' : 'Bonjour ! Je voudrais réserver un service.'"
-              :class="sectionsStyle.input" @focus="setDefaultWhatsAppMessages" />
+              placeholder="+1234567890"
+              :class="sectionsStyle.input"
+              class="mb-2"
+            />
+            <span class="text-xs text-Gray_800 mb-2 block">{{
+              $t('socialMedia.whatsappNumberDesc')
+            }}</span>
+            <label class="block text-sm font-medium mb-1">
+              {{ $t('socialMedia.whatsappMessage') }} ({{
+                selectedLang.toUpperCase()
+              }})
+            </label>
+            <input
+              :key="'whatsapp-message-input-' + selectedLang"
+              v-model="settings[0].whatsappMessage[selectedLang]"
+              type="text"
+              :placeholder="
+                selectedLang === 'en'
+                  ? 'Hello! I would like to book a service.'
+                  : 'Bonjour ! Je voudrais réserver un service.'
+              "
+              :class="sectionsStyle.input"
+              @focus="setDefaultWhatsAppMessages"
+            />
           </div>
         </div>
       </div>
     </div>
 
-    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
-
+    <LazySectionFormErrors
+      :selectedLang="selectedLang"
+      :default-lang="defaultLang"
+      :locales="locales"
+      :errors="errors"
+    />
   </div>
 </template>
 
 <i18n src="./ServicePackages_i18n.json"></i18n>
 
 <script>
-import { v4 as uuidv4 } from 'uuid';
-import { sectionsStyle, scrollToFirstError, assignMediaObject } from '@/utils/constants'
-import 'vue-select/dist/vue-select.css';
+import { v4 as uuidv4 } from 'uuid'
+import {
+  sectionsStyle,
+  scrollToFirstError,
+  assignMediaObject,
+} from '@/utils/constants'
+import 'vue-select/dist/vue-select.css'
 
 export default {
   name: 'ServicePackages',
   setup() {
     const { t } = useI18n({
-      useScope: 'local'
+      useScope: 'local',
     })
 
     return {
-      $t: t
+      $t: t,
     }
   },
   props: {
     selectedLang: {
       type: String,
-      default: 'en'
+      default: 'en',
     },
     defaultLang: {
       type: String,
-      default: 'en'
+      default: 'en',
     },
     selectedMedia: {},
     selectedMediaIndex: {
       type: Number,
-      default: -1
+      default: -1,
     },
     locales: {
       type: Array,
       default() {
         return []
-      }
+      },
     },
     mediaFields: [
       {
         type: 'image',
-        name: 'media'
-      }
-    ]
+        name: 'media',
+      },
+    ],
   },
   data() {
     return {
@@ -466,27 +858,27 @@ export default {
             facebook: '',
             tiktok: '',
             twitter: '',
-            youtube: ''
+            youtube: '',
           },
           showWhatsApp: false,
           whatsappNumber: '',
-          whatsappMessage: {}
-        }
+          whatsappMessage: {},
+        },
       ],
       errors: {
         categories: [],
         serviceItems: [],
         generalSettings: {
           taxRate: false,
-          serviceFeeRate: false
-        }
+          serviceFeeRate: false,
+        },
       },
       itemDetailsTextMap: {}, // For managing item details textarea
       currentMediaItemId: null,
       currentMediaType: null, // To track what kind of media we're uploading
       currentCategoryId: null,
       selectedCategoryId: '',
-      sectionsStyle
+      sectionsStyle,
     }
   },
   watch: {
@@ -494,48 +886,52 @@ export default {
       handler(newCategories, oldCategories) {
         if (newCategories) {
           // Initialize errors object when categories change
-          this.errors.categories = newCategories.map(() => ({ name: false }));
+          this.errors.categories = newCategories.map(() => ({ name: false }))
 
           // If we have categories but no selection, select the first one
           if (newCategories.length > 0 && !this.selectedCategoryId) {
-            this.selectedCategoryId = newCategories[0].id;
+            this.selectedCategoryId = newCategories[0].id
           }
 
           // If the currently selected category was deleted, select another one
-          if (this.selectedCategoryId && !newCategories.find(cat => cat.id === this.selectedCategoryId)) {
-            this.selectedCategoryId = newCategories.length > 0 ? newCategories[0].id : '';
+          if (
+            this.selectedCategoryId &&
+            !newCategories.find((cat) => cat.id === this.selectedCategoryId)
+          ) {
+            this.selectedCategoryId =
+              newCategories.length > 0 ? newCategories[0].id : ''
           }
         }
       },
       deep: true,
-      immediate: true
+      immediate: true,
     },
     selectedCategoryId: {
       handler(newCategoryId) {
         if (newCategoryId && this.settings[0].serviceItems) {
           // Load item details text for all items in the selected category
-          const items = this.getServiceItemsByCategory(newCategoryId);
-          items.forEach(item => {
-            this.loadItemDetailsText(item);
-          });
+          const items = this.getServiceItemsByCategory(newCategoryId)
+          items.forEach((item) => {
+            this.loadItemDetailsText(item)
+          })
         }
-      }
+      },
     },
     selectedLang: {
       handler(newLang) {
         // When language changes, we need to reload details text for the currently
         // visible service items in the selected category
         if (this.selectedCategoryId && this.settings[0].serviceItems) {
-          this.settings[0].serviceItems.forEach(item => {
+          this.settings[0].serviceItems.forEach((item) => {
             if (item.categoryId === this.selectedCategoryId) {
-              this.loadItemDetailsText(item);
+              this.loadItemDetailsText(item)
             }
-          });
+          })
         }
-      }
+      },
     },
     selectedMedia(mediaObject) {
-      if (!mediaObject) return;
+      if (!mediaObject) return
 
       let media = {}
       media = assignMediaObject(mediaObject)
@@ -543,58 +939,67 @@ export default {
       // Handle different media types
       if (this.currentMediaType === 'logo') {
         // Update business logo
-        this.settings[0].logo = media;
+        this.settings[0].logo = media
       } else if (this.currentMediaType === 'categoryIcon') {
         // Update category icon
-        const categoryIndex = this.settings[0].categories.findIndex(cat => cat.id === this.currentCategoryId);
+        const categoryIndex = this.settings[0].categories.findIndex(
+          (cat) => cat.id === this.currentCategoryId,
+        )
         if (categoryIndex !== -1) {
-          this.settings[0].categories[categoryIndex].icon = media;
+          this.settings[0].categories[categoryIndex].icon = media
         }
       } else if (this.currentMediaType === 'serviceItem') {
         // Handle service item image
-        const itemIndex = this.settings[0].serviceItems.findIndex(item => item.id === this.currentMediaItemId);
+        const itemIndex = this.settings[0].serviceItems.findIndex(
+          (item) => item.id === this.currentMediaItemId,
+        )
         if (itemIndex !== -1) {
-          this.settings[0].serviceItems[itemIndex].image = media;
+          this.settings[0].serviceItems[itemIndex].image = media
         }
       }
 
-      this.$emit('closeMediaModal');
-      this.resetMediaState();
+      this.$emit('closeMediaModal')
+      this.resetMediaState()
     },
     settings: {
       handler(value) {
         if (value[0].categories) {
           // Initialize errors object when categories change
-          this.errors.categories = value[0].categories.map(() => ({ name: false }));
+          this.errors.categories = value[0].categories.map(() => ({
+            name: false,
+          }))
 
           // Initialize selectedCategoryId if not set and we have categories
           if (!this.selectedCategoryId && value[0].categories.length > 0) {
-            this.selectedCategoryId = value[0].categories[0].id;
+            this.selectedCategoryId = value[0].categories[0].id
           }
         }
 
         if (value[0].serviceItems) {
           // Update service item errors
-          this.errors.serviceItems = value[0].serviceItems.map(item => ({
+          this.errors.serviceItems = value[0].serviceItems.map((item) => ({
             id: item.id,
             name: false,
-            price: false
-          }));
+            price: false,
+          }))
         }
       },
       deep: true,
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   mounted() {
-    this.initializeLocalizedFields();
-    this.initializeDurationLocalization();
-    this.setDefaultWhatsAppMessages();
+    this.initializeLocalizedFields()
+    this.initializeDurationLocalization()
+    this.setDefaultWhatsAppMessages()
 
-    if (this.settings[0].serviceItems && this.settings[0].serviceItems.length > 0) {
-      this.settings[0].serviceItems.forEach(item => {
-        this.loadItemDetailsText(item);
-      });
+    if (
+      this.settings[0].serviceItems &&
+      this.settings[0].serviceItems.length > 0
+    ) {
+      this.settings[0].serviceItems.forEach((item) => {
+        this.loadItemDetailsText(item)
+      })
     }
 
     // Safely initialize social media settings
@@ -604,302 +1009,325 @@ export default {
         facebook: '',
         tiktok: '',
         twitter: '',
-        youtube: ''
-      };
+        youtube: '',
+      }
     } else {
       // Ensure all platforms exist
-      const platforms = ['instagram', 'facebook', 'tiktok', 'twitter', 'youtube'];
-      platforms.forEach(platform => {
+      const platforms = [
+        'instagram',
+        'facebook',
+        'tiktok',
+        'twitter',
+        'youtube',
+      ]
+      platforms.forEach((platform) => {
         if (typeof this.settings[0].socialMedia[platform] === 'undefined') {
-          this.settings[0].socialMedia[platform] = '';
+          this.settings[0].socialMedia[platform] = ''
         }
-      });
+      })
     }
 
     // Set WhatsApp properties if not already defined
     if (typeof this.settings[0].showWhatsApp === 'undefined') {
-      this.settings[0].showWhatsApp = false;
+      this.settings[0].showWhatsApp = false
     }
 
     if (!this.settings[0].whatsappNumber) {
-      this.settings[0].whatsappNumber = '';
+      this.settings[0].whatsappNumber = ''
     }
 
     if (!this.settings[0].whatsappMessage) {
-      this.settings[0].whatsappMessage = {};
+      this.settings[0].whatsappMessage = {}
     }
 
-
     // Initialize whatsappMessage for all locales
-    this.locales.forEach(locale => {
+    this.locales.forEach((locale) => {
       if (!this.settings[0].whatsappMessage[locale]) {
         // Use locale-specific translations instead of a single default message
-        const defaultMessage = this.$i18n.t('ServicePackages.whatsappDefaultMessage', null, locale);
-        this.settings[0].whatsappMessage[locale] = defaultMessage;
+        const defaultMessage = this.$i18n.t(
+          'ServicePackages.whatsappDefaultMessage',
+          null,
+          locale,
+        )
+        this.settings[0].whatsappMessage[locale] = defaultMessage
       }
-    });
+    })
   },
   methods: {
     setDefaultWhatsAppMessages() {
       // Ensure the object exists
       if (!this.settings[0].whatsappMessage) {
-        this.settings[0].whatsappMessage = {};
+        this.settings[0].whatsappMessage = {}
       }
 
       // Set language-specific messages directly
       const messages = {
-        'en': 'Hello! I would like to book a service.',
-        'fr': 'Bonjour ! Je voudrais réserver un service.'
-      };
+        en: 'Hello! I would like to book a service.',
+        fr: 'Bonjour ! Je voudrais réserver un service.',
+      }
 
       // Set each message with proper reactivity
-      Object.keys(messages).forEach(lang => {
+      Object.keys(messages).forEach((lang) => {
         if (!this.settings[0].whatsappMessage[lang]) {
-          this.settings[0].whatsappMessage[lang] = messages[lang];
+          this.settings[0].whatsappMessage[lang] = messages[lang]
         }
-      });
+      })
     },
     initializeDurationLocalization() {
-      if (this.settings[0].serviceItems && this.settings[0].serviceItems.length > 0) {
-        this.settings[0].serviceItems.forEach(item => {
+      if (
+        this.settings[0].serviceItems &&
+        this.settings[0].serviceItems.length > 0
+      ) {
+        this.settings[0].serviceItems.forEach((item) => {
           // Check if duration is a string (old format)
           if (typeof item.duration === 'string') {
-            const oldValue = item.duration;
+            const oldValue = item.duration
             // Convert to object format
-            this.item.duration = {};
+            this.item.duration = {}
 
             // Set the value for all locales
-            this.locales.forEach(locale => {
-              this.item.duration[locale] = oldValue;
-            });
+            this.locales.forEach((locale) => {
+              this.item.duration[locale] = oldValue
+            })
           }
           // If duration is undefined or null, initialize it
           else if (!item.duration) {
-            this.item.duration = {};
+            this.item.duration = {}
 
             // Initialize for all locales
-            this.locales.forEach(locale => {
-              this.item.duration[locale] = '';
-            });
+            this.locales.forEach((locale) => {
+              this.item.duration[locale] = ''
+            })
           }
           // Check if any locale is missing in the duration object
           else {
-            this.locales.forEach(locale => {
+            this.locales.forEach((locale) => {
               if (!item.duration[locale]) {
-                this.item.duration[locale] = item.duration.en || '';
+                this.item.duration[locale] = item.duration.en || ''
               }
-            });
+            })
           }
-        });
+        })
       }
     },
     getItemDetailsText(itemId) {
-      if (!this.itemDetailsTextMap[itemId]) return '';
-      return this.itemDetailsTextMap[itemId][this.selectedLang] || '';
+      if (!this.itemDetailsTextMap[itemId]) return ''
+      return this.itemDetailsTextMap[itemId][this.selectedLang] || ''
     },
     setItemDetailsText(itemId, text) {
       // Initialize if needed
       if (!this.itemDetailsTextMap[itemId]) {
-        this.itemDetailsTextMap[itemId] = {};
+        this.itemDetailsTextMap[itemId] = {}
       }
-      this.itemDetailsTextMap[itemId][this.selectedLang] = text;
+      this.itemDetailsTextMap[itemId][this.selectedLang] = text
     },
     updateItemDetails(object) {
-      const itemId = object.id;
+      const itemId = object.id
 
       // Ensure the itemDetailsTextMap exists for this item and language
       if (!this.itemDetailsTextMap[itemId]) {
-        this.itemDetailsTextMap[itemId] = {};
+        this.itemDetailsTextMap[itemId] = {}
       }
 
       // Get the details text for the current language - DON'T filter empty lines yet
-      const detailsText = this.itemDetailsTextMap[itemId][this.selectedLang] || '';
-      const lines = detailsText.split('\n'); // Keep all lines including empty ones
+      const detailsText =
+        this.itemDetailsTextMap[itemId][this.selectedLang] || ''
+      const lines = detailsText.split('\n') // Keep all lines including empty ones
 
       // Initialize the details array if needed
       if (!object.details) {
-        object.details = [];
+        object.details = []
       }
 
       // Create new details array with updated text for the current language
       const newDetails = lines.map((line, index) => {
         // Start with existing translations for this detail if available
-        const existingDetail = object.details[index] || {};
-        const detailObj = { ...existingDetail };
+        const existingDetail = object.details[index] || {}
+        const detailObj = { ...existingDetail }
 
         // Update the current language (keep empty lines too)
-        detailObj[this.selectedLang] = line;
+        detailObj[this.selectedLang] = line
 
         // Ensure all locales have a value (keep existing or set empty)
-        this.locales.forEach(locale => {
+        this.locales.forEach((locale) => {
           if (typeof detailObj[locale] === 'undefined') {
-            detailObj[locale] = locale === this.selectedLang ? line : '';
+            detailObj[locale] = locale === this.selectedLang ? line : ''
           }
-        });
+        })
 
-        return detailObj;
-      });
+        return detailObj
+      })
 
       // Only filter out completely empty details (where all languages are empty)
-      const filteredDetails = newDetails.filter(detail => {
-        return this.locales.some(locale => detail[locale] && detail[locale].trim() !== '');
-      });
+      const filteredDetails = newDetails.filter((detail) => {
+        return this.locales.some(
+          (locale) => detail[locale] && detail[locale].trim() !== '',
+        )
+      })
 
       // Update the details array - Vue 3 reactive assignment
-      object.details = filteredDetails;
+      object.details = filteredDetails
     },
     loadItemDetailsText(object) {
-      if (!object || !object.id) return '';
+      if (!object || !object.id) return ''
 
-      const itemId = object.id;
+      const itemId = object.id
 
       // Initialize the map for this object if it doesn't exist
       if (!this.itemDetailsTextMap[itemId]) {
-        this.itemDetailsTextMap[itemId] = {};
+        this.itemDetailsTextMap[itemId] = {}
       }
 
       // Initialize for all locales if needed
-      this.locales.forEach(locale => {
+      this.locales.forEach((locale) => {
         if (typeof this.itemDetailsTextMap[itemId][locale] === 'undefined') {
-          this.itemDetailsTextMap[itemId][locale] = '';
+          this.itemDetailsTextMap[itemId][locale] = ''
         }
-      });
+      })
 
       // Load existing details into the text map
       if (object && object.details && object.details.length > 0) {
-        this.locales.forEach(locale => {
+        this.locales.forEach((locale) => {
           const detailsText = object.details
-            .map(detail => detail[locale] || '') // Don't filter empty strings here
-            .join('\n');
+            .map((detail) => detail[locale] || '') // Don't filter empty strings here
+            .join('\n')
 
-          this.itemDetailsTextMap[itemId][locale] = detailsText;
-        });
+          this.itemDetailsTextMap[itemId][locale] = detailsText
+        })
       }
 
       // Return the text for the current language
-      return this.itemDetailsTextMap[itemId][this.selectedLang] || '';
+      return this.itemDetailsTextMap[itemId][this.selectedLang] || ''
     },
     updateObjectDetailsText(object) {
       if (object && object.details && object.details.length > 0) {
         // Set the details text from the first available language
         this.objectDetailsText = object.details
-          .map(detail => detail[this.selectedLang] || detail.en || '')
-          .join('\n');
+          .map((detail) => detail[this.selectedLang] || detail.en || '')
+          .join('\n')
       } else {
-        this.objectDetailsText = '';
+        this.objectDetailsText = ''
       }
     },
     resetMediaState() {
-      this.currentMediaItemId = null;
-      this.currentCategoryId = null;
-      this.currentMediaType = null;
+      this.currentMediaItemId = null
+      this.currentCategoryId = null
+      this.currentMediaType = null
     },
     openMediaModal(itemId, mediaId) {
-      this.$emit('openMediaModal', mediaId);
+      this.$emit('openMediaModal', mediaId)
       this.$nextTick(() => {
-        this.currentMediaItemId = itemId;
-        this.currentMediaType = 'serviceItem';
-      });
+        this.currentMediaItemId = itemId
+        this.currentMediaType = 'serviceItem'
+      })
     },
     openCategoryIconModal(categoryId, mediaId) {
-      this.$emit('openMediaModal', mediaId);
+      this.$emit('openMediaModal', mediaId)
       this.$nextTick(() => {
-        this.currentCategoryId = categoryId;
-        this.currentMediaType = 'categoryIcon';
-      });
+        this.currentCategoryId = categoryId
+        this.currentMediaType = 'categoryIcon'
+      })
     },
     openLogoModal(mediaId) {
-      this.$emit('openMediaModal', mediaId);
+      this.$emit('openMediaModal', mediaId)
       this.$nextTick(() => {
-        this.currentMediaType = 'logo';
-      });
+        this.currentMediaType = 'logo'
+      })
     },
     removeLogo() {
-      this.settings[0].logo = {};
+      this.settings[0].logo = {}
     },
     removeCategoryIcon(categoryId) {
-      const categoryIndex = this.settings[0].categories.findIndex(cat => cat.id === categoryId);
+      const categoryIndex = this.settings[0].categories.findIndex(
+        (cat) => cat.id === categoryId,
+      )
       if (categoryIndex !== -1) {
-        this.settings[0].categories[categoryIndex].icon = {};
+        this.settings[0].categories[categoryIndex].icon = {}
       }
     },
     initializeLocalizedFields() {
       if (!this.settings[0].pageTitle) {
-        this.settings[0].pageTitle = {};
+        this.settings[0].pageTitle = {}
       }
       if (!this.settings[0].pageSubtitle) {
-        this.settings[0].pageSubtitle = {};
+        this.settings[0].pageSubtitle = {}
       }
 
-      this.locales.forEach(locale => {
+      this.locales.forEach((locale) => {
         if (!this.settings[0].pageTitle[locale]) {
-          this.settings[0].pageTitle[locale] = '';
+          this.settings[0].pageTitle[locale] = ''
         }
         if (!this.settings[0].pageSubtitle[locale]) {
-          this.settings[0].pageSubtitle[locale] = '';
+          this.settings[0].pageSubtitle[locale] = ''
         }
-      });
+      })
     },
     addCategory() {
-      const categoryNumber = this.settings[0].categories.length + 1;
+      const categoryNumber = this.settings[0].categories.length + 1
       const category = {
         id: uuidv4(),
         name: {},
         description: {},
         classes: '',
-        icon: {}
-      };
+        icon: {},
+      }
 
-      this.locales.forEach(locale => {
-        category.name[locale] = '';
-        category.description[locale] = '';
-      });
+      this.locales.forEach((locale) => {
+        category.name[locale] = ''
+        category.description[locale] = ''
+      })
 
-      this.settings[0].categories.push(category);
-      this.errors.categories.push({ name: false });
+      this.settings[0].categories.push(category)
+      this.errors.categories.push({ name: false })
     },
     removeCategory(idx) {
-      const removedCategory = this.settings[0].categories[idx];
+      const removedCategory = this.settings[0].categories[idx]
 
       // Remove the category
-      this.settings[0].categories = this.settings[0].categories.filter((ct, i) => idx !== i);
+      this.settings[0].categories = this.settings[0].categories.filter(
+        (ct, i) => idx !== i,
+      )
       // Also update errors
-      this.errors.categories.splice(idx, 1);
+      this.errors.categories.splice(idx, 1)
 
       // Remove all service items that belong to the deleted category
       if (removedCategory && removedCategory.id) {
-        const categoryId = removedCategory.id;
-        this.settings[0].serviceItems = this.settings[0].serviceItems.filter(item => item.categoryId !== categoryId);
+        const categoryId = removedCategory.id
+        this.settings[0].serviceItems = this.settings[0].serviceItems.filter(
+          (item) => item.categoryId !== categoryId,
+        )
 
         // If we're removing the currently selected category
         if (this.selectedCategoryId === categoryId) {
           // Select the first available category if any
           if (this.settings[0].categories.length > 0) {
-            this.selectedCategoryId = this.settings[0].categories[0].id;
+            this.selectedCategoryId = this.settings[0].categories[0].id
           } else {
-            this.selectedCategoryId = '';
+            this.selectedCategoryId = ''
           }
         }
       }
     },
     updateObjectDetails(object) {
       // Convert textarea content to array of localized objects
-      const lines = this.objectDetailsText.split('\n').filter(line => line.trim() !== '');
+      const lines = this.objectDetailsText
+        .split('\n')
+        .filter((line) => line.trim() !== '')
 
       if (!object.details) {
-        this.object.details = [];
+        this.object.details = []
       }
 
-      object.details = lines.map(line => {
-        const detailObj = {};
-        this.locales.forEach(locale => {
-          detailObj[locale] = line;
-        });
-        return detailObj;
-      });
+      object.details = lines.map((line) => {
+        const detailObj = {}
+        this.locales.forEach((locale) => {
+          detailObj[locale] = line
+        })
+        return detailObj
+      })
     },
     addServiceItem(categoryId) {
-      if (!categoryId) return;
+      if (!categoryId) return
 
       const serviceItem = {
         id: uuidv4(),
@@ -914,184 +1342,229 @@ export default {
         details: [],
         availability: 'available',
         featured: false,
-        classes: ''
-      };
+        classes: '',
+      }
 
       // Initialize localized fields
-      this.locales.forEach(locale => {
-        serviceItem.name[locale] = '';
-        serviceItem.description[locale] = '';
-        serviceItem.duration[locale] = '';
-      });
+      this.locales.forEach((locale) => {
+        serviceItem.name[locale] = ''
+        serviceItem.description[locale] = ''
+        serviceItem.duration[locale] = ''
+      })
 
-      this.settings[0].serviceItems.push(serviceItem);
+      this.settings[0].serviceItems.push(serviceItem)
       this.errors.serviceItems.push({
         id: serviceItem.id,
         name: false,
         price: false,
-        discountedPrice: false // Add this to handle discount validation
-      });
+        discountedPrice: false, // Add this to handle discount validation
+      })
 
       // Reset the details text area when adding a new item
-      this.itemDetailsTextMap[serviceItem.id] = {};
-      this.locales.forEach(locale => {
-        this.itemDetailsTextMap[serviceItem.id][locale] = '';
-      });
+      this.itemDetailsTextMap[serviceItem.id] = {}
+      this.locales.forEach((locale) => {
+        this.itemDetailsTextMap[serviceItem.id][locale] = ''
+      })
     },
     removeServiceItem(itemId) {
       // Find the index of the service item with this ID
-      const idx = this.settings[0].serviceItems.findIndex(item => item.id === itemId);
-      if (idx === -1) return;
+      const idx = this.settings[0].serviceItems.findIndex(
+        (item) => item.id === itemId,
+      )
+      if (idx === -1) return
 
       // Remove the service item
       // this.$set(this.settings[0], 'serviceItems', this.settings[0].serviceItems.filter(item => item.id !== itemId));
-      this.settings[0].serviceItems.splice(idx, 1);
+      this.settings[0].serviceItems.splice(idx, 1)
 
       // Also update errors - find the error with this ID
-      const errorIdx = this.errors.serviceItems.findIndex(err => err.id === itemId);
+      const errorIdx = this.errors.serviceItems.findIndex(
+        (err) => err.id === itemId,
+      )
       if (errorIdx !== -1) {
-        this.errors.serviceItems.splice(errorIdx, 1);
+        this.errors.serviceItems.splice(errorIdx, 1)
       }
     },
     removeItemImage(itemId) {
-      const itemIndex = this.settings[0].serviceItems.findIndex(item => item.id === itemId);
+      const itemIndex = this.settings[0].serviceItems.findIndex(
+        (item) => item.id === itemId,
+      )
       if (itemIndex !== -1) {
-        this.settings[0].serviceItems[itemIndex].image = {};
+        this.settings[0].serviceItems[itemIndex].image = {}
       }
     },
     getCategoryOptions() {
-      if (!this.settings[0].categories || this.settings[0].categories.length === 0) return [];
+      if (
+        !this.settings[0].categories ||
+        this.settings[0].categories.length === 0
+      )
+        return []
 
-      return this.settings[0].categories.map(category => {
+      return this.settings[0].categories.map((category) => {
         // Get the category name in the selected language, fall back to English if not available
-        const nameInSelectedLang = category.name[this.selectedLang]?.trim();
-        const nameInEnglish = category.name.en?.trim();
+        const nameInSelectedLang = category.name[this.selectedLang]?.trim()
+        const nameInEnglish = category.name.en?.trim()
 
         // Check if we have any actual name content (not just empty strings)
-        const hasValidName = nameInSelectedLang || nameInEnglish;
+        const hasValidName = nameInSelectedLang || nameInEnglish
 
         const displayName = hasValidName
-          ? (nameInSelectedLang || nameInEnglish)
-          : `New Category`;
+          ? nameInSelectedLang || nameInEnglish
+          : `New Category`
 
         return {
           id: category.id,
-          name: displayName  // This is what filter-label-prop="'name'" will display
-        };
-      });
+          name: displayName, // This is what filter-label-prop="'name'" will display
+        }
+      })
     },
     getServiceItemsByCategory(categoryId) {
-      if (!categoryId || !this.settings[0].serviceItems) return [];
+      if (!categoryId || !this.settings[0].serviceItems) return []
 
       // Just return the filtered items without setting objectDetailsText here
-      return this.settings[0].serviceItems.filter(item => item.categoryId === categoryId);
+      return this.settings[0].serviceItems.filter(
+        (item) => item.categoryId === categoryId,
+      )
     },
     updateServiceItemsForCategory(categoryId, updatedItems) {
-      if (!categoryId) return;
+      if (!categoryId) return
 
       // Get all items that don't belong to this category
-      const otherItems = this.settings[0].serviceItems.filter(item => item.categoryId !== categoryId);
+      const otherItems = this.settings[0].serviceItems.filter(
+        (item) => item.categoryId !== categoryId,
+      )
 
       // Combine with the updated items for this category
-      this.settings[0].serviceItems = [...otherItems, ...updatedItems];
+      this.settings[0].serviceItems = [...otherItems, ...updatedItems]
     },
     getErrorForServiceItem(itemId, field) {
-      const error = this.errors.serviceItems.find(err => err.id === itemId);
-      return error ? error[field] : false;
+      const error = this.errors.serviceItems.find((err) => err.id === itemId)
+      return error ? error[field] : false
     },
     validate() {
-      let valid = true;
+      let valid = true
 
       // Reset general settings errors
-      this.errors.generalSettings.taxRate = false;
-      this.errors.generalSettings.serviceFeeRate = false;
+      this.errors.generalSettings.taxRate = false
+      this.errors.generalSettings.serviceFeeRate = false
 
       // Validate categories
       this.settings[0].categories.forEach((category, idx) => {
         // Reset error
-        this.errors.categories[idx].name = false;
+        this.errors.categories[idx].name = false
 
         // Check for required name
         if (!category.name[this.defaultLang]) {
-          this.errors.categories[idx].name = true;
-          valid = false;
+          this.errors.categories[idx].name = true
+          valid = false
         }
-      });
+      })
 
       // Validate service items
-      this.settings[0].serviceItems.forEach(item => {
+      this.settings[0].serviceItems.forEach((item) => {
         // Find the error object for this item
-        const errorIdx = this.errors.serviceItems.findIndex(err => err.id === item.id);
-        if (errorIdx === -1) return;
+        const errorIdx = this.errors.serviceItems.findIndex(
+          (err) => err.id === item.id,
+        )
+        if (errorIdx === -1) return
 
         // Reset errors
-        this.errors.serviceItems[errorIdx].name = false;
-        this.errors.serviceItems[errorIdx].price = false;
+        this.errors.serviceItems[errorIdx].name = false
+        this.errors.serviceItems[errorIdx].price = false
         if (this.errors.serviceItems[errorIdx].discountedPrice !== undefined) {
-          this.errors.serviceItems[errorIdx].discountedPrice = false;
+          this.errors.serviceItems[errorIdx].discountedPrice = false
         }
 
         // Check for required fields
         if (!item.name[this.defaultLang]) {
-          this.errors.serviceItems[errorIdx].name = true;
-          valid = false;
+          this.errors.serviceItems[errorIdx].name = true
+          valid = false
         }
 
         if (!item.price && item.price !== 0) {
-          this.errors.serviceItems[errorIdx].price = true;
-          valid = false;
+          this.errors.serviceItems[errorIdx].price = true
+          valid = false
         }
 
         // Check for discounted price if discount is enabled
-        if (item.hasDiscount && (!item.discountedPrice && item.discountedPrice !== 0)) {
+        if (
+          item.hasDiscount &&
+          !item.discountedPrice &&
+          item.discountedPrice !== 0
+        ) {
           // Make sure the discountedPrice error field exists
-          if (this.errors.serviceItems[errorIdx].discountedPrice === undefined) {
-            this.errors.serviceItems[errorIdx].discountedPrice = true;
+          if (
+            this.errors.serviceItems[errorIdx].discountedPrice === undefined
+          ) {
+            this.errors.serviceItems[errorIdx].discountedPrice = true
           } else {
-            this.errors.serviceItems[errorIdx].discountedPrice = true;
+            this.errors.serviceItems[errorIdx].discountedPrice = true
           }
-          valid = false;
+          valid = false
         }
-      });
+      })
 
       // Validate tax rate if tax is enabled
-      if (this.settings[0].enableTax && (!this.settings[0].taxRate && this.settings[0].taxRate !== 0)) {
-        this.errors.generalSettings.taxRate = true;
-        valid = false;
+      if (
+        this.settings[0].enableTax &&
+        !this.settings[0].taxRate &&
+        this.settings[0].taxRate !== 0
+      ) {
+        this.errors.generalSettings.taxRate = true
+        valid = false
       }
 
       // Validate service fee rate if service fee is enabled
-      if (this.settings[0].enableServiceFee && (!this.settings[0].serviceFeeRate && this.settings[0].serviceFeeRate !== 0)) {
-        this.errors.generalSettings.serviceFeeRate = true;
-        valid = false;
+      if (
+        this.settings[0].enableServiceFee &&
+        !this.settings[0].serviceFeeRate &&
+        this.settings[0].serviceFeeRate !== 0
+      ) {
+        this.errors.generalSettings.serviceFeeRate = true
+        valid = false
       }
 
       // Clean up media objects
-      this.settings[0].serviceItems.forEach(item => {
-        if (item.image && (Object.keys(item.image).length === 0 || !item.image.media_id || !item.image.url)) {
-          delete item.image;
+      this.settings[0].serviceItems.forEach((item) => {
+        if (
+          item.image &&
+          (Object.keys(item.image).length === 0 ||
+            !item.image.media_id ||
+            !item.image.url)
+        ) {
+          delete item.image
         }
-      });
+      })
 
       // Clean up category icon objects
-      this.settings[0].categories.forEach(category => {
-        if (category.icon && (Object.keys(category.icon).length === 0 || !category.icon.media_id || !category.icon.url)) {
-          delete category.icon;
+      this.settings[0].categories.forEach((category) => {
+        if (
+          category.icon &&
+          (Object.keys(category.icon).length === 0 ||
+            !category.icon.media_id ||
+            !category.icon.url)
+        ) {
+          delete category.icon
         }
-      });
+      })
 
       // Clean up logo
-      if (this.settings[0].logo && (Object.keys(this.settings[0].logo).length === 0 || !this.settings[0].logo.media_id || !this.settings[0].logo.url)) {
-        delete this.settings[0].logo;
+      if (
+        this.settings[0].logo &&
+        (Object.keys(this.settings[0].logo).length === 0 ||
+          !this.settings[0].logo.media_id ||
+          !this.settings[0].logo.url)
+      ) {
+        delete this.settings[0].logo
       }
 
       if (!valid) {
-        scrollToFirstError(this.errors);
+        scrollToFirstError(this.errors)
       }
 
-      return valid;
-    }
-  }
+      return valid
+    },
+  },
 }
 </script>
 

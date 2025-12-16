@@ -6,6 +6,7 @@
   "types": "./types.d.ts",
   "scripts": {
     "dev": "",
+    "format": "prettier --write .",
     "test": "jest"
   },
   "repository": {
@@ -33,6 +34,7 @@
     "babel-jest": "^27.4.4",
     "@babel/preset-env": "^7.22.5",
     "jest": "^27.0.5",
+    "prettier": "^3.3.3",
     "vue-jest": "^3.0.4"
   }
 }

@@ -23,11 +23,14 @@ const sectionForms = [
   'SimpleCTA',
   'SimpleMenu',
   'TextImage',
-  'ZAQWidget'
+  'ZAQWidget',
 ]
 
 // 👇️ Shared translations (optional, always included if present)
-const sharedTranslationFile = path.resolve(__dirname, 'sections/forms/Shared_i18n.json')
+const sharedTranslationFile = path.resolve(
+  __dirname,
+  'sections/forms/Shared_i18n.json',
+)
 
 // Helper: flatten nested keys
 function flattenKeys(obj, prefix = '') {
@@ -64,7 +67,10 @@ let hasMissing = false
 
 for (const section of sectionForms) {
   const vueFile = path.resolve(__dirname, `sections/forms/${section}.vue`)
-  const i18nFile = path.resolve(__dirname, `sections/forms/${section}_i18n.json`)
+  const i18nFile = path.resolve(
+    __dirname,
+    `sections/forms/${section}_i18n.json`,
+  )
 
   let vueContent = ''
   try {
@@ -97,18 +103,22 @@ for (const section of sectionForms) {
     const localLangKeys = flattenKeys(localTranslations[lang] || {})
     const availableKeys = new Set([...sharedLangKeys, ...localLangKeys])
 
-    const missing = [...usedKeys].filter(k => !availableKeys.has(k))
+    const missing = [...usedKeys].filter((k) => !availableKeys.has(k))
     if (missing.length > 0) {
       hasMissing = true
       const relativeVuePath = path.relative(__dirname, vueFile)
-      console.error(`❌ Missing keys in file "${relativeVuePath}" for language "${lang}":`)
-      missing.forEach(k => console.error(`  - ${k}`))
+      console.error(
+        `❌ Missing keys in file "${relativeVuePath}" for language "${lang}":`,
+      )
+      missing.forEach((k) => console.error(`  - ${k}`))
     }
   }
 }
 
 if (!hasMissing) {
-  console.log('✅ All translation keys are present in all sections forms and languages.')
+  console.log(
+    '✅ All translation keys are present in all sections forms and languages.',
+  )
 }
 
 let hasMissingViews = false
@@ -127,12 +137,15 @@ const sectionViews = [
   'SimpleCTA_static',
   'SimpleMenu_static',
   'TextImage_static',
-  'ZAQWidget_static'
+  'ZAQWidget_static',
 ]
 
 for (const section of sectionViews) {
   const vueFile = path.resolve(__dirname, `sections/views/${section}.vue`)
-  const i18nFile = path.resolve(__dirname, `sections/forms/${section.replace('_static', '')}_i18n.json`)
+  const i18nFile = path.resolve(
+    __dirname,
+    `sections/forms/${section.replace('_static', '')}_i18n.json`,
+  )
 
   let vueContent = ''
   try {
@@ -165,20 +178,23 @@ for (const section of sectionViews) {
     const localLangKeys = flattenKeys(localTranslations[lang] || {})
     const availableKeys = new Set([...sharedLangKeys, ...localLangKeys])
 
-    const missing = [...usedKeys].filter(k => !availableKeys.has(k))
+    const missing = [...usedKeys].filter((k) => !availableKeys.has(k))
     if (missing.length > 0) {
       hasMissingViews = true
       const relativeVuePath = path.relative(__dirname, vueFile)
-      console.error(`❌ Missing keys in file "${relativeVuePath}" for language "${lang}":`)
-      missing.forEach(k => console.error(`  - ${k}`))
+      console.error(
+        `❌ Missing keys in file "${relativeVuePath}" for language "${lang}":`,
+      )
+      missing.forEach((k) => console.error(`  - ${k}`))
     }
   }
 }
 
 if (!hasMissingViews) {
-  console.log('✅ All translation keys are present in all sections views and languages.')
+  console.log(
+    '✅ All translation keys are present in all sections views and languages.',
+  )
 }
-
 
 // Components validation
 // 👇️ Configurable: map each .vue file to its translation file
@@ -189,16 +205,30 @@ const componentTranslations = {
   'components/Blogs/ArticlesCategories.vue': 'sections/forms/Blogs_i18n.json',
   'components/Blogs/AuthorView.vue': 'sections/forms/Blogs_i18n.json',
   'components/Blogs/FullArticle.vue': 'sections/forms/Blogs_i18n.json',
-  'components/UnifiedMenu/CategoryList.vue': ['sections/forms/ServicePackages_i18n.json', 'sections/forms/RestaurantMenu_i18n.json'],
-  'components/UnifiedMenu/ItemModal.vue': ['sections/forms/ServicePackages_i18n.json', 'sections/forms/RestaurantMenu_i18n.json'],
-  'components/UnifiedMenu/ItemsGrid.vue': ['sections/forms/ServicePackages_i18n.json', 'sections/forms/RestaurantMenu_i18n.json'],
-  'components/UnifiedMenu/ShoppingCart.vue': ['sections/forms/ServicePackages_i18n.json', 'sections/forms/RestaurantMenu_i18n.json'],
+  'components/UnifiedMenu/CategoryList.vue': [
+    'sections/forms/ServicePackages_i18n.json',
+    'sections/forms/RestaurantMenu_i18n.json',
+  ],
+  'components/UnifiedMenu/ItemModal.vue': [
+    'sections/forms/ServicePackages_i18n.json',
+    'sections/forms/RestaurantMenu_i18n.json',
+  ],
+  'components/UnifiedMenu/ItemsGrid.vue': [
+    'sections/forms/ServicePackages_i18n.json',
+    'sections/forms/RestaurantMenu_i18n.json',
+  ],
+  'components/UnifiedMenu/ShoppingCart.vue': [
+    'sections/forms/ServicePackages_i18n.json',
+    'sections/forms/RestaurantMenu_i18n.json',
+  ],
   'components/LinkDescription.vue': 'sections/forms/Shared_i18n.json',
   'components/ListPagination.vue': 'sections/forms/Blogs_i18n.json',
 }
 
 // Logic for components directory
-for (const [vueRelativePath, i18nPaths] of Object.entries(componentTranslations)) {
+for (const [vueRelativePath, i18nPaths] of Object.entries(
+  componentTranslations,
+)) {
   const vueFile = path.resolve(__dirname, vueRelativePath)
 
   // Normalize to array for easier processing
@@ -233,7 +263,9 @@ for (const [vueRelativePath, i18nPaths] of Object.entries(componentTranslations)
         }
       }
     } catch (_) {
-      console.warn(`⚠️  Translation file not found for ${vueRelativePath}: ${relativePath}`)
+      console.warn(
+        `⚠️  Translation file not found for ${vueRelativePath}: ${relativePath}`,
+      )
       // Continue with what we have
     }
   }
@@ -244,18 +276,22 @@ for (const [vueRelativePath, i18nPaths] of Object.entries(componentTranslations)
     const langKeys = flattenKeys(mergedTranslations[lang] || {})
     const availableKeys = new Set(langKeys)
 
-    const missing = [...usedKeys].filter(k => !availableKeys.has(k))
+    const missing = [...usedKeys].filter((k) => !availableKeys.has(k))
     if (missing.length > 0) {
       componentsHasMissing = true
       const relativeVuePath = path.relative(__dirname, vueFile)
-      console.error(`❌ Missing keys in file "${relativeVuePath}" for language "${lang}":`)
-      missing.forEach(k => console.error(`  - ${k}`))
+      console.error(
+        `❌ Missing keys in file "${relativeVuePath}" for language "${lang}":`,
+      )
+      missing.forEach((k) => console.error(`  - ${k}`))
     }
   }
 }
 
 if (!componentsHasMissing) {
-  console.log('✅ All translation keys are present in all components and languages.')
+  console.log(
+    '✅ All translation keys are present in all components and languages.',
+  )
 }
 
 if (hasMissing || componentsHasMissing || hasMissingViews) {

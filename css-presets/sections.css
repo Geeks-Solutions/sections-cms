@@ -4,7 +4,8 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjvWyNPYZvg7UI.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjvWyNPYZvg7UI.woff2)
+    format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 
@@ -14,7 +15,8 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjtGyNPYZvg7UI.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjtGyNPYZvg7UI.woff2)
+    format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 
@@ -24,7 +26,8 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjvGyNPYZvg7UI.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjvGyNPYZvg7UI.woff2)
+    format('woff2');
   unicode-range: U+1F00-1FFF;
 }
 
@@ -34,7 +37,8 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1Czjs2yNPYZvg7UI.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1Czjs2yNPYZvg7UI.woff2)
+    format('woff2');
   unicode-range: U+0370-03FF;
 }
 
@@ -44,8 +48,11 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjvmyNPYZvg7UI.woff2) format('woff2');
-  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjvmyNPYZvg7UI.woff2)
+    format('woff2');
+  unicode-range:
+    U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 /* latin */
@@ -54,8 +61,11 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjsGyNPYZvgw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoC1CzjsGyNPYZvgw.woff2)
+    format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* cyrillic-ext */
@@ -64,7 +74,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKcg72nU6AF7xm.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKcg72nU6AF7xm.woff2)
+    format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 
@@ -74,7 +85,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKew72nU6AF7xm.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKew72nU6AF7xm.woff2)
+    format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 
@@ -84,7 +96,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKcw72nU6AF7xm.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKcw72nU6AF7xm.woff2)
+    format('woff2');
   unicode-range: U+1F00-1FFF;
 }
 
@@ -94,7 +107,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKfA72nU6AF7xm.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKfA72nU6AF7xm.woff2)
+    format('woff2');
   unicode-range: U+0370-03FF;
 }
 
@@ -104,8 +118,11 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKcQ72nU6AF7xm.woff2) format('woff2');
-  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKcQ72nU6AF7xm.woff2)
+    format('woff2');
+  unicode-range:
+    U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 /* latin */
@@ -115,7 +132,9 @@
   font-weight: 400;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCs6KVjbNBYlgoKfw72nU6AFw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* cyrillic-ext */
@@ -124,7 +143,8 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjvWyNPYZvg7UI.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjvWyNPYZvg7UI.woff2)
+    format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 
@@ -134,7 +154,8 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjtGyNPYZvg7UI.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjtGyNPYZvg7UI.woff2)
+    format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 
@@ -144,7 +165,8 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjvGyNPYZvg7UI.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjvGyNPYZvg7UI.woff2)
+    format('woff2');
   unicode-range: U+1F00-1FFF;
 }
 
@@ -154,7 +176,8 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjs2yNPYZvg7UI.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjs2yNPYZvg7UI.woff2)
+    format('woff2');
   unicode-range: U+0370-03FF;
 }
 
@@ -164,8 +187,11 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjvmyNPYZvg7UI.woff2) format('woff2');
-  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjvmyNPYZvg7UI.woff2)
+    format('woff2');
+  unicode-range:
+    U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 /* latin */
@@ -174,18 +200,21 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjsGyNPYZvgw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v20/4iCv6KVjbNBYlgoCxCvjsGyNPYZvgw.woff2)
+    format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 :root {
-  --primary-color: #03B1C7 !important;
-  --secondary-color: #00131F !important;
+  --primary-color: #03b1c7 !important;
+  --secondary-color: #00131f !important;
   --background-color: unset;
   --hover-background-color: unset;
   --base-font-size: 16px;
   --mobile-base-font-size: 16px;
-  --base-font-family: "Ubuntu", sans-serif;
+  --base-font-family: 'Ubuntu', sans-serif;
   --h1-color: var(--primary-color);
   --h2-color: unset;
   --h3-color: var(--secondary-color);
@@ -194,8 +223,8 @@
   --h6-color: var(--secondary-color);
   --primary-button-text-color: var(--secondary-color);
   --hover-primary-button-text-color: var(--secondary-color);
-  --primary-button-background-color: #FFF;
-  --hover-primary-button-background-color: #FFF;
+  --primary-button-background-color: #fff;
+  --hover-primary-button-background-color: #fff;
   --primary-button-border-color: transparent;
   --hover-primary-button-border-color: transparent;
   --secondary-button-text-color: var(--primary-color);
@@ -211,10 +240,10 @@
   --link-border-color: unset;
   --hover-link-border-color: unset;
   --p-color: var(--secondary-color);
-  --menu-text-color: #00131F;
-  --hover-menu-text-color: #00131F;
-  --cookie-background-color: #00131F;
-  --hover-cookie-background-color: #00131F;
+  --menu-text-color: #00131f;
+  --hover-menu-text-color: #00131f;
+  --cookie-background-color: #00131f;
+  --hover-cookie-background-color: #00131f;
   --cookie-p-color: white;
   --lists-color: inherit;
   --hover-lists-color: inherit;
@@ -347,7 +376,8 @@ section[zone-id] {
   padding-top: var(--zone-padding-top, 0);
   padding-right: var(--zone-padding-right, 0);
   padding-bottom: var(--zone-padding-bottom, 0);
-  padding-left: var(--zone-padding-left, 0);}
+  padding-left: var(--zone-padding-left, 0);
+}
 
 section[zone-id]:hover {
   background: var(--zone-hover-background-color) !important;
@@ -413,17 +443,20 @@ section[section-id] .simple-menu .ul-container-wrapper:hover {
   border-color: var(--section-hover-menu-group-border-color);
 }
 
-section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"], section[section-id] .simple-menu .ul-container-wrapper [class*="i-ic-baseline-"] {
+section[section-id] .simple-menu .ul-container-wrapper [class*='i-entypo-social-'],
+section[section-id] .simple-menu .ul-container-wrapper [class*='i-ic-baseline-'] {
   font-size: var(--section-list-social-icon-size, 30px);
   background: var(--section-list-social-color, var(--primary-color)) !important;
   margin: 0.5rem 1rem;
 }
 
-section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"]:hover, section[section-id] .simple-menu .ul-container-wrapper [class*="i-ic-baseline-"]:hover {
+section[section-id] .simple-menu .ul-container-wrapper [class*='i-entypo-social-']:hover,
+section[section-id] .simple-menu .ul-container-wrapper [class*='i-ic-baseline-']:hover {
   background: var(--section-hover-list-social-color, var(--primary-color)) !important;
 }
 
-section[section-id] .simple-menu .ul-container-wrapper [class*="i-entypo-social-"] p, section[section-id] .simple-menu .ul-container-wrapper [class*="i-ic-baseline-"] p {
+section[section-id] .simple-menu .ul-container-wrapper [class*='i-entypo-social-'] p,
+section[section-id] .simple-menu .ul-container-wrapper [class*='i-ic-baseline-'] p {
   color: transparent !important;
 }
 
@@ -443,27 +476,36 @@ section[section-id].SimpleMenu .group-items {
 }
 
 section[section-id] .simple-cta {
-  background: var(--section-background-color, #00131F);
+  background: var(--section-background-color, #00131f);
 }
 
 section[section-id] .simple-cta:hover {
-  background: var(--section-hover-background-color, #00131F);
+  background: var(--section-hover-background-color, #00131f);
 }
 
 section .view-component button {
-  white-space:normal;
+  white-space: normal;
 }
 
 section[section-id] .view-component button.quill-button-container,
 section[section-id] .whatsapp-checkout-button,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]):not([title="Raccourcis clavier"]):not([title="Faites glisser Pegman sur la carte pour ouvrir Street View"]),
+section[section-id]
+  .view-component
+  button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title='Keyboard shortcuts']):not(
+    [title='Drag Pegman onto the map to open Street View']
+  ):not([title='Raccourcis clavier']):not(
+    [title='Faites glisser Pegman sur la carte pour ouvrir Street View']
+  ),
 section[section-id] .simple-menu.main .sign-up {
   font-size: 14px !important;
   border: 1px solid var(--section-primary-button-border-color, var(--primary-button-border-color)) !important;
   border-radius: 6px !important;
   padding: 8px 8px !important;
   color: var(--section-primary-button-text-color, var(--primary-button-text-color)) !important;
-  background: var(--section-primary-button-background-color, var(--primary-button-background-color)) !important;
+  background: var(
+    --section-primary-button-background-color,
+    var(--primary-button-background-color)
+  ) !important;
 }
 
 section[section-id] .simple-menu.main .sign-up a p {
@@ -472,31 +514,55 @@ section[section-id] .simple-menu.main .sign-up a p {
 
 section[section-id] .view-component button.quill-button-container:hover,
 section[section-id] .whatsapp-checkout-button:hover,
-section[section-id] .view-component button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title="Keyboard shortcuts"]):not([title="Drag Pegman onto the map to open Street View"]):not([title="Raccourcis clavier"]):not([title="Faites glisser Pegman sur la carte pour ouvrir Street View"]):hover,
+section[section-id]
+  .view-component
+  button:not(.ly-button-wrapper):not(.gm-ui-hover-effect):not([title='Keyboard shortcuts']):not(
+    [title='Drag Pegman onto the map to open Street View']
+  ):not([title='Raccourcis clavier']):not(
+    [title='Faites glisser Pegman sur la carte pour ouvrir Street View']
+  ):hover,
 section[section-id] .simple-menu.main .sign-up:hover {
-  border: 1px solid var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color)) !important;
-  color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color)) !important;
-  background: var(--section-hover-primary-button-background-color, var(--hover-primary-button-background-color)) !important;
+  border: 1px solid
+    var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color)) !important;
+  color: var(
+    --section-hover-primary-button-text-color,
+    var(--hover-primary-button-text-color)
+  ) !important;
+  background: var(
+    --section-hover-primary-button-background-color,
+    var(--hover-primary-button-background-color)
+  ) !important;
 }
 
 section[section-id] .simple-menu.main .sign-up:hover a p {
-  color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color)) !important;
+  color: var(
+    --section-hover-primary-button-text-color,
+    var(--hover-primary-button-text-color)
+  ) !important;
 }
 
 section[section-id] .simple-cta .button-selector {
   font-size: 14px;
-  border: 1px solid var(--section-secondary-button-border-color, var(--secondary-button-border-color));
+  border: 1px solid
+    var(--section-secondary-button-border-color, var(--secondary-button-border-color));
   border-radius: 6px;
   padding: 8px;
   color: var(--section-secondary-button-text-color, var(--secondary-button-text-color));
   margin-right: 198px;
-  background: var(--section-secondary-button-background-color, var(--secondary-button-background-color)) !important;
+  background: var(
+    --section-secondary-button-background-color,
+    var(--secondary-button-background-color)
+  ) !important;
 }
 
 section[section-id] .simple-cta .button-selector:hover {
-  border: 1px solid var(--section-hover-secondary-button-border-color, var(--hover-secondary-button-border-color));
+  border: 1px solid
+    var(--section-hover-secondary-button-border-color, var(--hover-secondary-button-border-color));
   color: var(--section-hover-secondary-button-text-color, var(--hover-secondary-button-text-color));
-  background: var(--section-hover-secondary-button-background-color, var(--hover-secondary-button-background-color)) !important;
+  background: var(
+    --section-hover-secondary-button-background-color,
+    var(--hover-secondary-button-background-color)
+  ) !important;
 }
 
 .sections-main input {
@@ -505,7 +571,9 @@ section[section-id] .simple-cta .button-selector:hover {
   height: 55px;
   line-height: 24px !important;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   width: 100%;
   box-sizing: border-box;
   padding-left: 0.5rem !important;
@@ -548,14 +616,21 @@ section[section-id] .button-selector,
   height: max-content;
   white-space: nowrap;
   align-self: center;
-  background: var(--section-primary-button-background-color, var(--primary-button-background-color));
+  background: var(
+    --section-primary-button-background-color,
+    var(--primary-button-background-color)
+  );
 }
 
 section[section-id] .button-selector:hover,
 .cookieControl__Bar .button-selector:hover {
-  border: 1px solid var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color));
+  border: 1px solid
+    var(--section-hover-primary-button-border-color, var(--hover-primary-button-border-color));
   color: var(--section-hover-primary-button-text-color, var(--hover-primary-button-text-color));
-  background: var(--section-hover-primary-button-background-color, var(--hover-primary-button-background-color));
+  background: var(
+    --section-hover-primary-button-background-color,
+    var(--hover-primary-button-background-color)
+  );
 }
 
 section[section-id] .faq .section-wrapper #faq .arrow {
@@ -565,7 +640,8 @@ section[section-id] .faq .section-wrapper #faq .arrow {
 .faq .section-wrapper .question.expanded {
   --tw-shadow: 4px 2px 10px #0000001a !important;
   --tw-shadow-colored: 4px 2px 10px var(--tw-shadow-color) !important;
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+  box-shadow:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 
 .author-view .twitter {
@@ -603,7 +679,7 @@ section[section-id] .faq .section-wrapper #faq .arrow {
 }
 
 .author-view .button-selector p::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 5px;
   left: 5px;
@@ -616,16 +692,19 @@ section[section-id] .faq .section-wrapper #faq .arrow {
   z-index: 0;
 }
 
-.plans.plans-wrapper .plansBox:hover .separator, .plans.plans-wrapper .plansBox.mostPopular .separator {
-  border-color: var(--section-hover-separator-color, #C2C2C2) !important;
+.plans.plans-wrapper .plansBox:hover .separator,
+.plans.plans-wrapper .plansBox.mostPopular .separator {
+  border-color: var(--section-hover-separator-color, #c2c2c2) !important;
 }
 
 .plans.plans-wrapper .plansBox .separator {
-  border-color: var(--section-separator-color, #C2C2C2) !important;
+  border-color: var(--section-separator-color, #c2c2c2) !important;
 }
 
 .plans.plans-wrapper .plansBox {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
   background: var(--section-plan-background-color, transparent);
 }
 
@@ -658,7 +737,7 @@ section[section-id] .faq .section-wrapper #faq .arrow {
 }
 
 .plans.plans-wrapper u {
-  text-decoration-color: #61035B;
+  text-decoration-color: #61035b;
   text-underline-offset: 12px;
 }
 
@@ -676,13 +755,13 @@ section[section-id] .plans.plans-wrapper .price {
   font-weight: 300;
   font-size: 6rem;
   line-height: 1;
-  color: var(--section-price-color, #03B1C7);
+  color: var(--section-price-color, #03b1c7);
 }
 section[section-id] .plans.plans-wrapper .plansBox.mostPopular .price {
-  color: var(--section-hover-price-color, #03B1C7);
+  color: var(--section-hover-price-color, #03b1c7);
 }
 section[section-id] .plans.plans-wrapper .plansBox:hover .price {
-  color: var(--section-hover-price-color, #03B1C7);
+  color: var(--section-hover-price-color, #03b1c7);
 }
 
 .plans.plans-wrapper .currency {
@@ -695,14 +774,14 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
 
 .plans.plans-wrapper .plansBox:hover .currency {
   font-size: 1.5rem;
-  line-height: 2.0rem;
+  line-height: 2rem;
   font-weight: 300;
   color: var(--section-hover-currency-color, white);
 }
 
 .plans.plans-wrapper .plansBox .currency.mostPopular {
   font-size: 1.5rem;
-  line-height: 2.0rem;
+  line-height: 2rem;
   font-weight: 300;
   color: var(--section-hover-currency-color, white);
 }
@@ -721,7 +800,7 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
 }
 
 .plans.plans-wrapper .mr-6.img-wrapper {
-  margin-right: 1.0rem !important;
+  margin-right: 1rem !important;
 }
 
 .plans.plans-wrapper .plansBox:hover .plansTitleBox .title {
@@ -748,7 +827,8 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
 .plans.plans-wrapper .plansTitleBox .desc p {
   color: var(--section-description-color, gray);
 }
-.plans.plans-wrapper .plansBox:hover .plansTitleBox .desc p, .plans.plans-wrapper .plansBox.mostPopular .plansTitleBox .desc p {
+.plans.plans-wrapper .plansBox:hover .plansTitleBox .desc p,
+.plans.plans-wrapper .plansBox.mostPopular .plansTitleBox .desc p {
   color: var(--section-hover-description-color, gray);
 }
 
@@ -758,7 +838,8 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   font-weight: 300;
   color: var(--section-frequency-color, gray);
 }
-.plans.plans-wrapper .plansBox:hover .date, .plans.plans-wrapper .plansBox.mostPopular .date {
+.plans.plans-wrapper .plansBox:hover .date,
+.plans.plans-wrapper .plansBox.mostPopular .date {
   color: var(--section-hover-frequency-color, gray);
 }
 
@@ -766,17 +847,18 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: var(--section-link-color, #03B1C7);
+  color: var(--section-link-color, #03b1c7);
 }
-.plans.plans-wrapper .plansBox:hover .cta, .plans.plans-wrapper .plansBox.mostPopular .cta {
-  color: var(--section-hover-link-color, #03B1C7);
+.plans.plans-wrapper .plansBox:hover .cta,
+.plans.plans-wrapper .plansBox.mostPopular .cta {
+  color: var(--section-hover-link-color, #03b1c7);
 }
 
 .plans.plans-wrapper .cta-arrow {
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 500;
-  color: #61035B;
+  color: #61035b;
 }
 
 .plans.plans-wrapper .plansBox:hover .cta-arrow {
@@ -808,7 +890,10 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   line-height: 1.75rem;
   font-weight: 300;
   color: var(--section-hover-features-color, white);
-  list-style-image: var(--section-hover-features-icon, url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png"));
+  list-style-image: var(
+    --section-hover-features-icon,
+    url('https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png')
+  );
 }
 
 .plans.plans-wrapper .plansBox .bp.mostPopular {
@@ -816,7 +901,10 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   line-height: 1.75rem;
   font-weight: 300;
   color: var(--section-hover-features-color, white);
-  list-style-image: var(--section-hover-features-icon, url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png"));
+  list-style-image: var(
+    --section-hover-features-icon,
+    url('https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload0a9a254ea6dd49098bd3619e649edde5.png')
+  );
 }
 
 .plans.plans-wrapper .plansBox .bp {
@@ -824,7 +912,10 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   line-height: 1.75rem;
   font-weight: 300;
   color: var(--section-features-color, black);
-  list-style-image: var(--section-features-icon, url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload+%281%29e608936bc6b84240891e198f40cbb96a.png"));
+  list-style-image: var(
+    --section-features-icon,
+    url('https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownload+%281%29e608936bc6b84240891e198f40cbb96a.png')
+  );
 }
 
 .plans.plans-wrapper .features ul li {
@@ -833,7 +924,7 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
 }
 
 .plans.plans-wrapper .popPad {
-  background: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2FpopularTag8615a1d45bbc484a98467072192e6713.png");
+  background: url('https://s3.amazonaws.com/eweevtestbucketprivate/sections%2FpopularTag8615a1d45bbc484a98467072192e6713.png');
   width: 100px;
   height: 80px;
   top: -8.6px !important;
@@ -881,10 +972,16 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
   section[section-id].SimpleMenu .simple-menu.main .groups-wrapper:not(:has(.mobile-top)) {
     display: none;
   }
-  section[section-id].SimpleMenu .simple-menu.main .groups-wrapper:not(:has(.mobile-top)) .group-items:not(:has(.mobile-top)) {
+  section[section-id].SimpleMenu
+    .simple-menu.main
+    .groups-wrapper:not(:has(.mobile-top))
+    .group-items:not(:has(.mobile-top)) {
     display: none;
   }
-  section[section-id].SimpleMenu .simple-menu.main .groups-wrapper .ul-container-wrapper:not(:has(.mobile-top)) {
+  section[section-id].SimpleMenu
+    .simple-menu.main
+    .groups-wrapper
+    .ul-container-wrapper:not(:has(.mobile-top)) {
     display: none;
   }
   section[section-id] .simple-menu .ul-container-wrapper {
@@ -915,7 +1012,7 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
     padding-bottom: var(--zone-mobile-padding-bottom, 0);
     padding-left: var(--zone-mobile-padding-left, 0);
   }
-  section[class*="-wrapper"].region-element[region-id] {
+  section[class*='-wrapper'].region-element[region-id] {
     width: var(--region-mobile-width) !important;
   }
   section[section-id] .simple-menu .ul-container-wrapper {
@@ -936,7 +1033,7 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
     padding-bottom: var(--zone-mobile-padding-bottom, 0);
     padding-left: var(--zone-mobile-padding-left, 0);
   }
-  section[class*="-wrapper"].region-element[region-id] {
+  section[class*='-wrapper'].region-element[region-id] {
     width: var(--region-mobile-width) !important;
   }
   section[section-id] .simple-menu .ul-container-wrapper {
@@ -990,7 +1087,7 @@ section[section-id] .plans.plans-wrapper .plansBox:hover .price {
 }
 
 .simple-menu.main .login {
-  color: #03B1C7;
+  color: #03b1c7;
 }
 
 section[section-id] .simple-menu.main .lang {
@@ -1007,7 +1104,7 @@ section[section-id] .simple-menu.main .lang {
 }
 
 .simple-menu.main ul li:not(.login):not(.sign-up):not(.lang):hover {
-  color: #61035B;
+  color: #61035b;
 }
 
 section[section-id] .simple-menu.main ul li a p {
@@ -1033,16 +1130,16 @@ section[section-id] .simple-menu .menu-group-label {
 }
 
 .simple-menu ul {
-  margin-left: 15px
+  margin-left: 15px;
 }
 
 .simple-menu ul li:hover {
-  color: #61035B;
+  color: #61035b;
 }
 
 .simple-menu:not(.main) ul li::marker {
-  content: ">  ";
-  color: #03B1C7;
+  content: '>  ';
+  color: #03b1c7;
 }
 
 .simple-menu .mobile-menu-main-wrapper {
@@ -1109,7 +1206,7 @@ section[section-id] .simple-menu .menu-group-label {
 }
 
 .simple-menu.main .mobile-menu-main-wrapper .mobile-menu-close-wrapper .mobile-menu-close {
-  background: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fclose5dbd49942a234bc2bff6c8ec65afff3a.svg");
+  background: url('https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fclose5dbd49942a234bc2bff6c8ec65afff3a.svg');
   background-size: 30px;
   width: 102px;
   height: 102px;
@@ -1146,7 +1243,7 @@ section[section-id] .simple-menu .menu-group-label {
 .simple-menu.main .icon {
   width: 50px;
   height: 30px;
-  background-image: url("https://s3.amazonaws.com/eweevtestbucketprivate/sections%2FScreenshot+2025-01-24+092651e4a7de1586c9472cb238492b5682470e.png") !important;
+  background-image: url('https://s3.amazonaws.com/eweevtestbucketprivate/sections%2FScreenshot+2025-01-24+092651e4a7de1586c9472cb238492b5682470e.png') !important;
 }
 
 @container sections-main (max-width: 994px) {
@@ -1194,7 +1291,7 @@ section[section-id] .simple-menu .menu-group-label {
 
   .simple-menu.main .mobile-menu-main-wrapper ul li.login a p {
     font-size: 16px !important;
-    color: #03B1C7 !important;
+    color: #03b1c7 !important;
     font-weight: 300;
   }
 
@@ -1227,7 +1324,7 @@ section[section-id] .simple-menu .menu-group-label {
 
   .simple-menu.main .mobile-menu-main-wrapper ul li.home {
     display: flex;
-    border: 1px solid #03B1C7;
+    border: 1px solid #03b1c7;
     margin-top: 18px;
   }
 
@@ -1254,9 +1351,9 @@ section[section-id] .simple-menu .menu-group-label {
   }
 }
 
-[class^="region2"][class$="-wrapper"] .simple-menu.main,
-[class^="region6"][class$="-wrapper"] .simple-menu.main,
-[class^="region4"][class$="-wrapper"] .simple-menu.main {
+[class^='region2'][class$='-wrapper'] .simple-menu.main,
+[class^='region6'][class$='-wrapper'] .simple-menu.main,
+[class^='region4'][class$='-wrapper'] .simple-menu.main {
   align-items: center;
   ul {
     flex-wrap: wrap;
@@ -1300,13 +1397,14 @@ section[section-id] .simple-menu .menu-group-label {
   width: 12rem;
 }
 
-.simple-menu.footer ul.socials  {
+.simple-menu.footer ul.socials {
   display: inline-flex;
   gap: 30px;
   align-self: center;
 }
 
-.simple-menu.footer ul.socials li p, li p a {
+.simple-menu.footer ul.socials li p,
+li p a {
   display: none !important;
 }
 
@@ -1321,28 +1419,32 @@ section[section-id] .simple-menu .menu-group-label {
   background-size: cover !important;
   width: 30px !important;
   height: 30px !important;
-  align-self: center;}
+  align-self: center;
+}
 
 .simple-menu.footer ul.socials li.facebook {
   background: url(https://s3.eu-west-3.amazonaws.com/geeks-apps/sections%2Ffacebook94c89d4d719c483a94cc35811be073e4.svg) !important;
   background-size: cover !important;
   width: 30px !important;
   height: 30px !important;
-  align-self: center;}
+  align-self: center;
+}
 
 .simple-menu.footer ul.socials li.linkedin {
   background: url(https://s3.eu-west-3.amazonaws.com/geeks-apps/sections%2Flinkedin5b971409349142cf97da14dc8a6d9d8c.svg) !important;
   background-size: cover !important;
   width: 30px !important;
   height: 30px !important;
-  align-self: center;}
+  align-self: center;
+}
 
 .simple-menu.footer ul.socials li.instagram {
   background: url(https://s3.amazonaws.com/eweevtestbucketprivate/sections%2Fdownloadbfe8cd3a2ef744b39dd39bb388125630.svg) !important;
   background-size: cover !important;
   width: 30px !important;
   height: 30px !important;
-  align-self: center;}
+  align-self: center;
+}
 
 .simple-menu.footer ul.socials li {
   margin: 0.5rem 0;
@@ -1352,7 +1454,8 @@ section[section-id] .simple-menu .menu-group-label {
   padding: 0 32px;
 }
 
-@container sections-main (min-width: 640px) { /* sm */
+@container sections-main (min-width: 640px) {
+  /* sm */
   .simple-menu.footer {
     width: 100%; /* sm:w-1/2 */
     flex-direction: row; /* sm:flex-row */
@@ -1373,7 +1476,7 @@ section[section-id] .simple-menu .menu-group-label {
 }
 
 .simple-menu.footer .logo-wrapper {
-  margin-bottom: 1.0rem;
+  margin-bottom: 1rem;
 }
 
 @container sections-main (min-width: 640px) {
@@ -1419,27 +1522,41 @@ section .product-details {
   padding-right: 1.75rem;
 }
 
-section[section-id] ul li, section[section-id] ol li, section[section-id] ul li .ql-ui, section[section-id] ol li .ql-ui {
+section[section-id] ul li,
+section[section-id] ol li,
+section[section-id] ul li .ql-ui,
+section[section-id] ol li .ql-ui {
   color: var(--section-lists-color, var(--lists-color));
 }
 
-section[section-id] ul li:hover, section[section-id] ol li:hover, section[section-id] ul li:hover .ql-ui, section[section-id] ol li:hover .ql-ui {
+section[section-id] ul li:hover,
+section[section-id] ol li:hover,
+section[section-id] ul li:hover .ql-ui,
+section[section-id] ol li:hover .ql-ui {
   color: var(--section-hover-lists-color, var(--hover-lists-color));
 }
 
-section[section-id] ul li::marker, section[section-id] ol li::marker, section[section-id] ul li .ql-ui::before, section[section-id] ol li .ql-ui::before {
+section[section-id] ul li::marker,
+section[section-id] ol li::marker,
+section[section-id] ul li .ql-ui::before,
+section[section-id] ol li .ql-ui::before {
   color: var(--section-lists-marker-color, var(--lists-marker-color));
 }
 
-section[section-id] ul li:hover::marker, section[section-id] ol li:hover::marker, section[section-id] ul li:hover .ql-ui::before, section[section-id] ol li:hover .ql-ui::before {
+section[section-id] ul li:hover::marker,
+section[section-id] ol li:hover::marker,
+section[section-id] ul li:hover .ql-ui::before,
+section[section-id] ol li:hover .ql-ui::before {
   color: var(--section-hover-lists-marker-color, var(--hover-lists-marker-color));
 }
 
-section[section-id] .articles .pagination-wrapper .button-selector .next, .pagination-wrapper .button-selector .previous {
+section[section-id] .articles .pagination-wrapper .button-selector .next,
+.pagination-wrapper .button-selector .previous {
   color: var(--section-arrow-color);
 }
 
-section[section-id] .articles .pagination-wrapper .button-selector:hover .next, .pagination-wrapper .button-selector:hover .previous {
+section[section-id] .articles .pagination-wrapper .button-selector:hover .next,
+.pagination-wrapper .button-selector:hover .previous {
   color: var(--section-hover-arrow-color);
 }
 
@@ -1447,7 +1564,8 @@ section[section-id] .articles .pagination-wrapper .page-number {
   color: var(--section-number-color) !important;
 }
 
-section[section-id] .articles .pagination-wrapper .page-number:hover, .pagination-wrapper .page-number-selected {
+section[section-id] .articles .pagination-wrapper .page-number:hover,
+.pagination-wrapper .page-number-selected {
   color: var(--section-hover-number-color) !important;
 }
 
@@ -1489,12 +1607,18 @@ section[section-id] .product-details .price-block .currency:hover {
 }
 
 section[section-id] .category-tab.active {
-  background: var(--section-categories-active-background-color, var(--section-primary-color, var(--primary-color)));
+  background: var(
+    --section-categories-active-background-color,
+    var(--section-primary-color, var(--primary-color))
+  );
   color: var(--section-categories-active-text-color, #ffffff);
 }
 
 section[section-id] .category-tab.active:hover {
-  background: var(--section-hover-categories-active-background-color, var(--section-primary-color, var(--primary-color)));
+  background: var(
+    --section-hover-categories-active-background-color,
+    var(--section-primary-color, var(--primary-color))
+  );
   color: var(--section-hover-categories-active-text-color, #ffffff);
 }
 
@@ -1523,7 +1647,9 @@ section[section-id] .category-tab.active:hover {
   transition: all 0.2s;
   border-radius: 0.5rem;
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   padding: 1rem;
 }
 
@@ -1642,8 +1768,9 @@ section[section-id] .badge-featured.badge-service {
 
 .item-modal-content {
   background-color: white;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .modal-close-button {
@@ -1734,8 +1861,9 @@ section[section-id] .badge-featured.badge-service {
 
 .add-to-cart-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .add-to-cart-restaurant {
@@ -1824,10 +1952,12 @@ section[section-id] .cart-item-count {
   background: var(--section-hover-close-icon-background-color, #e5e5e5);
 }
 
-.cart-qty-value, .item-qty-value {
+.cart-qty-value,
+.item-qty-value {
   color: var(--section-quantity-number-color);
 }
-.cart-qty-value:hover, .item-qty-value:hover {
+.cart-qty-value:hover,
+.item-qty-value:hover {
   color: var(--section-hover-quantity-number-color);
 }
 
@@ -2089,8 +2219,9 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 
 .checkout-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .checkout-button.restaurant-theme {
@@ -2112,8 +2243,9 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 .whatsapp-button {
   background-color: #25d366;
   color: white;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .whatsapp-button:hover {
@@ -2182,17 +2314,16 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
   border: none;
 }
 
-
 /* Mobile-specific social link styling */
 @container sections-main (max-width: 768px) {
   .social-link-instagram {
     background: linear-gradient(
-            45deg,
-            #f09433 0%,
-            #e6683c 25%,
-            #dc2743 50%,
-            #cc2366 75%,
-            #bc1888 100%
+      45deg,
+      #f09433 0%,
+      #e6683c 25%,
+      #dc2743 50%,
+      #cc2366 75%,
+      #bc1888 100%
     );
     color: white;
   }
@@ -2244,14 +2375,10 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
   }
 
   .social-link-instagram:hover {
-    background: var(--section-hover-social-network-icon-background-color, linear-gradient(
-            45deg,
-            #f09433 0%,
-            #e6683c 25%,
-            #dc2743 50%,
-            #cc2366 75%,
-            #bc1888 100%
-    ));
+    background: var(
+      --section-hover-social-network-icon-background-color,
+      linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)
+    );
     color: var(--section-hover-social-network-icon-color, white);
   }
 
@@ -2278,12 +2405,18 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 
 /* Restaurant menu specific styles */
 .restaurant-menu {
-  font-family: var(--section-base-font-family, var(--base-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)) !important;
+  font-family: var(
+    --section-base-font-family,
+    var(--base-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif)
+  ) !important;
 }
 
 /* Service packages specific styles */
 .service-packages {
-  font-family: var(--section-base-font-family, var(--base-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)) !important;
+  font-family: var(
+    --section-base-font-family,
+    var(--base-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif)
+  ) !important;
 }
 
 /* Business type specific styling */
@@ -2311,7 +2444,7 @@ section[section-id] .view-component .service-packages button.item-qty-plus {
 }
 
 .restaurant-menu {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Featured item styling */
@@ -2337,7 +2470,6 @@ section[section-id] .restaurant-menu .featured {
 }
 
 /* Restaurant theme with potential custom colors */
-
 
 /* Set up the container query context */
 .category-container-query {
@@ -2455,25 +2587,25 @@ section[section-id] .restaurant-menu .featured {
 }
 
 :root {
-  --cookie-control-barBackground: #00131F;
+  --cookie-control-barBackground: #00131f;
   --cookie-control-barTextColor: #fff;
   --cookie-control-barButtonColor: #fff;
-  --cookie-control-barButtonHoverColor: #03B1C7;
-  --cookie-control-modalTextColor: #00131F;
+  --cookie-control-barButtonHoverColor: #03b1c7;
+  --cookie-control-modalTextColor: #00131f;
   --cookie-control-modalBackground: #fff;
   --cookie-control-modalOverlayOpacity: 0.8;
   --cookie-control-modalButtonColor: #fff;
   --cookie-control-modalUnsavedColor: #fff;
-  --cookie-control-barButtonBackground: #03B1C7;
+  --cookie-control-barButtonBackground: #03b1c7;
   --cookie-control-modalButtonHoverColor: var(--primary-color);
   --cookie-control-controlButtonIconColor: #fff;
-  --cookie-control-modalButtonBackground: #03B1C7;
+  --cookie-control-modalButtonBackground: #03b1c7;
   --cookie-control-modalButtonShadowedBackground: #aaa;
-  --cookie-control-controlButtonBackground: #03B1C7;
+  --cookie-control-controlButtonBackground: #03b1c7;
   --cookie-control-barButtonHoverBackground: #fff;
-  --cookie-control-checkboxActiveBackground: #03B1C7;
-  --cookie-control-controlButtonIconHoverColor: #03B1C7;
-  --cookie-control-checkboxInactiveBackground: #00131F;
+  --cookie-control-checkboxActiveBackground: #03b1c7;
+  --cookie-control-controlButtonIconHoverColor: #03b1c7;
+  --cookie-control-checkboxInactiveBackground: #00131f;
   --cookie-control-modalButtonHoverBackground: #fff;
   --cookie-control-modalOverlay: #333;
   --cookie-control-checkboxDisabledBackground: #ddd;
@@ -2551,7 +2683,9 @@ section[section-id] .restaurant-menu .featured {
   cursor: pointer;
   padding: 12px 20px;
   backface-visibility: hidden;
-  transition: background-color 200ms, color 200ms;
+  transition:
+    background-color 200ms,
+    color 200ms;
 }
 
 .cookieControl__Bar {
@@ -2589,7 +2723,7 @@ section[section-id] .restaurant-menu .featured {
   min-height: auto;
 }
 
-.cookieControl__Bar button+button {
+.cookieControl__Bar button + button {
   margin-left: 10px;
 }
 
@@ -2674,7 +2808,7 @@ section[section-id] .restaurant-menu .featured {
 }
 
 .cookieControl__Modal:before {
-  content: "";
+  content: '';
   min-height: 100vh;
   display: inline-block;
   vertical-align: middle;
@@ -2682,7 +2816,7 @@ section[section-id] .restaurant-menu .featured {
 
 .cookieControl__Modal:after {
   position: absolute;
-  content: "";
+  content: '';
   top: 0;
   left: 0;
   right: 0;
@@ -2692,7 +2826,7 @@ section[section-id] .restaurant-menu .featured {
   background-color: var(--cookie-control-modalOverlay);
 }
 
-.cookieControl__Modal>div {
+.cookieControl__Modal > div {
   font-size: initial;
 }
 
@@ -2755,7 +2889,7 @@ section[section-id] .restaurant-menu .featured {
   padding: 5px 56px 0;
 }
 
-.cookieControl__ModalContent ul ul li+li {
+.cookieControl__ModalContent ul ul li + li {
   margin-top: 5px;
 }
 
@@ -2763,7 +2897,7 @@ section[section-id] .restaurant-menu .featured {
   align-items: center;
 }
 
-.cookieControl__ModalContent li+li {
+.cookieControl__ModalContent li + li {
   margin-top: 20px;
 }
 
@@ -2771,20 +2905,20 @@ section[section-id] .restaurant-menu .featured {
   display: none;
 }
 
-.cookieControl__ModalContent input:checked+label {
+.cookieControl__ModalContent input:checked + label {
   background: var(--primary-color);
 }
 
-.cookieControl__ModalContent input:checked+label:before {
+.cookieControl__ModalContent input:checked + label:before {
   background-color: var(--cookie-control-checkboxActiveCircleBackground);
   transform: translate3d(100%, -50%, 0);
 }
 
-.cookieControl__ModalContent input:checked:disabled+label {
+.cookieControl__ModalContent input:checked:disabled + label {
   background-color: var(--cookie-control-checkboxDisabledBackground);
 }
 
-.cookieControl__ModalContent input:checked:disabled+label:before {
+.cookieControl__ModalContent input:checked:disabled + label:before {
   background-color: var(--cookie-control-checkboxDisabledCircleBackground);
 }
 
@@ -2803,7 +2937,7 @@ section[section-id] .restaurant-menu .featured {
 
 .cookieControl__ModalContent label:before {
   position: absolute;
-  content: "";
+  content: '';
   top: 50%;
   left: 3px;
   width: 15px;
@@ -2844,7 +2978,7 @@ section[section-id] .restaurant-menu .featured {
   justify-content: center;
 }
 
-.cookieControl__ModalButtons button+button {
+.cookieControl__ModalButtons button + button {
   margin-left: 20px;
 }
 
@@ -2865,7 +2999,7 @@ section[section-id] .restaurant-menu .featured {
 
 .cookieControl__BlockedIframe p,
 .cookieControl__BlockedIframe a {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 @media screen and (max-width: 768px) {
@@ -2914,7 +3048,7 @@ section[section-id] .restaurant-menu .featured {
     width: 100%;
   }
 
-  .cookieControl__BarButtons button+button {
+  .cookieControl__BarButtons button + button {
     margin: 10px 0 0;
   }
 
@@ -2931,7 +3065,7 @@ section[section-id] .restaurant-menu .featured {
     margin: 10px 0 0;
   }
 
-  .cookieControl__ModalButtons button+button {
+  .cookieControl__ModalButtons button + button {
     margin: 10px 0 0;
   }
 }

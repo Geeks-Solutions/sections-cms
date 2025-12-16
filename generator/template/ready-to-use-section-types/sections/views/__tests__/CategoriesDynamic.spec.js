@@ -1,26 +1,25 @@
-import { shallowMount } from "@vue/test-utils";
-import CategoriesDynamic from "../categories_dynamic.vue";
+import { shallowMount } from '@vue/test-utils'
+import CategoriesDynamic from '../categories_dynamic.vue'
 
 describe('totalPages computed property', () => {
-
   const factory = (propsData = {}, routePath = '') => {
     return shallowMount(CategoriesDynamic, {
       global: {
         config: {
           globalProperties: {
             $route: { path: '' },
-            updateQueryStringValue: vi.fn()
-          }
-        }
-      }
-    });
-  };
+            updateQueryStringValue: vi.fn(),
+          },
+        },
+      },
+    })
+  }
 
   it('emits refresh-section without sort key in qs', async () => {
-    const wrapper = factory({});
+    const wrapper = factory({})
 
     vi.mock('@/utils/constants', () => ({
-      updateQueryStringValue: vi.fn()
+      updateQueryStringValue: vi.fn(),
     }))
 
     const item = { original_title: 'Test Category' }
@@ -42,5 +41,4 @@ describe('totalPages computed property', () => {
     // This is the key part: make sure 'sort' is NOT in qs
     expect(eventPayload.qs.sort).toBeUndefined()
   })
-
-});
+})

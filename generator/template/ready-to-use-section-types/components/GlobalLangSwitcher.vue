@@ -5,27 +5,26 @@
 </template>
 
 <script>
-
 export default {
   name: 'GlobalLangSwitcher',
   props: {
     label: {
       type: String,
-      default: ""
+      default: '',
     },
     lang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
     defaultLang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
   },
   methods: {
     switchLang() {
       const updatedLang = this.lang === 'fr' ? 'en' : 'fr'
-      const currentState = history.state || {};
+      const currentState = history.state || {}
       if (updatedLang !== this.defaultLang) {
         let newPath = `/${updatedLang}${this.$route.fullPath}`
         if (this.$route.fullPath.startsWith(`/${updatedLang}`)) {
@@ -42,7 +41,7 @@ export default {
       this.$i18n.locale = updatedLang
       this.$i18n.setLocale(updatedLang)
       this.$emit('lang-switched', updatedLang)
-    }
-  }
+    },
+  },
 }
 </script>

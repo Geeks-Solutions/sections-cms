@@ -1,12 +1,35 @@
 <template>
   <div class="QAWr">
-
     <div class="mt-4 mb-4">
-      <LazyMediasUploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="selectedMediaIndex = 0; $emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia(0)" />
+      <LazyMediasUploadMedia
+        :media-label="$t('forms.media')"
+        :upload-text="$t('forms.uploadMedia')"
+        :change-text="$t('forms.changeMedia')"
+        :seo-tag="$t('forms.seoTag')"
+        :media="
+          settings[0].media && Object.keys(settings[0].media).length > 0
+            ? [settings[0].media]
+            : []
+        "
+        @uploadContainerClicked="
+          selectedMediaIndex = 0
+          $emit(
+            'openMediaModal',
+            settings[0].media && Object.keys(settings[0].media).length > 0
+              ? settings[0].media.media_id
+              : null,
+          )
+        "
+        @removeUploadedImage="removeMedia(0)"
+      />
     </div>
 
     <div class="flex flex-col items-start justify-start mt-8">
-      <label for="dropdown" class="block mb-2 text-sm font-medium text-gray-700">{{ $t('forms.imagePosition') }}</label>
+      <label
+        for="dropdown"
+        class="block mb-2 text-sm font-medium text-gray-700"
+        >{{ $t('forms.imagePosition') }}</label
+      >
       <select
         id="dropdown"
         v-model="settings[0].imagePosition"
@@ -20,46 +43,56 @@
 
     <div class="flex flex-col items-start justify-start mt-8">
       <div class="flex">
-        <label class="mr-4 font-bold">{{ $t("forms.title") }}</label>
+        <label class="mr-4 font-bold">{{ $t('forms.title') }}</label>
       </div>
       <input
         v-model="settings[0][siteLang].title"
         type="text"
         :placeholder="$t('forms.title')"
-        :class="['py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none', errors.title && selectedLang === defaultLang ? 'border-error' : 'border-FieldGray']"
+        :class="[
+          'py-4 pl-6 border rounded-xl h-[48px] w-[344px] focus:outline-none',
+          errors.title && selectedLang === defaultLang
+            ? 'border-error'
+            : 'border-FieldGray',
+        ]"
       />
     </div>
 
     <div class="flex flex-col mt-4">
-
-      <LazySectionsFormsFieldSets :array-data-pop="settings[0].QAs" :fieldset-group="'qa'" :legend-label="$t('forms.qa')" @array-updated="(data) => settings[0]['QAs'] = data" @remove-fieldset="(object, idx) => removeQA(idx)">
+      <LazySectionsFormsFieldSets
+        :array-data-pop="settings[0].QAs"
+        :fieldset-group="'qa'"
+        :legend-label="$t('forms.qa')"
+        @array-updated="(data) => (settings[0]['QAs'] = data)"
+        @remove-fieldset="(object, idx) => removeQA(idx)"
+      >
         <template #default="{ object, idx }">
           <div class="flex flex-row w-full justify-between">
             <div class="flex flex-col w-full items-start justify-start">
               <div class="flex flex-row w-full justify-between mt-6">
-                <label class="mr-4 font-medium">{{ $t("forms.question") }}</label>
+                <label class="mr-4 font-medium">{{
+                  $t('forms.question')
+                }}</label>
               </div>
               <input
                 v-model="object[siteLang].question"
                 type="text"
                 :placeholder="$t('forms.question')"
-                class="
-            py-4
-            pl-6
-            border border-FieldGray
-            rounded-xl
-            h-[48px]
-            w-full
-            focus:outline-none
-          "
+                class="py-4 pl-6 border border-FieldGray rounded-xl h-[48px] w-full focus:outline-none"
               />
             </div>
-
           </div>
 
           <div class="flex flex-col items-start justify-start mt-8">
-            <label class="mr-4 font-medium">{{ $t("forms.answer") }}</label>
-            <LazyEditorWysiwyg :quill-key="`object-${idx}`" :html="object[siteLang].answer" :css-classes-prop="object.classes" @cssClassesChanged="(v) => object['classes'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateQAAnswer(content, idx)"/>
+            <label class="mr-4 font-medium">{{ $t('forms.answer') }}</label>
+            <LazyEditorWysiwyg
+              :quill-key="`object-${idx}`"
+              :html="object[siteLang].answer"
+              :css-classes-prop="object.classes"
+              @cssClassesChanged="(v) => (object['classes'] = v)"
+              @wysiwygMedia="wysiwygMediaAdded"
+              @settingsUpdate="(content) => updateQAAnswer(content, idx)"
+            />
           </div>
         </template>
       </LazySectionsFormsFieldSets>
@@ -69,87 +102,88 @@
         :class="{ disabled: settings[0].QAs.length === 4 }"
         @click="addQA()"
       >
-        <div class="p3 bold text">{{ $t("forms.addNewContainer") }}</div>
+        <div class="p3 bold text">{{ $t('forms.addNewContainer') }}</div>
       </div>
-
-
     </div>
 
-    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
-
+    <LazySectionFormErrors
+      :selectedLang="selectedLang"
+      :default-lang="defaultLang"
+      :locales="locales"
+      :errors="errors"
+    />
   </div>
 </template>
 
 <i18n src="./Shared_i18n.json"></i18n>
 
 <script>
-
 import { assignMediaObject } from '@/utils/constants.js'
 
 export default {
-  name: "FAQ",
+  name: 'FAQ',
   setup() {
     const { t } = useI18n({
-      useScope: 'local'
+      useScope: 'local',
     })
 
     return {
-      $t: t
+      $t: t,
     }
   },
   props: {
     selectedLang: {
       type: String,
-      default: 'en'
+      default: 'en',
     },
     defaultLang: {
       type: String,
-      default: 'en'
+      default: 'en',
     },
     selectedMedia: {},
     locales: {
       type: Array,
       default() {
         return []
-      }
+      },
     },
     mediaFields: [
       {
         type: 'image',
-        name: 'media'
+        name: 'media',
       },
       {
         type: 'image',
-        name: 'wysiwygMedia'
-      }
-    ]
+        name: 'wysiwygMedia',
+      },
+    ],
   },
   data() {
     return {
       settings: [
         {
           en: {
-            title: ''
+            title: '',
           },
           fr: {
-            title: ''
+            title: '',
           },
           QAs: [],
           media: {
-            media_id: "",
-            url: "",
-            seo_tag: ""
+            media_id: '',
+            url: '',
+            seo_tag: '',
           },
-          imagePosition: "none"
-        }
+          imagePosition: 'none',
+        },
       ],
       errors: {
         title: false,
         text: false,
-        buttonText: false
+        buttonText: false,
       },
       siteLang: 'en',
-      selectedMediaIndex: 0
+      selectedMediaIndex: 0,
     }
   },
   watch: {
@@ -158,10 +192,10 @@ export default {
         this.siteLang = val
       },
       deep: true,
-      immediate: true
+      immediate: true,
     },
     settings(val) {
-      if (Array.isArray(val) === false ) {
+      if (Array.isArray(val) === false) {
         this.settings = [val]
       }
     },
@@ -170,13 +204,13 @@ export default {
       media = assignMediaObject(mediaObject)
       this.settings[this.selectedMediaIndex]['media'] = media
       this.$emit('closeMediaModal')
-    }
+    },
   },
   methods: {
     wysiwygMediaAdded(media) {
       this.settings.push({
         wysiwygMedia: media,
-        wysiwygLang: this.selectedLang
+        wysiwygLang: this.selectedLang,
       })
     },
     updateQAAnswer(content, idx) {
@@ -186,13 +220,13 @@ export default {
       this.settings[0].QAs.push({
         en: {
           question: '',
-          answer: ''
+          answer: '',
         },
         fr: {
           question: '',
-          answer: ''
+          answer: '',
         },
-        classes: ''
+        classes: '',
       })
     },
     removeQA(idx) {
@@ -205,7 +239,11 @@ export default {
       if (Array.isArray(this.settings)) {
         this.settings.forEach((ob, index) => {
           if (ob.wysiwygLang) {
-            if (!JSON.stringify(this.settings[0].QAs.map(qa => qa)).includes(ob.wysiwygMedia.media_id)) {
+            if (
+              !JSON.stringify(this.settings[0].QAs.map((qa) => qa)).includes(
+                ob.wysiwygMedia.media_id,
+              )
+            ) {
               this.settings.splice(index, 1)
             }
           }
@@ -214,14 +252,14 @@ export default {
           }
         })
       }
-      let valid = true;
-      this.errors.title = false;
+      let valid = true
+      this.errors.title = false
       if (!this.settings[0][this.defaultLang].title) {
-        this.errors.title = true;
-        valid = false;
+        this.errors.title = true
+        valid = false
       }
-      return valid;
-    }
-  }
+      return valid
+    },
+  },
 }
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div :key="resetKey" class="max-w-4xl mx-auto p-6 bg-white builder-settings">
-
     <div class="flex flex-row justify-end">
       <button
         @click="resetSettings()"
@@ -16,20 +15,35 @@
         @click="toggleSection('priceAndCurrency')"
         class="priceAndCurrency w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.priceAndCurrency') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.priceAndCurrency') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.priceAndCurrency }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.priceAndCurrency" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.priceAndCurrency"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
-            <label for="base-font-size" class="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              for="base-font-size"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
               {{ $t('builderSettings.priceFontSize') }}
             </label>
             <input
@@ -42,7 +56,10 @@
             />
           </div>
           <div>
-            <label for="base-font-size" class="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              for="base-font-size"
+              class="block text-sm font-medium text-gray-700 mb-2"
+            >
               {{ $t('builderSettings.discountedPriceFontSize') }}
             </label>
             <input
@@ -59,7 +76,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-price-color']"
               @update:model-value="emitUpdate"
@@ -75,7 +94,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-price-color']"
               @update:model-value="emitUpdate"
@@ -90,7 +111,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -100,21 +120,35 @@
         @click="toggleSection('limitedAvailability')"
         class="limitedAvailability w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.limitedAvailability') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.limitedAvailability') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.limitedAvailability }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.limitedAvailability" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.limitedAvailability"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-limited-availability-color']"
               @update:model-value="emitUpdate"
@@ -124,7 +158,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-limited-availability-color']"
               @update:model-value="emitUpdate"
@@ -133,7 +169,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -143,21 +178,35 @@
         @click="toggleSection('offPercentage')"
         class="offPercentage w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.offPercentage') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.offPercentage') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.offPercentage }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.offPercentage" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.offPercentage"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-off-color']"
               @update:model-value="emitUpdate"
@@ -167,7 +216,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-off-color']"
               @update:model-value="emitUpdate"
@@ -176,7 +227,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -186,21 +236,35 @@
         @click="toggleSection('duration')"
         class="duration w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.duration') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.duration') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.duration }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.duration" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.duration"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-duration-color']"
               @update:model-value="emitUpdate"
@@ -210,7 +274,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-duration-color']"
               @update:model-value="emitUpdate"
@@ -219,7 +285,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -229,21 +294,35 @@
         @click="toggleSection('closeIcon')"
         class="closeIconToggle w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.closeIcon') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.closeIcon') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.closeIcon }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.closeIcon" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.closeIcon"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-close-icon-color']"
               @update:model-value="emitUpdate"
@@ -260,7 +339,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-close-icon-color']"
               @update:model-value="emitUpdate"
@@ -276,7 +357,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -286,21 +366,35 @@
         @click="toggleSection('quantity')"
         class="quantity w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.quantity') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.quantity') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.quantity }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.quantity" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.quantity"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-quantity-label-color']"
               @update:model-value="emitUpdate"
@@ -317,7 +411,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-quantity-label-color']"
               @update:model-value="emitUpdate"
@@ -333,7 +429,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -343,21 +438,35 @@
         @click="toggleSection('specialInstructions')"
         class="specialInstructions w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.specialInstructions') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.specialInstructions') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.specialInstructions }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.specialInstructions" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.specialInstructions"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-special-instructions-color']"
               @update:model-value="emitUpdate"
@@ -367,7 +476,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-special-instructions-color']"
               @update:model-value="emitUpdate"
@@ -376,7 +487,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -386,21 +496,35 @@
         @click="toggleSection('categories')"
         class="categories w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.categories') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.categories') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.categories }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.categories" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.categories"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-categories-text-color']"
               @update:model-value="emitUpdate"
@@ -430,7 +554,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-categories-text-color']"
               @update:model-value="emitUpdate"
@@ -451,7 +577,9 @@
               field-name="hover-categories-active-text-color"
             />
             <ColorPicker
-              v-model="formData['--section-hover-categories-active-background-color']"
+              v-model="
+                formData['--section-hover-categories-active-background-color']
+              "
               @update:model-value="emitUpdate"
               :label="`${$t('builderSettings.hoverCategoriesActiveBackgroundColor')}`"
               field-name="hover-categories-active-background-color"
@@ -459,7 +587,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -469,21 +596,35 @@
         @click="toggleSection('cartIcon')"
         class="cartIconToggle w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.cartIcon') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.cartIcon') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.cartIcon }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.cartIcon" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.cartIcon"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-cart-icon-color']"
               @update:model-value="emitUpdate"
@@ -500,7 +641,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-cart-icon-color']"
               @update:model-value="emitUpdate"
@@ -516,7 +659,6 @@
             />
           </div>
         </div>
-
       </div>
     </div>
 
@@ -526,21 +668,35 @@
         @click="toggleSection('socialNetworkLinks')"
         class="socialNetworkLinks w-full flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors"
       >
-        <h3 class="text-lg font-semibold text-gray-800">{{ $t('builderSettings.socialNetworkLinks') }}</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          {{ $t('builderSettings.socialNetworkLinks') }}
+        </h3>
         <svg
           :class="{ 'rotate-180': expandedSections.socialNetworkLinks }"
           class="w-5 h-5 text-gray-600 transition-transform"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
-      <div v-show="expandedSections.socialNetworkLinks" class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50">
+      <div
+        v-show="expandedSections.socialNetworkLinks"
+        class="mt-4 p-4 border border-gray-200 rounded-b-lg bg-gray-50"
+      >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Normal State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.normalState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.normalState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-social-network-icon-color']"
               @update:model-value="emitUpdate"
@@ -548,7 +704,9 @@
               field-name="social-network-icon-color"
             />
             <ColorPicker
-              v-model="formData['--section-social-network-icon-background-color']"
+              v-model="
+                formData['--section-social-network-icon-background-color']
+              "
               @update:model-value="emitUpdate"
               :label="`${$t('builderSettings.socialNetworkIconBackgroundColor')}`"
               field-name="social-network-icon-background-color"
@@ -557,7 +715,9 @@
           </div>
           <!-- Hover State -->
           <div class="space-y-4">
-            <h5 class="text-sm font-medium text-gray-600">{{ $t('builderSettings.hoverState') }}</h5>
+            <h5 class="text-sm font-medium text-gray-600">
+              {{ $t('builderSettings.hoverState') }}
+            </h5>
             <ColorPicker
               v-model="formData['--section-hover-social-network-icon-color']"
               @update:model-value="emitUpdate"
@@ -565,7 +725,9 @@
               field-name="hover-social-network-icon-color"
             />
             <ColorPicker
-              v-model="formData['--section-hover-social-network-icon-background-color']"
+              v-model="
+                formData['--section-hover-social-network-icon-background-color']
+              "
               @update:model-value="emitUpdate"
               :label="`${$t('builderSettings.hoverSocialNetworkIconBackgroundColor')}`"
               field-name="hover-social-network-icon-background-color"
@@ -573,15 +735,13 @@
             />
           </div>
         </div>
-
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup>
-import {ref, reactive, watch} from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { callDynamicFunction } from '@/utils/constants.js'
 
 const emit = defineEmits(['section-theme-updated'])
@@ -599,7 +759,7 @@ const expandedSections = ref({
   specialInstructions: false,
   categories: false,
   cartIcon: false,
-  socialNetworkLinks: false
+  socialNetworkLinks: false,
 })
 
 const props = defineProps({
@@ -607,20 +767,20 @@ const props = defineProps({
     type: Object,
     default() {
       return {}
-    }
+    },
   },
   originalThemeSettingsProp: {
     type: Object,
     default() {
       return {}
-    }
+    },
   },
   themeSettingsProp: {
     type: Object,
     default() {
       return {}
-    }
-  }
+    },
+  },
 })
 
 // Form data with all required fields
@@ -673,23 +833,31 @@ let formData = reactive({
   '--section-social-network-icon-color': '',
   '--section-social-network-icon-background-color': '',
   '--section-hover-social-network-icon-color': '',
-  '--section-hover-social-network-icon-background-color': ''
+  '--section-hover-social-network-icon-background-color': '',
 })
 
-watch(() => props.originalThemeSettingsProp, (value) => {
-  if (value && value.specific && value.specific[props.sectionData.id]) {
-    if (!savedSettings.value) {
-      Object.assign(formData, value.specific[props.sectionData.id])
-      savedSettings.value = value.specific[props.sectionData.id]
+watch(
+  () => props.originalThemeSettingsProp,
+  (value) => {
+    if (value && value.specific && value.specific[props.sectionData.id]) {
+      if (!savedSettings.value) {
+        Object.assign(formData, value.specific[props.sectionData.id])
+        savedSettings.value = value.specific[props.sectionData.id]
+      }
     }
-  }
-}, {deep: true, immediate: true})
+  },
+  { deep: true, immediate: true },
+)
 
-watch(() => props.themeSettingsProp, (value) => {
-  if (value && value.specific && value.specific[props.sectionData.id]) {
-    Object.assign(formData, value.specific[props.sectionData.id])
-  }
-}, {deep: true, immediate: true})
+watch(
+  () => props.themeSettingsProp,
+  (value) => {
+    if (value && value.specific && value.specific[props.sectionData.id]) {
+      Object.assign(formData, value.specific[props.sectionData.id])
+    }
+  },
+  { deep: true, immediate: true },
+)
 
 const toggleSection = (section) => {
   expandedSections.value[section] = !expandedSections.value[section]
@@ -745,7 +913,7 @@ const resetSettings = () => {
     '--section-social-network-icon-color': '',
     '--section-social-network-icon-background-color': '',
     '--section-hover-social-network-icon-color': '',
-    '--section-hover-social-network-icon-background-color': ''
+    '--section-hover-social-network-icon-background-color': '',
   }
   Object.assign(formData, emptyFormData)
   emitUpdate(true)
@@ -754,14 +922,14 @@ const resetSettings = () => {
 
 const emitUpdate = async (reset) => {
   await callDynamicFunction(
-    "/theme/theme-hooks",     // file path
-    "applySettingsToCSS",   // function name
-    { ...formData },        // arguments
+    '/theme/theme-hooks', // file path
+    'applySettingsToCSS', // function name
+    { ...formData }, // arguments
     props.sectionData,
-    "specific",
-    reset
+    'specific',
+    reset,
   )
-  emit('section-theme-updated', {...formData})
+  emit('section-theme-updated', { ...formData })
 }
 
 // Initial emit

@@ -1,9 +1,9 @@
 :root {
-    --primary-color: #4B5563;
-    --secondary-color: #9CA3AF;
-    --bg-color: #F9FAFB;
+  --primary-color: #4b5563;
+  --secondary-color: #9ca3af;
+  --bg-color: #f9fafb;
 }
 
 .cookieControl__Modal {
-    z-index: 10;
+  z-index: 10;
 }

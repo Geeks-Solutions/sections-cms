@@ -95,8 +95,7 @@
   "fr": {
     "RestaurantMenu": {
       "categories": "Catégories",
-      "categoriesDesc":
-      "Créez des catégories pour vos plats (ex. Entrées, Plats Principaux, Desserts)",
+      "categoriesDesc": "Créez des catégories pour vos plats (ex. Entrées, Plats Principaux, Desserts)",
       "category": "Catégorie",
       "categoryName": "Nom de la Catégorie",
       "categoryDescription": "Description de la Catégorie",
@@ -105,28 +104,23 @@
       "categoryView": "Vue par Catégorie",
       "listView": "Vue en Liste",
       "categoryIcon": "Icône de Catégorie",
-      "categoryIconDesc":
-      "Ajoutez une icône pour cette catégorie (taille recommandée: 50x50px)",
+      "categoryIconDesc": "Ajoutez une icône pour cette catégorie (taille recommandée: 50x50px)",
       "uploadIcon": "Télécharger une Icône",
       "changeLogo": "Changer le Logo",
-      "logoDesc":
-      "Utilisez la classe par défaut `logo` pour personnaliser l'affichage de votre logo avec CSS",
+      "logoDesc": "Utilisez la classe par défaut `logo` pour personnaliser l'affichage de votre logo avec CSS",
       "backgroundColor": "Couleur d'Arrière-plan",
-      "backgroundColorDesc":
-      "Définissez une couleur d'arrière-plan pour votre menu (ex. #FFFFFF)",
+      "backgroundColorDesc": "Définissez une couleur d'arrière-plan pour votre menu (ex. #FFFFFF)",
       "restaurantLogo": "Logo du Restaurant",
       "changeIcon": "Changer l'Icône",
       "viewMode": "Mode d'Affichage",
       "uploadLogo": "Télécharger un Logo",
-      "viewModeDesc":
-      "Choisissez comment les articles du menu sont affichés aux clients",
+      "viewModeDesc": "Choisissez comment les articles du menu sont affichés aux clients",
       "emptyCart": "Votre panier est vide",
       "cart": "Panier",
       "startOrdering": "Commencer à Commander",
       "quantity": "Quantité",
       "specialInstructions": "Instructions Spéciales",
-      "specialInstructionsPlaceholder":
-      "Ajoutez des instructions spéciales pour votre commande",
+      "specialInstructionsPlaceholder": "Ajoutez des instructions spéciales pour votre commande",
       "addToCart": "Ajouter au Panier",
       "qty": "Qté",
       "subtotal": "Sous-total",
@@ -139,8 +133,7 @@
       "itemDescription": "Description de l'Article",
       "itemPrice": "Prix",
       "itemImage": "Image de l'Article",
-      "itemImageDesc":
-      "Ajoutez une image de cet article du menu (taille recommandée: 300x200px)",
+      "itemImageDesc": "Ajoutez une image de cet article du menu (taille recommandée: 300x200px)",
       "featuredItem": "Article en Vedette",
       "featuredItemDesc": "Marquer cet article comme spécial ou en vedette",
       "addMenuItem": "Ajouter un Article au Menu",
@@ -152,8 +145,7 @@
       "currencySymbol": "Symbole de Devise",
       "requiredField": "Ce champ est obligatoire",
       "cssClasses": "Classes CSS",
-      "cssClassesDesc":
-      "Ajoutez des classes CSS personnalisées (séparées par des espaces)",
+      "cssClassesDesc": "Ajoutez des classes CSS personnalisées (séparées par des espaces)",
       "uploadMedia": "Télécharger une Image",
       "changeMedia": "Changer l'Image",
       "seoTag": "Balise SEO / Texte Alt",
@@ -171,8 +163,7 @@
       "noItemsInCategory": "Aucun article dans cette catégorie pour le moment."
     },
     "socialMedia": {
-      "socialMediaDesc":
-      "Ajoutez vos liens de réseaux sociaux pour vous connecter avec votre audience",
+      "socialMediaDesc": "Ajoutez vos liens de réseaux sociaux pour vous connecter avec votre audience",
       "socialMedia": "Réseaux sociaux",
       "instagram": "Instagram",
       "facebook": "Facebook",

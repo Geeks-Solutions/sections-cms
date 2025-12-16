@@ -11,7 +11,7 @@
       "imageFitDesc": "Select how the media type `image` should fit inside the preview container",
       "currencyPosition": "Currency position",
       "left": "Left",
-      "right":  "Right"
+      "right": "Right"
     }
   },
   "fr": {
@@ -26,7 +26,7 @@
       "imageFitDesc": "Sélectionnez la manière dont le type de média « image » doit s'adapter à l'intérieur du conteneur d'aperçu",
       "currencyPosition": "Position de la devise",
       "left": "Gauche",
-      "right":  "Droite"
+      "right": "Droite"
     }
   }
 }

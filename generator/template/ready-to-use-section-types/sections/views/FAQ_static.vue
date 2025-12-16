@@ -1,32 +1,83 @@
 <template>
   <div v-if="settings" class="faq">
-    <div class="faq-row-wrapper" :class="settings.imagePosition === 'right' ? 'image-right' : 'image-left'">
+    <div
+      class="faq-row-wrapper"
+      :class="settings.imagePosition === 'right' ? 'image-right' : 'image-left'"
+    >
       <div class="section-wrapper QASec">
         <h2 class="title">{{ settings[lang].title }}</h2>
         <div id="faq">
-          <div v-for="(qa, index) in settings.QAs" :key="`qa-${index}`" class="question" :class="[`question-${sectionWeight}`, answerShowing[index] === true ? 'expanded' : 'collapsed']">
-            <div class="flex flex-row justify-between" :class="`question-title-${index}-${sectionWeight}`" @click="toggleAnswer(index)">
+          <div
+            v-for="(qa, index) in settings.QAs"
+            :key="`qa-${index}`"
+            class="question"
+            :class="[
+              `question-${sectionWeight}`,
+              answerShowing[index] === true ? 'expanded' : 'collapsed',
+            ]"
+          >
+            <div
+              class="flex flex-row justify-between"
+              :class="`question-title-${index}-${sectionWeight}`"
+              @click="toggleAnswer(index)"
+            >
               <h3 class="question-title">{{ qa[lang].question }}</h3>
               <div v-if="answerShowing[index] === true" class="arrow w-6">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M5 15l7-7 7 7"
+                  />
                 </svg>
               </div>
               <div v-else class="arrow w-6">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </div>
             </div>
-            <div v-if="answerShowing[index] === true" class="answer" :class="[index === 0 ? 'show' : '', `answer-${index}-${sectionWeight}`]">
+            <div
+              v-if="answerShowing[index] === true"
+              class="answer"
+              :class="[
+                index === 0 ? 'show' : '',
+                `answer-${index}-${sectionWeight}`,
+              ]"
+            >
               <div class="flex w-full justify-start">
-                <gWysiwygContent tag="p" :wrapper-classes="qa.classes" :classes="`tracking-tight w-fit md:mx-0`" style="padding: 0 !important;" :html-content="qa[lang].answer" />
+                <gWysiwygContent
+                  tag="p"
+                  :wrapper-classes="qa.classes"
+                  :classes="`tracking-tight w-fit md:mx-0`"
+                  style="padding: 0 !important"
+                  :html-content="qa[lang].answer"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div v-if="settings.imagePosition !== 'none'" class="w-full md:w-auto gap-4 imageWrapper">
+      <div
+        v-if="settings.imagePosition !== 'none'"
+        class="w-full md:w-auto gap-4 imageWrapper"
+      >
         <div :class="'flex h-[240px] md:h-[360px] md:row-span-2 md:mt-6'">
           <GUniversalViewer
             v-if="settings.media && settings.media.url"
@@ -36,8 +87,9 @@
             class="w-full"
             :class="'h-full object-contain'"
             width="300"
-           height="300"
-           :placeholder="[300, 300, 75, 5]" format="webp"
+            height="300"
+            :placeholder="[300, 300, 75, 5]"
+            format="webp"
             loading="lazy"
           />
         </div>
@@ -50,7 +102,7 @@
 import { importAsset } from '~/utils/constants.js'
 
 export default {
-  name: "FAQStatic",
+  name: 'FAQStatic',
   props: {
     section: {
       type: Object,
@@ -58,66 +110,66 @@ export default {
     },
     lang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
-	viewStructure: {
-	  settings: [
-		{
-		  en: {
-			title: 'string'
-		  },
-		  fr: {
-			title: 'string'
-		  },
-		  QAs: [
-			{
-			  en: {
-				question: 'text',
-				answer: 'text'
-			  },
-			  fr: {
-				question: 'text',
-				answer: 'text'
-			  }
-			},
-			{
-			  en: {
-				question: 'text',
-				answer: 'text'
-			  },
-			  fr: {
-				question: 'text',
-				answer: 'text'
-			  }
-			},
-			{
-			  en: {
-				question: 'text',
-				answer: 'text'
-			  },
-			  fr: {
-				question: 'text',
-				answer: 'text'
-			  }
-			},
-			{
-			  en: {
-				question: 'text',
-				answer: 'text'
-			  },
-			  fr: {
-				question: 'text',
-				answer: 'text'
-			  }
-			}
-		  ],
-		}
-	  ]
-	}
+    viewStructure: {
+      settings: [
+        {
+          en: {
+            title: 'string',
+          },
+          fr: {
+            title: 'string',
+          },
+          QAs: [
+            {
+              en: {
+                question: 'text',
+                answer: 'text',
+              },
+              fr: {
+                question: 'text',
+                answer: 'text',
+              },
+            },
+            {
+              en: {
+                question: 'text',
+                answer: 'text',
+              },
+              fr: {
+                question: 'text',
+                answer: 'text',
+              },
+            },
+            {
+              en: {
+                question: 'text',
+                answer: 'text',
+              },
+              fr: {
+                question: 'text',
+                answer: 'text',
+              },
+            },
+            {
+              en: {
+                question: 'text',
+                answer: 'text',
+              },
+              fr: {
+                question: 'text',
+                answer: 'text',
+              },
+            },
+          ],
+        },
+      ],
+    },
   },
   data() {
     return {
-      answerShowing: []
+      answerShowing: [],
     }
   },
   computed: {
@@ -126,16 +178,16 @@ export default {
     },
     settings() {
       if (Array.isArray(this.section.settings) === false) {
-        return this.section.settings;
+        return this.section.settings
       } else {
-        return this.section.settings[0];
+        return this.section.settings[0]
       }
     },
   },
   watch: {
-    "section.settings"() {
+    'section.settings'() {
       this.initQAs()
-    }
+    },
   },
   mounted() {
     this.initQAs()
@@ -144,8 +196,8 @@ export default {
       {
         id: 'global',
         name: this.$t('sectionsBuilder.globalSettings'),
-        path: '/theme/global_settings'
-      }
+        path: '/theme/global_settings',
+      },
     ])
   },
   methods: {
@@ -164,8 +216,8 @@ export default {
       if (this.answerShowing[index]) {
         this.answerShowing[index] = false
       } else this.answerShowing[index] = true
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -228,20 +280,20 @@ export default {
   gap: 2rem;
 }
 .faq-row-wrapper.image-right {
-  flex-direction: column
+  flex-direction: column;
 }
 .faq-row-wrapper.image-left {
-  flex-direction: column-reverse
+  flex-direction: column-reverse;
 }
 @media (min-width: 768px) {
   .faq-row-wrapper {
     padding: 0.625rem 0;
   }
   .faq-row-wrapper.image-right {
-    flex-direction: row
+    flex-direction: row;
   }
   .faq-row-wrapper.image-left {
-    flex-direction: row-reverse
+    flex-direction: row-reverse;
   }
 }
 

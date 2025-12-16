@@ -3,7 +3,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'AuthorDetailsDynamic',
   props: {
@@ -13,19 +12,19 @@ export default {
     },
     lang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
-	viewStructure: {
-	  render_data: {
-		"total_views": "string",
-		"total_blogs": "string",
-		"social_media": "image",
-		"profile_image": "image",
-		"id": "65b21f7f1353160007b6ccc0",
-		"full_name": "string",
-		"biography": "string"
-	  }
-	}
+    viewStructure: {
+      render_data: {
+        total_views: 'string',
+        total_blogs: 'string',
+        social_media: 'image',
+        profile_image: 'image',
+        id: '65b21f7f1353160007b6ccc0',
+        full_name: 'string',
+        biography: 'string',
+      },
+    },
   },
   mounted() {
     const sectionsThemeComponents = null
@@ -33,9 +32,9 @@ export default {
       {
         id: 'global',
         name: this.$t('sectionsBuilder.globalSettings'),
-        path: '/theme/global_settings'
-      }
+        path: '/theme/global_settings',
+      },
     ])
-  }
-};
+  },
+}
 </script>

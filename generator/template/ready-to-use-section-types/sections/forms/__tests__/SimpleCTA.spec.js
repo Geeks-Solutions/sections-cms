@@ -6,17 +6,27 @@ import { createI18n } from 'vue-i18n'
 // Mock the components that are not defined in the test environment
 const mockComponents = {
   'link-description': {
-    template: '<div>Link Description</div>'
+    template: '<div>Link Description</div>',
   },
-  'gAutoComplete': {
+  gAutoComplete: {
     template: '<div>AutoComplete</div>',
-    props: ['mainFilter', 'placeholder', 'filterLabelProp', 'reduce', 'filterOptions', 'filterSearchable', 'closeOnSelect', 'filterClearable', 'trackBy'],
-    emits: ['itemSelected']
+    props: [
+      'mainFilter',
+      'placeholder',
+      'filterLabelProp',
+      'reduce',
+      'filterOptions',
+      'filterSearchable',
+      'closeOnSelect',
+      'filterClearable',
+      'trackBy',
+    ],
+    emits: ['itemSelected'],
   },
-  'LazySectionFormErrors': {
+  LazySectionFormErrors: {
     template: '<div>Form Errors</div>',
-    props: ['selectedLang', 'defaultLang', 'locales', 'errors']
-  }
+    props: ['selectedLang', 'defaultLang', 'locales', 'errors'],
+  },
 }
 
 const i18n = createI18n({
@@ -25,8 +35,8 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: {
     en: {},
-    fr: {}
-  }
+    fr: {},
+  },
 })
 
 describe('SimpleCTA', () => {
@@ -38,17 +48,17 @@ describe('SimpleCTA', () => {
         selectedLang: 'en',
         defaultLang: 'en',
         locales: ['en', 'fr'],
-        ...props
+        ...props,
       },
       global: {
         components: mockComponents,
         config: {
           globalProperties: {
-            $t: vi.fn((key) => key)
-          }
+            $t: vi.fn((key) => key),
+          },
         },
-        plugins: [i18n]
-      }
+        plugins: [i18n],
+      },
     })
   }
 
@@ -65,19 +75,19 @@ describe('SimpleCTA', () => {
         title: '',
         subTitle: '',
         link: '',
-        buttonLabel: ''
+        buttonLabel: '',
       })
       expect(wrapper.vm.settings[0].fr).toEqual({
         title: '',
         subTitle: '',
         link: '',
-        buttonLabel: ''
+        buttonLabel: '',
       })
       expect(wrapper.vm.settings[0].es).toEqual({
         title: '',
         subTitle: '',
         link: '',
-        buttonLabel: ''
+        buttonLabel: '',
       })
     })
 
@@ -88,7 +98,7 @@ describe('SimpleCTA', () => {
         title: false,
         subTitle: false,
         buttonLabel: false,
-        link: false
+        link: false,
       })
     })
   })
@@ -97,12 +107,17 @@ describe('SimpleCTA', () => {
     it('should show error border when error exists and selectedLang matches defaultLang', async () => {
       wrapper = createWrapper({
         selectedLang: 'en',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       // Set an error
       await wrapper.setData({
-        errors: { title: true, subTitle: false, buttonLabel: false, link: false }
+        errors: {
+          title: true,
+          subTitle: false,
+          buttonLabel: false,
+          link: false,
+        },
       })
 
       const titleInput = wrapper.find('input[placeholder="Title"]')
@@ -113,12 +128,17 @@ describe('SimpleCTA', () => {
     it('should not show error border when error exists but selectedLang does not match defaultLang', async () => {
       wrapper = createWrapper({
         selectedLang: 'fr',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       // Set an error
       await wrapper.setData({
-        errors: { title: true, subTitle: false, buttonLabel: false, link: false }
+        errors: {
+          title: true,
+          subTitle: false,
+          buttonLabel: false,
+          link: false,
+        },
       })
 
       const titleInput = wrapper.find('input[placeholder="Title"]')
@@ -129,7 +149,7 @@ describe('SimpleCTA', () => {
     it('should show normal border when no error exists', async () => {
       wrapper = createWrapper({
         selectedLang: 'en',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       const titleInput = wrapper.find('input[placeholder="Title"]')
@@ -140,12 +160,12 @@ describe('SimpleCTA', () => {
     it('should apply error styles to all fields when errors exist and languages match', async () => {
       wrapper = createWrapper({
         selectedLang: 'en',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       // Set errors for all fields
       await wrapper.setData({
-        errors: { title: true, subTitle: true, buttonLabel: true, link: true }
+        errors: { title: true, subTitle: true, buttonLabel: true, link: true },
       })
 
       const titleInput = wrapper.find('input.title')
@@ -162,26 +182,28 @@ describe('SimpleCTA', () => {
     it('should validate successfully when required fields are filled', async () => {
       wrapper = createWrapper({
         selectedLang: 'en',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       // Set required fields
       await wrapper.setData({
-        settings: [{
-          en: {
-            title: 'Test Title',
-            subTitle: 'Test Subtitle',
-            link: 'https://example.com',
-            buttonLabel: 'Click Me'
+        settings: [
+          {
+            en: {
+              title: 'Test Title',
+              subTitle: 'Test Subtitle',
+              link: 'https://example.com',
+              buttonLabel: 'Click Me',
+            },
+            fr: {
+              title: '',
+              subTitle: '',
+              link: '',
+              buttonLabel: '',
+            },
+            linkTarget: '_self',
           },
-          fr: {
-            title: '',
-            subTitle: '',
-            link: '',
-            buttonLabel: ''
-          },
-          linkTarget: '_self'
-        }]
+        ],
       })
 
       const isValid = wrapper.vm.validate()
@@ -193,26 +215,28 @@ describe('SimpleCTA', () => {
     it('should fail validation when buttonLabel is missing in defaultLang', async () => {
       wrapper = createWrapper({
         selectedLang: 'en',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       // Set only link, missing buttonLabel
       await wrapper.setData({
-        settings: [{
-          en: {
-            title: 'Test Title',
-            subTitle: 'Test Subtitle',
-            link: 'https://example.com',
-            buttonLabel: ''
+        settings: [
+          {
+            en: {
+              title: 'Test Title',
+              subTitle: 'Test Subtitle',
+              link: 'https://example.com',
+              buttonLabel: '',
+            },
+            fr: {
+              title: '',
+              subTitle: '',
+              link: '',
+              buttonLabel: '',
+            },
+            linkTarget: '_self',
           },
-          fr: {
-            title: '',
-            subTitle: '',
-            link: '',
-            buttonLabel: ''
-          },
-          linkTarget: '_self'
-        }]
+        ],
       })
 
       const isValid = wrapper.vm.validate()
@@ -224,26 +248,28 @@ describe('SimpleCTA', () => {
     it('should fail validation when link is missing in defaultLang', async () => {
       wrapper = createWrapper({
         selectedLang: 'en',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       // Set only buttonLabel, missing link
       await wrapper.setData({
-        settings: [{
-          en: {
-            title: 'Test Title',
-            subTitle: 'Test Subtitle',
-            link: '',
-            buttonLabel: 'Click Me'
+        settings: [
+          {
+            en: {
+              title: 'Test Title',
+              subTitle: 'Test Subtitle',
+              link: '',
+              buttonLabel: 'Click Me',
+            },
+            fr: {
+              title: '',
+              subTitle: '',
+              link: '',
+              buttonLabel: '',
+            },
+            linkTarget: '_self',
           },
-          fr: {
-            title: '',
-            subTitle: '',
-            link: '',
-            buttonLabel: ''
-          },
-          linkTarget: '_self'
-        }]
+        ],
       })
 
       const isValid = wrapper.vm.validate()
@@ -255,26 +281,28 @@ describe('SimpleCTA', () => {
     it('should fail validation when both required fields are missing', async () => {
       wrapper = createWrapper({
         selectedLang: 'en',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       // Both required fields are empty
       await wrapper.setData({
-        settings: [{
-          en: {
-            title: 'Test Title',
-            subTitle: 'Test Subtitle',
-            link: '',
-            buttonLabel: ''
+        settings: [
+          {
+            en: {
+              title: 'Test Title',
+              subTitle: 'Test Subtitle',
+              link: '',
+              buttonLabel: '',
+            },
+            fr: {
+              title: '',
+              subTitle: '',
+              link: '',
+              buttonLabel: '',
+            },
+            linkTarget: '_self',
           },
-          fr: {
-            title: '',
-            subTitle: '',
-            link: '',
-            buttonLabel: ''
-          },
-          linkTarget: '_self'
-        }]
+        ],
       })
 
       const isValid = wrapper.vm.validate()
@@ -286,26 +314,28 @@ describe('SimpleCTA', () => {
     it('should validate based on defaultLang regardless of selectedLang', async () => {
       wrapper = createWrapper({
         selectedLang: 'fr',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       // Fill French fields but leave English (default) fields empty
       await wrapper.setData({
-        settings: [{
-          en: {
-            title: '',
-            subTitle: '',
-            link: '',
-            buttonLabel: ''
+        settings: [
+          {
+            en: {
+              title: '',
+              subTitle: '',
+              link: '',
+              buttonLabel: '',
+            },
+            fr: {
+              title: 'Titre français',
+              subTitle: 'Sous-titre français',
+              link: 'https://example.fr',
+              buttonLabel: 'Cliquez ici',
+            },
+            linkTarget: '_self',
           },
-          fr: {
-            title: 'Titre français',
-            subTitle: 'Sous-titre français',
-            link: 'https://example.fr',
-            buttonLabel: 'Cliquez ici'
-          },
-          linkTarget: '_self'
-        }]
+        ],
       })
 
       const isValid = wrapper.vm.validate()
@@ -317,26 +347,28 @@ describe('SimpleCTA', () => {
     it('should validate successfully when defaultLang is not English', async () => {
       wrapper = createWrapper({
         selectedLang: 'fr',
-        defaultLang: 'fr'
+        defaultLang: 'fr',
       })
 
       // Fill French fields (which is now the default language)
       await wrapper.setData({
-        settings: [{
-          en: {
-            title: '',
-            subTitle: '',
-            link: '',
-            buttonLabel: ''
+        settings: [
+          {
+            en: {
+              title: '',
+              subTitle: '',
+              link: '',
+              buttonLabel: '',
+            },
+            fr: {
+              title: 'Titre français',
+              subTitle: 'Sous-titre français',
+              link: 'https://example.fr',
+              buttonLabel: 'Cliquez ici',
+            },
+            linkTarget: '_self',
           },
-          fr: {
-            title: 'Titre français',
-            subTitle: 'Sous-titre français',
-            link: 'https://example.fr',
-            buttonLabel: 'Cliquez ici'
-          },
-          linkTarget: '_self'
-        }]
+        ],
       })
 
       const isValid = wrapper.vm.validate()
@@ -350,7 +382,7 @@ describe('SimpleCTA', () => {
     it('should update settings when input values change', async () => {
       wrapper = createWrapper({
         selectedLang: 'en',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       const titleInput = wrapper.find('input[placeholder="Title"]')
@@ -362,7 +394,7 @@ describe('SimpleCTA', () => {
     it('should update correct language settings based on selectedLang', async () => {
       wrapper = createWrapper({
         selectedLang: 'fr',
-        defaultLang: 'en'
+        defaultLang: 'en',
       })
 
       const titleInput = wrapper.find('input[placeholder="Title"]')
@@ -379,26 +411,28 @@ describe('SimpleCTA', () => {
 
       // Set some errors manually
       await wrapper.setData({
-        errors: { title: true, subTitle: true, buttonLabel: true, link: true }
+        errors: { title: true, subTitle: true, buttonLabel: true, link: true },
       })
 
       // Fill required fields
       await wrapper.setData({
-        settings: [{
-          en: {
-            title: 'Test',
-            subTitle: 'Test',
-            link: 'https://example.com',
-            buttonLabel: 'Click'
+        settings: [
+          {
+            en: {
+              title: 'Test',
+              subTitle: 'Test',
+              link: 'https://example.com',
+              buttonLabel: 'Click',
+            },
+            fr: {
+              title: '',
+              subTitle: '',
+              link: '',
+              buttonLabel: '',
+            },
+            linkTarget: '_self',
           },
-          fr: {
-            title: '',
-            subTitle: '',
-            link: '',
-            buttonLabel: ''
-          },
-          linkTarget: '_self'
-        }]
+        ],
       })
 
       // Validation should reset errors for successful validation

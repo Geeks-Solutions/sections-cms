@@ -1,9 +1,16 @@
 <template>
-  <div v-if="settings" class="service-packages py-2.5" :class="[settings.classes, `business-${settings.businessType}`]"
-    :style="{ backgroundColor: settings.backgroundColor || 'transparent' }">
-
+  <div
+    v-if="settings"
+    class="service-packages py-2.5"
+    :class="[settings.classes, `business-${settings.businessType}`]"
+    :style="{ backgroundColor: settings.backgroundColor || 'transparent' }"
+  >
     <!-- Shopping Cart Icon -->
-    <CartIcon :total-items="totalItems" cart-type="service" @click="toggleCart" />
+    <CartIcon
+      :total-items="totalItems"
+      cart-type="service"
+      @click="toggleCart"
+    />
 
     <div class="md:px-4">
       <!-- Business Logo -->
@@ -12,57 +19,127 @@
           :src="settings.logo.url"
           :alt="settings.logo.seo_tag || 'Business Logo'"
           :type="settings.logo.metadata?.type || 'image'"
-          class="h-24 object-contain mx-auto" width="96" height="96" preload fetchpriority="high" quality="80"
-          format="webp" fit="contain" />
+          class="h-24 object-contain mx-auto"
+          width="96"
+          height="96"
+          preload
+          fetchpriority="high"
+          quality="80"
+          format="webp"
+          fit="contain"
+        />
       </div>
 
       <!-- Page Title and Subtitle -->
       <div class="mb-4 md:mb-8">
-        <h2 v-if="settings.pageTitle && settings.pageTitle[lang]" class="menu-title mb-2 flex justify-center">
+        <h2
+          v-if="settings.pageTitle && settings.pageTitle[lang]"
+          class="menu-title mb-2 flex justify-center"
+        >
           {{ settings.pageTitle[lang] }}
         </h2>
-        <p v-if="isInitialRenderComplete && settings.pageSubtitle && settings.pageSubtitle[lang]"
-          class="menu-subtitle flex justify-center">
+        <p
+          v-if="
+            isInitialRenderComplete &&
+            settings.pageSubtitle &&
+            settings.pageSubtitle[lang]
+          "
+          class="menu-subtitle flex justify-center"
+        >
           {{ settings.pageSubtitle[lang] }}
         </p>
       </div>
 
-      <div style="display: none;" aria-hidden="true">
-        <SocialLinks :links="[]" :show-whats-app="false" :whatsapp-number="''" :i18n="$t"
-          :whatsapp-message="getWhatsAppMessage()" :cart="[]" :lang="lang" />
-        <CategoryTabs :categories="[]" :active-category="''" :lang="lang" type="service" />
-        <CategoryList :categories="[]" :get-items-by-category="getEmptyItems" :currency-symbol="'$'" :lang="lang"
-          type="service" />
-        <ItemsGrid :items="[]" :currency-symbol="'$'" :lang="lang" type="service" />
+      <div style="display: none" aria-hidden="true">
+        <SocialLinks
+          :links="[]"
+          :show-whats-app="false"
+          :whatsapp-number="''"
+          :i18n="$t"
+          :whatsapp-message="getWhatsAppMessage()"
+          :cart="[]"
+          :lang="lang"
+        />
+        <CategoryTabs
+          :categories="[]"
+          :active-category="''"
+          :lang="lang"
+          type="service"
+        />
+        <CategoryList
+          :categories="[]"
+          :get-items-by-category="getEmptyItems"
+          :currency-symbol="'$'"
+          :lang="lang"
+          type="service"
+        />
+        <ItemsGrid
+          :items="[]"
+          :currency-symbol="'$'"
+          :lang="lang"
+          type="service"
+        />
       </div>
 
       <div v-if="isInitialRenderComplete">
-        <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
+        <SocialLinks
+          :links="socialMediaLinks"
+          :show-whats-app="!!settings.showWhatsApp"
           :whatsapp-number="settings.whatsappNumber || ''"
-          :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
-          :i18n="$t" :type="'service'" />
+          :whatsapp-message="
+            (settings.whatsappMessage && settings.whatsappMessage[lang]) || ''
+          "
+          :cart="cart"
+          :lang="lang"
+          :i18n="$t"
+          :type="'service'"
+        />
 
         <!-- Category View Mode -->
         <div v-if="isCategoryView" class="service-content">
           <!-- Category Navigation Tabs -->
-          <CategoryTabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang" type="service"
-            @select-category="setActiveCategory" />
+          <CategoryTabs
+            :categories="sortedCategories"
+            :active-category="activeCategory"
+            :lang="lang"
+            type="service"
+            @select-category="setActiveCategory"
+          />
 
           <!-- Active Category Description -->
-          <div v-if="activeCategoryObj && activeCategoryObj.description && activeCategoryObj.description[lang]"
-            class="mb-6 text-center">
-            <p class="category-description">{{ activeCategoryObj.description[lang] }}</p>
+          <div
+            v-if="
+              activeCategoryObj &&
+              activeCategoryObj.description &&
+              activeCategoryObj.description[lang]
+            "
+            class="mb-6 text-center"
+          >
+            <p class="category-description">
+              {{ activeCategoryObj.description[lang] }}
+            </p>
           </div>
 
           <!-- Service Items for Active Category -->
-          <ItemsGrid :items="getServiceItemsByCategory(activeCategory)" :currency-symbol="settings.currencySymbol"
-            :lang="lang" type="service" @item-click="openItemModal" />
+          <ItemsGrid
+            :items="getServiceItemsByCategory(activeCategory)"
+            :currency-symbol="settings.currencySymbol"
+            :lang="lang"
+            type="service"
+            @item-click="openItemModal"
+          />
         </div>
 
         <!-- List View Mode -->
         <div v-else class="service-content">
-          <CategoryList :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
-            :currency-symbol="settings.currencySymbol" :lang="lang" type="service" @item-click="openItemModal" />
+          <CategoryList
+            :categories="sortedCategories"
+            :get-items-by-category="getItemsByCategory"
+            :currency-symbol="settings.currencySymbol"
+            :lang="lang"
+            type="service"
+            @item-click="openItemModal"
+          />
         </div>
       </div>
       <div v-else class="loading-placeholder">
@@ -90,28 +167,68 @@
     </div>
 
     <!-- Item Modal -->
-    <ItemModal v-if="showItemModal" :item="selectedItem" :currency-symbol="settings.currencySymbol" :lang="lang"
-      :quantity="itemQuantity" :notes="itemNotes" :selected-date="selectedDate" :selected-time-slot="selectedTimeSlot"
-      type="service" :show-date-time-pickers="showDateTimePickers" @close="closeItemModal"
-      @update-quantity="updateItemQuantity" @update-notes="updateItemNotes" @update-date="updateSelectedDate"
-      @update-time-slot="updateSelectedTimeSlot" @add-to-cart="addToCart" />
+    <ItemModal
+      v-if="showItemModal"
+      :item="selectedItem"
+      :currency-symbol="settings.currencySymbol"
+      :lang="lang"
+      :quantity="itemQuantity"
+      :notes="itemNotes"
+      :selected-date="selectedDate"
+      :selected-time-slot="selectedTimeSlot"
+      type="service"
+      :show-date-time-pickers="showDateTimePickers"
+      @close="closeItemModal"
+      @update-quantity="updateItemQuantity"
+      @update-notes="updateItemNotes"
+      @update-date="updateSelectedDate"
+      @update-time-slot="updateSelectedTimeSlot"
+      @add-to-cart="addToCart"
+    />
 
     <!-- Shopping Cart Sidebar - Load on demand -->
-    <ShoppingCart v-if="showCart" :cart="cart" :currency-symbol="settings.currencySymbol"
+    <ShoppingCart
+      v-if="showCart"
+      :cart="cart"
+      :currency-symbol="settings.currencySymbol"
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
       :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true"
-      :service-fee-rate="settings.serviceFeeRate ? settings.serviceFeeRate / 100 : SERVICE_FEE_RATE"
-      :enable-service-fee="settings.enableServiceFee !== undefined ? settings.enableServiceFee : true" :lang="lang"
-      :i18n="$t" type="service" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
-      :whatsapp-number="settings.whatsappNumber || ''" @close="closeCart" @increment="incrementCartItem"
-      @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout" />
+      :service-fee-rate="
+        settings.serviceFeeRate
+          ? settings.serviceFeeRate / 100
+          : SERVICE_FEE_RATE
+      "
+      :enable-service-fee="
+        settings.enableServiceFee !== undefined
+          ? settings.enableServiceFee
+          : true
+      "
+      :lang="lang"
+      :i18n="$t"
+      type="service"
+      :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
+      :whatsapp-number="settings.whatsappNumber || ''"
+      @close="closeCart"
+      @increment="incrementCartItem"
+      @decrement="decrementCartItem"
+      @remove="removeFromCart"
+      @checkout="checkout"
+    />
   </div>
 </template>
 
 <i18n src="../../sections/forms/ServicePackages_i18n.json"></i18n>
 
 <script setup>
-import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount, inject } from 'vue'
+import {
+  ref,
+  computed,
+  watch,
+  nextTick,
+  onMounted,
+  onBeforeUnmount,
+  inject,
+} from 'vue'
 
 const { t: $t } = useI18n({ useScope: 'local' })
 
@@ -130,15 +247,15 @@ import ShoppingCart from '../../components/UnifiedMenu/ShoppingCart.vue'
 const props = defineProps({
   section: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   lang: {
     type: String,
-    default: "en"
+    default: 'en',
   },
   locales: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   viewStructure: {
     settings: [
@@ -146,26 +263,26 @@ const props = defineProps({
         logo: 'image',
         pageTitle: {
           en: 'Our Services',
-          fr: 'Nos Services'
+          fr: 'Nos Services',
         },
         pageSubtitle: {
           en: 'Book your next experience with us',
-          fr: 'Réservez votre prochaine expérience avec nous'
+          fr: 'Réservez votre prochaine expérience avec nous',
         },
         categories: [
           {
             id: 'category-id',
             name: {
               en: 'Category Name',
-              fr: 'Nom de la catégorie'
+              fr: 'Nom de la catégorie',
             },
             description: {
               en: 'Category Description',
-              fr: 'Description de la catégorie'
+              fr: 'Description de la catégorie',
             },
             classes: '',
-            icon: 'image'
-          }
+            icon: 'image',
+          },
         ],
         serviceItems: [
           {
@@ -173,59 +290,59 @@ const props = defineProps({
             categoryId: 'category-id',
             name: {
               en: 'Item Name',
-              fr: 'Nom du service'
+              fr: 'Nom du service',
             },
             description: {
               en: 'Item Description',
-              fr: 'Description du service'
+              fr: 'Description du service',
             },
             price: 10.99,
             duration: {
               en: '1 hour',
-              fr: '1 heure'
+              fr: '1 heure',
             },
             hasDiscount: true,
             discountedPrice: 8.99,
             details: [
               {
                 en: 'Detail point 1',
-                fr: 'Point de détail 1'
-              }
+                fr: 'Point de détail 1',
+              },
             ],
             image: 'image',
             availability: 'available',
             featured: false,
-            classes: ''
-          }
+            classes: '',
+          },
         ],
         currencySymbol: '$',
         classes: '',
         viewMode: 'list',
         businessType: 'travel',
         enableTax: true,
-        taxRate: 10.00,
+        taxRate: 10.0,
         enableServiceFee: true,
-        serviceFeeRate: 5.00,
+        serviceFeeRate: 5.0,
         socialMedia: {
           instagram: '',
           facebook: '',
           tiktok: '',
           twitter: '',
-          youtube: ''
+          youtube: '',
         },
         showWhatsApp: false,
         whatsappNumber: '',
         whatsappMessage: {
           en: 'Hello! I would like to book a service.',
-          fr: 'Bonjour ! Je voudrais réserver un service.'
-        }
-      }
-    ]
+          fr: 'Bonjour ! Je voudrais réserver un service.',
+        },
+      },
+    ],
   },
   showDateTimePickers: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 })
 
 // Reactive data
@@ -242,30 +359,30 @@ const activeCategory = ref('')
 const isCartLoaded = ref(false)
 
 // Constants
-const TAX_RATE = 0.10
+const TAX_RATE = 0.1
 const SERVICE_FEE_RATE = 0.05
 
 const socialIcons = {
   instagram: {
     classes: 'instagram',
-    hoverClasses: 'instagram-hover'
+    hoverClasses: 'instagram-hover',
   },
   facebook: {
     classes: 'facebook',
-    hoverClasses: 'facebook-hover'
+    hoverClasses: 'facebook-hover',
   },
   tiktok: {
     classes: 'tiktok',
-    hoverClasses: 'tiktok-hover'
+    hoverClasses: 'tiktok-hover',
   },
   twitter: {
     classes: 'twitter',
-    hoverClasses: 'twitter-hover'
+    hoverClasses: 'twitter-hover',
   },
   youtube: {
     classes: 'youtube',
-    hoverClasses: 'youtube-hover'
-  }
+    hoverClasses: 'youtube-hover',
+  },
 }
 
 // Utility functions
@@ -283,10 +400,12 @@ const socialMediaLinks = computed(() => {
 
   return Object.entries(settings.value.socialMedia || {})
     .filter(([platform, url]) => {
-      return platform !== 'whatsapp' &&
+      return (
+        platform !== 'whatsapp' &&
         url &&
         typeof url === 'string' &&
         url.trim() !== ''
+      )
     })
     .map(([platform, url]) => {
       const classes = (socialIcons[platform] || {}).classes || ''
@@ -296,7 +415,7 @@ const socialMediaLinks = computed(() => {
         type: platform,
         url,
         classes,
-        hoverClasses
+        hoverClasses,
       }
     })
 })
@@ -316,7 +435,7 @@ const settings = computed(() => {
       pageSubtitle: {},
       currencySymbol: '$',
       menuTitle: {},
-      menuSubtitle: {}
+      menuSubtitle: {},
     }
   }
 
@@ -329,7 +448,8 @@ const settings = computed(() => {
 
   // Ensure required properties exist
   if (!settingsData.socialMedia) settingsData.socialMedia = {}
-  if (typeof settingsData.showWhatsApp === 'undefined') settingsData.showWhatsApp = false
+  if (typeof settingsData.showWhatsApp === 'undefined')
+    settingsData.showWhatsApp = false
   if (!settingsData.whatsappNumber) settingsData.whatsappNumber = ''
   if (!settingsData.whatsappMessage) settingsData.whatsappMessage = {}
   if (!settingsData.pageTitle) settingsData.pageTitle = {}
@@ -353,7 +473,9 @@ const isCategoryView = computed(() => {
 
 const activeCategoryObj = computed(() => {
   if (!activeCategory.value) return null
-  return settings.value.categories.find(cat => cat.id === activeCategory.value)
+  return settings.value.categories.find(
+    (cat) => cat.id === activeCategory.value,
+  )
 })
 
 const totalItems = computed(() => {
@@ -362,17 +484,25 @@ const totalItems = computed(() => {
 
 const cartSubtotal = computed(() => {
   return cart.value.reduce((total, item) => {
-    const price = item.hasDiscount ? (item.discountedPrice || item.price) : item.price
-    return total + (price * item.quantity)
+    const price = item.hasDiscount
+      ? item.discountedPrice || item.price
+      : item.price
+    return total + price * item.quantity
   }, 0)
 })
 
 const cartServiceFee = computed(() => {
-  return settings.value.enableServiceFee ? cartSubtotal.value * (settings.value.serviceFeeRate / 100 || SERVICE_FEE_RATE) : 0
+  return settings.value.enableServiceFee
+    ? cartSubtotal.value *
+        (settings.value.serviceFeeRate / 100 || SERVICE_FEE_RATE)
+    : 0
 })
 
 const cartTax = computed(() => {
-  return settings.value.enableTax ? (cartSubtotal.value + cartServiceFee.value) * (settings.value.taxRate / 100 || TAX_RATE) : 0
+  return settings.value.enableTax
+    ? (cartSubtotal.value + cartServiceFee.value) *
+        (settings.value.taxRate / 100 || TAX_RATE)
+    : 0
 })
 
 const cartTotal = computed(() => {
@@ -385,15 +515,22 @@ const getEmptyItems = () => {
 }
 
 const getWhatsAppMessage = () => {
-  if (settings.value && settings.value.whatsappMessage &&
-    settings.value.whatsappMessage[props.lang]) {
+  if (
+    settings.value &&
+    settings.value.whatsappMessage &&
+    settings.value.whatsappMessage[props.lang]
+  ) {
     return settings.value.whatsappMessage[props.lang]
   }
   return 'Hello! I would like to book a service.'
 }
 
 const initializeActiveCategory = () => {
-  if (isCategoryView.value && sortedCategories.value.length > 0 && !activeCategory.value) {
+  if (
+    isCategoryView.value &&
+    sortedCategories.value.length > 0 &&
+    !activeCategory.value
+  ) {
     activeCategory.value = sortedCategories.value[0].id
   }
 }
@@ -424,8 +561,7 @@ const loadCartFromStorage = () => {
       try {
         cart.value = JSON.parse(savedCart)
         isCartLoaded.value = true
-      } catch (e) {
-      }
+      } catch (e) {}
     }
   }
 }
@@ -433,7 +569,9 @@ const loadCartFromStorage = () => {
 // Fixed: Return array directly, not a function
 const getItemsByCategory = (categoryId) => {
   if (!settings.value || !settings.value.serviceItems) return []
-  return settings.value.serviceItems.filter(item => item.categoryId === categoryId)
+  return settings.value.serviceItems.filter(
+    (item) => item.categoryId === categoryId,
+  )
 }
 
 const getServiceItemsByCategory = (categoryId) => {
@@ -521,7 +659,7 @@ const addToCart = () => {
     notes: itemNotes.value,
     date: props.showDateTimePickers ? selectedDate.value : null,
     timeSlot: props.showDateTimePickers ? selectedTimeSlot.value : null,
-    duration: selectedItem.value.duration
+    duration: selectedItem.value.duration,
   }
 
   closeItemModal()
@@ -545,15 +683,16 @@ const addToCart = () => {
 
 const findExistingCartItem = (newItem) => {
   if (props.showDateTimePickers) {
-    return cart.value.findIndex(item =>
-      item.id === newItem.id &&
-      item.date === newItem.date &&
-      item.timeSlot === newItem.timeSlot &&
-      item.notes === newItem.notes
+    return cart.value.findIndex(
+      (item) =>
+        item.id === newItem.id &&
+        item.date === newItem.date &&
+        item.timeSlot === newItem.timeSlot &&
+        item.notes === newItem.notes,
     )
   } else {
-    return cart.value.findIndex(item =>
-      item.id === newItem.id && item.notes === newItem.notes
+    return cart.value.findIndex(
+      (item) => item.id === newItem.id && item.notes === newItem.notes,
     )
   }
 }
@@ -589,18 +728,29 @@ const checkout = () => {
 }
 
 // Watchers
-watch(() => settings.value, () => {
-  initializeActiveCategory()
-  initializeMenuTitles()
-}, { deep: true })
+watch(
+  () => settings.value,
+  () => {
+    initializeActiveCategory()
+    initializeMenuTitles()
+  },
+  { deep: true },
+)
 
-watch(() => props.lang, () => {
-  initializeMenuTitles()
-})
+watch(
+  () => props.lang,
+  () => {
+    initializeMenuTitles()
+  },
+)
 
-watch(() => cart.value, () => {
-  debouncedSaveCart()
-}, { deep: true })
+watch(
+  () => cart.value,
+  () => {
+    debouncedSaveCart()
+  },
+  { deep: true },
+)
 
 // Lifecycle hooks
 onMounted(() => {
@@ -634,13 +784,13 @@ onMounted(() => {
     {
       id: 'global',
       name: useI18n().t('sectionsBuilder.globalSettings'),
-      path: '/theme/global_settings'
+      path: '/theme/global_settings',
     },
     {
       id: 'specific',
       name: useI18n().t('sectionsBuilder.specificSettings'),
-      path: '/theme/ServicePackages_settings'
-    }
+      path: '/theme/ServicePackages_settings',
+    },
   ])
 })
 

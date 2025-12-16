@@ -1,16 +1,22 @@
 <template>
   <div class="p-4">
-
-    <div id="videoLink" class="flex flex-col items-start justify-start mt-8 ml-2">
-      <label :class="sectionsStyle.fieldLabel">{{ $t("forms.video") }}</label>
-      <span class="text-xs text-Gray_800">{{ $t("forms.videoLinkDesc") }}</span>
+    <div
+      id="videoLink"
+      class="flex flex-col items-start justify-start mt-8 ml-2"
+    >
+      <label :class="sectionsStyle.fieldLabel">{{ $t('forms.video') }}</label>
+      <span class="text-xs text-Gray_800">{{ $t('forms.videoLinkDesc') }}</span>
       <input
         v-model="settings[0].videoLink"
         type="text"
         :placeholder="$t('forms.videoLink')"
         :class="sectionsStyle.input"
       />
-      <span v-if="errors.videoLink === true" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+      <span
+        v-if="errors.videoLink === true"
+        class="flex text-error text-sm pt-2 pl-2"
+        >{{ $t('forms.requiredField') }}</span
+      >
     </div>
 
     <div v-if="settings[0].videoLink" class="flex flex-wrap pt-4 pl-6">
@@ -57,11 +63,35 @@
     </div>
 
     <div class="mt-4 mb-4">
-      <LazyMediasUploadMedia :media-label="$t('forms.media')" :upload-text="$t('forms.uploadMedia')" :change-text="$t('forms.changeMedia')" :seo-tag="$t('forms.seoTag')" :media="settings[0].media && Object.keys(settings[0].media).length > 0 ? [settings[0].media] : []" @uploadContainerClicked="selectedMediaIndex = 0; $emit('openMediaModal', settings[0].media && Object.keys(settings[0].media).length > 0 ? settings[0].media.media_id : null)" @removeUploadedImage="removeMedia(0)" />
+      <LazyMediasUploadMedia
+        :media-label="$t('forms.media')"
+        :upload-text="$t('forms.uploadMedia')"
+        :change-text="$t('forms.changeMedia')"
+        :seo-tag="$t('forms.seoTag')"
+        :media="
+          settings[0].media && Object.keys(settings[0].media).length > 0
+            ? [settings[0].media]
+            : []
+        "
+        @uploadContainerClicked="
+          selectedMediaIndex = 0
+          $emit(
+            'openMediaModal',
+            settings[0].media && Object.keys(settings[0].media).length > 0
+              ? settings[0].media.media_id
+              : null,
+          )
+        "
+        @removeUploadedImage="removeMedia(0)"
+      />
     </div>
 
     <div class="flex flex-col items-start justify-start mt-8">
-      <label for="dropdown" class="block mb-2 text-sm font-medium text-gray-700">{{ $t('forms.imagePosition') }}</label>
+      <label
+        for="dropdown"
+        class="block mb-2 text-sm font-medium text-gray-700"
+        >{{ $t('forms.imagePosition') }}</label
+      >
       <select
         id="dropdown"
         v-model="settings[0].imagePosition"
@@ -73,8 +103,13 @@
       </select>
     </div>
 
-    <div id="sectionWrapperClass" class="flex flex-col items-start justify-start mt-8 ml-2">
-      <label :class="sectionsStyle.fieldLabel">{{ $t("forms.sectionWrapperClass") }}</label>
+    <div
+      id="sectionWrapperClass"
+      class="flex flex-col items-start justify-start mt-8 ml-2"
+    >
+      <label :class="sectionsStyle.fieldLabel">{{
+        $t('forms.sectionWrapperClass')
+      }}</label>
       <input
         v-model="settings[0].sectionWrapperClass"
         type="text"
@@ -84,64 +119,96 @@
     </div>
 
     <div id="title" class="flex flex-col items-start justify-start mt-8">
-      <label :class="sectionsStyle.fieldLabel">{{ $t("forms.title") + '*' }}</label>
-      <LazyEditorWysiwyg :html="settings[0].title[selectedLang]" :css-classes-prop="settings[0].titleClasses" @cssClassesChanged="(v) => settings[0]['titleClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTitleDescription(content)"/>
-      <span v-if="errors.title === true && selectedLang === defaultLang" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+      <label :class="sectionsStyle.fieldLabel">{{
+        $t('forms.title') + '*'
+      }}</label>
+      <LazyEditorWysiwyg
+        :html="settings[0].title[selectedLang]"
+        :css-classes-prop="settings[0].titleClasses"
+        @cssClassesChanged="(v) => (settings[0]['titleClasses'] = v)"
+        @wysiwygMedia="wysiwygMediaAdded"
+        @settingsUpdate="(content) => updateTitleDescription(content)"
+      />
+      <span
+        v-if="errors.title === true && selectedLang === defaultLang"
+        class="flex text-error text-sm pt-2 pl-2"
+        >{{ $t('forms.requiredField') }}</span
+      >
     </div>
 
     <div id="text" class="flex flex-col items-start justify-start mt-8">
-      <label :class="sectionsStyle.fieldLabel">{{ $t("forms.text") + '*' }}</label>
-      <LazyEditorWysiwyg :html="settings[0].text[selectedLang]" :css-classes-prop="settings[0].textClasses" @cssClassesChanged="(v) => settings[0]['textClasses'] = v" @wysiwygMedia="wysiwygMediaAdded" @settingsUpdate="(content) => updateTextDescription(content)"/>
-      <span v-if="errors.text === true && selectedLang === defaultLang" class="flex text-error text-sm pt-2 pl-2">{{ $t('forms.requiredField') }}</span>
+      <label :class="sectionsStyle.fieldLabel">{{
+        $t('forms.text') + '*'
+      }}</label>
+      <LazyEditorWysiwyg
+        :html="settings[0].text[selectedLang]"
+        :css-classes-prop="settings[0].textClasses"
+        @cssClassesChanged="(v) => (settings[0]['textClasses'] = v)"
+        @wysiwygMedia="wysiwygMediaAdded"
+        @settingsUpdate="(content) => updateTextDescription(content)"
+      />
+      <span
+        v-if="errors.text === true && selectedLang === defaultLang"
+        class="flex text-error text-sm pt-2 pl-2"
+        >{{ $t('forms.requiredField') }}</span
+      >
     </div>
 
-    <LazySectionFormErrors :selectedLang="selectedLang" :default-lang="defaultLang" :locales="locales" :errors="errors" />
-
+    <LazySectionFormErrors
+      :selectedLang="selectedLang"
+      :default-lang="defaultLang"
+      :locales="locales"
+      :errors="errors"
+    />
   </div>
 </template>
 
 <i18n src="./Shared_i18n.json"></i18n>
 
 <script>
-import { sectionsStyle, scrollToFirstError, assignMediaObject } from '@/utils/constants'
+import {
+  sectionsStyle,
+  scrollToFirstError,
+  assignMediaObject,
+} from '@/utils/constants'
 
 export default {
   name: 'TextImage',
   setup() {
     const { t } = useI18n({
-      useScope: 'local'
+      useScope: 'local',
     })
 
     return {
-      $t: t
+      $t: t,
     }
   },
   props: {
     selectedLang: {
       type: String,
-      default: 'en'
+      default: 'en',
     },
     defaultLang: {
       type: String,
-      default: 'en'
+      default: 'en',
     },
     selectedMedia: {},
     locales: {
       type: Array,
       default() {
         return []
-      }
+      },
     },
     mediaFields: [
       {
         type: 'image',
-        name: 'media'
+        name: 'media',
       },
       {
         type: 'image',
-        name: 'wysiwygMedia'
-      }
-    ]
+        name: 'wysiwygMedia',
+      },
+    ],
   },
   data() {
     return {
@@ -149,36 +216,36 @@ export default {
         {
           title: {
             en: '',
-            fr: ''
+            fr: '',
           },
           text: {
             en: '',
-            fr: ''
+            fr: '',
           },
           titleClasses: '',
           textClasses: '',
           media: {
-            media_id: "",
-            url: "",
-            seo_tag: ""
+            media_id: '',
+            url: '',
+            seo_tag: '',
           },
-          sectionWrapperClass: "",
-          imagePosition: "none",
+          sectionWrapperClass: '',
+          imagePosition: 'none',
           videoLink: '',
           autoplay: false,
           loop: false,
           controls: false,
           whiteProgress: false,
-        }
+        },
       ],
       errors: {
         title: false,
         text: false,
-        media: false
+        media: false,
       },
       siteLang: 'en',
       sectionsStyle,
-      selectedMediaIndex: 0
+      selectedMediaIndex: 0,
     }
   },
   watch: {
@@ -190,13 +257,13 @@ export default {
       media = assignMediaObject(mediaObject)
       this.settings[this.selectedMediaIndex]['media'] = media
       this.$emit('closeMediaModal')
-    }
+    },
   },
   methods: {
     wysiwygMediaAdded(media) {
       this.settings.push({
         wysiwygMedia: media,
-        wysiwygLang: this.selectedLang
+        wysiwygLang: this.selectedLang,
       })
     },
     updateTitleDescription(content) {
@@ -213,34 +280,44 @@ export default {
         if (Array.isArray(this.settings)) {
           this.settings.forEach((ob, index) => {
             if (ob.wysiwygLang) {
-              if (!JSON.stringify({title: { ...this.settings[0].title }, text: { ...this.settings[0].text }}).includes(ob.wysiwygMedia.media_id)) {
+              if (
+                !JSON.stringify({
+                  title: { ...this.settings[0].title },
+                  text: { ...this.settings[0].text },
+                }).includes(ob.wysiwygMedia.media_id)
+              ) {
                 this.settings.splice(index, 1)
               }
             }
           })
         }
       } catch {}
-      for(let i = 0; i < this.settings.length; i++) {
-        if (this.settings[i].media && (Object.keys(this.settings[i].media).length === 0 || !this.settings[i].media.media_id || !this.settings[i].media.url)) {
+      for (let i = 0; i < this.settings.length; i++) {
+        if (
+          this.settings[i].media &&
+          (Object.keys(this.settings[i].media).length === 0 ||
+            !this.settings[i].media.media_id ||
+            !this.settings[i].media.url)
+        ) {
           delete this.settings[i].media
         }
       }
-      let valid = true;
-      this.errors.title = false;
-      this.errors.text = false;
-      this.errors.media = false;
+      let valid = true
+      this.errors.title = false
+      this.errors.text = false
+      this.errors.media = false
       if (!this.settings[0].title[this.defaultLang]) {
-        this.errors.title = true;
-        valid = false;
+        this.errors.title = true
+        valid = false
       }
       if (!this.settings[0].text[this.defaultLang]) {
-        this.errors.text = true;
-        valid = false;
+        this.errors.text = true
+        valid = false
       }
       if (!valid) {
         scrollToFirstError(this.errors)
       }
-      return valid;
+      return valid
     },
   },
 }

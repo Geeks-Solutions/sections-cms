@@ -2,57 +2,56 @@ module.exports = (api, options, rootOptions) => {
   if (options.choice === 'nuxt') {
     api.extendPackage({
       dependencies: {
-        "@geeks.solutions/nuxt-sections": "3.0.17",
-        "@googlemaps/js-api-loader": "^1.16.6",
-        "@gtm-support/vue-gtm": "^3.1.0",
-        "leaflet": "^1.9.4",
-        "nuxt": "^3.20.2",
-        "@nuxtjs/i18n": "^9.5.3",
-        "@nuxt/image": "^1.10.0",
-        "@nuxt/scripts": "^0.13.1",
-        "vue-dragscroll": "^4.0.6",
-        "nuxt-lazytube": "^0.2.2",
-        "nuxt3-leaflet": "^1.0.13",
-        "uuid": "3.4.0",
-        "pinia": "^3.0.2",
-        "@pinia/nuxt": "^0.11.0",
-        "h3-compression": "^0.3.2"
+        '@geeks.solutions/nuxt-sections': '3.0.17',
+        '@googlemaps/js-api-loader': '^1.16.6',
+        '@gtm-support/vue-gtm': '^3.1.0',
+        leaflet: '^1.9.4',
+        nuxt: '^3.20.2',
+        '@nuxtjs/i18n': '^9.5.3',
+        '@nuxt/image': '^1.10.0',
+        '@nuxt/scripts': '^0.13.1',
+        'vue-dragscroll': '^4.0.6',
+        'nuxt-lazytube': '^0.2.2',
+        'nuxt3-leaflet': '^1.0.13',
+        uuid: '3.4.0',
+        pinia: '^3.0.2',
+        '@pinia/nuxt': '^0.11.0',
+        'h3-compression': '^0.3.2',
       },
-      "devDependencies": {
-        "@nuxt/eslint": "^1.3.0",
-        "@nuxt/eslint-config": "^1.3.0",
-        "@nuxt/test-utils": "^3.17.2",
-        "@testing-library/vue": "^8.1.0",
-        "@unocss/nuxt": "^66.3.2",
-        "@vue/test-utils": "^2.4.6",
-        "eslint": "^9.25.1",
-        "happy-dom": "^17.4.6",
-        "unocss": "^66.3.2",
-        "vitest": "^3.1.2"
-      }
+      devDependencies: {
+        '@nuxt/eslint': '^1.3.0',
+        '@nuxt/eslint-config': '^1.3.0',
+        '@nuxt/test-utils': '^3.17.2',
+        '@testing-library/vue': '^8.1.0',
+        '@unocss/nuxt': '^66.3.2',
+        '@vue/test-utils': '^2.4.6',
+        eslint: '^9.25.1',
+        'happy-dom': '^17.4.6',
+        unocss: '^66.3.2',
+        vitest: '^3.1.2',
+      },
     })
     api.render('./template/nuxt-sections-first-page', {
-      ...options
+      ...options,
     })
-
   } else {
     api.extendPackage({
       dependencies: {
-        "@geeks.solutions/vue-sections": "^1.0.23",
-        "bootstrap-vue": "^2.21.2",
-        "cookie-universal-nuxt": "^2.1.4",
-        "nuxt-i18n": "^6.20.5",
-        "vue-metamask": "^2.2.1",
-        "web3": "^1.7.3",
-        "js-sha256": "^0.9.0"
-      }
+        '@geeks.solutions/vue-sections': '^1.0.23',
+        'bootstrap-vue': '^2.21.2',
+        'cookie-universal-nuxt': '^2.1.4',
+        'nuxt-i18n': '^6.20.5',
+        'vue-metamask': '^2.2.1',
+        web3: '^1.7.3',
+        'js-sha256': '^0.9.0',
+      },
     })
     api.render('./template/vue-sections', {
       ...options,
     })
     if (options.addSectionsFiles) {
       api.render('./template/vue-sections-first-page', {
-        ...options
+        ...options,
       })
     }
   }
@@ -65,16 +64,17 @@ module.exports = (api, options, rootOptions) => {
 }
 
 module.exports.hooks = (api, options) => {
-
   api.afterInvoke(() => {
     const { EOL } = require('os')
     const fs = require('fs')
     const contentMain = fs.readFileSync(api.resolve('nuxt.config.ts'), { encoding: 'utf-8' })
     let lines = contentMain.split(/\r?\n/g)
 
-    const renderIndex0 = lines.findIndex(line => line.match(/export default/))
+    const renderIndex0 = lines.findIndex((line) => line.match(/export default/))
     if (options.choice === 'nuxt') {
-      lines[renderIndex0] = lines[renderIndex0].replace(`{`, `{
+      lines[renderIndex0] = lines[renderIndex0].replace(
+        `{`,
+        `{
   \rmodules: [\r
     '@geeks.solutions/nuxt-sections',\r
     '@nuxt/image',\r
@@ -124,20 +124,24 @@ module.exports.hooks = (api, options) => {
       gzip: true,
       brotli: true
     }
-  },`)
+  },`
+      )
     }
 
-    const renderIndex1 = lines.findIndex(line => line.match(/plugins:/))
+    const renderIndex1 = lines.findIndex((line) => line.match(/plugins:/))
     if (options.choice === 'vue') {
-      lines[renderIndex1] = lines[renderIndex1].replace(`[`, `[\r{ src: '~/plugins/sections.js', ssr: false },`)
+      lines[renderIndex1] = lines[renderIndex1].replace(
+        `[`,
+        `[\r{ src: '~/plugins/sections.js', ssr: false },`
+      )
     }
 
-
-    const renderIndex2 = lines.findIndex(line => line.match(/modules:/))
+    const renderIndex2 = lines.findIndex((line) => line.match(/modules:/))
     if (options.choice === 'nuxt') {
-
     } else {
-      lines[renderIndex2] = lines[renderIndex2].replace(`[`, `[\r'bootstrap-vue/nuxt',
+      lines[renderIndex2] = lines[renderIndex2].replace(
+        `[`,
+        `[\r'bootstrap-vue/nuxt',
     [
       "nuxt-i18n",
       {
@@ -154,26 +158,35 @@ module.exports.hooks = (api, options) => {
         langDir: "lang/",
         defaultLocale: "en"
       }
-    ],`)
+    ],`
+      )
     }
 
     fs.writeFileSync(api.resolve('nuxt.config.ts'), lines.join(EOL), { encoding: 'utf-8' })
 
     api.onCreateComplete(async () => {
-
       if (options.choice === 'vue') {
-        const contentSections = fs.readFileSync(api.resolve('plugins/sections.js'), { encoding: 'utf-8' })
+        const contentSections = fs.readFileSync(api.resolve('plugins/sections.js'), {
+          encoding: 'utf-8',
+        })
         const linesSections = contentSections.split(/\r?\n/g)
 
-        const renderSectionsIndex1 = linesSections.findIndex(line => line.match(/projectId:/))
-        linesSections[renderSectionsIndex1] = linesSections[renderSectionsIndex1].replace(`""`, `"${options.projectId}"`)
+        const renderSectionsIndex1 = linesSections.findIndex((line) => line.match(/projectId:/))
+        linesSections[renderSectionsIndex1] = linesSections[renderSectionsIndex1].replace(
+          `""`,
+          `"${options.projectId}"`
+        )
 
-        const renderSectionsIndex2 = linesSections.findIndex(line => line.match(/projectUrl:/))
-        linesSections[renderSectionsIndex2] = linesSections[renderSectionsIndex2].replace(`""`, `"${options.projectUrl}"`)
+        const renderSectionsIndex2 = linesSections.findIndex((line) => line.match(/projectUrl:/))
+        linesSections[renderSectionsIndex2] = linesSections[renderSectionsIndex2].replace(
+          `""`,
+          `"${options.projectUrl}"`
+        )
 
-        fs.writeFileSync(api.resolve('plugins/sections.js'), linesSections.join(EOL), { encoding: 'utf-8' })
+        fs.writeFileSync(api.resolve('plugins/sections.js'), linesSections.join(EOL), {
+          encoding: 'utf-8',
+        })
       }
-
     })
   })
 }
