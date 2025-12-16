@@ -187,7 +187,7 @@ export default {
       }
     }
   },
-  // eslint-disable-next-line vue/order-in-components
+   
   methods: {
     verifyMatch() {
       this.formError = ''

@@ -35,7 +35,7 @@ export default {
     reference: {
       handler(value) {
         this.configurableReference = value.value
-        // eslint-disable-next-line no-prototype-builtins
+         
         if (
           this.configurableReference.optionsData.hasOwnProperty(
             'primary_content',

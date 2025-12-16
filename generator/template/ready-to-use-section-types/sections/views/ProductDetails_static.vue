@@ -83,6 +83,7 @@ export default {
       if (this.section.settings && this.section.settings[0]) {
         return this.section.settings[0]
       }
+      return {}
     },
   },
   mounted() {
