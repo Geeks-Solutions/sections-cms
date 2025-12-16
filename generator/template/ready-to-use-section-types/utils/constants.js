@@ -236,13 +236,22 @@ export function emitGlobalEvent(link, target, event) {
 }
 
 export function isGlobalEvent(link) {
-  return globalEvents.includes(link)
+    return globalEvents.includes(link)
 }
 
 export const globalEvents = []
 
-export function formatPrice(price) {
-  return (Math.round(price * 100) / 100).toFixed(2)
+export function formatPrice(price, currency = '$') {
+  const numPrice = parseFloat(price)
+  if (isNaN(numPrice)) return '0'
+  
+  // For LBP, no decimals and add thousand separators
+  if (currency === 'LBP') {
+    return Math.round(numPrice).toLocaleString('en-US')
+  }
+  
+  // For other currencies, show 2 decimals
+  return numPrice.toFixed(2)
 }
 
 export function generateWhatsAppMessage(
@@ -294,7 +303,7 @@ export function generateWhatsAppMessage(
 
   // Add total if provided
   if (total > 0) {
-    message += `\n${i18n('whatsapp.total') || 'Total'}: ${currencySymbol}${formatPrice(total)}`
+    message += `\n${i18n('whatsapp.total') || 'Total'}: ${currencySymbol}${formatPrice(total,currencySymbol)}`
   }
 
   // Add closing message
@@ -305,8 +314,8 @@ export function generateWhatsAppMessage(
 
 export const importAsset = (path) => {
   try {
-    const images = import.meta.glob('/assets/icons/**/*', { eager: true })
-    return images[path].default
+    const images = import.meta.glob("/assets/icons/**/*", {eager: true});
+    return images[path].default;
   } catch {
     return ''
   }
