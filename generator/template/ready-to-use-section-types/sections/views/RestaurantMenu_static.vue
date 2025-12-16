@@ -2,14 +2,27 @@
   <div v-if="settings" class="restaurant-menu py-2.5" :class="settings.classes">
     <div>
       <!-- Shopping Cart Icon - Only render the icon, not full cart -->
-      <CartIcon v-if="settings.appearance && settings.appearance.shoppingCart" :total-items="totalItems"
-        @click="toggleCart" />
+      <CartIcon
+        v-if="settings.appearance && settings.appearance.shoppingCart"
+        :total-items="totalItems"
+        @click="toggleCart"
+      />
 
       <!-- Restaurant Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
-        <GUniversalViewer :src="settings.logo.url" :alt="settings.logo.seo_tag || 'Restaurant Logo'"
-          :type="settings.logo.metadata?.type || 'image'" width="96" height="96" class="h-24 object-contain mx-auto"
-          placeholder quality="80" format="webp" preload fetchpriority="high" />
+        <GUniversalViewer
+          :src="settings.logo.url"
+          :alt="settings.logo.seo_tag || 'Restaurant Logo'"
+          :type="settings.logo.metadata?.type || 'image'"
+          width="96"
+          height="96"
+          class="h-24 object-contain mx-auto"
+          placeholder
+          quality="80"
+          format="webp"
+          preload
+          fetchpriority="high"
+        />
       </div>
 
       <!-- Menu Title and Subtitle -->
@@ -22,61 +35,130 @@
         </p>
       </div>
 
-      <SocialLinks :links="socialMediaLinks" :show-whats-app="!!settings.showWhatsApp"
+      <SocialLinks
+        :links="socialMediaLinks"
+        :show-whats-app="!!settings.showWhatsApp"
         :whatsapp-number="settings.whatsappNumber || ''"
-        :whatsapp-message="settings.whatsappMessage && settings.whatsappMessage[lang] || ''" :cart="cart" :lang="lang"
-        :i18n="$t" :type="'restaurant'" :enable-branches="settings.enableBranches || false" />
+        :whatsapp-message="
+          (settings.whatsappMessage && settings.whatsappMessage[lang]) || ''
+        "
+        :cart="cart"
+        :lang="lang"
+        :i18n="$t"
+        :type="'restaurant'"
+        :enable-branches="settings.enableBranches || false"
+      />
 
       <!-- Category View Mode -->
       <div v-if="isCategoryView" class="menu-content">
         <!-- Category Navigation Tabs - Optimized for performance -->
-        <CategoryTabs :categories="sortedCategories" :active-category="activeCategory" :lang="lang"
-          @select-category="setActiveCategory" />
+        <CategoryTabs
+          :categories="sortedCategories"
+          :active-category="activeCategory"
+          :lang="lang"
+          @select-category="setActiveCategory"
+        />
 
         <!-- Active Category Description -->
-        <div v-if="activeCategoryObj && activeCategoryObj.description && activeCategoryObj.description[lang]"
-          class="mb-6 text-center">
-          <p class="category-description">{{ activeCategoryObj.description[lang] }}</p>
+        <div
+          v-if="
+            activeCategoryObj &&
+            activeCategoryObj.description &&
+            activeCategoryObj.description[lang]
+          "
+          class="mb-6 text-center"
+        >
+          <p class="category-description">
+            {{ activeCategoryObj.description[lang] }}
+          </p>
         </div>
 
         <!-- Menu Items for Active Category - Using virtual list for large menus -->
-        <ItemsGrid :items="getMenuItemsByCategory(activeCategory)" :currency-symbol="settings.currencySymbol"
-          :lang="lang" :show-item-details="settings.appearance && settings.appearance.itemDetails"
-          :expanded-items="expandedItems" @item-click="handleItemClick" />
+        <ItemsGrid
+          :items="getMenuItemsByCategory(activeCategory)"
+          :currency-symbol="settings.currencySymbol"
+          :lang="lang"
+          :show-item-details="
+            settings.appearance && settings.appearance.itemDetails
+          "
+          :expanded-items="expandedItems"
+          @item-click="handleItemClick"
+        />
       </div>
 
       <!-- List View Mode (Original) - Optimized for performance -->
       <div v-else class="menu-content">
-        <CategoryList :categories="sortedCategories" :get-items-by-category="getItemsByCategory"
-          :currency-symbol="settings.currencySymbol" :lang="lang"
-          :show-item-details="settings.appearance && settings.appearance.itemDetails" :expanded-items="expandedItems"
-          @item-click="handleItemClick" />
+        <CategoryList
+          :categories="sortedCategories"
+          :get-items-by-category="getItemsByCategory"
+          :currency-symbol="settings.currencySymbol"
+          :lang="lang"
+          :show-item-details="
+            settings.appearance && settings.appearance.itemDetails
+          "
+          :expanded-items="expandedItems"
+          @item-click="handleItemClick"
+        />
       </div>
     </div>
 
     <!-- Item Modal - Conditionally imported and rendered -->
-    <ItemModal v-if="showItemModal && settings.appearance && settings.appearance.itemDetails" :item="selectedItem"
-      :currency-symbol="settings.currencySymbol" :lang="lang" :quantity="itemQuantity" :notes="itemNotes"
-      :type="'restaurant'" :selected-variant="selectedVariant"
-      :show-add-to-cart="settings.appearance && settings.appearance.shoppingCart" @close="closeItemModal"
-      @update-quantity="updateItemQuantity" @update-notes="updateItemNotes" @select-variant="selectVariant"
-      @add-to-cart="addToCart" />
+    <ItemModal
+      v-if="
+        showItemModal && settings.appearance && settings.appearance.itemDetails
+      "
+      :item="selectedItem"
+      :currency-symbol="settings.currencySymbol"
+      :lang="lang"
+      :quantity="itemQuantity"
+      :notes="itemNotes"
+      :type="'restaurant'"
+      :selected-variant="selectedVariant"
+      :show-add-to-cart="
+        settings.appearance && settings.appearance.shoppingCart
+      "
+      @close="closeItemModal"
+      @update-quantity="updateItemQuantity"
+      @update-notes="updateItemNotes"
+      @select-variant="selectVariant"
+      @add-to-cart="addToCart"
+    />
 
     <!-- Shopping Cart Sidebar - Conditionally imported and rendered -->
-    <ShoppingCart v-if="showCart && settings.appearance.shoppingCart" :cart="cart"
-      :currency-symbol="settings.currencySymbol" :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
-      :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true" :lang="lang" :i18n="$t"
-      type="restaurant" :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
-      :whatsapp-number="settings.whatsappNumber || ''" :enable-branches="settings.enableBranches || false"
-      :branches="settings.branches || []" @close="closeCart" @increment="incrementCartItem"
-      @decrement="decrementCartItem" @remove="removeFromCart" @checkout="checkout" />
+    <ShoppingCart
+      v-if="showCart && settings.appearance.shoppingCart"
+      :cart="cart"
+      :currency-symbol="settings.currencySymbol"
+      :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
+      :enable-tax="settings.enableTax !== undefined ? settings.enableTax : true"
+      :lang="lang"
+      :i18n="$t"
+      type="restaurant"
+      :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
+      :whatsapp-number="settings.whatsappNumber || ''"
+      :enable-branches="settings.enableBranches || false"
+      :branches="settings.branches || []"
+      @close="closeCart"
+      @increment="incrementCartItem"
+      @decrement="decrementCartItem"
+      @remove="removeFromCart"
+      @checkout="checkout"
+    />
   </div>
 </template>
 
 <i18n src="../../sections/forms/RestaurantMenu_i18n.json"></i18n>
 
 <script setup>
-import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount, inject } from 'vue'
+import {
+  ref,
+  computed,
+  watch,
+  nextTick,
+  onMounted,
+  onBeforeUnmount,
+  inject,
+} from 'vue'
 
 const { t: $t } = useI18n({ useScope: 'local' })
 
@@ -93,15 +175,15 @@ import ShoppingCart from '../../components/UnifiedMenu/ShoppingCart.vue'
 const props = defineProps({
   section: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   lang: {
     type: String,
-    default: "en"
+    default: 'en',
   },
   locales: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   viewStructure: {
     settings: [
@@ -109,30 +191,30 @@ const props = defineProps({
         logo: 'image',
         menuTitle: {
           en: 'Our Menu',
-          fr: 'Notre Menu'
+          fr: 'Notre Menu',
         },
         menuSubtitle: {
           en: 'Discover our delicious options',
-          fr: 'Découvrez nos délicieuses options'
+          fr: 'Découvrez nos délicieuses options',
         },
         categories: [
           {
             id: 'drinks-category-id',
             name: {
               en: 'Drinks',
-              fr: 'Boissons'
+              fr: 'Boissons',
             },
             description: {
               en: 'Category Description',
-              fr: 'Description de la catégorie'
+              fr: 'Description de la catégorie',
             },
             classes: '',
             icon: {
               media_id: '',
               url: '',
-              seo_tag: ''
-            }
-          }
+              seo_tag: '',
+            },
+          },
         ],
         menuItems: [
           {
@@ -140,26 +222,26 @@ const props = defineProps({
             categoryId: 'drinks-category-id',
             name: {
               en: 'Item Name',
-              fr: 'Nom du plat'
+              fr: 'Nom du plat',
             },
             description: {
               en: 'Item Description',
-              fr: 'Description du plat'
+              fr: 'Description du plat',
             },
             price: 10.99,
             image: 'image',
             featured: true,
-            classes: ''
-          }
+            classes: '',
+          },
         ],
         currencySymbol: '$',
         classes: '',
         viewMode: 'list',
         enableTax: true,
-        taxRate: 10.00
-      }
-    ]
-  }
+        taxRate: 10.0,
+      },
+    ],
+  },
 })
 
 // Reactive data
@@ -176,31 +258,30 @@ const showShoppingCart = ref(false)
 const showItemDetails = ref(false)
 const expandedItems = ref(new Set())
 
-
 // Constants
-const TAX_RATE = 0.10
+const TAX_RATE = 0.1
 
 const socialIcons = {
   instagram: {
     classes: 'instagram',
-    hoverClasses: 'instagram-hover'
+    hoverClasses: 'instagram-hover',
   },
   facebook: {
     classes: 'facebook',
-    hoverClasses: 'facebook-hover'
+    hoverClasses: 'facebook-hover',
   },
   tiktok: {
     classes: 'tiktok',
-    hoverClasses: 'tiktok-hover'
+    hoverClasses: 'tiktok-hover',
   },
   twitter: {
     classes: 'twitter',
-    hoverClasses: 'twitter-hover'
+    hoverClasses: 'twitter-hover',
   },
   youtube: {
     classes: 'youtube',
-    hoverClasses: 'youtube-hover'
-  }
+    hoverClasses: 'youtube-hover',
+  },
 }
 
 // Utility functions
@@ -215,18 +296,28 @@ const debounce = (fn, delay) => {
 // Computed properties
 const settings = computed(() => {
   if (!props.section?.settings) return {}
-  return Array.isArray(props.section.settings) ? props.section.settings[0] : props.section.settings
+  return Array.isArray(props.section.settings)
+    ? props.section.settings[0]
+    : props.section.settings
 })
 
 const menuTitle = computed(() => {
-  if (settings.value && settings.value.menuTitle && settings.value.menuTitle[props.lang]) {
+  if (
+    settings.value &&
+    settings.value.menuTitle &&
+    settings.value.menuTitle[props.lang]
+  ) {
     return settings.value.menuTitle[props.lang]
   }
   return ''
 })
 
 const menuSubtitle = computed(() => {
-  if (settings.value && settings.value.menuSubtitle && settings.value.menuSubtitle[props.lang]) {
+  if (
+    settings.value &&
+    settings.value.menuSubtitle &&
+    settings.value.menuSubtitle[props.lang]
+  ) {
     return settings.value.menuSubtitle[props.lang]
   }
   return ''
@@ -237,10 +328,12 @@ const socialMediaLinks = computed(() => {
 
   return Object.entries(settings.value.socialMedia || {})
     .filter(([platform, url]) => {
-      return platform !== 'whatsapp' &&
+      return (
+        platform !== 'whatsapp' &&
         url &&
         typeof url === 'string' &&
         url.trim() !== ''
+      )
     })
     .map(([platform, url]) => {
       const classes = (socialIcons[platform] || {}).classes || ''
@@ -250,7 +343,7 @@ const socialMediaLinks = computed(() => {
         type: platform,
         url,
         classes,
-        hoverClasses
+        hoverClasses,
       }
     })
 })
@@ -266,7 +359,9 @@ const isCategoryView = computed(() => {
 
 const activeCategoryObj = computed(() => {
   if (!activeCategory.value) return null
-  return settings.value.categories.find(cat => cat.id === activeCategory.value)
+  return settings.value.categories.find(
+    (cat) => cat.id === activeCategory.value,
+  )
 })
 
 const totalItems = computed(() => {
@@ -274,7 +369,10 @@ const totalItems = computed(() => {
 })
 
 const cartSubtotal = computed(() => {
-  return cart.value.reduce((total, item) => total + (item.price * item.quantity), 0)
+  return cart.value.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  )
 })
 
 const cartTax = computed(() => {
@@ -312,21 +410,26 @@ const loadCartFromStorage = () => {
       try {
         cart.value = JSON.parse(savedCart)
         isCartLoaded.value = true
-      } catch (e) {
-      }
+      } catch (e) {}
     }
   }
 }
 
 const initializeActiveCategory = () => {
-  if (isCategoryView.value && sortedCategories.value.length > 0 && !activeCategory.value) {
+  if (
+    isCategoryView.value &&
+    sortedCategories.value.length > 0 &&
+    !activeCategory.value
+  ) {
     activeCategory.value = sortedCategories.value[0].id
   }
 }
 
 const getItemsByCategory = (categoryId) => {
   if (!settings.value.menuItems) return []
-  return settings.value.menuItems.filter(item => item.categoryId === categoryId)
+  return settings.value.menuItems.filter(
+    (item) => item.categoryId === categoryId,
+  )
 }
 
 const getMenuItemsByCategory = (categoryId) => {
@@ -423,13 +526,17 @@ const addToCart = () => {
   if (!selectedItem.value) return
 
   // Determine the price: use variant price if variant is selected, otherwise use item price
-  const itemPrice = selectedVariant.value ? selectedVariant.value.price : selectedItem.value.price
+  const itemPrice = selectedVariant.value
+    ? selectedVariant.value.price
+    : selectedItem.value.price
 
   // Create variant info for cart display
-  const variantInfo = selectedVariant.value ? {
-    id: selectedVariant.value.id,
-    name: selectedVariant.value.name
-  } : null
+  const variantInfo = selectedVariant.value
+    ? {
+        id: selectedVariant.value.id,
+        name: selectedVariant.value.name,
+      }
+    : null
 
   const newItem = {
     id: selectedItem.value.id,
@@ -437,17 +544,18 @@ const addToCart = () => {
     price: itemPrice,
     quantity: itemQuantity.value,
     notes: itemNotes.value,
-    variant: variantInfo // NEW: Include variant info
+    variant: variantInfo, // NEW: Include variant info
   }
 
   closeItemModal()
 
   nextTick(() => {
     // Match cart items by id, variant, AND notes
-    const existingItemIndex = cart.value.findIndex(item =>
-      item.id === newItem.id &&
-      item.notes === newItem.notes &&
-      (item.variant?.id || null) === (newItem.variant?.id || null)
+    const existingItemIndex = cart.value.findIndex(
+      (item) =>
+        item.id === newItem.id &&
+        item.notes === newItem.notes &&
+        (item.variant?.id || null) === (newItem.variant?.id || null),
     )
 
     if (existingItemIndex !== -1) {
@@ -491,14 +599,21 @@ const checkout = () => {
 }
 
 // Watchers
-watch(() => settings.value, () => {
-  initializeActiveCategory()
-  initializeMenuTitles()
-}, { deep: true })
+watch(
+  () => settings.value,
+  () => {
+    initializeActiveCategory()
+    initializeMenuTitles()
+  },
+  { deep: true },
+)
 
-watch(() => props.lang, () => {
-  initializeMenuTitles()
-})
+watch(
+  () => props.lang,
+  () => {
+    initializeMenuTitles()
+  },
+)
 
 // Lifecycle hooks
 onMounted(() => {
@@ -510,7 +625,7 @@ onMounted(() => {
     if (!settings.value.appearance) {
       settings.value.appearance = {
         shoppingCart: true,
-        itemDetails: true
+        itemDetails: true,
       }
     } else {
       if (typeof settings.value.appearance.shoppingCart === 'undefined') {
@@ -527,7 +642,7 @@ onMounted(() => {
         facebook: '',
         tiktok: '',
         twitter: '',
-        youtube: ''
+        youtube: '',
       }
     }
 
@@ -543,8 +658,12 @@ onMounted(() => {
       settings.value.whatsappMessage = {}
     }
 
-    if (settings.value.whatsappMessage && !settings.value.whatsappMessage[props.lang]) {
-      settings.value.whatsappMessage[props.lang] = 'Hello! I would like to reserve a table.'
+    if (
+      settings.value.whatsappMessage &&
+      !settings.value.whatsappMessage[props.lang]
+    ) {
+      settings.value.whatsappMessage[props.lang] =
+        'Hello! I would like to reserve a table.'
     }
   }
 
@@ -567,13 +686,13 @@ onMounted(() => {
     {
       id: 'global',
       name: useI18n().t('sectionsBuilder.globalSettings'),
-      path: '/theme/global_settings'
+      path: '/theme/global_settings',
     },
     {
       id: 'specific',
       name: useI18n().t('sectionsBuilder.specificSettings'),
-      path: '/theme/RestaurantMenu_settings'
-    }
+      path: '/theme/RestaurantMenu_settings',
+    },
   ])
 })
 

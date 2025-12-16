@@ -1,21 +1,32 @@
 <template>
   <div class="category-tabs-wrapper mb-4 md:mb-8 overflow-x-auto">
     <div class="flex space-x-2 pb-2">
-      <div v-for="category in categories" :key="'tab-' + category.id"
+      <div
+        v-for="category in categories"
+        :key="'tab-' + category.id"
         class="category-tab whitespace-nowrap px-3 sm:px-4 py-0 rounded-lg h-8 flex hover:cursor-pointer transition-colors duration-200"
-        :class="[
-          activeCategory === category.id ? 'active' : ''
-        ]" @click="$emit('select-category', category.id)">
+        :class="[activeCategory === category.id ? 'active' : '']"
+        @click="$emit('select-category', category.id)"
+      >
         <div class="flex items-center justify-center">
-          <div v-if="category.icon && category.icon.url"
-            class="icon-container mr-1 flex-shrink-0 w-5 h-5 flex items-center justify-center">
-            <GUniversalViewer :src="category.icon.url" :alt="category.icon.seo_tag || category.name[lang]"
-              :type="category.icon.metadata?.type || 'image'" class="icon-image max-w-full max-h-full object-contain"
-              width="20" height="20" loading="lazy" :modifiers="{
+          <div
+            v-if="category.icon && category.icon.url"
+            class="icon-container mr-1 flex-shrink-0 w-5 h-5 flex items-center justify-center"
+          >
+            <GUniversalViewer
+              :src="category.icon.url"
+              :alt="category.icon.seo_tag || category.name[lang]"
+              :type="category.icon.metadata?.type || 'image'"
+              class="icon-image max-w-full max-h-full object-contain"
+              width="20"
+              height="20"
+              loading="lazy"
+              :modifiers="{
                 width: 20,
                 height: 20,
-                fit: 'contain'
-              }" />
+                fit: 'contain',
+              }"
+            />
           </div>
           <span class="tab-text">{{ category.name[lang] }}</span>
         </div>
@@ -28,21 +39,21 @@
 defineProps({
   categories: {
     type: Array,
-    required: true
+    required: true,
   },
   activeCategory: {
     type: String,
-    required: true
+    required: true,
   },
   lang: {
     type: String,
-    default: 'en'
+    default: 'en',
   },
   type: {
     type: String,
     default: 'restaurant', // 'restaurant' or 'service'
-    validator: value => ['restaurant', 'service'].includes(value)
-  }
+    validator: (value) => ['restaurant', 'service'].includes(value),
+  },
 })
 
 defineEmits(['select-category'])
