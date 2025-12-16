@@ -176,7 +176,7 @@
           "
           @remove-fieldset="(object, idx) => removeMenuItem(object.id)"
         >
-          <template #default="{ object }" class="w-full">
+          <template #default="{ object }">
             <!-- Item Name -->
             <div class="flex flex-col items-start justify-start mt-4">
               <label class="mr-4 font-medium"
