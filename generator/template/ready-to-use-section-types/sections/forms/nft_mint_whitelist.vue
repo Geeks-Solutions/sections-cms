@@ -187,7 +187,7 @@ export default {
       }
     }
   },
-   
+
   methods: {
     verifyMatch() {
       this.formError = ''

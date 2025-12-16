@@ -675,7 +675,7 @@ export default {
       if (this.settings[0].wysiwygMediasData === undefined) {
         this.settings[0].wysiwygMediasData = []
       }
-       
+
       this.settings[0]['wysiwygMediasData'].push({
         wysiwygMedia: media,
         wysiwygLang: this.selectedLang,
@@ -683,7 +683,7 @@ export default {
       if (this.settings[0].wysiwygMedias === undefined) {
         this.settings[0].wysiwygMedias = []
       }
-       
+
       this.settings[0]['wysiwygMedias'].push(media)
     },
     updateTitleDescription(content, idx) {

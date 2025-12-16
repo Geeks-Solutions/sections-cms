@@ -521,7 +521,7 @@ export default {
                 .catch((error) => {
                   this.processing = false
                   this.loading = false
-                   
+
                   console.warn(error.message)
                   this.errorMessage =
                     'An error occurred, check you metamask wallet for details'
@@ -564,7 +564,6 @@ export default {
           contractAddress,
         )
       } else {
-         
         console.error('Contract ID not found')
       }
 
@@ -595,7 +594,6 @@ export default {
           })
         })
         .catch((error) => {
-           
           console.warn(error.message)
           this.$nuxt.$emit('transactionResponse', {
             status: 'Error',

@@ -35,7 +35,7 @@ export default {
     reference: {
       handler(value) {
         this.configurableReference = value.value
-         
+
         if (
           this.configurableReference.optionsData.hasOwnProperty(
             'primary_content',
