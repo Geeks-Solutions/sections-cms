@@ -314,15 +314,16 @@ export default {
   computed: {
     settings() {
       if (Array.isArray(this.section.settings)) {
-        if (!this.section.settings[0].menus) {
-          this.section.settings[0].menus = [
+        const settings = { ...this.section.settings[0] }
+        if (!settings.menus) {
+          settings.menus = [
             {
               menuContainerClasses: '',
-              menu: this.section.settings[0].menu,
+              menu: settings.menu,
             },
           ]
         }
-        return this.section.settings[0]
+        return settings
       } else return this.section.settings
     },
   },

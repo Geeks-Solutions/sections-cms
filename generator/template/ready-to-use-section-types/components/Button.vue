@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'Button',
+  name: 'SectionButton',
   props: {
     label: {
       type: String,
