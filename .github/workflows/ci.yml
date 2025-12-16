@@ -3,6 +3,8 @@ name: Code Quality Checks
 on:
   push:
     branches: ['**']
+  pull_request:
+    branches: [dev]
 
 jobs:
   build-and-lint:
