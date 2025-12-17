@@ -132,8 +132,7 @@
       "travelAgency": "Agence de voyage",
       "spa": "Spa",
       "salon": "Salon",
-      "businessTypeDesc":
-      "Sélectionnez votre type d'entreprise pour des fonctionnalités spécialisées",
+      "businessTypeDesc": "Sélectionnez votre type d'entreprise pour des fonctionnalités spécialisées",
       "categories": "Catégories",
       "categoriesDesc": "Définissez les catégories pour vos services",
       "category": "Catégorie",
@@ -155,8 +154,7 @@
       "itemPrice": "Prix",
       "itemDuration": "Durée",
       "itemDetails": "Détails du service",
-      "itemDetailsDesc":
-      "Ajoutez des points pour décrire le service (un par ligne)",
+      "itemDetailsDesc": "Ajoutez des points pour décrire le service (un par ligne)",
       "itemImage": "Image du service",
       "uploadMedia": "Télécharger une image",
       "changeMedia": "Changer l'image",
@@ -164,8 +162,7 @@
       "availability": "Disponibilité",
       "fullyAvailable": "Entièrement disponible",
       "limitedAvailability": "Disponibilité limitée",
-      "limitedAvailabilityNote":
-      "Ce service a une disponibilité limitée. Réservez rapidement pour garantir votre place.",
+      "limitedAvailabilityNote": "Ce service a une disponibilité limitée. Réservez rapidement pour garantir votre place.",
       "featuredItem": "Service en vedette",
       "featuredItemDesc": "Mettre en avant ce service",
       "addServiceItem": "Ajouter un service",
@@ -190,8 +187,7 @@
       "enableServiceFee": "Activer les frais de service",
       "enableServiceFeeDesc": "Appliquer des frais de service aux réservations",
       "serviceFeeRate": "Taux des frais de service (%)",
-      "serviceFeeRateDesc":
-      "Pourcentage des frais de service appliqués aux réservations",
+      "serviceFeeRateDesc": "Pourcentage des frais de service appliqués aux réservations",
       "requiredField": "Champ obligatoire",
       "quantity": "Quantité",
       "specialRequests": "Demandes spéciales",
@@ -215,8 +211,7 @@
       "checkout": "Finaliser la réservation",
       "bookingConfirmed": "Votre réservation a été confirmée!",
       "yourCart": "Votre panier",
-      "defaultWhatsAppMessage":
-      "Bonjour, j'aimerais me renseigner sur vos services",
+      "defaultWhatsAppMessage": "Bonjour, j'aimerais me renseigner sur vos services",
       "completeBooking": "Compléter la réservation",
       "hasDiscount": "A un code de réduction",
       "hasDiscountDesc": "Entrez le code de réduction pour bénéficier d'une remise",
@@ -227,8 +222,7 @@
       "seoTag": "Tag SEO"
     },
     "socialMedia": {
-      "socialMediaDesc":
-      "Ajoutez vos liens de réseaux sociaux pour vous connecter avec votre audience",
+      "socialMediaDesc": "Ajoutez vos liens de réseaux sociaux pour vous connecter avec votre audience",
       "socialMedia": "Réseaux sociaux",
       "instagram": "Instagram",
       "facebook": "Facebook",

@@ -1,22 +1,25 @@
 {
   "name": "@geeks.solutions/vue-cli-plugin-sections",
-  "version": "1.0.3",
-  "description": "vue-cli plugin to add vue-sections",
+  "version": "1.0.4",
+  "description": "vue-cli plugin to setup nuxt-sections and install sections to your project",
   "main": "index.js",
   "types": "./types.d.ts",
   "scripts": {
     "dev": "",
+    "format": "prettier --write .",
+    "lint": "eslint .",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Geeks-Solutions/vue-cli-plugin-sections"
+    "url": "https://github.com/Geeks-Solutions/sections-cms"
   },
   "keywords": [
     "vue",
     "vue-cli",
     "geeks-solutions",
     "vue-sections",
+    "nux-sections",
     "sections"
   ],
   "author": "Geeks Solutions info@geeks.solutions (https://www.geeks.solutions)",
@@ -31,7 +34,12 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^27.4.4",
     "@babel/preset-env": "^7.22.5",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.25.0",
+    "globals": "^15.0.0",
     "jest": "^27.0.5",
+    "prettier": "^3.3.3",
     "vue-jest": "^3.0.4"
   }
 }

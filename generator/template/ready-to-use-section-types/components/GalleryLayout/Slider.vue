@@ -1,6 +1,13 @@
 <template>
   <div v-if="selectedLayout === 'slider'" class="relative slider-wrapper">
-    <div class="aspect-w-16 aspect-h-9 overflow-hidden slides-container" :style="settings[0].containerHeight ? `height: ${settings[0].containerHeight};` : ``">
+    <div
+      class="aspect-w-16 aspect-h-9 overflow-hidden slides-container"
+      :style="
+        settings[0].containerHeight
+          ? `height: ${settings[0].containerHeight};`
+          : ``
+      "
+    >
       <div
         class="flex transition-transform duration-300 ease-in-out w-full h-full slides-inner"
         :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
@@ -17,11 +24,16 @@
             :alt="image.media.seo_tag ? image.media.seo_tag : ''"
             :type="image.media.metadata?.type || 'image'"
             class="w-full h-full"
-            :class="{'mobileHidden': image.mediaMobile && image.mediaMobile.url}"
-            :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
+            :class="{
+              mobileHidden: image.mediaMobile && image.mediaMobile.url,
+            }"
+            :style="
+              settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''
+            "
             width="300"
-           height="300"
-           :placeholder="[300, 300, 75, 5]" format="webp"
+            height="300"
+            :placeholder="[300, 300, 75, 5]"
+            format="webp"
             loading="lazy"
             @touchstart="handleTouchStart"
             @touchmove="handleTouchMove"
@@ -33,10 +45,13 @@
             :alt="image.mediaMobile.seo_tag ? image.mediaMobile.seo_tag : ''"
             :type="image.mediaMobile.metadata?.type || 'image'"
             class="w-full h-full md:hidden"
-            :style="settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''"
+            :style="
+              settings[0].imageFit ? `object-fit: ${settings[0].imageFit};` : ''
+            "
             width="300"
-           height="300"
-           :placeholder="[300, 300, 75, 5]" format="webp"
+            height="300"
+            :placeholder="[300, 300, 75, 5]"
+            format="webp"
             loading="lazy"
             @touchstart="handleTouchStart"
             @touchmove="handleTouchMove"
@@ -57,14 +72,24 @@
     >
       <chevron-right class="w-6 h-6" />
     </div>
-    <div class="slider-dots absolute bottom-0 left-0 right-0 flex flex-wrap justify-center pb-4">
-      <span v-for="(item, index) in images" :key="index" :class="images.length > 1 ? `slider-dot ${index === currentSlide ? 'active' : ''}` : ``" @click="$emit('goTo', index)"></span>
+    <div
+      class="slider-dots absolute bottom-0 left-0 right-0 flex flex-wrap justify-center pb-4"
+    >
+      <span
+        v-for="(item, index) in images"
+        :key="index"
+        :class="
+          images.length > 1
+            ? `slider-dot ${index === currentSlide ? 'active' : ''}`
+            : ``
+        "
+        @click="$emit('goTo', index)"
+      ></span>
     </div>
   </div>
 </template>
 
 <script>
-
 import ChevronRight from '../icons/chevron-right.vue'
 import ChevronLeft from '../icons/chevron-left.vue'
 
@@ -74,78 +99,78 @@ export default {
   props: {
     selectedLayout: {
       type: String,
-      default: ''
+      default: '',
     },
     settings: {
       type: Array,
       default() {
         return []
-      }
+      },
     },
     images: {
       type: Array,
       default() {
         return []
-      }
+      },
     },
     currentSlide: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   data() {
     return {
-      autoplayInterval: null
+      autoplayInterval: null,
     }
   },
   watch: {
     selectedLayout() {
       if (this.selectedLayout === 'slider') {
-        this.startAutoplay();
+        this.startAutoplay()
       } else if (this.autoplayInterval) {
-        clearInterval(this.autoplayInterval);
+        clearInterval(this.autoplayInterval)
       }
-    }
+    },
   },
   mounted() {
     if (this.selectedLayout === 'slider') {
-      this.startAutoplay();
+      this.startAutoplay()
     }
   },
   beforeUnmount() {
-    clearInterval(this.autoplayInterval);
+    clearInterval(this.autoplayInterval)
   },
   methods: {
     handleTouchStart(event) {
-      this._touchStartX = event.touches[0].clientX;
+      this._touchStartX = event.touches[0].clientX
     },
     handleTouchMove(event) {
-      this._touchEndX = event.touches[0].clientX;
+      this._touchEndX = event.touches[0].clientX
     },
     handleTouchEnd() {
-      const swipeThreshold = 50; // Minimum swipe distance in pixels to trigger change
-      const swipeDistance = this._touchStartX - this._touchEndX;
+      const swipeThreshold = 50 // Minimum swipe distance in pixels to trigger change
+      const swipeDistance = this._touchStartX - this._touchEndX
 
       if (swipeDistance > swipeThreshold) {
         this.resetAutoplay()
-        this.$emit('nextSlide');
+        this.$emit('nextSlide')
       } else if (swipeDistance < -swipeThreshold) {
         this.resetAutoplay()
-        this.$emit('previousSlide');
+        this.$emit('previousSlide')
       }
     },
     startAutoplay() {
       if (this.images && this.images.length > 1) {
         this.autoplayInterval = setInterval(() => {
-          this.$emit('nextSlide');
-        }, 5000);
+          this.$emit('nextSlide')
+        }, 5000)
       }
     },
     resetAutoplay() {
-      clearInterval(this.autoplayInterval);
-      this.startAutoplay();
-    }
-  }
+      clearInterval(this.autoplayInterval)
+      this.startAutoplay()
+    },
+  },
 }
 </script>
 

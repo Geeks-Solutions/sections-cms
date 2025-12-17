@@ -3,20 +3,40 @@
     <div class="flex flex-col gap-16 py-10 md:py-8 full-article-wrapper">
       <div class="flex flex-col items-center gap-6">
         <div class="flex flex-col items-center gap-3">
-          <h4 class="text-center published">{{ $t('blogs.published', {time: parseTime(sectionRenderData.updated_at)}) }}</h4>
+          <h4 class="text-center published">
+            {{
+              $t('blogs.published', {
+                time: parseTime(sectionRenderData.updated_at),
+              })
+            }}
+          </h4>
           <h1 class="text-center title">{{ sectionRenderData.title }}</h1>
         </div>
-        <gWysiwygContent tag="p" :classes="`text-center html-content`" :html-content="sectionRenderData.description" />
+        <gWysiwygContent
+          tag="p"
+          :classes="`text-center html-content`"
+          :html-content="sectionRenderData.description"
+        />
       </div>
-      <NuxtImg v-if="articleImage" :src="articleImage" :alt="articleImageAlt ? articleImageAlt : ''" class="w-fit max-w-full self-center object-contain"
-           sizes="100%"
-           width="300"
-           height="300"
-           :placeholder="[300, 300, 75, 5]" format="webp"
-           loading="lazy"/>
+      <NuxtImg
+        v-if="articleImage"
+        :src="articleImage"
+        :alt="articleImageAlt ? articleImageAlt : ''"
+        class="w-fit max-w-full self-center object-contain"
+        sizes="100%"
+        width="300"
+        height="300"
+        :placeholder="[300, 300, 75, 5]"
+        format="webp"
+        loading="lazy"
+      />
     </div>
     <div class="flex flex-col items-center body-wrapper">
-      <gWysiwygContent tag="p" :classes="`html-content`" :html-content="sectionRenderData.body" />
+      <gWysiwygContent
+        tag="p"
+        :classes="`html-content`"
+        :html-content="sectionRenderData.body"
+      />
     </div>
   </div>
 </template>
@@ -24,17 +44,17 @@
 <i18n src="../../sections/forms/Blogs_i18n.json"></i18n>
 
 <script>
-import {parseTime} from "@/utils/constants";
+import { parseTime } from '@/utils/constants'
 
 export default {
-  name: "FullArticle",
+  name: 'FullArticle',
   setup() {
     const { t } = useI18n({
-      useScope: 'local'
+      useScope: 'local',
     })
 
     return {
-      $t: t
+      $t: t,
     }
   },
   props: {
@@ -44,8 +64,8 @@ export default {
     },
     lang: {
       type: String,
-      default: "en"
-    }
+      default: 'en',
+    },
   },
   computed: {
     sectionRenderData() {
@@ -54,19 +74,28 @@ export default {
       } else return null
     },
     articleImage() {
-      if (this.sectionRenderData && this.sectionRenderData.medias && this.sectionRenderData.medias[0] && this.sectionRenderData.medias[0].files) {
+      if (
+        this.sectionRenderData &&
+        this.sectionRenderData.medias &&
+        this.sectionRenderData.medias[0] &&
+        this.sectionRenderData.medias[0].files
+      ) {
         return this.sectionRenderData.medias[0].files[0].url
       } else return ''
     },
     articleImageAlt() {
-      if (this.sectionRenderData.medias && this.sectionRenderData.medias[0] && this.sectionRenderData.medias[0].files) {
+      if (
+        this.sectionRenderData.medias &&
+        this.sectionRenderData.medias[0] &&
+        this.sectionRenderData.medias[0].files
+      ) {
         return this.sectionRenderData.medias[0].files[0].seo_tag
       } else return ''
-    }
+    },
   },
   methods: {
-    parseTime
-  }
+    parseTime,
+  },
 }
 </script>
 

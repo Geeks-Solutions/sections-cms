@@ -1,14 +1,22 @@
 <template>
-  <div class="articles-preview flex flex-col md:flex-row gap-6 md:gap-24 py-5 px-4">
+  <div
+    class="articles-preview flex flex-col md:flex-row gap-6 md:gap-24 py-5 px-4"
+  >
     <div v-if="image" class="flex image-wrapper min-h-[300px] max-h-[300px]">
-      <NuxtImg :src="image" :alt="imageAlt" class="md:min-w-[440px] w-full md:w-440px object-cover"
-               width="300"
-           height="300"
-           :placeholder="[300, 300, 75, 5]" format="webp"
-               loading="lazy"/>
+      <NuxtImg
+        :src="image"
+        :alt="imageAlt"
+        class="md:min-w-[440px] w-full md:w-440px object-cover"
+        width="300"
+        height="300"
+        :placeholder="[300, 300, 75, 5]"
+        format="webp"
+        loading="lazy"
+      />
     </div>
-    <div class="flex flex-col gap-4 w-full justify-between preview-block-wrapper">
-
+    <div
+      class="flex flex-col gap-4 w-full justify-between preview-block-wrapper"
+    >
       <div class="flex flex-col gap-4 w-full content-block-wrapper">
         <div class="flex flex-row justify-between">
           <div class="flex flex-row gap-2 items-end title-wrapper">
@@ -17,53 +25,61 @@
           <div></div>
         </div>
 
-        <gWysiwygContent tag="p" :classes="`html-content desc p-0`" :html-content="content" />
+        <gWysiwygContent
+          tag="p"
+          :classes="`html-content desc p-0`"
+          :html-content="content"
+        />
       </div>
 
-      <BlogsArticleButton :path="path" :lang="lang" :default-lang="defaultLang" />
-
+      <BlogsArticleButton
+        :path="path"
+        :lang="lang"
+        :default-lang="defaultLang"
+      />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ArticlePreview",
+  name: 'ArticlePreview',
   props: {
     image: {
       type: String,
-      default: ""
+      default: '',
     },
     imageAlt: {
       type: String,
-      default: ""
+      default: '',
     },
     title: {
       type: String,
-      default: ""
+      default: '',
     },
     content: {
       type: String,
-      default: ""
+      default: '',
     },
     path: {
       type: String,
-      default: ""
+      default: '',
     },
     lang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
     defaultLang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
-  }
+  },
 }
 </script>
 
 <style>
-.articles-preview .desc, .articles-preview .title {
+.articles-preview .desc,
+.articles-preview .title {
   -webkit-box-orient: vertical;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -88,7 +104,8 @@ section .article-preview-wrapper {
     }
   }
 
-  .articles-preview .image-wrapper, .articles-preview img {
+  .articles-preview .image-wrapper,
+  .articles-preview img {
     width: 100% !important;
   }
 }

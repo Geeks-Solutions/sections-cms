@@ -1,8 +1,8 @@
-import { shallowMount } from "@vue/test-utils";
-import ZAQWidget from "../ZAQWidget.vue";
+import { shallowMount } from '@vue/test-utils'
+import ZAQWidget from '../ZAQWidget.vue'
 
 vi.mock('#app', () => ({
-  useFetch: vi.fn()
+  useFetch: vi.fn(),
 }))
 
 import { useFetch } from '#app'
@@ -14,26 +14,24 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: {
     en: {},
-    fr: {}
-  }
+    fr: {},
+  },
 })
 
 describe('ZAQWidget', () => {
-  let wrapper;
+  let wrapper
 
-  const defaultData = {
-
-  };
+  const defaultData = {}
 
   beforeEach(() => {
     wrapper = shallowMount(ZAQWidget, {
       global: {
         config: {
           globalProperties: {
-            $t: vi.fn()
-          }
+            $t: vi.fn(),
+          },
         },
-        plugins: [i18n]
+        plugins: [i18n],
       },
       data() {
         return defaultData
@@ -44,31 +42,35 @@ describe('ZAQWidget', () => {
         mediaFields: [
           {
             type: 'image',
-            name: 'sendBtnMedia'
+            name: 'sendBtnMedia',
           },
           {
             type: 'image',
-            name: 'typingIconMedia'
-          }
-        ]
-      }
-    });
-  });
+            name: 'typingIconMedia',
+          },
+        ],
+      },
+    })
+  })
 
   it('updates sequences and autoStart when removeMedia is called', async () => {
     await wrapper.setData({
-      sequences: { 'seq1': 'Sequence 1', 'seq2': 'Sequence 2' },
+      sequences: { seq1: 'Sequence 1', seq2: 'Sequence 2' },
       settings: [
         {
           websiteId: '123',
-          sequence: { media_id: '1', url: 'http://example.com/sequence', seo_tag: 'seq' },
+          sequence: {
+            media_id: '1',
+            url: 'http://example.com/sequence',
+            seo_tag: 'seq',
+          },
           css: {},
           sendBtnMedia: {},
           typingIconMedia: {},
           hideBadge: false,
-          autoStart: 'seq1'
-        }
-      ]
+          autoStart: 'seq1',
+        },
+      ],
     })
 
     await wrapper.vm.removeMedia('sequence')
@@ -87,30 +89,34 @@ describe('ZAQWidget', () => {
         sendBtnMedia: {},
         typingIconMedia: {},
         hideBadge: false,
-        autoStart: 'None'
-      }
+        autoStart: 'None',
+      },
     ]
 
     const mediaObject = {
       id: '1',
-      files: [{ url: 'http://example.com/sequence', filename: 'seq', headers: {} }],
-      seo_tag: 'seq'
+      files: [
+        { url: 'http://example.com/sequence', filename: 'seq', headers: {} },
+      ],
+      seo_tag: 'seq',
     }
     await wrapper.vm.$options.watch.selectedMedia.call(wrapper.vm, mediaObject)
 
     expect(wrapper.vm.settings[0].sequence.media_id).toBe('1')
-    expect(wrapper.vm.settings[0].sequence.url).toBe('http://example.com/sequence')
+    expect(wrapper.vm.settings[0].sequence.url).toBe(
+      'http://example.com/sequence',
+    )
     expect(wrapper.vm.settings[0].sequence.seo_tag).toBe('seq')
     expect(wrapper.vm.settings[0].autoStart).toBe('None')
 
     await vi.resetAllMocks()
 
-    const mockResponse = { data: { 'seq1': 'Sequence 1', 'seq2': 'Sequence 2' } }
+    const mockResponse = { data: { seq1: 'Sequence 1', seq2: 'Sequence 2' } }
     useFetch.mockResolvedValue({
       data: mockResponse.data,
       pending: false,
       error: null,
-      refresh: vi.fn()
+      refresh: vi.fn(),
     })
 
     // Call loadSequences method
@@ -119,5 +125,4 @@ describe('ZAQWidget', () => {
     // Check if sequences are loaded correctly
     expect(wrapper.vm.sequences).toEqual(mockResponse.data)
   })
-
-});
+})

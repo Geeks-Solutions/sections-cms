@@ -1,8 +1,14 @@
 <template>
   <div class="flex flex-col text-start gap-1">
-	<span class="text-xs text-Gray_800">{{ $t("forms.linksDescription1") }}</span>
-	<span class="text-xs text-Gray_800">{{ $t("forms.linksDescription2") }}</span>
-	<span class="text-xs text-Gray_800">{{ $t("forms.linksDescription3") }}</span>
+    <span class="text-xs text-Gray_800">{{
+      $t('forms.linksDescription1')
+    }}</span>
+    <span class="text-xs text-Gray_800">{{
+      $t('forms.linksDescription2')
+    }}</span>
+    <span class="text-xs text-Gray_800">{{
+      $t('forms.linksDescription3')
+    }}</span>
   </div>
 </template>
 
@@ -13,11 +19,11 @@ export default {
   name: 'LinkDescription',
   setup() {
     const { t } = useI18n({
-      useScope: 'local'
+      useScope: 'local',
     })
 
     return {
-      $t: t
+      $t: t,
     }
   },
 }

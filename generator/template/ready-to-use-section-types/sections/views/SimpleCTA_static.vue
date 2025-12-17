@@ -1,9 +1,5 @@
 <template>
-  <div
-      v-if="show"
-      class="simple-cta"
-      style="overflow: hidden"
-  >
+  <div v-if="show" class="simple-cta" style="overflow: hidden">
     <div class="wrapper">
       <div class="wrapper">
         <div class="wrapper-question">
@@ -11,18 +7,100 @@
             {{ getCurrentTranslation(settings, lang, 'title', 'title') }}
           </h2>
           <div class="flex buttonsRow items-center mb-4">
-			<global-link v-if="getCurrentTranslation(settings, lang, 'subTitle', 'subTitle')" :link="!settings.sectionsPage || (settings.sectionsPage && (settings.sectionsPage[lang] === 'other' || !settings.sectionsPage[lang])) ? {en: getCurrentTranslation(settings, 'en', 'link', 'link'), fr: getCurrentTranslation(settings, 'fr', 'link', 'link')} : settings.sectionsPage && settings.sectionsPage[lang] ? { ...settings.sectionsPage, en: '/' + settings.sectionsPage.en, fr: '/' + settings.sectionsPage.fr } : '#'" :lang="lang" :default-lang="defaultLang" :form-link-target="settings.linkTarget">
+            <global-link
+              v-if="
+                getCurrentTranslation(settings, lang, 'subTitle', 'subTitle')
+              "
+              :link="
+                !settings.sectionsPage ||
+                (settings.sectionsPage &&
+                  (settings.sectionsPage[lang] === 'other' ||
+                    !settings.sectionsPage[lang]))
+                  ? {
+                      en: getCurrentTranslation(settings, 'en', 'link', 'link'),
+                      fr: getCurrentTranslation(settings, 'fr', 'link', 'link'),
+                    }
+                  : settings.sectionsPage && settings.sectionsPage[lang]
+                    ? {
+                        ...settings.sectionsPage,
+                        en: '/' + settings.sectionsPage.en,
+                        fr: '/' + settings.sectionsPage.fr,
+                      }
+                    : '#'
+              "
+              :lang="lang"
+              :default-lang="defaultLang"
+              :form-link-target="settings.linkTarget"
+            >
               <p>
-                {{ getCurrentTranslation(settings, lang, 'subTitle', 'subTitle') }}
+                {{
+                  getCurrentTranslation(settings, lang, 'subTitle', 'subTitle')
+                }}
               </p>
             </global-link>
             <div class="mobileButtonLabel">
-			  <global-link v-if="getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') && getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') !== '' && getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') !== '/'"
-                     :link="!settings.sectionsPage || (settings.sectionsPage && settings.sectionsPage[lang] === 'other') ? {en: getCurrentTranslation(settings, 'en', 'link', 'link'), fr: getCurrentTranslation(settings, 'fr', 'link', 'link')} : settings.sectionsPage && settings.sectionsPage[lang] ? { ...settings.sectionsPage, en: '/' + settings.sectionsPage.en, fr: '/' + settings.sectionsPage.fr } : '#'" :lang="lang" :default-lang="defaultLang" :form-link-target="settings.linkTarget">
-				<div class="button-selector">
-				  {{ getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') }}
-				</div>
-			  </global-link>
+              <global-link
+                v-if="
+                  getCurrentTranslation(
+                    settings,
+                    lang,
+                    'buttonLabel',
+                    'buttonLabel',
+                  ) &&
+                  getCurrentTranslation(
+                    settings,
+                    lang,
+                    'buttonLabel',
+                    'buttonLabel',
+                  ) !== '' &&
+                  getCurrentTranslation(
+                    settings,
+                    lang,
+                    'buttonLabel',
+                    'buttonLabel',
+                  ) !== '/'
+                "
+                :link="
+                  !settings.sectionsPage ||
+                  (settings.sectionsPage &&
+                    settings.sectionsPage[lang] === 'other')
+                    ? {
+                        en: getCurrentTranslation(
+                          settings,
+                          'en',
+                          'link',
+                          'link',
+                        ),
+                        fr: getCurrentTranslation(
+                          settings,
+                          'fr',
+                          'link',
+                          'link',
+                        ),
+                      }
+                    : settings.sectionsPage && settings.sectionsPage[lang]
+                      ? {
+                          ...settings.sectionsPage,
+                          en: '/' + settings.sectionsPage.en,
+                          fr: '/' + settings.sectionsPage.fr,
+                        }
+                      : '#'
+                "
+                :lang="lang"
+                :default-lang="defaultLang"
+                :form-link-target="settings.linkTarget"
+              >
+                <div class="button-selector">
+                  {{
+                    getCurrentTranslation(
+                      settings,
+                      lang,
+                      'buttonLabel',
+                      'buttonLabel',
+                    )
+                  }}
+                </div>
+              </global-link>
             </div>
           </div>
         </div>
@@ -32,50 +110,48 @@
 </template>
 
 <script>
-import {getTranslation} from "@/utils/constants";
+import { getTranslation } from '@/utils/constants'
 
 export default {
-  name: "SimpleCTA",
+  name: 'SimpleCTA',
   props: {
     section: {
       type: Object,
-	  default: () => {},
+      default: () => {},
     },
     lang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
     defaultLang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
-	viewStructure: {
-	  settings: [
-		{
-		  en: {
-			title: 'string',
-			subTitle: 'string',
-			link: 'string',
-			buttonLabel: 'string'
-		  },
-		  fr: {
-			title: 'string',
-			subTitle: 'string',
-			link: 'string',
-			buttonLabel: 'string'
-		  }
-		}
-	  ]
-	}
+    viewStructure: {
+      settings: [
+        {
+          en: {
+            title: 'string',
+            subTitle: 'string',
+            link: 'string',
+            buttonLabel: 'string',
+          },
+          fr: {
+            title: 'string',
+            subTitle: 'string',
+            link: 'string',
+            buttonLabel: 'string',
+          },
+        },
+      ],
+    },
   },
   data() {
-    return {
-
-    };
+    return {}
   },
   computed: {
     show() {
-      return !!this.section.settings;
+      return !!this.section.settings
     },
     title() {
       return this.section.settings.title
@@ -88,18 +164,18 @@ export default {
     },
     settings() {
       if (Array.isArray(this.section.settings) === false) {
-        return this.section.settings;
+        return this.section.settings
       } else {
-        return this.section.settings[0];
+        return this.section.settings[0]
       }
-    }
+    },
   },
   methods: {
     getCurrentTranslation(settings, lang, primaryKey, frKey) {
-      if(getTranslation(settings, lang, primaryKey, frKey)) {
+      if (getTranslation(settings, lang, primaryKey, frKey)) {
         return getTranslation(settings, lang, primaryKey, frKey)
       } else return ''
-    }
+    },
   },
   mounted() {
     const sectionsThemeComponents = null
@@ -107,10 +183,10 @@ export default {
       {
         id: 'global',
         name: this.$t('sectionsBuilder.globalSettings'),
-        path: '/theme/global_settings'
-      }
+        path: '/theme/global_settings',
+      },
     ])
-  }
+  },
 }
 </script>
 

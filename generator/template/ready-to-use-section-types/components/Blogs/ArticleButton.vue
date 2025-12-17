@@ -1,5 +1,10 @@
 <template>
-  <global-link :link="path" :lang="lang" :default-lang="defaultLang" class="w-full">
+  <global-link
+    :link="path"
+    :lang="lang"
+    :default-lang="defaultLang"
+    class="w-full"
+  >
     <div class="flex flex-row w-full gap-2">
       <div class="button-selector">
         {{ $t('blogs.readPost') }}
@@ -11,31 +16,30 @@
 <i18n src="../../sections/forms/Blogs_i18n.json"></i18n>
 
 <script>
-
 export default {
-  name: "ArticleButton",
+  name: 'ArticleButton',
   setup() {
     const { t } = useI18n({
-      useScope: 'local'
+      useScope: 'local',
     })
 
     return {
-      $t: t
+      $t: t,
     }
   },
   props: {
     path: {
       type: String,
-      default: ""
+      default: '',
     },
     lang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
     defaultLang: {
       type: String,
-      default: "en"
+      default: 'en',
     },
-  }
+  },
 }
 </script>

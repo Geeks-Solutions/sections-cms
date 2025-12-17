@@ -20,16 +20,16 @@ export const useSectionsStore = defineStore('sectionsStore', {
   actions: {
     // In Pinia, mutations are replaced with actions
     setPackageData(packageData) {
-      this.packageData = packageData;
+      this.packageData = packageData
     },
     setCategoriesTitles(value) {
-      this.categoriesTitles = value;
+      this.categoriesTitles = value
     },
     setCookieConsentActivated(value) {
-      this.cookieConsentActivated = value;
+      this.cookieConsentActivated = value
     },
     setGtmId(value) {
-      this.gtmId = value;
-    }
-  }
+      this.gtmId = value
+    },
+  },
 })

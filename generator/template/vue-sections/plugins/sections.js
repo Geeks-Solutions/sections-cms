@@ -1,10 +1,10 @@
-import Vue from "vue";
-import Sections from "@geeks.solutions/vue-sections";
+import Vue from 'vue'
+import Sections from '@geeks.solutions/vue-sections'
 
-export default function() {
+export default function () {
   Vue.use(Sections, {
-    projectId: "",
-    projectUrl: "",
-    environment: ""
-  });
+    projectId: '',
+    projectUrl: '',
+    environment: '',
+  })
 }

@@ -1,5 +1,5 @@
-import { shallowMount } from "@vue/test-utils";
-import InteractiveDisplayStatic from "../InteractiveDisplay_static.vue";
+import { shallowMount } from '@vue/test-utils'
+import InteractiveDisplayStatic from '../InteractiveDisplay_static.vue'
 
 // vi.mock('~/components/GlobalLink.vue', () => ({
 //   name: 'GlobalLink',
@@ -33,7 +33,6 @@ describe('InteractiveDisplayStatic.vue', () => {
   })
 
   it('renders <global-link> when cta exists in block', () => {
-
     const block = wrapper.vm.migratedSettings[0]
     block.cta = { en: 'Click me' }
 
@@ -45,7 +44,6 @@ describe('InteractiveDisplayStatic.vue', () => {
   })
 
   it('does not render <global-link> when cta does not exist in block', async () => {
-
     const block = wrapper.vm.migratedSettings[0]
     block.cta = { en: '' }
 
@@ -57,7 +55,6 @@ describe('InteractiveDisplayStatic.vue', () => {
   })
 
   it('renders <global-link> based on video cta in settings', async () => {
-
     const settings = wrapper.vm.settings
     settings[0].videoCta = { en: 'Watch now' }
     settings[0].videoTitle = { en: 'title' }
@@ -72,8 +69,7 @@ describe('InteractiveDisplayStatic.vue', () => {
   })
 
   it('does not render <global-link> when video cta does not exist in settings', async () => {
-
-    await vi.resetAllMocks();
+    await vi.resetAllMocks()
     const settings = wrapper.vm.settings
     settings[0].videoTitle = { en: 'title' }
     settings[0].videoText = { en: 'desc' }

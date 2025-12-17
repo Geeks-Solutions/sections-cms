@@ -1,10 +1,24 @@
 <template>
   <div class="w-full">
-    <label class="mr-4 font-bold">{{ $t("defaultCategories")+'*' }}</label>
+    <label class="mr-4 font-bold">{{ $t('defaultCategories') + '*' }}</label>
     <div v-if="optionValues.option_values">
       <div class="selectMultipleOptions">
-        <div v-for="option in optionValues.option_values" :key="option.id" class="multiple-options-wrapper">
-          <div class="single-multiple-option" :class="isSelected(option.title, field.name) ? 'multiple-options-selected' : ''" @click="selectOption(option.title, field.name)">{{ option.title }}</div>
+        <div
+          v-for="option in optionValues.option_values"
+          :key="option.id"
+          class="multiple-options-wrapper"
+        >
+          <div
+            class="single-multiple-option"
+            :class="
+              isSelected(option.title, field.name)
+                ? 'multiple-options-selected'
+                : ''
+            "
+            @click="selectOption(option.title, field.name)"
+          >
+            {{ option.title }}
+          </div>
         </div>
       </div>
     </div>
@@ -12,15 +26,25 @@
 </template>
 
 <script>
-
 export default {
-  name: "StringBaseUrl",
-  props: ["options", "optionsData", "field", "customFormData", "sectionsUserId", "reference", "selectedLang", "locales", "optionValues"],
+  name: 'StringBaseUrl',
+  props: [
+    'options',
+    'optionsData',
+    'field',
+    'customFormData',
+    'sectionsUserId',
+    'reference',
+    'selectedLang',
+    'locales',
+    'optionValues',
+  ],
   data() {
     return {
       configurableReference: null,
-      inputStyle: 'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
-      base_url: ""
+      inputStyle:
+        'py-4 pl-6 border titleBorder rounded-xl h-[48px] w-full focus:outline-none',
+      base_url: '',
     }
   },
   watch: {
@@ -32,26 +56,40 @@ export default {
         // }
       },
       deep: true,
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     isSelected(title, name) {
-      return this.configurableReference && this.configurableReference.optionsData[name] !== undefined && this.configurableReference.optionsData[name] !== null && this.configurableReference.optionsData[name].includes(title);
+      return (
+        this.configurableReference &&
+        this.configurableReference.optionsData[name] !== undefined &&
+        this.configurableReference.optionsData[name] !== null &&
+        this.configurableReference.optionsData[name].includes(title)
+      )
     },
     selectOption(value, name) {
-      if (Array.isArray(this.configurableReference.optionsData[name]) && !this.configurableReference.optionsData[name].includes(value)) {
-        this.configurableReference.optionsData[name].push(value);
-      } else if (Array.isArray(this.configurableReference.optionsData[name]) && this.configurableReference.optionsData[name].includes(value)) {
-        this.configurableReference.optionsData[name].splice(this.configurableReference.optionsData[name].indexOf(value), 1);
+      if (
+        Array.isArray(this.configurableReference.optionsData[name]) &&
+        !this.configurableReference.optionsData[name].includes(value)
+      ) {
+        this.configurableReference.optionsData[name].push(value)
+      } else if (
+        Array.isArray(this.configurableReference.optionsData[name]) &&
+        this.configurableReference.optionsData[name].includes(value)
+      ) {
+        this.configurableReference.optionsData[name].splice(
+          this.configurableReference.optionsData[name].indexOf(value),
+          1,
+        )
       } else {
-        this.configurableReference.optionsData[name] = [value];
+        this.configurableReference.optionsData[name] = [value]
       }
-      this.configurableReference.options[0][name] = this.configurableReference.optionsData[name]
-    }
-  }
+      this.configurableReference.options[0][name] =
+        this.configurableReference.optionsData[name]
+    },
+  },
 }
-
 </script>
 
 <style>
@@ -80,6 +118,6 @@ export default {
 }
 
 .multiple-options-selected {
-  background: #C2C2C2;
+  background: #c2c2c2;
 }
 </style>

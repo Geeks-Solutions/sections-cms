@@ -5,14 +5,30 @@
         :website-id="settings[0].websiteId"
         :hide-badge="settings[0].hideBadge.toString()"
         :lang="$i18n.locale"
-        :server-url="$route.query.zaq_api ? `https://${$route.query.zaq_api}` : ''"
-        :websocket-url="$route.query.zaq_api ? `wss://${$route.query.zaq_api}/socket` : ''"
-        :load-sequence="settings[0].sequence && settings[0].sequence.url ? settings[0].sequence.url : ''"
+        :server-url="
+          $route.query.zaq_api ? `https://${$route.query.zaq_api}` : ''
+        "
+        :websocket-url="
+          $route.query.zaq_api ? `wss://${$route.query.zaq_api}/socket` : ''
+        "
+        :load-sequence="
+          settings[0].sequence && settings[0].sequence.url
+            ? settings[0].sequence.url
+            : ''
+        "
         :css="settings[0].css && settings[0].css.url ? settings[0].css.url : ''"
-        :icons='JSON.stringify({
-          sendBtn: settings[0].sendBtnMedia && settings[0].sendBtnMedia.url ? settings[0].sendBtnMedia.url : "",
-          typingIcon: settings[0].typingIconMedia && settings[0].typingIconMedia.url ? settings[0].typingIconMedia.url : ""
-        })'
+        :icons="
+          JSON.stringify({
+            sendBtn:
+              settings[0].sendBtnMedia && settings[0].sendBtnMedia.url
+                ? settings[0].sendBtnMedia.url
+                : '',
+            typingIcon:
+              settings[0].typingIconMedia && settings[0].typingIconMedia.url
+                ? settings[0].typingIconMedia.url
+                : '',
+          })
+        "
         :session-suffix="settings[0].websiteId"
       ></zaq-widget>
     </client-only>
@@ -20,7 +36,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'ZAQWidgetStatic',
   props: {
@@ -30,31 +45,31 @@ export default {
     },
     lang: {
       type: String,
-      default: "en"
-    }
+      default: 'en',
+    },
   },
   data() {
     return {
       scriptElement: null,
       widgetEventHandler: null,
-      sequenceRun: ''
+      sequenceRun: '',
     }
   },
   computed: {
     settings() {
       return this.section.settings
-    }
+    },
   },
   watch: {
-    "section.settings": {
+    'section.settings': {
       handler(v) {
         if (v && v[0] && v[0].websiteId) {
           this.initializeWidget()
         }
       },
       immediate: true,
-      deep: true
-    }
+      deep: true,
+    },
   },
   mounted() {
     if (this.settings && this.settings[0].websiteId) {
@@ -65,21 +80,21 @@ export default {
       {
         id: 'global',
         name: this.$t('sectionsBuilder.globalSettings'),
-        path: '/theme/global_settings'
-      }
+        path: '/theme/global_settings',
+      },
     ])
   },
   beforeUnmount() {
     if (window.zaq) {
-      window.zaq.$emit("clearConversations")
-      window.zaq.$emit("clearWidgetState")
+      window.zaq.$emit('clearConversations')
+      window.zaq.$emit('clearWidgetState')
       window.zaq.removeEventListners()
       window.zaq.disconnect()
     }
     window.zaq = null
     // Remove the script when the component is destroyed
     if (this.scriptElement) {
-      document.head.removeChild(this.scriptElement);
+      document.head.removeChild(this.scriptElement)
     }
     if (this.widgetEventHandler) {
       window.removeEventListener('zaqWidget', this.widgetEventHandler, false)
@@ -94,20 +109,28 @@ export default {
           bucketName = `zaq-ai-dev`
         }
 
-        const scriptSrc = `https://${bucketName}.s3.eu-west-2.amazonaws.com/widget/zaq-widget-vue.min.js`;
+        const scriptSrc = `https://${bucketName}.s3.eu-west-2.amazonaws.com/widget/zaq-widget-vue.min.js`
         if (!document.querySelector(`head script[src="${scriptSrc}"]`)) {
           const recaptchaScript = document.createElement('script')
           this.scriptElement = recaptchaScript
-          recaptchaScript.setAttribute(
-            'src',
-            scriptSrc
-          )
+          recaptchaScript.setAttribute('src', scriptSrc)
 
           document.head.appendChild(recaptchaScript)
         }
 
-        if (this.$route.query.runSequence || (this.settings && this.settings[0] && this.settings[0].autoStart && this.settings[0].autoStart !== 'None')) {
-          if (this.settings && this.settings[0] && this.settings[0].autoStart && this.settings[0].autoStart !== 'None') {
+        if (
+          this.$route.query.runSequence ||
+          (this.settings &&
+            this.settings[0] &&
+            this.settings[0].autoStart &&
+            this.settings[0].autoStart !== 'None')
+        ) {
+          if (
+            this.settings &&
+            this.settings[0] &&
+            this.settings[0].autoStart &&
+            this.settings[0].autoStart !== 'None'
+          ) {
             this.sequenceRun = this.settings[0].autoStart
           }
           if (this.$route.query.runSequence) {
@@ -122,9 +145,8 @@ export default {
           }
           window.addEventListener('zaqWidget', this.widgetEventHandler, false)
         }
-
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>

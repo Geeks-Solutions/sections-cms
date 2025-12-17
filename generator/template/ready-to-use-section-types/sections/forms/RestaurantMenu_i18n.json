@@ -66,7 +66,34 @@
       "whatsappCartMessage": "I want to order the following items:",
       "whatsappDefaultMessage": "Hello! I would like to order food.",
       "orderViaWhatsApp": "Order via WhatsApp",
-      "noItemsInCategory": "No items in this category yet."
+      "noItemsInCategory": "No items in this category yet.",
+      "appearance": {
+        "shoppingCart": "Shopping Cart",
+        "shoppingCartDesc": "Enable or disable the shopping cart display for customers",
+        "itemsDetails": "Items Details",
+        "itemsDetailsDesc": "Enable or disable item details such as description and price"
+      },
+      "enableVariants": "Enable Variants",
+      "enableVariantsDesc": "Allow this item to have multiple variants (e.g., sizes, portions)",
+      "itemVariants": "Item Variants",
+      "itemVariantsDesc": "Add different variants for this item with different prices",
+      "variant": "Variant",
+      "variantName": "Variant Name",
+      "variantNamePlaceholder": "e.g., Small, Medium, Large",
+      "variantPrice": "Variant Price",
+      "addVariant": "Add Variant",
+      "remove": "Remove",
+      "selectVariant": "Select Size",
+      "branches": "Branches",
+      "branchesDesc": "Manage multiple branch locations for your restaurant",
+      "enableBranches": "Enable Branches",
+      "enableBranchesDesc": "Allow customers to select their preferred branch location when ordering",
+      "branch": "Branch",
+      "branchName": "Branch Name",
+      "branchPhone": "Branch Phone Number",
+      "branchPhoneDesc": "WhatsApp number for this branch (e.g., +961XXXXXX)",
+      "addBranch": "Add Branch",
+      "selectBranch": "Select Branch"
     },
     "socialMedia": {
       "socialMediaDesc": "Add your social media links to connect with your audience",
@@ -95,8 +122,7 @@
   "fr": {
     "RestaurantMenu": {
       "categories": "Catégories",
-      "categoriesDesc":
-      "Créez des catégories pour vos plats (ex. Entrées, Plats Principaux, Desserts)",
+      "categoriesDesc": "Créez des catégories pour vos plats (ex. Entrées, Plats Principaux, Desserts)",
       "category": "Catégorie",
       "categoryName": "Nom de la Catégorie",
       "categoryDescription": "Description de la Catégorie",
@@ -105,28 +131,23 @@
       "categoryView": "Vue par Catégorie",
       "listView": "Vue en Liste",
       "categoryIcon": "Icône de Catégorie",
-      "categoryIconDesc":
-      "Ajoutez une icône pour cette catégorie (taille recommandée: 50x50px)",
+      "categoryIconDesc": "Ajoutez une icône pour cette catégorie (taille recommandée: 50x50px)",
       "uploadIcon": "Télécharger une Icône",
       "changeLogo": "Changer le Logo",
-      "logoDesc":
-      "Utilisez la classe par défaut `logo` pour personnaliser l'affichage de votre logo avec CSS",
+      "logoDesc": "Utilisez la classe par défaut `logo` pour personnaliser l'affichage de votre logo avec CSS",
       "backgroundColor": "Couleur d'Arrière-plan",
-      "backgroundColorDesc":
-      "Définissez une couleur d'arrière-plan pour votre menu (ex. #FFFFFF)",
+      "backgroundColorDesc": "Définissez une couleur d'arrière-plan pour votre menu (ex. #FFFFFF)",
       "restaurantLogo": "Logo du Restaurant",
       "changeIcon": "Changer l'Icône",
       "viewMode": "Mode d'Affichage",
       "uploadLogo": "Télécharger un Logo",
-      "viewModeDesc":
-      "Choisissez comment les articles du menu sont affichés aux clients",
+      "viewModeDesc": "Choisissez comment les articles du menu sont affichés aux clients",
       "emptyCart": "Votre panier est vide",
       "cart": "Panier",
       "startOrdering": "Commencer à Commander",
       "quantity": "Quantité",
       "specialInstructions": "Instructions Spéciales",
-      "specialInstructionsPlaceholder":
-      "Ajoutez des instructions spéciales pour votre commande",
+      "specialInstructionsPlaceholder": "Ajoutez des instructions spéciales pour votre commande",
       "addToCart": "Ajouter au Panier",
       "qty": "Qté",
       "subtotal": "Sous-total",
@@ -139,8 +160,7 @@
       "itemDescription": "Description de l'Article",
       "itemPrice": "Prix",
       "itemImage": "Image de l'Article",
-      "itemImageDesc":
-      "Ajoutez une image de cet article du menu (taille recommandée: 300x200px)",
+      "itemImageDesc": "Ajoutez une image de cet article du menu (taille recommandée: 300x200px)",
       "featuredItem": "Article en Vedette",
       "featuredItemDesc": "Marquer cet article comme spécial ou en vedette",
       "addMenuItem": "Ajouter un Article au Menu",
@@ -152,8 +172,7 @@
       "currencySymbol": "Symbole de Devise",
       "requiredField": "Ce champ est obligatoire",
       "cssClasses": "Classes CSS",
-      "cssClassesDesc":
-      "Ajoutez des classes CSS personnalisées (séparées par des espaces)",
+      "cssClassesDesc": "Ajoutez des classes CSS personnalisées (séparées par des espaces)",
       "uploadMedia": "Télécharger une Image",
       "changeMedia": "Changer l'Image",
       "seoTag": "Balise SEO / Texte Alt",
@@ -168,11 +187,37 @@
       "whatsappDefaultMessage": "Bonjour ! Je voudrais commander à manger.",
       "orderViaWhatsApp": "Commande via WhatsApp",
       "total": "Total",
-      "noItemsInCategory": "Aucun article dans cette catégorie pour le moment."
+      "noItemsInCategory": "Aucun article dans cette catégorie pour le moment.",
+      "appearance": {
+        "shoppingCart": "Shopping Cart",
+        "shoppingCartDesc": "Enable or disable the shopping cart display for customers",
+        "itemsDetails": "Items Details",
+        "itemsDetailsDesc": "Enable or disable item details such as description and price"
+      },
+      "enableVariants": "Activer les Variantes",
+      "enableVariantsDesc": "Permettre à cet article d'avoir plusieurs variantes (ex. tailles, portions)",
+      "itemVariants": "Variantes de l'Article",
+      "itemVariantsDesc": "Ajoutez différentes variantes pour cet article avec différents prix",
+      "variant": "Variante",
+      "variantName": "Nom de la Variante",
+      "variantNamePlaceholder": "ex. Petit, Moyen, Grand",
+      "variantPrice": "Prix de la Variante",
+      "addVariant": "Ajouter une Variante",
+      "remove": "Supprimer",
+      "selectVariant": "Choisir la Taille",
+      "branches": "Succursales",
+      "branchesDesc": "Gérez plusieurs emplacements de succursales pour votre restaurant",
+      "enableBranches": "Activer les Succursales",
+      "enableBranchesDesc": "Permettre aux clients de sélectionner leur succursale préférée lors de la commande",
+      "branch": "Succursale",
+      "branchName": "Nom de la Succursale",
+      "branchPhone": "Numéro de Téléphone de la Succursale",
+      "branchPhoneDesc": "Numéro WhatsApp pour cette succursale (ex. +961XXXXXX)",
+      "addBranch": "Ajouter une Succursale",
+      "selectBranch": "Sélectionner une Succursale"
     },
     "socialMedia": {
-      "socialMediaDesc":
-      "Ajoutez vos liens de réseaux sociaux pour vous connecter avec votre audience",
+      "socialMediaDesc": "Ajoutez vos liens de réseaux sociaux pour vous connecter avec votre audience",
       "socialMedia": "Réseaux sociaux",
       "instagram": "Instagram",
       "facebook": "Facebook",
@@ -181,7 +226,7 @@
       "linkedin": "LinkedIn",
       "tiktok": "TikTok",
       "whatsapp": "WhatsApp",
-      "whatsappNumberDesc": "Numéro de téléphone WhatsApp (ex. +1234567890)",
+      "whatsappNumberDesc": "Numéro de téléphone WhatsApp (ex. +961XXXXXX)",
       "whatsappMessage": "Message WhatsApp"
     },
     "whatsapp": {
