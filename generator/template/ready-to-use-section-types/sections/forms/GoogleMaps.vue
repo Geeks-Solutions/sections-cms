@@ -31,9 +31,9 @@
       <LazyEditorWysiwyg
         :html="settings[0].content[selectedLang]"
         :css-classes-prop="settings[0].contentClasses"
-        @cssClassesChanged="(v) => (settings[0]['contentClasses'] = v)"
-        @wysiwygMedia="wysiwygMediaAdded"
-        @settingsUpdate="(content) => updateContent(content)"
+        @css-classes-changed="(v) => (settings[0]['contentClasses'] = v)"
+        @wysiwyg-media="wysiwygMediaAdded"
+        @settings-update="(content) => updateContent(content)"
       />
     </div>
 
@@ -69,11 +69,7 @@
           :close-on-select="true"
           :filter-clearable="true"
           :track-by="'key'"
-          @itemSelected="
-            (val) => {
-              settings[0].zoom = val
-            }
-          "
+          @item-selected="updateZoom"
         >
         </gAutoComplete>
       </div>
@@ -149,11 +145,8 @@
                     ? [object.media]
                     : []
                 "
-                @uploadContainerClicked="uploadMedia(idx)"
-                @removeUploadedImage="
-                  mediaFieldIndex = idx
-                  removeMedia(idx)
-                "
+                @upload-container-clicked="uploadMedia(idx)"
+                @remove-uploaded-image="handleRemoveMedia(idx)"
               />
               <span
                 v-show="errors[`pin-media-${idx}`] === true"
@@ -293,11 +286,7 @@
                     :close-on-select="true"
                     :filter-clearable="true"
                     :track-by="'key'"
-                    @itemSelected="
-                      (val) => {
-                        settings[0].addresses[idx].type = val
-                      }
-                    "
+                    @item-selected="(val) => updateAddressType(val, idx)"
                   >
                     <template #selected-option="{ selected, label }">
                       <div
@@ -421,13 +410,7 @@
               }}</label>
               <span
                 class="text-sm md:cursor-pointer underline pb-2"
-                @click="
-                  openMapSelection(
-                    idx,
-                    settings[0].addresses[idx].lat,
-                    settings[0].addresses[idx].lng,
-                  )
-                "
+                @click="openMapSelectionHandler(idx)"
                 >{{ $t('forms.selectFromMap') }}</span
               >
               <input
@@ -451,13 +434,7 @@
               }}</label>
               <span
                 class="text-sm md:cursor-pointer underline pb-2"
-                @click="
-                  openMapSelection(
-                    idx,
-                    settings[0].addresses[idx].lat,
-                    settings[0].addresses[idx].lng,
-                  )
-                "
+                @click="openMapSelectionHandler(idx)"
                 >{{ $t('forms.selectFromMap') }}</span
               >
               <input
@@ -490,12 +467,7 @@
       <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-lg relative">
         <button
           class="absolute top-2 right-2 text-gray-600 hover:text-black"
-          @click="
-            showMapSelection = false
-            selectedAddressIndex = null
-            marker = null
-            zoom = 1
-          "
+          @click="closeMapSelection"
         >
           ✕
         </button>
@@ -528,7 +500,7 @@
     </div>
 
     <LazySectionFormErrors
-      :selectedLang="selectedLang"
+      :selected-lang="selectedLang"
       :default-lang="defaultLang"
       :locales="locales"
       :errors="errors"
@@ -547,15 +519,6 @@ import {
 
 export default {
   name: 'GoogleMaps',
-  setup() {
-    const { t } = useI18n({
-      useScope: 'local',
-    })
-
-    return {
-      $t: t,
-    }
-  },
   props: {
     selectedLang: {
       type: String,
@@ -582,6 +545,15 @@ export default {
         name: 'wysiwygMedia',
       },
     ],
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local',
+    })
+
+    return {
+      $t: t,
+    }
   },
   data() {
     return {
@@ -879,6 +851,29 @@ export default {
         scrollToFirstError(this.errors)
       }
       return valid
+    },
+    updateZoom(val) {
+      this.settings[0].zoom = val
+    },
+    closeMapSelection() {
+      this.showMapSelection = false
+      this.selectedAddressIndex = null
+      this.marker = null
+      this.zoom = 1
+    },
+    updateAddressType(val, idx) {
+      this.settings[0].addresses[idx].type = val
+    },
+    handleRemoveMedia(idx) {
+      this.mediaFieldIndex = idx
+      this.removeMedia(idx)
+    },
+    openMapSelectionHandler(idx) {
+      this.openMapSelection(
+        idx,
+        this.settings[0].addresses[idx].lat,
+        this.settings[0].addresses[idx].lng,
+      )
     },
   },
 }

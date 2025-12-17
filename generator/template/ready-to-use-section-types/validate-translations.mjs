@@ -74,6 +74,7 @@ for (const section of sectionForms) {
   try {
     vueContent = await fs.readFile(vueFile, 'utf-8')
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`❌ Vue file not found for section "${section}": ${vueFile}`)
     hasMissing = true
     continue
@@ -105,15 +106,17 @@ for (const section of sectionForms) {
     if (missing.length > 0) {
       hasMissing = true
       const relativeVuePath = path.relative(__dirname, vueFile)
+      // eslint-disable-next-line no-console
       console.error(
         `❌ Missing keys in file "${relativeVuePath}" for language "${lang}":`,
       )
-      missing.forEach((k) => console.error(`  - ${k}`))
+      missing.forEach((k) => console.error(`  - ${k}`)) // eslint-disable-line no-console
     }
   }
 }
 
 if (!hasMissing) {
+  // eslint-disable-next-line no-console
   console.log(
     '✅ All translation keys are present in all sections forms and languages.',
   )
@@ -149,6 +152,7 @@ for (const section of sectionViews) {
   try {
     vueContent = await fs.readFile(vueFile, 'utf-8')
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`❌ Vue file not found for section "${section}": ${vueFile}`)
     hasMissingViews = true
     continue
@@ -180,15 +184,17 @@ for (const section of sectionViews) {
     if (missing.length > 0) {
       hasMissingViews = true
       const relativeVuePath = path.relative(__dirname, vueFile)
+      // eslint-disable-next-line no-console
       console.error(
         `❌ Missing keys in file "${relativeVuePath}" for language "${lang}":`,
       )
-      missing.forEach((k) => console.error(`  - ${k}`))
+      missing.forEach((k) => console.error(`  - ${k}`)) // eslint-disable-line no-console
     }
   }
 }
 
 if (!hasMissingViews) {
+  // eslint-disable-next-line no-console
   console.log(
     '✅ All translation keys are present in all sections views and languages.',
   )
@@ -236,6 +242,7 @@ for (const [vueRelativePath, i18nPaths] of Object.entries(
   try {
     vueContent = await fs.readFile(vueFile, 'utf-8')
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`❌ Vue file not found: ${vueRelativePath}`)
     componentsHasMissing = true
     continue
@@ -261,6 +268,7 @@ for (const [vueRelativePath, i18nPaths] of Object.entries(
         }
       }
     } catch (_) {
+      // eslint-disable-next-line no-console
       console.warn(
         `⚠️  Translation file not found for ${vueRelativePath}: ${relativePath}`,
       )
@@ -278,15 +286,17 @@ for (const [vueRelativePath, i18nPaths] of Object.entries(
     if (missing.length > 0) {
       componentsHasMissing = true
       const relativeVuePath = path.relative(__dirname, vueFile)
+      // eslint-disable-next-line no-console
       console.error(
         `❌ Missing keys in file "${relativeVuePath}" for language "${lang}":`,
       )
-      missing.forEach((k) => console.error(`  - ${k}`))
+      missing.forEach((k) => console.error(`  - ${k}`)) // eslint-disable-line no-console
     }
   }
 }
 
 if (!componentsHasMissing) {
+  // eslint-disable-next-line no-console
   console.log(
     '✅ All translation keys are present in all components and languages.',
   )

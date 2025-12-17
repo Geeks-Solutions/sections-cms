@@ -522,9 +522,7 @@ export default {
                   this.processing = false
                   this.loading = false
 
-                  console.warn(error.message)
-                  this.errorMessage =
-                    'An error occurred, check you metamask wallet for details'
+                  this.errorMessage = `An error occurred, check you metamask wallet for details: ${error}`
                 })
             } else {
               this.processing = false
@@ -564,7 +562,7 @@ export default {
           contractAddress,
         )
       } else {
-        console.error('Contract ID not found')
+        this.errorMessage = 'Contract ID not found'
       }
 
       const nonce = await this.$refs.metamask.web3.eth.getTransactionCount(
@@ -594,7 +592,6 @@ export default {
           })
         })
         .catch((error) => {
-          console.warn(error.message)
           this.$nuxt.$emit('transactionResponse', {
             status: 'Error',
             message: 'An error occurred, check you metamask wallet for details',

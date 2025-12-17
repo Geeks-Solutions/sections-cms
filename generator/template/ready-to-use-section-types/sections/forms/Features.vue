@@ -5,9 +5,9 @@
       <LazyEditorWysiwyg
         :html="settings[0].title[selectedLang]"
         :css-classes-prop="settings[0].titleClasses"
-        @cssClassesChanged="(v) => (settings[0]['titleClasses'] = v)"
-        @wysiwygMedia="wysiwygMediaAdded"
-        @settingsUpdate="(content) => updateTitleDescription(content, 0)"
+        @css-classes-changed="(v) => (settings[0]['titleClasses'] = v)"
+        @wysiwyg-media="wysiwygMediaAdded"
+        @settings-update="(content) => updateTitleDescription(content, 0)"
       />
     </div>
 
@@ -18,9 +18,9 @@
       <LazyEditorWysiwyg
         :html="settings[0].subtitle[selectedLang]"
         :css-classes-prop="settings[0].subtitleClasses"
-        @cssClassesChanged="(v) => (settings[0]['subtitleClasses'] = v)"
-        @wysiwygMedia="wysiwygMediaAdded"
-        @settingsUpdate="(content) => updateSubtitleDescription(content, 0)"
+        @css-classes-changed="(v) => (settings[0]['subtitleClasses'] = v)"
+        @wysiwyg-media="wysiwygMediaAdded"
+        @settings-update="(content) => updateSubtitleDescription(content, 0)"
       />
     </div>
 
@@ -49,17 +49,10 @@
                     ? [object.media]
                     : []
                 "
-                @uploadContainerClicked="
-                  selectedMediaIndex = idx
-                  selectedMediaKey = 'media'
-                  $emit(
-                    'openMediaModal',
-                    object.media && Object.keys(object.media).length > 0
-                      ? object.media.media_id
-                      : null,
-                  )
+                @upload-container-clicked="
+                  handleUploadContainerClicked(idx, object)
                 "
-                @removeUploadedImage="removeMedia(idx, 'media')"
+                @remove-uploaded-image="removeMedia(idx, 'media')"
               />
               <span
                 v-if="errors.media === true && idx === 0"
@@ -76,9 +69,11 @@
             <LazyEditorWysiwyg
               :html="object.text[selectedLang]"
               :css-classes-prop="object.textClasses"
-              @cssClassesChanged="(v) => (object['textClasses'] = v)"
-              @wysiwygMedia="wysiwygMediaAdded"
-              @settingsUpdate="(content) => updateTextDescription(content, idx)"
+              @css-classes-changed="(v) => (object['textClasses'] = v)"
+              @wysiwyg-media="wysiwygMediaAdded"
+              @settings-update="
+                (content) => updateTextDescription(content, idx)
+              "
             />
           </div>
         </template>
@@ -105,15 +100,6 @@ import {
 
 export default {
   name: 'Features',
-  setup() {
-    const { t } = useI18n({
-      useScope: 'local',
-    })
-
-    return {
-      $t: t,
-    }
-  },
   props: {
     selectedLang: {
       type: String,
@@ -140,6 +126,15 @@ export default {
         name: 'wysiwygMedias',
       },
     ],
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local',
+    })
+
+    return {
+      $t: t,
+    }
   },
   data() {
     return {
@@ -324,6 +319,16 @@ export default {
         scrollToFirstError(this.errors)
       }
       return valid
+    },
+    handleUploadContainerClicked(idx, object) {
+      this.selectedMediaIndex = idx
+      this.selectedMediaKey = 'media'
+      this.$emit(
+        'openMediaModal',
+        object.media && Object.keys(object.media).length > 0
+          ? object.media.media_id
+          : null,
+      )
     },
   },
 }

@@ -24,8 +24,8 @@
       <LazyEditorWysiwyg
         :html="settings[0].description[selectedLang]"
         :css-classes-prop="settings[0].descriptionClasses"
-        @cssClassesChanged="(v) => (settings[0]['descriptionClasses'] = v)"
-        @settingsUpdate="(content) => updateTextDescription(content)"
+        @css-classes-changed="(v) => (settings[0]['descriptionClasses'] = v)"
+        @settings-update="(content) => updateTextDescription(content)"
       />
       <span
         v-if="errors.description === true && selectedLang === defaultLang"
@@ -218,7 +218,7 @@
                 :close-on-select="true"
                 :filter-clearable="true"
                 :track-by="'key'"
-                @itemSelected="
+                @item-selected="
                   (val) => {
                     object.mediaType = val
                   }
@@ -242,16 +242,10 @@
                     ? [object.media]
                     : []
                 "
-                @uploadContainerClicked="
-                  selectedMediaIndex = idx
-                  $emit(
-                    'openMediaModal',
-                    object.media && Object.keys(object.media).length > 0
-                      ? object.media.media_id
-                      : null,
-                  )
+                @upload-container-clicked="
+                  openMediaModalHandler(idx, object.media)
                 "
-                @removeUploadedImage="removeProductMedia(idx, 'media')"
+                @remove-uploaded-image="removeProductMedia(idx, 'media')"
               />
               <span
                 v-if="errors.media === true && idx === 0"
@@ -295,7 +289,7 @@
     </div>
 
     <LazySectionFormErrors
-      :selectedLang="selectedLang"
+      :selected-lang="selectedLang"
       :default-lang="defaultLang"
       :locales="locales"
       :errors="errors"
@@ -315,16 +309,6 @@ import {
 
 export default {
   name: 'TextImage',
-  setup() {
-    const { t } = useI18n({
-      useScope: 'local',
-    })
-
-    return {
-      $t: t,
-      t,
-    }
-  },
   props: {
     selectedLang: {
       type: String,
@@ -347,6 +331,16 @@ export default {
         name: 'medias',
       },
     ],
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local',
+    })
+
+    return {
+      $t: t,
+      t,
+    }
   },
   data() {
     return {
@@ -603,6 +597,13 @@ export default {
         scrollToFirstError(this.errors)
       }
       return valid
+    },
+    openMediaModalHandler(idx, media) {
+      this.selectedMediaIndex = idx
+      this.$emit(
+        'openMediaModal',
+        media && Object.keys(media).length > 0 ? media.media_id : null,
+      )
     },
   },
 }

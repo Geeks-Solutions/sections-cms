@@ -5,9 +5,9 @@
       <LazyEditorWysiwyg
         :html="settings[0].title[siteLang]"
         :css-classes-prop="settings[0].titleClasses"
-        @cssClassesChanged="(v) => (settings[0]['titleClasses'] = v)"
-        @wysiwygMedia="wysiwygMediaAdded"
-        @settingsUpdate="updateTitle"
+        @css-classes-changed="(v) => (settings[0]['titleClasses'] = v)"
+        @wysiwyg-media="wysiwygMediaAdded"
+        @settings-update="updateTitle"
       />
     </div>
 
@@ -16,9 +16,9 @@
       <LazyEditorWysiwyg
         :html="settings[0].subTitle[siteLang]"
         :css-classes-prop="settings[0].subTitleClasses"
-        @cssClassesChanged="(v) => (settings[0]['subTitleClasses'] = v)"
-        @wysiwygMedia="wysiwygMediaAdded"
-        @settingsUpdate="updateSubTitle"
+        @css-classes-changed="(v) => (settings[0]['subTitleClasses'] = v)"
+        @wysiwyg-media="wysiwygMediaAdded"
+        @settings-update="updateSubTitle"
       />
     </div>
 
@@ -42,11 +42,8 @@
                 ? [settings[0].plans[idx].media]
                 : []
             "
-            @uploadContainerClicked="uploadMedia(idx)"
-            @removeUploadedImage="
-              mediaFieldIndex = idx
-              removeMedia(idx)
-            "
+            @upload-container-clicked="uploadMedia(idx)"
+            @remove-uploaded-image="removeMediaHandler(idx)"
           />
         </div>
 
@@ -87,9 +84,9 @@
           <LazyEditorWysiwyg
             :html="settings[0].plans[idx].description[siteLang]"
             :css-classes-prop="settings[0].plans[idx].classes"
-            @cssClassesChanged="(v) => (plan['classes'] = v)"
-            @wysiwygMedia="wysiwygMediaAdded"
-            @settingsUpdate="(content) => updateDescription(content, idx)"
+            @css-classes-changed="(v) => (plan['classes'] = v)"
+            @wysiwyg-media="wysiwygMediaAdded"
+            @settings-update="(content) => updateDescription(content, idx)"
           />
         </div>
 
@@ -212,15 +209,6 @@ import { assignMediaObject, scrollToFirstError } from '@/utils/constants'
 
 export default {
   name: 'Plans',
-  setup() {
-    const { t } = useI18n({
-      useScope: 'local',
-    })
-
-    return {
-      $t: t,
-    }
-  },
   props: {
     selectedLang: {
       type: String,
@@ -247,6 +235,15 @@ export default {
         name: 'wysiwygMedia',
       },
     ],
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local',
+    })
+
+    return {
+      $t: t,
+    }
   },
   data() {
     return {
@@ -436,6 +433,10 @@ export default {
         scrollToFirstError(this.errors)
       }
       return valid
+    },
+    removeMediaHandler(idx) {
+      this.mediaFieldIndex = idx
+      this.removeMedia(idx)
     },
   },
 }

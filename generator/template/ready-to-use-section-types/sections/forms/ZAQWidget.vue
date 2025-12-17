@@ -43,16 +43,10 @@
             ? [settings[0].sequence]
             : []
         "
-        @uploadContainerClicked="
-          selectedMediaKey = 'sequence'
-          $emit(
-            'openMediaModal',
-            settings[0].sequence && Object.keys(settings[0].sequence).length > 0
-              ? settings[0].sequence.media_id
-              : null,
-          )
+        @upload-container-clicked="
+          openMediaModalHandler('sequence', settings[0].sequence)
         "
-        @removeUploadedImage="removeMedia('sequence')"
+        @remove-uploaded-image="removeMedia('sequence')"
       />
       <span
         v-if="errors.sequence === true"
@@ -75,7 +69,7 @@
           :filter-searchable="false"
           :close-on-select="true"
           :track-by="'key'"
-          @itemSelected="
+          @item-selected="
             (val) => {
               settings[0].autoStart = val
             }
@@ -100,16 +94,10 @@
             ? [settings[0].css]
             : []
         "
-        @uploadContainerClicked="
-          selectedMediaKey = 'css'
-          $emit(
-            'openMediaModal',
-            settings[0].css && Object.keys(settings[0].css).length > 0
-              ? settings[0].css.media_id
-              : null,
-          )
+        @upload-container-clicked="
+          openMediaModalHandler('css', settings[0].css)
         "
-        @removeUploadedImage="removeMedia('css')"
+        @remove-uploaded-image="removeMedia('css')"
       />
       <span class="text-xs text-Gray_800"></span>
     </div>
@@ -132,17 +120,10 @@
             ? [settings[0].sendBtnMedia]
             : []
         "
-        @uploadContainerClicked="
-          selectedMediaKey = 'sendBtnMedia'
-          $emit(
-            'openMediaModal',
-            settings[0].sendBtnMedia &&
-              Object.keys(settings[0].sendBtnMedia).length > 0
-              ? settings[0].sendBtnMedia.media_id
-              : null,
-          )
+        @upload-container-clicked="
+          openMediaModalHandler('sendBtnMedia', settings[0].sendBtnMedia)
         "
-        @removeUploadedImage="removeMedia('sendBtnMedia')"
+        @remove-uploaded-image="removeMedia('sendBtnMedia')"
       />
     </div>
 
@@ -164,17 +145,10 @@
             ? [settings[0].typingIconMedia]
             : []
         "
-        @uploadContainerClicked="
-          selectedMediaKey = 'typingIconMedia'
-          $emit(
-            'openMediaModal',
-            settings[0].typingIconMedia &&
-              Object.keys(settings[0].typingIconMedia).length > 0
-              ? settings[0].typingIconMedia.media_id
-              : null,
-          )
+        @upload-container-clicked="
+          openMediaModalHandler('typingIconMedia', settings[0].typingIconMedia)
         "
-        @removeUploadedImage="removeMedia('typingIconMedia')"
+        @remove-uploaded-image="removeMedia('typingIconMedia')"
       />
     </div>
 
@@ -200,15 +174,6 @@ import { useFetch } from '#app'
 
 export default {
   name: 'ZAQWidget',
-  setup() {
-    const { t } = useI18n({
-      useScope: 'local',
-    })
-
-    return {
-      $t: t,
-    }
-  },
   props: {
     selectedLang: {
       type: String,
@@ -235,6 +200,15 @@ export default {
         name: 'typingIconMedia',
       },
     ],
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local',
+    })
+
+    return {
+      $t: t,
+    }
   },
   data() {
     return {
@@ -365,6 +339,13 @@ export default {
         scrollToFirstError(this.errors)
       }
       return valid
+    },
+    openMediaModalHandler(key, media) {
+      this.selectedMediaKey = key
+      this.$emit(
+        'openMediaModal',
+        media && Object.keys(media).length > 0 ? media.media_id : null,
+      )
     },
   },
 }

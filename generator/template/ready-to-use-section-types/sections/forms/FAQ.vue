@@ -11,16 +11,8 @@
             ? [settings[0].media]
             : []
         "
-        @uploadContainerClicked="
-          selectedMediaIndex = 0
-          $emit(
-            'openMediaModal',
-            settings[0].media && Object.keys(settings[0].media).length > 0
-              ? settings[0].media.media_id
-              : null,
-          )
-        "
-        @removeUploadedImage="removeMedia(0)"
+        @upload-container-clicked="openMediaModalHandler(0, settings[0].media)"
+        @remove-uploaded-image="removeMedia(0)"
       />
     </div>
 
@@ -89,9 +81,9 @@
               :quill-key="`object-${idx}`"
               :html="object[siteLang].answer"
               :css-classes-prop="object.classes"
-              @cssClassesChanged="(v) => (object['classes'] = v)"
-              @wysiwygMedia="wysiwygMediaAdded"
-              @settingsUpdate="(content) => updateQAAnswer(content, idx)"
+              @css-classes-changed="(v) => (object['classes'] = v)"
+              @wysiwyg-media="wysiwygMediaAdded"
+              @settings-update="(content) => updateQAAnswer(content, idx)"
             />
           </div>
         </template>
@@ -107,7 +99,7 @@
     </div>
 
     <LazySectionFormErrors
-      :selectedLang="selectedLang"
+      :selected-lang="selectedLang"
       :default-lang="defaultLang"
       :locales="locales"
       :errors="errors"
@@ -122,15 +114,6 @@ import { assignMediaObject } from '@/utils/constants.js'
 
 export default {
   name: 'FAQ',
-  setup() {
-    const { t } = useI18n({
-      useScope: 'local',
-    })
-
-    return {
-      $t: t,
-    }
-  },
   props: {
     selectedLang: {
       type: String,
@@ -157,6 +140,15 @@ export default {
         name: 'wysiwygMedia',
       },
     ],
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local',
+    })
+
+    return {
+      $t: t,
+    }
   },
   data() {
     return {
@@ -259,6 +251,13 @@ export default {
         valid = false
       }
       return valid
+    },
+    openMediaModalHandler(idx, media) {
+      this.selectedMediaIndex = idx
+      this.$emit(
+        'openMediaModal',
+        media && Object.keys(media).length > 0 ? media.media_id : null,
+      )
     },
   },
 }

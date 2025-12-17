@@ -81,7 +81,7 @@
             :close-on-select="true"
             :filter-clearable="true"
             :track-by="'key'"
-            @itemSelected="
+            @item-selected="
               (val) => {
                 settings[0].aspectRatio = val
               }
@@ -166,7 +166,7 @@
             :close-on-select="true"
             :filter-clearable="true"
             :track-by="'key'"
-            @itemSelected="
+            @item-selected="
               (val) => {
                 settings[0].mobileAspectRatio = val
               }
@@ -184,9 +184,11 @@
         <LazyEditorWysiwyg
           :html="settings[0].videoTitle[selectedLang]"
           :css-classes-prop="settings[0].videoTitleClasses"
-          @cssClassesChanged="(v) => (settings[0]['videoTitleClasses'] = v)"
-          @wysiwygMedia="wysiwygMediaAdded"
-          @settingsUpdate="(content) => updateVideoTitleDescription(content, 0)"
+          @css-classes-changed="(v) => (settings[0]['videoTitleClasses'] = v)"
+          @wysiwyg-media="wysiwygMediaAdded"
+          @settings-update="
+            (content) => updateVideoTitleDescription(content, 0)
+          "
         />
       </div>
 
@@ -195,9 +197,9 @@
         <LazyEditorWysiwyg
           :html="settings[0].videoText[selectedLang]"
           :css-classes-prop="settings[0].videoTextClasses"
-          @cssClassesChanged="(v) => (settings[0]['videoTextClasses'] = v)"
-          @wysiwygMedia="wysiwygMediaAdded"
-          @settingsUpdate="(content) => updateVideoTextDescription(content, 0)"
+          @css-classes-changed="(v) => (settings[0]['videoTextClasses'] = v)"
+          @wysiwyg-media="wysiwygMediaAdded"
+          @settings-update="(content) => updateVideoTextDescription(content, 0)"
         />
       </div>
 
@@ -303,17 +305,10 @@
                     ? [object.media]
                     : []
                 "
-                @uploadContainerClicked="
-                  selectedMediaIndex = idx
-                  selectedMediaKey = 'media'
-                  $emit(
-                    'openMediaModal',
-                    object.media && Object.keys(object.media).length > 0
-                      ? object.media.media_id
-                      : null,
-                  )
+                @upload-container-clicked="
+                  openMediaModalHandler(idx, 'media', object.media)
                 "
-                @removeUploadedImage="removeMedia(idx, 'media')"
+                @remove-uploaded-image="removeMedia(idx, 'media')"
               />
               <span
                 v-if="errors.media === true && idx === 0"
@@ -340,18 +335,10 @@
                     ? [object.mediaMobile]
                     : []
                 "
-                @uploadContainerClicked="
-                  selectedMediaIndex = idx
-                  selectedMediaKey = 'mediaMobile'
-                  $emit(
-                    'openMediaModal',
-                    object.mediaMobile &&
-                      Object.keys(object.mediaMobile).length > 0
-                      ? object.mediaMobile.media_id
-                      : null,
-                  )
+                @upload-container-clicked="
+                  openMediaModalHandler(idx, 'mediaMobile', object.mediaMobile)
                 "
-                @removeUploadedImage="removeMedia(idx, 'mediaMobile')"
+                @remove-uploaded-image="removeMedia(idx, 'mediaMobile')"
               />
               <span
                 v-if="errors.mediaMobile === true && idx === 0"
@@ -368,9 +355,9 @@
             <LazyEditorWysiwyg
               :html="object.title[selectedLang]"
               :css-classes-prop="object.titleClasses"
-              @cssClassesChanged="(v) => (object['titleClasses'] = v)"
-              @wysiwygMedia="wysiwygMediaAdded"
-              @settingsUpdate="
+              @css-classes-changed="(v) => (object['titleClasses'] = v)"
+              @wysiwyg-media="wysiwygMediaAdded"
+              @settings-update="
                 (content) => updateTitleDescription(content, idx)
               "
             />
@@ -383,9 +370,11 @@
             <LazyEditorWysiwyg
               :html="object.text[selectedLang]"
               :css-classes-prop="object.textClasses"
-              @cssClassesChanged="(v) => (object['textClasses'] = v)"
-              @wysiwygMedia="wysiwygMediaAdded"
-              @settingsUpdate="(content) => updateTextDescription(content, idx)"
+              @css-classes-changed="(v) => (object['textClasses'] = v)"
+              @wysiwyg-media="wysiwygMediaAdded"
+              @settings-update="
+                (content) => updateTextDescription(content, idx)
+              "
             />
           </div>
 
@@ -451,15 +440,6 @@ import {
 
 export default {
   name: 'InteractiveDisplay',
-  setup() {
-    const { t } = useI18n({
-      useScope: 'local',
-    })
-
-    return {
-      $t: t,
-    }
-  },
   props: {
     selectedLang: {
       type: String,
@@ -486,6 +466,15 @@ export default {
         name: 'wysiwygMedias',
       },
     ],
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local',
+    })
+
+    return {
+      $t: t,
+    }
   },
   data() {
     return {
@@ -842,6 +831,17 @@ export default {
         scrollToFirstError(this.errors)
       }
       return valid
+    },
+    reduceOption(option) {
+      return option.key
+    },
+    openMediaModalHandler(idx, key, media) {
+      this.selectedMediaIndex = idx
+      this.selectedMediaKey = key
+      this.$emit(
+        'openMediaModal',
+        media && Object.keys(media).length > 0 ? media.media_id : null,
+      )
     },
   },
 }

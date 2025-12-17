@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-console
 console.log(
   'In order to setup section you need to get your projectId and projectUrl by registering an account on https://sections.geeks.solutions'
 )

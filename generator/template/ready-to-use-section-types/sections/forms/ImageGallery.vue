@@ -106,17 +106,10 @@
                     ? [object.media]
                     : []
                 "
-                @uploadContainerClicked="
-                  selectedMediaIndex = idx
-                  selectedMediaKey = 'media'
-                  $emit(
-                    'openMediaModal',
-                    object.media && Object.keys(object.media).length > 0
-                      ? object.media.media_id
-                      : null,
-                  )
+                @upload-container-clicked="
+                  handleUploadContainerClicked(idx, 'media', object)
                 "
-                @removeUploadedImage="removeMedia(idx, 'media')"
+                @remove-uploaded-image="removeMedia(idx, 'media')"
               />
               <span
                 v-if="errors.media === true && idx === 0"
@@ -143,18 +136,10 @@
                     ? [object.mediaMobile]
                     : []
                 "
-                @uploadContainerClicked="
-                  selectedMediaIndex = idx
-                  selectedMediaKey = 'mediaMobile'
-                  $emit(
-                    'openMediaModal',
-                    object.mediaMobile &&
-                      Object.keys(object.mediaMobile).length > 0
-                      ? object.mediaMobile.media_id
-                      : null,
-                  )
+                @upload-container-clicked="
+                  handleUploadContainerClicked(idx, 'mediaMobile', object)
                 "
-                @removeUploadedImage="removeMedia(idx, 'mediaMobile')"
+                @remove-uploaded-image="removeMedia(idx, 'mediaMobile')"
               />
               <span
                 v-if="errors.mediaMobile === true && idx === 0"
@@ -187,15 +172,6 @@ import {
 
 export default {
   name: 'InteractiveDisplay',
-  setup() {
-    const { t } = useI18n({
-      useScope: 'local',
-    })
-
-    return {
-      $t: t,
-    }
-  },
   props: {
     selectedLang: {
       type: String,
@@ -218,6 +194,15 @@ export default {
         name: 'medias',
       },
     ],
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local',
+    })
+
+    return {
+      $t: t,
+    }
   },
   data() {
     return {
@@ -270,7 +255,6 @@ export default {
     },
     selectedMedia(mediaObject) {
       let media = {}
-      console.log('mediaObject', mediaObject)
       media = assignMediaObject(mediaObject)
       this.settings[0].gallery[this.selectedMediaIndex][this.selectedMediaKey] =
         { ...media }
@@ -419,6 +403,15 @@ export default {
         scrollToFirstError(this.errors)
       }
       return valid
+    },
+    handleUploadContainerClicked(idx, key, object) {
+      this.selectedMediaIndex = idx
+      this.selectedMediaKey = key
+      const mediaObj = object[key]
+      this.$emit(
+        'openMediaModal',
+        mediaObj && Object.keys(mediaObj).length > 0 ? mediaObj.media_id : null,
+      )
     },
   },
 }

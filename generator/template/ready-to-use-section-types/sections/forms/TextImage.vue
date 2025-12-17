@@ -73,16 +73,8 @@
             ? [settings[0].media]
             : []
         "
-        @uploadContainerClicked="
-          selectedMediaIndex = 0
-          $emit(
-            'openMediaModal',
-            settings[0].media && Object.keys(settings[0].media).length > 0
-              ? settings[0].media.media_id
-              : null,
-          )
-        "
-        @removeUploadedImage="removeMedia(0)"
+        @upload-container-clicked="openMediaModalHandler(0, settings[0].media)"
+        @remove-uploaded-image="removeMedia(0)"
       />
     </div>
 
@@ -125,9 +117,9 @@
       <LazyEditorWysiwyg
         :html="settings[0].title[selectedLang]"
         :css-classes-prop="settings[0].titleClasses"
-        @cssClassesChanged="(v) => (settings[0]['titleClasses'] = v)"
-        @wysiwygMedia="wysiwygMediaAdded"
-        @settingsUpdate="(content) => updateTitleDescription(content)"
+        @css-classes-changed="(v) => (settings[0]['titleClasses'] = v)"
+        @wysiwyg-media="wysiwygMediaAdded"
+        @settings-update="(content) => updateTitleDescription(content)"
       />
       <span
         v-if="errors.title === true && selectedLang === defaultLang"
@@ -143,9 +135,9 @@
       <LazyEditorWysiwyg
         :html="settings[0].text[selectedLang]"
         :css-classes-prop="settings[0].textClasses"
-        @cssClassesChanged="(v) => (settings[0]['textClasses'] = v)"
-        @wysiwygMedia="wysiwygMediaAdded"
-        @settingsUpdate="(content) => updateTextDescription(content)"
+        @css-classes-changed="(v) => (settings[0]['textClasses'] = v)"
+        @wysiwyg-media="wysiwygMediaAdded"
+        @settings-update="(content) => updateTextDescription(content)"
       />
       <span
         v-if="errors.text === true && selectedLang === defaultLang"
@@ -155,7 +147,7 @@
     </div>
 
     <LazySectionFormErrors
-      :selectedLang="selectedLang"
+      :selected-lang="selectedLang"
       :default-lang="defaultLang"
       :locales="locales"
       :errors="errors"
@@ -174,15 +166,6 @@ import {
 
 export default {
   name: 'TextImage',
-  setup() {
-    const { t } = useI18n({
-      useScope: 'local',
-    })
-
-    return {
-      $t: t,
-    }
-  },
   props: {
     selectedLang: {
       type: String,
@@ -209,6 +192,15 @@ export default {
         name: 'wysiwygMedia',
       },
     ],
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'local',
+    })
+
+    return {
+      $t: t,
+    }
   },
   data() {
     return {
@@ -306,11 +298,19 @@ export default {
       this.errors.title = false
       this.errors.text = false
       this.errors.media = false
-      if (!this.settings[0].title[this.defaultLang]) {
+      // Quill uses "<p><br></p>" for an empty editor, so we check for it to ensure the field is treated as required.
+      if (
+        !this.settings[0].title[this.defaultLang] ||
+        this.settings?.[0]?.title?.[this.defaultLang] === '<p><br></p>'
+      ) {
         this.errors.title = true
         valid = false
       }
-      if (!this.settings[0].text[this.defaultLang]) {
+      // Quill uses "<p><br></p>" for an empty editor, so we check for it to ensure the field is treated as required.
+      if (
+        !this.settings[0].text[this.defaultLang] ||
+        this.settings?.[0]?.text?.[this.defaultLang] === '<p><br></p>'
+      ) {
         this.errors.text = true
         valid = false
       }
@@ -318,6 +318,13 @@ export default {
         scrollToFirstError(this.errors)
       }
       return valid
+    },
+    openMediaModalHandler(idx, media) {
+      this.selectedMediaIndex = idx
+      this.$emit(
+        'openMediaModal',
+        media && Object.keys(media).length > 0 ? media.media_id : null,
+      )
     },
   },
 }
