@@ -17,7 +17,7 @@
       </a>
     </template>
 
-    <!-- Fixed WhatsApp button if enabled -->
+    <!-- Fixed WhatsApp button if enabled (hide when branches are enabled) -->
     <a
       v-if="showWhatsApp && whatsappNumber"
       :href="whatsappUrl"
@@ -78,6 +78,10 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  enableBranches: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 // Computed properties
@@ -96,12 +100,26 @@ const whatsappUrl = computed(() => {
 
   const phoneNumber = props.whatsappNumber.replace(/[^0-9+]/g, '')
 
-  const message = generateWhatsAppMessage(
-    props.cart,
-    props.type,
-    props.lang,
-    props.i18n,
-  )
+  let message = ''
+
+  // If branches are enabled, only send default message (no cart items)
+  if (props.enableBranches) {
+    message =
+      props.whatsappMessage ||
+      (props.type === 'service'
+        ? props.i18n('whatsapp.defaultServiceMessage') ||
+          'Hello! I would like to book a service.'
+        : props.i18n('whatsapp.defaultOrderMessage') ||
+          'Hello! I would like to place an order.')
+  } else {
+    // If branches disabled, send full cart message
+    message = generateWhatsAppMessage(
+      props.cart,
+      props.type,
+      props.lang,
+      props.i18n,
+    )
+  }
 
   const encodedMessage = encodeURIComponent(message)
   return `https://wa.me/${phoneNumber}?text=${encodedMessage}`

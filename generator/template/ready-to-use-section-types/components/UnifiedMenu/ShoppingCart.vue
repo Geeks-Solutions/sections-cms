@@ -161,19 +161,26 @@
                 >
                   <span class="cart-item-price-original"
                     >{{ currencySymbol
-                    }}{{ formatPrice(item.price * item.quantity) }}</span
+                    }}{{
+                      formatPrice(item.price * item.quantity, currencySymbol)
+                    }}</span
                   >
                   <span class="cart-item-price-discounted"
                     >{{ currencySymbol
                     }}{{
-                      formatPrice(item.discountedPrice * item.quantity)
+                      formatPrice(
+                        item.discountedPrice * item.quantity,
+                        currencySymbol,
+                      )
                     }}</span
                   >
                 </div>
                 <!-- Regular pricing -->
                 <div v-else class="cart-item-price">
                   {{ currencySymbol
-                  }}{{ formatPrice(item.price * item.quantity) }}
+                  }}{{
+                    formatPrice(item.price * item.quantity, currencySymbol)
+                  }}
                 </div>
               </div>
             </div>
@@ -186,7 +193,11 @@
 
           <!-- Order summary -->
           <div class="cart-summary">
-            <div class="cart-subtotal mb-3 flex justify-between">
+            <!-- Subtotal - only show if tax or service fee is enabled -->
+            <div
+              v-if="enableTax || (isService && enableServiceFee)"
+              class="cart-subtotal mb-3 flex justify-between"
+            >
               <h3 class="cart-subtotal-label">
                 {{
                   isService
@@ -195,7 +206,8 @@
                 }}:
               </h3>
               <span class="cart-subtotal-value"
-                >{{ currencySymbol }}{{ formatPrice(subtotal) }}</span
+                >{{ currencySymbol
+                }}{{ formatPrice(subtotal, currencySymbol) }}</span
               >
             </div>
 
@@ -210,7 +222,8 @@
                 }}%):
               </h3>
               <span class="cart-summary-value"
-                >{{ currencySymbol }}{{ formatPrice(serviceFee) }}</span
+                >{{ currencySymbol
+                }}{{ formatPrice(serviceFee, currencySymbol) }}</span
               >
             </div>
 
@@ -225,7 +238,8 @@
                 ({{ (taxRate * 100).toFixed(2) }}%):
               </h3>
               <span class="cart-summary-value"
-                >{{ currencySymbol }}{{ formatPrice(tax) }}</span
+                >{{ currencySymbol
+                }}{{ formatPrice(tax, currencySymbol) }}</span
               >
             </div>
 
@@ -239,20 +253,59 @@
                 }}:
               </h3>
               <h3 class="cart-total-value">
-                {{ currencySymbol }}{{ formatPrice(total) }}
+                {{ currencySymbol }}{{ formatPrice(total, currencySymbol) }}
               </h3>
             </div>
           </div>
 
+          <!-- Branch Selector (if branches enabled) -->
+          <div v-if="enableBranches && branches.length > 0" class="mb-4">
+            <label class="block text-sm font-medium mb-2"
+              >{{ $t('RestaurantMenu.selectBranch') }}:</label
+            >
+            <select
+              v-model="selectedBranch"
+              class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option :value="null" disabled>
+                {{ $t('RestaurantMenu.selectBranch') }}
+              </option>
+              <option
+                v-for="branch in branches"
+                :key="branch.id"
+                :value="branch"
+              >
+                {{ branch.name[lang] || branch.name.en || 'Branch' }}
+              </option>
+            </select>
+            <span
+              v-if="!selectedBranch"
+              class="text-xs text-red-600 mt-1 block"
+            >
+              {{ $t('RestaurantMenu.selectBranch') }}
+            </span>
+          </div>
+
           <div v-if="cart.length > 0" class="checkout-buttons w-full">
-            <!-- WhatsApp checkout button when WhatsApp is enabled -->
+            <!-- WhatsApp checkout button when WhatsApp is enabled OR branches are enabled -->
             <a
-              v-if="whatsappEnabled"
-              :href="whatsappUrl"
+              v-if="whatsappEnabled || enableBranches"
+              :href="enableBranches && !selectedBranch ? '#' : whatsappUrl"
+              @click="
+                (e) => {
+                  if (enableBranches && !selectedBranch) e.preventDefault()
+                }
+              "
               target="_blank"
               rel="noopener"
               class="whatsapp-checkout-button w-full flex items-center justify-center"
-              :class="isService ? 'service-theme' : 'restaurant-theme'"
+              :class="[
+                isService ? 'service-theme' : 'restaurant-theme',
+                {
+                  'opacity-50 cursor-not-allowed':
+                    enableBranches && !selectedBranch,
+                },
+              ]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -283,10 +336,13 @@
 <i18n src="../../sections/forms/RestaurantMenu_i18n.json"></i18n>
 
 <script setup>
-import { computed } from 'vue'
-import { formatPrice, generateWhatsAppMessage } from '@/utils/constants'
+import { ref, computed } from 'vue'
+import { generateWhatsAppMessage, formatPrice } from '@/utils/constants'
 
 const { t: $t } = useI18n({ useScope: 'local' })
+
+// Reactive state for selected branch
+const selectedBranch = ref(null)
 
 const props = defineProps({
   cart: {
@@ -339,6 +395,14 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  enableBranches: {
+    type: Boolean,
+    default: false,
+  },
+  branches: {
+    type: Array,
+    default: () => [],
+  },
 })
 
 const emit = defineEmits([
@@ -380,9 +444,17 @@ const total = computed(() => {
 })
 
 const whatsappUrl = computed(() => {
-  if (!props.whatsappNumber) return '#'
+  // Determine which phone number to use
+  let phoneNumber = props.whatsappNumber
 
-  const phoneNumber = props.whatsappNumber.replace(/[^0-9+]/g, '')
+  // If branches are enabled and a branch is selected, use the branch's phone number
+  if (props.enableBranches && selectedBranch.value) {
+    phoneNumber = selectedBranch.value.phone
+  }
+
+  if (!phoneNumber) return '#'
+
+  phoneNumber = phoneNumber.replace(/[^0-9+]/g, '')
 
   const message = generateWhatsAppMessage(
     props.cart,
@@ -399,10 +471,27 @@ const whatsappUrl = computed(() => {
 
 // Methods
 const getItemName = (item) => {
+  let itemName = ''
+
   if (typeof item.name === 'object') {
-    return item.name[props.lang] || item.name.en || 'Item'
+    itemName = item.name[props.lang] || item.name.en || 'Item'
+  } else {
+    itemName = item.name || 'Item'
   }
-  return item.name || 'Item'
+
+  // Add variant name if variant exists
+  if (item.variant && item.variant.name) {
+    const variantName =
+      typeof item.variant.name === 'object'
+        ? item.variant.name[props.lang] || item.variant.name.en || ''
+        : item.variant.name
+
+    if (variantName) {
+      itemName = `${itemName} - ${variantName}`
+    }
+  }
+
+  return itemName
 }
 
 const formatDate = (dateString) => {

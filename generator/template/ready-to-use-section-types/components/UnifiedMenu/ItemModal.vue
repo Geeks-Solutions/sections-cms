@@ -1,9 +1,9 @@
 <template>
   <div
-    class="modal-overlay fixed inset-0 z-50 flex md:items-center justify-center p-4 overflow-y-scroll md:overflow-y-unset"
+    class="modal-overlay fixed inset-0 z-50 flex items-start md:items-center justify-center overflow-y-auto"
   >
     <div
-      class="item-modal-content rounded-lg shadow-xl max-w-2xl w-full h-max"
+      class="item-modal-content rounded-lg shadow-xl max-w-2xl w-full my-4 md:my-0"
       :class="{ 'max-w-2xl': isService }"
     >
       <div class="relative flex flex-col md:flex-row md:w-full">
@@ -60,18 +60,13 @@
               <span
                 v-if="isService && item.hasDiscount"
                 class="item-price-regular line-through mr-2"
-                >{{ formatPrice(item.price) }}</span
+                >{{ currencySymbol
+                }}{{ formatPrice(item.price, currencySymbol) }}</span
               >
               <!-- Current price -->
               <span class="modal-item-price mr-2"
                 >{{ currencySymbol
-                }}{{
-                  formatPrice(
-                    isService && item.hasDiscount
-                      ? item.discountedPrice
-                      : item.price,
-                  )
-                }}</span
+                }}{{ formatPrice(displayPrice, currencySymbol) }}</span
               >
               <div
                 v-if="
@@ -90,6 +85,44 @@
           <p class="modal-item-description mb-2">
             {{ item.description[lang] }}
           </p>
+
+          <!-- Variant Selector (NEW) - Only show for restaurant items with variants -->
+          <div
+            v-if="
+              !isService &&
+              item.hasVariants &&
+              item.variants &&
+              item.variants.length > 0
+            "
+            class="mb-4"
+          >
+            <label class="input-label block mb-2"
+              >{{ $t('RestaurantMenu.selectVariant') }}:</label
+            >
+            <div
+              class="flex gap-2 overflow-x-auto pb-2"
+              style="-webkit-overflow-scrolling: touch"
+            >
+              <button
+                v-for="variant in item.variants"
+                :key="variant.id"
+                @click="$emit('select-variant', variant)"
+                class="variant-button px-4 py-2 rounded-lg border-2 transition-all"
+                :class="{
+                  'variant-selected':
+                    selectedVariant && selectedVariant.id === variant.id,
+                  'variant-unselected':
+                    !selectedVariant || selectedVariant.id !== variant.id,
+                }"
+              >
+                <span class="font-medium">{{ variant.name[lang] }}</span>
+                <span class="ml-2 text-sm"
+                  >{{ currencySymbol
+                  }}{{ formatPrice(variant.price, currencySymbol) }}</span
+                >
+              </button>
+            </div>
+          </div>
 
           <!-- Item features as bullet points - FIXED HEIGHT SCROLLABLE LIST -->
           <div
@@ -191,6 +224,7 @@
 
           <!-- Add to cart button - Updated to match mockup -->
           <button
+            v-if="showAddToCart"
             @click="addToCart"
             class="add-to-cart-button w-full py-4 rounded-lg flex justify-center items-center"
             :class="{
@@ -257,6 +291,14 @@ const props = defineProps({
     type: Boolean,
     default: false, // Only show date/time pickers when explicitly enabled
   },
+  showAddToCart: {
+    type: Boolean,
+    default: true, // Show add to cart button by default
+  },
+  selectedVariant: {
+    type: Object,
+    default: null,
+  },
 })
 
 const emit = defineEmits([
@@ -266,6 +308,7 @@ const emit = defineEmits([
   'update-date',
   'update-time-slot',
   'add-to-cart',
+  'select-variant',
 ])
 
 // Reactive data
@@ -282,6 +325,22 @@ const minDate = ref(new Date().toISOString().split('T')[0]) // Today's date as m
 
 // Computed properties
 const isService = computed(() => props.type === 'service')
+
+const currentPrice = computed(() => {
+  // If there's a selected variant, use its price
+  if (props.selectedVariant) {
+    return props.selectedVariant.price
+  }
+  // Otherwise use the item's base price
+  return props.item.price
+})
+
+const displayPrice = computed(() => {
+  if (isService.value && props.item.hasDiscount) {
+    return props.item.discountedPrice
+  }
+  return currentPrice.value
+})
 
 const calculateDiscountPercentage = (item) => {
   if (!item.hasDiscount || !item.price || !item.discountedPrice) return 0

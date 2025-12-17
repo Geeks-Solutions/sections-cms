@@ -2,7 +2,11 @@
   <div v-if="settings" class="restaurant-menu py-2.5" :class="settings.classes">
     <div>
       <!-- Shopping Cart Icon - Only render the icon, not full cart -->
-      <CartIcon :total-items="totalItems" @click="toggleCart" />
+      <CartIcon
+        v-if="settings.appearance && settings.appearance.shoppingCart"
+        :total-items="totalItems"
+        @click="toggleCart"
+      />
 
       <!-- Restaurant Logo -->
       <div v-if="settings.logo && settings.logo.url" class="text-center mb-6">
@@ -42,6 +46,7 @@
         :lang="lang"
         :i18n="$t"
         :type="'restaurant'"
+        :enable-branches="settings.enableBranches || false"
       />
 
       <!-- Category View Mode -->
@@ -73,7 +78,11 @@
           :items="getMenuItemsByCategory(activeCategory)"
           :currency-symbol="settings.currencySymbol"
           :lang="lang"
-          @item-click="openItemModal"
+          :show-item-details="
+            settings.appearance && settings.appearance.itemDetails
+          "
+          :expanded-items="expandedItems"
+          @item-click="handleItemClick"
         />
       </div>
 
@@ -84,29 +93,40 @@
           :get-items-by-category="getItemsByCategory"
           :currency-symbol="settings.currencySymbol"
           :lang="lang"
-          @item-click="openItemModal"
+          :show-item-details="
+            settings.appearance && settings.appearance.itemDetails
+          "
+          :expanded-items="expandedItems"
+          @item-click="handleItemClick"
         />
       </div>
     </div>
 
     <!-- Item Modal - Conditionally imported and rendered -->
     <ItemModal
-      v-if="showItemModal"
+      v-if="
+        showItemModal && settings.appearance && settings.appearance.itemDetails
+      "
       :item="selectedItem"
       :currency-symbol="settings.currencySymbol"
       :lang="lang"
       :quantity="itemQuantity"
       :notes="itemNotes"
       :type="'restaurant'"
+      :selected-variant="selectedVariant"
+      :show-add-to-cart="
+        settings.appearance && settings.appearance.shoppingCart
+      "
       @close="closeItemModal"
       @update-quantity="updateItemQuantity"
       @update-notes="updateItemNotes"
+      @select-variant="selectVariant"
       @add-to-cart="addToCart"
     />
 
     <!-- Shopping Cart Sidebar - Conditionally imported and rendered -->
     <ShoppingCart
-      v-if="showCart"
+      v-if="showCart && settings.appearance.shoppingCart"
       :cart="cart"
       :currency-symbol="settings.currencySymbol"
       :tax-rate="settings.taxRate ? settings.taxRate / 100 : TAX_RATE"
@@ -116,6 +136,8 @@
       type="restaurant"
       :whatsapp-enabled="!!settings.showWhatsApp && !!settings.whatsappNumber"
       :whatsapp-number="settings.whatsappNumber || ''"
+      :enable-branches="settings.enableBranches || false"
+      :branches="settings.branches || []"
       @close="closeCart"
       @increment="incrementCartItem"
       @decrement="decrementCartItem"
@@ -227,10 +249,14 @@ const cart = ref([])
 const showCart = ref(false)
 const showItemModal = ref(false)
 const selectedItem = ref(null)
+const selectedVariant = ref(null) // NEW: Track selected variant
 const itemQuantity = ref(1)
 const itemNotes = ref('')
 const activeCategory = ref('')
 const isCartLoaded = ref(false)
+const showShoppingCart = ref(false)
+const showItemDetails = ref(false)
+const expandedItems = ref(new Set())
 
 // Constants
 const TAX_RATE = 0.1
@@ -414,10 +440,34 @@ const setActiveCategory = (categoryId) => {
   activeCategory.value = categoryId
 }
 
+const handleItemClick = (item) => {
+  // If itemDetails is enabled, open the modal
+  if (settings.value.appearance && settings.value.appearance.itemDetails) {
+    openItemModal(item)
+  } else {
+    // If itemDetails is disabled, toggle the expanded state for this item
+    if (expandedItems.value.has(item.id)) {
+      expandedItems.value.delete(item.id)
+    } else {
+      expandedItems.value.add(item.id)
+    }
+    // Force reactivity update
+    expandedItems.value = new Set(expandedItems.value)
+  }
+}
+
 const openItemModal = (item) => {
   selectedItem.value = item
   itemQuantity.value = 1
   itemNotes.value = ''
+
+  // Initialize selected variant: if item has variants, select the first one
+  if (item.hasVariants && item.variants && item.variants.length > 0) {
+    selectedVariant.value = item.variants[0]
+  } else {
+    selectedVariant.value = null
+  }
+
   showItemModal.value = true
   if (process.client) {
     document.body.classList.add('overflow-hidden')
@@ -437,6 +487,10 @@ const updateItemQuantity = (quantity) => {
 
 const updateItemNotes = (notes) => {
   itemNotes.value = notes
+}
+
+const selectVariant = (variant) => {
+  selectedVariant.value = variant
 }
 
 const toggleCart = () => {
@@ -471,19 +525,37 @@ const handleKeyEvents = (e) => {
 const addToCart = () => {
   if (!selectedItem.value) return
 
+  // Determine the price: use variant price if variant is selected, otherwise use item price
+  const itemPrice = selectedVariant.value
+    ? selectedVariant.value.price
+    : selectedItem.value.price
+
+  // Create variant info for cart display
+  const variantInfo = selectedVariant.value
+    ? {
+        id: selectedVariant.value.id,
+        name: selectedVariant.value.name,
+      }
+    : null
+
   const newItem = {
     id: selectedItem.value.id,
     name: selectedItem.value.name,
-    price: selectedItem.value.price,
+    price: itemPrice,
     quantity: itemQuantity.value,
     notes: itemNotes.value,
+    variant: variantInfo, // NEW: Include variant info
   }
 
   closeItemModal()
 
   nextTick(() => {
+    // Match cart items by id, variant, AND notes
     const existingItemIndex = cart.value.findIndex(
-      (item) => item.id === newItem.id && item.notes === newItem.notes,
+      (item) =>
+        item.id === newItem.id &&
+        item.notes === newItem.notes &&
+        (item.variant?.id || null) === (newItem.variant?.id || null),
     )
 
     if (existingItemIndex !== -1) {
@@ -493,10 +565,6 @@ const addToCart = () => {
     }
 
     debouncedSaveCart()
-
-    setTimeout(() => {
-      showCart.value = true
-    }, 100)
   })
 }
 
@@ -554,6 +622,20 @@ onMounted(() => {
 
   // Initialize settings properties
   if (settings.value) {
+    if (!settings.value.appearance) {
+      settings.value.appearance = {
+        shoppingCart: true,
+        itemDetails: true,
+      }
+    } else {
+      if (typeof settings.value.appearance.shoppingCart === 'undefined') {
+        settings.value.appearance.shoppingCart = true
+      }
+      if (typeof settings.value.appearance.itemDetails === 'undefined') {
+        settings.value.appearance.itemDetails = true
+      }
+    }
+
     if (!settings.value.socialMedia) {
       settings.value.socialMedia = {
         instagram: '',

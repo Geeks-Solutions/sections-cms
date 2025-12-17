@@ -166,7 +166,7 @@
         </div>
       </div>
 
-      <div v-if="selectedCategoryId">
+      <div v-if="selectedCategoryId" class="w-full">
         <LazySectionsFormsFieldSets
           :array-data-pop="getMenuItemsByCategory(selectedCategoryId)"
           :fieldset-group="'menuItems'"
@@ -230,6 +230,85 @@
                 class="text-error text-sm pt-2 pl-2"
                 >{{ $t('RestaurantMenu.requiredField') }}</span
               >
+            </div>
+
+            <!-- Item Variants Toggle (NEW) -->
+            <div class="flex flex-col items-start justify-start mt-4">
+              <label class="mr-4 font-medium">{{
+                $t('RestaurantMenu.enableVariants')
+              }}</label>
+              <div class="flex items-center">
+                <input
+                  v-model="object.hasVariants"
+                  type="checkbox"
+                  class="h-5 w-5 mr-2"
+                  @change="onVariantsToggle(object.id, object.hasVariants)"
+                />
+                <span class="text-xs text-Gray_800">{{
+                  $t('RestaurantMenu.enableVariantsDesc')
+                }}</span>
+              </div>
+            </div>
+
+            <!-- Item Variants Section (only show if enabled) -->
+            <div
+              v-if="object.hasVariants"
+              class="flex flex-col items-start justify-start mt-4 pt-4 border-t w-full"
+            >
+              <label class="mr-4 font-medium mb-2">{{
+                $t('RestaurantMenu.itemVariants')
+              }}</label>
+              <span class="text-xs text-Gray_800 mb-4">{{
+                $t('RestaurantMenu.itemVariantsDesc')
+              }}</span>
+
+              <LazySectionsFormsFieldSets
+                :array-data-pop="object.variants || []"
+                :fieldset-group="'variants'"
+                :legend-label="$t('RestaurantMenu.variant')"
+                @array-updated="(data) => updateVariants(object.id, data)"
+                @remove-fieldset="
+                  (variant, vIdx) => removeVariant(object.id, vIdx)
+                "
+                class="w-full"
+              >
+                <template #default="{ object: variant }">
+                  <div class="flex flex-col items-start justify-start mt-4">
+                    <label class="mr-4 font-medium"
+                      >{{ $t('RestaurantMenu.variantName') }}*</label
+                    >
+                    <input
+                      v-model="variant.name[selectedLang]"
+                      type="text"
+                      :placeholder="$t('RestaurantMenu.variantNamePlaceholder')"
+                      :class="sectionsStyle.input"
+                    />
+                  </div>
+
+                  <div class="flex flex-col items-start justify-start mt-4">
+                    <label class="mr-4 font-medium"
+                      >{{ $t('RestaurantMenu.variantPrice') }}*</label
+                    >
+                    <input
+                      v-model="variant.price"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      :placeholder="$t('RestaurantMenu.itemPrice')"
+                      :class="sectionsStyle.input"
+                    />
+                  </div>
+                </template>
+              </LazySectionsFormsFieldSets>
+
+              <div
+                class="add-button underline cursor-pointer mt-2"
+                @click="addVariant(object.id)"
+              >
+                <div class="p3 bold text">
+                  {{ $t('RestaurantMenu.addVariant') }}
+                </div>
+              </div>
             </div>
 
             <!-- Item Image -->
@@ -368,12 +447,62 @@
         <label class="mr-4 font-medium">{{
           $t('RestaurantMenu.currencySymbol')
         }}</label>
-        <input
+        <select
           v-model="settings[0].currencySymbol"
-          type="text"
-          placeholder="$"
           :class="sectionsStyle.input"
-        />
+        >
+          <option value="$">$ (USD)</option>
+          <option value="€">€ (EUR)</option>
+          <option value="LBP">LBP</option>
+        </select>
+      </div>
+      <div class="flex flex-col items-start justify-start mt-4">
+        <div class="flex items-center mb-2">
+          <input
+            v-model="settings[0].appearance.shoppingCart"
+            id="appearanceShoppingCart"
+            type="checkbox"
+            class="h-5 w-5 mr-2"
+            @change="onShoppingCartChange"
+          />
+          <label for="appearanceShoppingCart" class="mr-4 font-medium">
+            {{ $t('RestaurantMenu.appearance.shoppingCart') }}
+          </label>
+        </div>
+        <span class="text-xs text-Gray_800 mb-2 text-start">
+          {{ $t('RestaurantMenu.appearance.shoppingCartDesc') }}
+        </span>
+      </div>
+
+      <div class="flex flex-col items-start justify-start mt-4">
+        <div class="flex items-center mb-2">
+          <input
+            v-model="settings[0].appearance.itemDetails"
+            id="appearanceItemsDetails"
+            type="checkbox"
+            class="h-5 w-5 mr-2"
+            :disabled="settings[0].appearance.shoppingCart"
+          />
+          <label
+            for="appearanceItemsDetails"
+            class="mr-4 font-medium"
+            :class="{
+              'opacity-50 cursor-not-allowed':
+                settings[0].appearance.shoppingCart,
+            }"
+          >
+            {{ $t('RestaurantMenu.appearance.itemsDetails') }}
+          </label>
+        </div>
+        <span class="text-xs text-Gray_800 mb-2">
+          {{ $t('RestaurantMenu.appearance.itemsDetailsDesc') }}
+        </span>
+        <span
+          v-if="settings[0].appearance.shoppingCart"
+          class="text-xs text-blue-600 mt-1"
+        >
+          Item details must be enabled when shopping cart is enabled
+        </span>
       </div>
 
       <div class="flex flex-col items-start justify-start mt-8 pt-8 border-t">
@@ -577,6 +706,92 @@
         </div>
       </div>
 
+      <!-- Branches Section -->
+      <div
+        class="flex flex-col items-start justify-start mt-8 pt-8 border-t w-full"
+      >
+        <h3 class="text-lg font-semibold mb-4">
+          {{ $t('RestaurantMenu.branches') }}
+        </h3>
+        <span class="text-xs text-Gray_800 mb-4">{{
+          $t('RestaurantMenu.branchesDesc')
+        }}</span>
+
+        <div class="flex items-center mb-4">
+          <input
+            v-model="settings[0].enableBranches"
+            id="enableBranches"
+            type="checkbox"
+            class="h-5 w-5 mr-2"
+          />
+          <label for="enableBranches" class="font-medium">
+            {{ $t('RestaurantMenu.enableBranches') }}
+          </label>
+        </div>
+        <span class="text-xs text-Gray_800 mb-4">
+          {{ $t('RestaurantMenu.enableBranchesDesc') }}
+        </span>
+
+        <div v-if="settings[0].enableBranches" class="w-full">
+          <LazySectionsFormsFieldSets
+            :array-data-pop="settings[0].branches"
+            :fieldset-group="'branches'"
+            :legend-label="$t('RestaurantMenu.branch')"
+            @array-updated="(data) => updateBranches(data)"
+            @remove-fieldset="(object, idx) => removeBranch(idx)"
+          >
+            <template #default="{ object, idx }">
+              <div class="flex flex-col items-start justify-start mt-4">
+                <label class="mr-4 font-medium"
+                  >{{ $t('RestaurantMenu.branchName') }}*</label
+                >
+                <input
+                  v-model="object.name[selectedLang]"
+                  type="text"
+                  placeholder="Branch Name"
+                  :class="sectionsStyle.input"
+                />
+                <span
+                  v-show="
+                    errors.branches[idx]?.name === true &&
+                    selectedLang === defaultLang
+                  "
+                  class="text-error text-sm pt-2 pl-2"
+                  >{{ $t('RestaurantMenu.requiredField') }}</span
+                >
+              </div>
+
+              <div class="flex flex-col items-start justify-start mt-4">
+                <label class="mr-4 font-medium"
+                  >{{ $t('RestaurantMenu.branchPhone') }}*</label
+                >
+                <input
+                  v-model="object.phone"
+                  type="text"
+                  placeholder="+1234567890"
+                  :class="sectionsStyle.input"
+                />
+                <span
+                  v-show="errors.branches[idx]?.phone === true"
+                  class="text-error text-sm pt-2 pl-2"
+                  >{{ $t('RestaurantMenu.requiredField') }}</span
+                >
+                <span class="text-xs text-Gray_800 mt-1">{{
+                  $t('RestaurantMenu.branchPhoneDesc')
+                }}</span>
+              </div>
+            </template>
+          </LazySectionsFormsFieldSets>
+
+          <div
+            class="add-button underline cursor-pointer mt-2"
+            @click="addBranch()"
+          >
+            <div class="p3 bold text">{{ $t('RestaurantMenu.addBranch') }}</div>
+          </div>
+        </div>
+      </div>
+
       <div class="flex flex-col items-start justify-start mt-4">
         <label class="mr-4 font-medium">{{
           $t('RestaurantMenu.cssClasses')
@@ -676,12 +891,19 @@ const settings = ref([
     showWhatsApp: false,
     whatsappNumber: '',
     whatsappMessage: {},
+    enableBranches: false,
+    branches: [],
+    appearance: {
+      shoppingCart: true,
+      itemDetails: true,
+    },
   },
 ])
 
 const errors = reactive({
   categories: [],
   menuItems: [],
+  branches: [],
   generalSettings: {
     taxRate: false,
   },
@@ -806,6 +1028,66 @@ const removeItemImage = (itemId) => {
   }
 }
 
+// Variant Management Functions
+const onVariantsToggle = (itemId, isEnabled) => {
+  const itemIndex = settings.value[0].menuItems.findIndex(
+    (item) => item.id === itemId,
+  )
+  if (itemIndex === -1) return
+
+  if (isEnabled) {
+    // Initialize variants array if enabling
+    if (!settings.value[0].menuItems[itemIndex].variants) {
+      settings.value[0].menuItems[itemIndex].variants = []
+    }
+  } else {
+    // Clear variants array if disabling
+    settings.value[0].menuItems[itemIndex].variants = []
+  }
+}
+
+const addVariant = (itemId) => {
+  const itemIndex = settings.value[0].menuItems.findIndex(
+    (item) => item.id === itemId,
+  )
+  if (itemIndex === -1) return
+
+  if (!settings.value[0].menuItems[itemIndex].variants) {
+    settings.value[0].menuItems[itemIndex].variants = []
+  }
+
+  const newVariant = {
+    id: `variant-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    name: {},
+    price: 0,
+  }
+
+  // Initialize name for all locales
+  props.locales.forEach((locale) => {
+    newVariant.name[locale] = ''
+  })
+
+  settings.value[0].menuItems[itemIndex].variants.push(newVariant)
+}
+
+const removeVariant = (itemId, variantIndex) => {
+  const itemIndex = settings.value[0].menuItems.findIndex(
+    (item) => item.id === itemId,
+  )
+  if (itemIndex === -1) return
+
+  settings.value[0].menuItems[itemIndex].variants.splice(variantIndex, 1)
+}
+
+const updateVariants = (itemId, updatedVariants) => {
+  const itemIndex = settings.value[0].menuItems.findIndex(
+    (item) => item.id === itemId,
+  )
+  if (itemIndex === -1) return
+
+  settings.value[0].menuItems[itemIndex].variants = updatedVariants
+}
+
 const initializeLocalizedFields = () => {
   if (!settings.value[0].menuTitle) {
     settings.value[0].menuTitle = {}
@@ -872,6 +1154,32 @@ const removeCategory = (idx) => {
   }
 }
 
+const addBranch = () => {
+  const branch = {
+    id: uuidv4(),
+    name: {},
+    phone: '',
+  }
+
+  props.locales.forEach((locale) => {
+    branch.name[locale] = ''
+  })
+
+  settings.value[0].branches.push(branch)
+  errors.branches.push({ name: false, phone: false })
+}
+
+const removeBranch = (idx) => {
+  settings.value[0].branches = settings.value[0].branches.filter(
+    (br, i) => idx !== i,
+  )
+  errors.branches.splice(idx, 1)
+}
+
+const updateBranches = (data) => {
+  settings.value[0].branches = data
+}
+
 const addMenuItem = (categoryId) => {
   if (!categoryId) return
 
@@ -884,6 +1192,8 @@ const addMenuItem = (categoryId) => {
     image: {},
     featured: false,
     classes: '',
+    hasVariants: false,
+    variants: [],
   }
 
   props.locales.forEach((locale) => {
@@ -912,13 +1222,18 @@ const removeMenuItem = (itemId) => {
     removeFromMediasArray(mediaId)
   }
 
-  settings.value[0].menuItems = settings.value[0].menuItems.filter(
-    (item) => item.id !== itemId,
-  )
+  settings.value[0].menuItems.splice(idx, 1)
 
   const errorIdx = errors.menuItems.findIndex((err) => err.id === itemId)
   if (errorIdx !== -1) {
     errors.menuItems.splice(errorIdx, 1)
+  }
+}
+
+const onShoppingCartChange = () => {
+  // When shopping cart is enabled, force itemDetails to be true
+  if (settings.value[0].appearance.shoppingCart) {
+    settings.value[0].appearance.itemDetails = true
   }
 }
 
@@ -1014,6 +1329,27 @@ const validate = () => {
     valid = false
   }
 
+  // Branch validation
+  if (settings.value[0].enableBranches) {
+    settings.value[0].branches.forEach((branch, idx) => {
+      if (!errors.branches[idx]) {
+        errors.branches[idx] = { name: false, phone: false }
+      }
+      errors.branches[idx].name = false
+      errors.branches[idx].phone = false
+
+      if (!branch.name[props.defaultLang]) {
+        errors.branches[idx].name = true
+        valid = false
+      }
+
+      if (!branch.phone || branch.phone.trim() === '') {
+        errors.branches[idx].phone = true
+        valid = false
+      }
+    })
+  }
+
   settings.value[0].menuItems.forEach((item) => {
     if (
       item.image &&
@@ -1106,6 +1442,13 @@ watch(
         price: false,
       }))
     }
+
+    if (value[0].branches) {
+      errors.branches = value[0].branches.map(() => ({
+        name: false,
+        phone: false,
+      }))
+    }
   },
   { deep: true, immediate: true },
 )
@@ -1114,6 +1457,24 @@ watch(
 onMounted(() => {
   initializeLocalizedFields()
   initializeMediasArray()
+
+  if (!settings.value[0].appearance) {
+    settings.value[0].appearance = {
+      shoppingCart: true,
+      itemDetails: true,
+    }
+  } else {
+    if (typeof settings.value[0].appearance.shoppingCart === 'undefined') {
+      settings.value[0].appearance.shoppingCart = true
+    }
+    if (typeof settings.value[0].appearance.itemDetails === 'undefined') {
+      settings.value[0].appearance.itemDetails = true
+    }
+    // Enforce rule: if shoppingCart is true, itemDetails must be true
+    if (settings.value[0].appearance.shoppingCart) {
+      settings.value[0].appearance.itemDetails = true
+    }
+  }
 
   if (!settings.value[0].socialMedia) {
     settings.value[0].socialMedia = {
@@ -1136,6 +1497,15 @@ onMounted(() => {
     settings.value[0].showWhatsApp = false
   }
 
+  settings.value[0].menuItems.forEach((item) => {
+    if (typeof item.hasVariants === 'undefined') {
+      item.hasVariants = false
+    }
+    if (!item.variants) {
+      item.variants = []
+    }
+  })
+
   if (!settings.value[0].whatsappNumber) {
     settings.value[0].whatsappNumber = ''
   }
@@ -1150,6 +1520,15 @@ onMounted(() => {
         'Hello! I would like to reserve a table.'
     }
   })
+
+  // Initialize branches
+  if (typeof settings.value[0].enableBranches === 'undefined') {
+    settings.value[0].enableBranches = false
+  }
+
+  if (!settings.value[0].branches) {
+    settings.value[0].branches = []
+  }
 })
 
 // Expose methods that might be called from parent
