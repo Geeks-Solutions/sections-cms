@@ -18,6 +18,7 @@
   --menu-badge-orange-text: #9a3412;
   --menu-green: #22c55e;
   --menu-green-dark: #16a34a;
+  --bg-color: white;
 }
 
 .menu-content,
@@ -125,6 +126,35 @@
   max-height: 2.8em;
 }
 
+.item-description-expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  max-height: none;
+  overflow: visible;
+}
+
+/* Variant price buttons in list view */
+.variant-price-button {
+  background-color: #f3f4f6;
+  border-color: #e5e7eb;
+  color: var(--menu-neutral-700, #374151);
+  font-weight: 500;
+  display: inline-block;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.variant-price-button:hover {
+  background-color: #e5e7eb;
+}
+
+@media (max-width: 640px) {
+  .variant-price-button {
+    font-size: 0.7rem;
+    padding: 0.375rem 0.5rem;
+  }
+}
+
 /* Badges */
 .badge {
   font-weight: 500;
@@ -157,6 +187,27 @@
 /* Modal styling */
 .modal-overlay {
   background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-start !important;
+  }
+
+  .item-modal-content {
+    margin: 0 !important;
+    max-height: 100vh;
+    border-radius: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .item-modal-content > div {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
 }
 
 .item-modal-content {
@@ -993,6 +1044,55 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+}
+
+.variant-button {
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.variant-selected {
+  background-color: var(--primary-color, #3b82f6);
+  border-color: var(--primary-color, #3b82f6);
+  color: white;
+}
+
+.variant-unselected {
+  background-color: transparent;
+  border-color: #d1d5db;
+  color: var(--text-color, #374151);
+}
+
+.variant-unselected:hover {
+  border-color: var(--primary-color, #3b82f6);
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 2px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+@media (max-width: 640px) {
+  .variant-button {
+    font-size: 12px;
+    padding: 0.5rem 0.75rem !important;
+  }
 }
 
 /* Media query for larger screens - two columns */
