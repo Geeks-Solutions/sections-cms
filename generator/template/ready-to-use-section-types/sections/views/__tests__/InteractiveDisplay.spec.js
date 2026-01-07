@@ -1,3 +1,4 @@
+import { describe, it, expect, afterEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import InteractiveDisplay from '../ZAQWidget_static.vue'
 
@@ -10,8 +11,8 @@ describe('InteractiveDisplay_static.vue', () => {
 
   const createComponent = (settings, options = {}) => {
     const mockMethods = {
-      isYouTubeLink: jest.fn((link) => link.includes('youtube.com')),
-      extractVideoId: jest.fn((link) => {
+      isYouTubeLink: vi.fn((link) => link.includes('youtube.com')),
+      extractVideoId: vi.fn((link) => {
         const match = link.match(/v=([^&]*)/)
         return match ? match[1] : null
       }),
@@ -80,14 +81,18 @@ describe('InteractiveDisplay_static.vue', () => {
       methods: {
         ...mockMethods,
       },
-      mocks: {
-        $i18n: mockI18n,
+      global: {
+        mocks: {
+          $i18n: mockI18n,
+        },
       },
     })
   }
 
   afterEach(() => {
-    wrapper.destroy()
+    if (wrapper) {
+      wrapper.unmount()
+    }
   })
 
   it('returns updated video URL with query parameters when valid YouTube link and settings are provided', () => {

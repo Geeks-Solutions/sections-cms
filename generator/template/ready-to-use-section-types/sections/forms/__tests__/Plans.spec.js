@@ -1,6 +1,12 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import Plans from '../Plans.vue'
 import { createI18n } from 'vue-i18n'
+
+// Mock the constants module
+vi.mock('@/utils/constants', () => ({
+  default: {},
+}))
 
 const i18n = createI18n({
   legacy: false,
@@ -19,6 +25,7 @@ describe('Plans', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(Plans, {
+      props: defaultProps,
       global: {
         config: {
           globalProperties: {
@@ -30,7 +37,6 @@ describe('Plans', () => {
       data() {
         return defaultData
       },
-      propsData: defaultProps,
     })
   })
 

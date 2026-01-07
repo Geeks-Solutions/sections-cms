@@ -1,10 +1,11 @@
+import { describe, it, expect } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import FeaturesStatic from '../Features_static.vue'
 
 describe('FeaturesStatic.vue', () => {
   it('ensures all blocks have the same height and width', async () => {
     const wrapper = shallowMount(FeaturesStatic, {
-      propsData: {
+      props: {
         section: {
           settings: [
             {

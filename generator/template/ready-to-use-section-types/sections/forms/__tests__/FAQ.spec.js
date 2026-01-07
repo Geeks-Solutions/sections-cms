@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import FAQ from '../FAQ.vue'
 import { createI18n } from 'vue-i18n'
@@ -19,6 +20,7 @@ describe('FAQ', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(FAQ, {
+      props: defaultProps,
       global: {
         config: {
           globalProperties: {
@@ -30,7 +32,6 @@ describe('FAQ', () => {
       data() {
         return defaultData
       },
-      propsData: defaultProps,
     })
   })
 

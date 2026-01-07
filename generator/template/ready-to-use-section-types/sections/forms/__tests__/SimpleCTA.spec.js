@@ -1,4 +1,19 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
+
+// Mock vue-i18n before importing the component
+vi.mock('vue-i18n', () => ({
+  useI18n: () => ({
+    t: (key) => key,
+    locale: { value: 'en' },
+  }),
+  createI18n: vi.fn((config) => ({
+    global: {
+      locale: config.locale || 'en',
+      messages: config.messages || {},
+    },
+  })),
+}))
+
 import { mount } from '@vue/test-utils'
 import SimpleCTA from '../SimpleCTA.vue'
 import { createI18n } from 'vue-i18n'
@@ -52,10 +67,16 @@ describe('SimpleCTA', () => {
       },
       global: {
         components: mockComponents,
-        config: {
-          globalProperties: {
-            $t: vi.fn((key) => key),
-          },
+        mocks: {
+          $t: vi.fn((key) => key),
+          useI18n: () => ({
+            t: (key) => key,
+            locale: { value: 'en' },
+          }),
+        },
+        stubs: {
+          LazyFormLink: true,
+          LazySectionFormErrors: true,
         },
         plugins: [i18n],
       },

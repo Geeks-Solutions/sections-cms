@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import InteractiveDisplayStatic from '../InteractiveDisplay_static.vue'
 
@@ -25,7 +26,7 @@ describe('InteractiveDisplayStatic.vue', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(InteractiveDisplayStatic, {
-      propsData: {
+      props: {
         section: mockSection,
         lang: 'en',
       },

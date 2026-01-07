@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import ZAQWidget from '../ZAQWidget.vue'
 
@@ -36,7 +37,7 @@ describe('ZAQWidget', () => {
       data() {
         return defaultData
       },
-      propsData: {
+      props: {
         selectedLang: 'en',
         locales: [],
         mediaFields: [

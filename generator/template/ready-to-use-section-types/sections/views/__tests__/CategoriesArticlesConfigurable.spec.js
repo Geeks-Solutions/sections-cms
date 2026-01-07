@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import CategoriesArticlesConfigurable from '../categories_articles_configurable.vue'
 import { extractQsValue } from '../../../utils/constants'

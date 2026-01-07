@@ -1,4 +1,5 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
 import ZAQWidgetStatic from '../ZAQWidget_static.vue'
 
 describe('ZAQWidgetStatic.vue', () => {
@@ -17,29 +18,42 @@ describe('ZAQWidgetStatic.vue', () => {
   ]
 
   beforeEach(() => {
-    // Mock $i18n
-    const localVue = createLocalVue()
-    localVue.prototype.$i18n = { locale: 'en' }
-
     // Mock window.zaq
-    mockZaQ = { $emit: jest.fn() }
+    mockZaQ = {
+      $emit: vi.fn(),
+      removeEventListners: vi.fn(),
+      disconnect: vi.fn(),
+    }
     global.window.zaq = mockZaQ
 
     // Mock the zaq-widget component as a stub
     wrapper = mount(ZAQWidgetStatic, {
-      localVue,
-      propsData: {
+      props: {
         section: { settings: mockSettings },
       },
-      stubs: {
-        'zaq-widget': true, // Mock the zaq-widget component as a simple stub
+      global: {
+        mocks: {
+          $i18n: { locale: 'en' },
+          $t: vi.fn((key) => key),
+          $route: {
+            query: {},
+            params: {},
+            path: '/',
+          },
+        },
+        stubs: {
+          'client-only': true,
+          'zaq-widget': true,
+        },
       },
     })
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
-    wrapper.destroy()
+    vi.clearAllMocks()
+    if (wrapper) {
+      wrapper.unmount()
+    }
   })
 
   it('renders zaq-widget when settings are provided', async () => {
