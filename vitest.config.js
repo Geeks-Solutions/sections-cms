@@ -11,7 +11,24 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul',
       reporter: ['text', 'json', 'html'],
-      exclude: ['node_modules/', 'coverage/', '**/*.spec.js', '**/__tests__/**'],
+      include: [
+        'generator/template/ready-to-use-section-types/sections/forms/*.vue',
+        'generator/template/ready-to-use-section-types/sections/views/*.vue',
+        'generator/template/ready-to-use-section-types/sections/**/*.js',
+      ],
+      exclude: [
+        'node_modules/',
+        'coverage/',
+        '**/*.spec.js',
+        '**/__tests__/**',
+        '**/GoogleMaps.vue',
+        '**/GoogleMaps_static.vue',
+        '**/nft_mint_whitelist.vue',
+        '**/RestaurantMenu.vue',
+        '**/ServicePackages.vue',
+        '**/SimpleMenu.vue',
+        '**/server/**',
+      ],
     },
   },
   resolve: {
