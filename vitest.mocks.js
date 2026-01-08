@@ -29,6 +29,13 @@ export const sectionHeader = {}
 
 export const showToast = vi.fn()
 
+export const createPinia = vi.fn(() => ({}))
+export const setActivePinia = vi.fn()
+export const defineStore = vi.fn()
+export const mapState = vi.fn()
+export const mapActions = vi.fn()
+export const mapGetters = vi.fn()
+
 // Export useI18n to make it available from #app
 export const useI18n = vi.fn((options) => ({
   t: vi.fn((key) => key),

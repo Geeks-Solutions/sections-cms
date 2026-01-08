@@ -1,5 +1,16 @@
 import { vi } from 'vitest'
 
+// Mock pinia
+vi.mock('pinia', async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    createPinia: vi.fn(() => ({})),
+    setActivePinia: vi.fn(),
+    defineStore: vi.fn(),
+  }
+})
+
 // Mock vue-i18n
 vi.mock('vue-i18n', () => ({
   createI18n: vi.fn((config) => ({
