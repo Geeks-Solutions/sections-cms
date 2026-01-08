@@ -16,8 +16,14 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./', import.meta.url)),
-      '~': fileURLToPath(new URL('./', import.meta.url)),
+      '@': fileURLToPath(
+        new URL('./generator/template/ready-to-use-section-types', import.meta.url)
+      ),
+      '~': fileURLToPath(
+        new URL('./generator/template/ready-to-use-section-types', import.meta.url)
+      ),
+      '#app': fileURLToPath(new URL('./vitest.mocks.js', import.meta.url)),
+      '#imports': fileURLToPath(new URL('./vitest.mocks.js', import.meta.url)),
     },
   },
 })

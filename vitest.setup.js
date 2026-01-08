@@ -14,6 +14,12 @@ vi.mock('vue-i18n', () => ({
   })),
 }))
 
+// Make useI18n globally available (for Nuxt components that don't import it)
+global.useI18n = vi.fn((options) => ({
+  t: vi.fn((key) => key),
+  locale: { value: 'en' },
+}))
+
 // Mock axios
 vi.mock('axios', () => ({
   default: {
@@ -74,3 +80,41 @@ global.mocks = {
     $emit: vi.fn(),
   },
 }
+
+// Mock #app imports
+vi.mock('#app', () => ({
+  useFetch: vi.fn(() => ({
+    data: { value: [] },
+    status: { value: 'success' },
+  })),
+  useNuxtApp: vi.fn(() => ({
+    $sections: {
+      serverUrl: 'https://test-server.com',
+      projectId: 'test-project-id',
+    },
+    $event: vi.fn(),
+  })),
+  useRoute: vi.fn(() => ({
+    path: '/',
+    query: {},
+    params: {},
+  })),
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+  })),
+}))
+
+// Mock #imports imports
+vi.mock('#imports', () => ({
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+  })),
+  useRoute: vi.fn(() => ({
+    path: '/',
+    query: {},
+    params: {},
+  })),
+  useCookie: vi.fn(() => ({ value: 'test-cookie' })),
+  sectionHeader: {},
+  showToast: vi.fn(),
+}))

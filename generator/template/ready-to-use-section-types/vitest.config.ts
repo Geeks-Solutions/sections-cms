@@ -1,6 +1,8 @@
 import { defineVitestConfig } from '@nuxt/test-utils/config'
 import { fileURLToPath } from 'node:url'
 
+const rootDir = fileURLToPath(new URL('./', import.meta.url))
+
 export default defineVitestConfig({
   plugins: [],
   test: {
@@ -16,8 +18,8 @@ export default defineVitestConfig({
   },
   resolve: {
     alias: {
-      '~': fileURLToPath(new URL('./', import.meta.url)),
-      '@': fileURLToPath(new URL('./', import.meta.url)),
+      '~': rootDir,
+      '@': rootDir,
       '#app': fileURLToPath(
         new URL('./node_modules/nuxt/dist/app', import.meta.url),
       ),
