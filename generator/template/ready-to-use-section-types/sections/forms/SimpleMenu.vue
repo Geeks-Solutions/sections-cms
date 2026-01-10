@@ -89,6 +89,9 @@
       />
     </div>
     <span class="flex text-start text-xs text-Gray_800 mt-4">{{
+      $t('forms.menuCSSClassDesc')
+    }}</span>
+    <span class="flex text-start text-xs text-Gray_800 mt-4">{{
       $t('forms.iconDesc')
     }}</span>
     <span class="flex text-start text-xs text-Gray_800 mt-4">{{
@@ -379,41 +382,68 @@ export default {
       deep: true,
       immediate: true,
     },
-    settings(v) {
-      if (!v[0].logoLink) {
-        v[0].logoLink = {}
-      }
-      if (!v[0].logoPage) {
-        v[0].logoPage = {}
-      }
-      this.locales.forEach((locale) => {
-        if (!v[0].menuLabel) {
-          v[0].menuLabel = {}
+    settings: {
+      handler(v) {
+        if (!v[0].logoLink) {
+          v[0].logoLink = {}
         }
-        if (!v[0].logoLink[locale]) {
-          v[0].logoLink[locale] = ''
+        if (!v[0].logoPage) {
+          v[0].logoPage = {}
         }
-        if (!v[0].logoPage[locale]) {
-          v[0].logoLink[locale] = ''
-        }
-        v[0].menus.forEach((menuGroup) => {
-          if (!menuGroup.menuGroupLabel) {
-            menuGroup.menuGroupLabel = {}
+        this.locales.forEach((locale) => {
+          if (!v[0].menuLabel) {
+            v[0].menuLabel = {}
           }
-          if (!menuGroup.menuGroupLabel[locale]) {
-            menuGroup.menuGroupLabel[locale] = ''
+          if (!v[0].menuLabel[locale]) {
+            v[0].menuLabel[locale] = ''
           }
+          if (!v[0].logoLink[locale]) {
+            v[0].logoLink[locale] = ''
+          }
+          if (!v[0].logoPage[locale]) {
+            v[0].logoPage[locale] = ''
+          }
+          v[0].menus.forEach((menuGroup) => {
+            if (!menuGroup.menuGroupLabel) {
+              menuGroup.menuGroupLabel = {}
+            }
+            if (!menuGroup.menuGroupLabel[locale]) {
+              menuGroup.menuGroupLabel[locale] = ''
+            }
+            menuGroup.menu.forEach((menuItem) => {
+              if (!menuItem.label) {
+                menuItem.label = {}
+              }
+              if (!menuItem.link) {
+                menuItem.link = {}
+              }
+              if (!menuItem.page) {
+                menuItem.page = {}
+              }
+              if (!menuItem.label[locale]) {
+                menuItem.label[locale] = ''
+              }
+              if (!menuItem.link[locale]) {
+                menuItem.link[locale] = ''
+              }
+              if (!menuItem.page[locale]) {
+                menuItem.page[locale] = ''
+              }
+            })
+          })
         })
-      })
-      if (!v[0].menus) {
-        v[0]['menus'] = []
-        v[0].menus = [
-          {
-            menuContainerClasses: '',
-            menu: v[0].menu,
-          },
-        ]
-      }
+        if (!v[0].menus) {
+          v[0]['menus'] = []
+          v[0].menus = [
+            {
+              menuContainerClasses: '',
+              menu: v[0].menu,
+            },
+          ]
+        }
+      },
+      deep: true,
+      immediate: true,
     },
     selectedMedia(mediaObject) {
       let media = {}
@@ -439,6 +469,7 @@ export default {
         ],
       }
       this.locales.forEach((locale) => {
+        menuContainer.menuGroupLabel[locale] = ''
         menuContainer.menu[0].label[locale] = ''
         menuContainer.menu[0].link[locale] = ''
         menuContainer.menu[0].page[locale] = ''
