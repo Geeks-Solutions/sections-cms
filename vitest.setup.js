@@ -115,6 +115,55 @@ vi.mock('#app', () => ({
   })),
 }))
 
+// Mock leaflet
+vi.mock('leaflet', () => ({
+  default: {
+    icon: vi.fn((options) => options),
+    marker: vi.fn(() => ({})),
+  },
+}))
+
+// Mock uuid
+let uuidCounter = 0
+vi.mock('uuid', () => ({
+  v4: vi.fn(() => `mock-uuid-${uuidCounter++}`),
+}))
+
+// Mock @googlemaps/js-api-loader
+const mockGoogleMaps = {
+  Map: vi.fn().mockImplementation(() => ({
+    setCenter: vi.fn(),
+    setZoom: vi.fn(),
+    fitBounds: vi.fn(),
+    getZoom: vi.fn().mockReturnValue(10),
+  })),
+  LatLngBounds: vi.fn().mockImplementation(() => ({
+    extend: vi.fn(),
+    getCenter: vi.fn().mockReturnValue({ lat: () => 48.8566, lng: () => 2.3522 }),
+  })),
+  InfoWindow: vi.fn().mockImplementation(() => ({
+    setContent: vi.fn(),
+    open: vi.fn(),
+    close: vi.fn(),
+    addListener: vi.fn(),
+  })),
+  AdvancedMarkerElement: vi.fn().mockImplementation((options) => ({
+    position: options.position,
+    setMap: vi.fn(),
+    addListener: vi.fn((event, callback) => {
+      if (event === 'gmp-click') {
+        setTimeout(() => callback(), 0)
+      }
+    }),
+  })),
+}
+
+vi.mock('@googlemaps/js-api-loader', () => ({
+  Loader: vi.fn().mockImplementation(() => ({
+    importLibrary: vi.fn().mockResolvedValue(mockGoogleMaps),
+  })),
+}))
+
 // Mock #imports imports
 vi.mock('#imports', () => ({
   useRouter: vi.fn(() => ({

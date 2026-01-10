@@ -19,16 +19,16 @@ export default defineConfig({
       exclude: [
         'node_modules/',
         'coverage/',
-        '**/*.spec.js',
         '**/__tests__/**',
-        '**/GoogleMaps.vue',
-        '**/GoogleMaps_static.vue',
         '**/nft_mint_whitelist.vue',
-        '**/RestaurantMenu.vue',
         '**/ServicePackages.vue',
-        '**/SimpleMenu.vue',
         '**/server/**',
       ],
+    },
+    css: {
+      modules: {
+        localsConvention: 'camelCase',
+      },
     },
   },
   resolve: {
@@ -41,6 +41,7 @@ export default defineConfig({
       ),
       '#app': fileURLToPath(new URL('./vitest.mocks.js', import.meta.url)),
       '#imports': fileURLToPath(new URL('./vitest.mocks.js', import.meta.url)),
+      'vue-select/dist/vue-select.css': fileURLToPath(new URL('./stub.css', import.meta.url)),
     },
   },
 })

@@ -1,173 +1,47 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import SimpleCTA_static from '../SimpleCTA_static.vue'
+
+// Mock vue-i18n to provide $i18n
+vi.mock('vue-i18n', () => ({
+  useI18n: vi.fn(() => ({
+    locale: { value: 'en' },
+  })),
+}))
+
+// Mock @/utils/constants
+vi.mock('@/utils/constants', () => ({
+  getTranslation: vi.fn((settings, lang, primaryKey, frKey) => {
+    if (settings[lang]) {
+      if (lang === 'fr') {
+        return settings[lang][primaryKey] === ''
+          ? settings[frKey]
+          : settings[lang][primaryKey]
+      } else
+        return settings[lang][primaryKey] === ''
+          ? settings[primaryKey]
+          : settings[lang][primaryKey]
+    } else return lang === 'fr' ? settings[frKey] : settings[primaryKey]
+  }),
+}))
 
 // Mock the global-link component
 const mockGlobalLink = {
+  name: 'global-link',
   template: '<a><slot></slot></a>',
   props: ['link', 'lang', 'defaultLang', 'formLinkTarget'],
 }
 
-// Create a mock version of the component with the utility function inlined
-const mockSimpleCTA = {
-  name: 'SimpleCTA',
-  template: `
-    <div v-if="show" class="simple-cta" style="overflow: hidden">
-      <div class="wrapper">
-        <div class="wrapper">
-          <div class="wrapper-question">
-            <h2 v-if="title">
-              {{ title }}
-            </h2>
-            <div class="flex buttonsRow items-center mb-4">
-              <global-link
-                v-if="subTitle"
-                :link="getLinkForSubTitle()"
-                :lang="lang"
-                :default-lang="defaultLang"
-                :form-link-target="settings.linkTarget"
-              >
-                <p>
-                  {{ subTitle }}
-                </p>
-              </global-link>
-              <div class="mobileButtonLabel">
-                <global-link
-                  v-if="getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') &&
-                        getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') !== '' &&
-                        getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') !== '/'"
-                  :link="getLinkForButton()"
-                  :lang="lang"
-                  :default-lang="defaultLang"
-                  :form-link-target="settings.linkTarget"
-                >
-                  <div class="button-selector">
-                    {{ getCurrentTranslation(settings, lang, 'buttonLabel', 'buttonLabel') }}
-                  </div>
-                </global-link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
-  props: {
-    section: {
-      type: Object,
-      default: () => {},
-    },
-    lang: {
-      type: String,
-      default: 'en',
-    },
-    defaultLang: {
-      type: String,
-      default: 'en',
-    },
-    viewStructure: {
-      settings: [
-        {
-          en: {
-            title: 'string',
-            subTitle: 'string',
-            link: 'string',
-            buttonLabel: 'string',
-          },
-          fr: {
-            title: 'string',
-            subTitle: 'string',
-            link: 'string',
-            buttonLabel: 'string',
-          },
-        },
-      ],
-    },
-  },
-  data() {
-    return {}
-  },
-  computed: {
-    show() {
-      return !!this.section.settings
-    },
-    title() {
-      return this.settings[this.lang]?.title || this.settings.en?.title
-    },
-    subTitle() {
-      return this.settings[this.lang]?.subTitle || this.settings.en?.subTitle
-    },
-    link() {
-      const langLink = this.settings[this.lang]?.link || this.settings.en?.link
-      return langLink ? langLink : ''
-    },
-    settings() {
-      if (Array.isArray(this.section.settings) === false) {
-        return this.section.settings
-      } else {
-        return this.section.settings[0]
-      }
-    },
-  },
-  methods: {
-    getCurrentTranslation(settings, lang, primaryKey, frKey) {
-      if (settings && settings[lang] && settings[lang][primaryKey]) {
-        return settings[lang][primaryKey]
-      }
-      return ''
-    },
-    getLinkForSubTitle() {
-      if (
-        !this.settings.sectionsPage ||
-        (this.settings.sectionsPage &&
-          (this.settings.sectionsPage[this.lang] === 'other' ||
-            !this.settings.sectionsPage[this.lang]))
-      ) {
-        return {
-          en: this.getCurrentTranslation(this.settings, 'en', 'link', 'link'),
-          fr: this.getCurrentTranslation(this.settings, 'fr', 'link', 'link'),
-        }
-      } else if (
-        this.settings.sectionsPage &&
-        this.settings.sectionsPage[this.lang]
-      ) {
-        return {
-          ...this.settings.sectionsPage,
-          en: '/' + this.settings.sectionsPage.en,
-          fr: '/' + this.settings.sectionsPage.fr,
-        }
-      }
-      return '#'
-    },
-    getLinkForButton() {
-      if (
-        !this.settings.sectionsPage ||
-        (this.settings.sectionsPage &&
-          this.settings.sectionsPage[this.lang] === 'other')
-      ) {
-        return {
-          en: this.getCurrentTranslation(this.settings, 'en', 'link', 'link'),
-          fr: this.getCurrentTranslation(this.settings, 'fr', 'link', 'link'),
-        }
-      } else if (
-        this.settings.sectionsPage &&
-        this.settings.sectionsPage[this.lang]
-      ) {
-        return {
-          ...this.settings.sectionsPage,
-          en: '/' + this.settings.sectionsPage.en,
-          fr: '/' + this.settings.sectionsPage.fr,
-        }
-      }
-      return '#'
-    },
-  },
+// Mock $t function
+const mockI18n = {
+  locale: 'en',
 }
 
 describe('SimpleCTA_static', () => {
   let wrapper
 
   const createWrapper = (props = {}) => {
-    return mount(mockSimpleCTA, {
+    return mount(SimpleCTA_static, {
       props: {
         lang: 'en',
         defaultLang: 'en',
@@ -197,8 +71,12 @@ describe('SimpleCTA_static', () => {
         components: {
           'global-link': mockGlobalLink,
         },
+        mocks: {
+          $i18n: mockI18n,
+          $t: vi.fn((key) => key),
+        },
         stubs: {
-          'global-link': mockGlobalLink, // Use stub component
+          'global-link': mockGlobalLink,
         },
       },
     })
@@ -327,8 +205,8 @@ describe('SimpleCTA_static', () => {
         },
       })
       const title = wrapper.find('h2')
-      expect(title.exists()).toBe(true)
-      // Should fall back to empty string or default behavior
+      // Should not render title when language doesn't exist
+      expect(title.exists()).toBe(false)
     })
   })
 
@@ -379,30 +257,40 @@ describe('SimpleCTA_static', () => {
       expect(wrapper.vm.show).toBe(false)
     })
 
-    it('should compute title correctly', () => {
+    it('should compute settings correctly', () => {
       wrapper = createWrapper()
-      expect(wrapper.vm.title).toBe('Test Title')
+      expect(wrapper.vm.settings).toEqual(
+        expect.objectContaining({
+          en: expect.objectContaining({
+            title: 'Test Title',
+            subTitle: 'Test Subtitle',
+            link: 'https://example.com',
+            buttonLabel: 'Click Me',
+          }),
+        }),
+      )
     })
 
-    it('should compute subTitle correctly', () => {
-      wrapper = createWrapper()
-      expect(wrapper.vm.subTitle).toBe('Test Subtitle')
-    })
-
-    it('should compute link correctly', () => {
-      wrapper = createWrapper()
-      expect(wrapper.vm.link).toBe('https://example.com')
-
+    it('should handle non-array settings correctly', () => {
       wrapper = createWrapper({
         section: {
-          settings: [
-            {
-              en: { link: '' },
+          settings: {
+            en: {
+              title: 'Test Title',
+              subTitle: 'Test Subtitle',
+              link: 'https://example.com',
+              buttonLabel: 'Click Me',
             },
-          ],
+          },
         },
       })
-      expect(wrapper.vm.link).toBe('')
+      expect(wrapper.vm.settings).toEqual(
+        expect.objectContaining({
+          en: expect.objectContaining({
+            title: 'Test Title',
+          }),
+        }),
+      )
     })
   })
 

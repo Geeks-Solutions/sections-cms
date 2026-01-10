@@ -29,4 +29,4 @@ jobs:
         run: npm run lint
 
       - name: Test Coverage
-        run: npm run test:coverage:check 40
+        run: npm run test:coverage:check 60
