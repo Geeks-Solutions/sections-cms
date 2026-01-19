@@ -390,6 +390,15 @@ export default {
         if (!v[0].logoPage) {
           v[0].logoPage = {}
         }
+        if (!v[0].menus) {
+          v[0]['menus'] = []
+          v[0].menus = [
+            {
+              menuContainerClasses: '',
+              menu: v[0].menu,
+            },
+          ]
+        }
         this.locales.forEach((locale) => {
           if (!v[0].menuLabel) {
             v[0].menuLabel = {}
@@ -432,15 +441,6 @@ export default {
             })
           })
         })
-        if (!v[0].menus) {
-          v[0]['menus'] = []
-          v[0].menus = [
-            {
-              menuContainerClasses: '',
-              menu: v[0].menu,
-            },
-          ]
-        }
       },
       deep: true,
       immediate: true,
