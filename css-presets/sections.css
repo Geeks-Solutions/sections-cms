@@ -2586,6 +2586,217 @@ section[section-id] .restaurant-menu .featured {
   }
 }
 
+main.sections-main section[section-id] .full-article {
+  --article-accent-color: var(--section-primary-color, var(--primary-color));
+  --article-text-color: var(--section-p-color, var(--p-color));
+  --article-heading-color: var(--section-h3-color, var(--h3-color));
+  --article-muted-text-color: var(--section-secondary-color, var(--secondary-color));
+  --article-surface-color: var(--section-background-color, var(--background-color));
+  --article-surface-contrast-color: var(
+    --section-hover-background-color,
+    var(--section-background-color, var(--background-color))
+  );
+  --article-table-border-color: var(
+    --section-separator-color,
+    var(
+      --section-menu-group-border-color,
+      color-mix(in srgb, var(--section-secondary-color, var(--secondary-color)) 18%, transparent)
+    )
+  );
+}
+
+main.sections-main section[section-id] .full-article-wrapper {
+  width: min(100% - 2rem, 1400px);
+  margin: 1rem auto 0;
+  padding: 3rem 0 2.5rem;
+  gap: 2rem;
+  background: var(--article-surface-contrast-color);
+}
+
+main.sections-main section[section-id] .full-article-wrapper > .flex {
+  width: min(100% - 2rem, 640px);
+  margin: 0 auto;
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+main.sections-main section[section-id] .full-article-wrapper > .flex > .flex {
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+main.sections-main section[section-id] .full-article-wrapper .title {
+  order: 1;
+  margin: 0;
+  text-align: left !important;
+  font-size: clamp(2rem, 3.1vw, 3rem);
+  line-height: 1.1;
+  color: var(--section-h1-color, var(--h1-color));
+}
+
+main.sections-main section[section-id] .full-article-wrapper .published {
+  order: 2;
+  margin: 0.4rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-align: left !important;
+  color: var(--article-muted-text-color);
+}
+
+main.sections-main section[section-id] .full-article-wrapper > .flex .html-content {
+  width: 100%;
+  text-align: left !important;
+  color: var(--article-text-color);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+main.sections-main section[section-id] .full-article-wrapper > img,
+main.sections-main
+  section[section-id]
+  .full-article-wrapper
+  > .w-fit.max-w-full.self-center.object-contain {
+  width: min(100% - 2rem, 640px) !important;
+  max-height: 320px;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+main.sections-main section[section-id] .full-article-wrapper > img {
+  object-fit: cover !important;
+}
+
+main.sections-main
+  section[section-id]
+  .full-article-wrapper
+  > .w-fit.max-w-full.self-center.object-contain {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+main.sections-main
+  section[section-id]
+  .full-article-wrapper
+  > .w-fit.max-w-full.self-center.object-contain
+  svg,
+main.sections-main
+  section[section-id]
+  .full-article-wrapper
+  > .w-fit.max-w-full.self-center.object-contain
+  canvas,
+main.sections-main
+  section[section-id]
+  .full-article-wrapper
+  > .w-fit.max-w-full.self-center.object-contain
+  lottie-player,
+main.sections-main
+  section[section-id]
+  .full-article-wrapper
+  > .w-fit.max-w-full.self-center.object-contain
+  dotlottie-player {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper {
+  width: 100%;
+  padding: 0 1rem 2rem;
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper .html-content {
+  width: min(100%, 640px) !important;
+  max-width: 640px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--article-text-color);
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper .html-content h2,
+main.sections-main section[section-id] .full-article .body-wrapper .html-content h3,
+main.sections-main section[section-id] .full-article .body-wrapper .html-content h4 {
+  color: var(--article-heading-color);
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper .html-content p {
+  color: var(--article-text-color);
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper .html-content blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1rem 1rem 0.9rem;
+  background: var(--article-surface-contrast-color);
+  border-left: 3px solid var(--article-accent-color);
+  border-radius: 2px;
+  color: var(--article-text-color);
+}
+
+main.sections-main
+  section[section-id]
+  .full-article
+  .body-wrapper
+  .html-content
+  blockquote
+  + blockquote {
+  margin-top: -0.75rem;
+  padding-top: 0;
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper .html-content table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: var(--article-text-color);
+  font-size: 0.95rem;
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper .html-content th,
+main.sections-main section[section-id] .full-article .body-wrapper .html-content td {
+  border: 0;
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  color: var(--article-text-color);
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper .html-content table tr + tr > * {
+  border-top: 1px solid var(--article-table-border-color);
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper .html-content table tr > * + * {
+  border-left: 1px solid var(--article-table-border-color);
+}
+
+main.sections-main section[section-id] .full-article .body-wrapper .html-content tr:first-child th,
+main.sections-main section[section-id] .full-article .body-wrapper .html-content tr:first-child td {
+  color: var(--article-heading-color);
+  font-weight: 600;
+}
+
+@container full-article (max-width: 768px) {
+  main.sections-main section[section-id] .full-article-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 2rem 1rem;
+  }
+
+  main.sections-main section[section-id] .full-article-wrapper > .flex,
+  main.sections-main section[section-id] .full-article .body-wrapper .html-content,
+  main.sections-main section[section-id] .full-article-wrapper > img,
+  main.sections-main
+    section[section-id]
+    .full-article-wrapper
+    > .w-fit.max-w-full.self-center.object-contain {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  main.sections-main section[section-id] .full-article-wrapper .title {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+  }
+}
+
 :root {
   --cookie-control-barBackground: #00131f;
   --cookie-control-barTextColor: #fff;
