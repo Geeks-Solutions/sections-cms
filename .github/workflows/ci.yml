@@ -27,3 +27,6 @@ jobs:
 
       - name: Lint Code
         run: npm run lint
+
+      - name: Test Coverage
+        run: npm run test:coverage:check 60

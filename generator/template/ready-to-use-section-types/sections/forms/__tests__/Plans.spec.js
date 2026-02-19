@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import Plans from '../Plans.vue'
 import { createI18n } from 'vue-i18n'
@@ -14,23 +15,29 @@ const i18n = createI18n({
 
 describe('Plans', () => {
   let wrapper
-  const defaultProps = {}
-  const defaultData = {}
+
+  const FieldSetsStub = {
+    name: 'LazySectionsFormsFieldSets',
+    template:
+      "<div><slot :plan=\"{ title: { en: '', fr: '' }, description: { en: '', fr: '' }, classes: '', price: { en: '', fr: '' }, currency: { en: '', fr: '' }, frequency: { en: '', fr: '' }, ctaLabel: { en: '', fr: '' }, ctaLink: { en: '', fr: '' }, sectionsPage: {}, ctaLinkTarget: '', features: { en: '', fr: '' }, customFeatures: { en: '', fr: '' }, mostPopular: false, media: { media_id: '', url: '', seo_tag: '', filename: '' } }\" :idx=\"0\"></slot></div>",
+  }
 
   beforeEach(() => {
     wrapper = shallowMount(Plans, {
+      props: {
+        selectedLang: 'en',
+        defaultLang: 'en',
+        locales: ['en', 'fr'],
+      },
       global: {
-        config: {
-          globalProperties: {
-            $t: vi.fn(),
-          },
-        },
         plugins: [i18n],
+        stubs: {
+          LazyEditorWysiwyg: { template: '<div></div>' },
+          LazyMediasUploadMedia: { template: '<div></div>' },
+          LazyFormLink: { template: '<div></div>' },
+          LazySectionsFormsFieldSets: FieldSetsStub,
+        },
       },
-      data() {
-        return defaultData
-      },
-      propsData: defaultProps,
     })
   })
 
@@ -38,22 +45,25 @@ describe('Plans', () => {
     const media = { media_id: '12345', url: 'https://example.com/image.jpg' }
     wrapper.vm.wysiwygMediaAdded(media)
 
-    expect(wrapper.vm.settings).toContainEqual(
-      expect.objectContaining({ wysiwygMedia: media, wysiwygLang: 'en' }),
-    )
+    expect(wrapper.vm.settings.length).toBe(2)
+    expect(wrapper.vm.settings[1]).toMatchObject({
+      wysiwygMedia: media,
+      wysiwygLang: 'en',
+    })
   })
 
   it('validates WYSIWYG media presence in plans', () => {
     const media = { media_id: '67890', url: 'https://example.com/image.jpg' }
     wrapper.vm.settings[0].plans.push({
       title: {
-        en: `<img src='${media.url}' media-id='${media.media_id}' />`,
-        fr: '',
-      },
-      description: {
         en: '',
         fr: '',
       },
+      description: {
+        en: `<img src='${media.url}' media-id='${media.media_id}' />`,
+        fr: '',
+      },
+      classes: '',
       price: {
         en: '',
         fr: '',
@@ -74,6 +84,7 @@ describe('Plans', () => {
         en: '',
         fr: '',
       },
+      sectionsPage: {},
       ctaLinkTarget: '',
       features: {
         en: '',
@@ -88,17 +99,13 @@ describe('Plans', () => {
         media_id: '',
         url: '',
         seo_tag: '',
-        files: [
-          {
-            filename: '',
-            url: '',
-          },
-        ],
+        filename: '',
       },
     })
     wrapper.vm.wysiwygMediaAdded(media)
 
-    expect(wrapper.vm.validate()).toBe(true)
+    const result = wrapper.vm.validate()
+    expect(result).toBe(true)
   })
 
   it('removes media if not found in any plans', () => {
@@ -127,13 +134,14 @@ describe('Plans', () => {
 
     wrapper.vm.settings[0].plans.push({
       title: {
-        en: `<img src='${media1.url}' media-id='${media1.media_id}' />`,
+        en: '',
         fr: '',
       },
       description: {
         en: '',
         fr: '',
       },
+      classes: '',
       price: {
         en: '',
         fr: '',
@@ -154,6 +162,7 @@ describe('Plans', () => {
         en: '',
         fr: '',
       },
+      sectionsPage: {},
       ctaLinkTarget: '',
       features: {
         en: '',
@@ -168,14 +177,11 @@ describe('Plans', () => {
         media_id: '',
         url: '',
         seo_tag: '',
-        files: [
-          {
-            filename: '',
-            url: '',
-          },
-        ],
+        filename: '',
       },
     })
+
+    wrapper.vm.settings[0].title.en = `<img src='${media1.url}' media-id='${media1.media_id}' />`
 
     wrapper.vm.validate()
     expect(
@@ -195,6 +201,7 @@ describe('Plans', () => {
         en: `<img src='${media.url}' media-id='${media.media_id}' />`,
         fr: '',
       },
+      classes: '',
       price: {
         en: '',
         fr: '',
@@ -215,6 +222,7 @@ describe('Plans', () => {
         en: '',
         fr: '',
       },
+      sectionsPage: {},
       ctaLinkTarget: '',
       features: {
         en: '',
@@ -229,12 +237,7 @@ describe('Plans', () => {
         media_id: '',
         url: '',
         seo_tag: '',
-        files: [
-          {
-            filename: '',
-            url: '',
-          },
-        ],
+        filename: '',
       },
     })
 

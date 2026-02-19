@@ -60,23 +60,9 @@
       :other-link-label="$t('Other')"
       :link-target-label="$t('forms.linkTarget')"
       :link-error="errors.link && selectedLang === defaultLang"
-      @sections-page-selected="
-        (val) => {
-          locales.forEach((locale) => {
-            settings[0].sectionsPage[locale] = val
-          })
-        }
-      "
-      @update:other-link="
-        (val) => {
-          settings[0][selectedLang].link = val
-        }
-      "
-      @link-target-selected="
-        (val) => {
-          settings[0].linkTarget = val
-        }
-      "
+      @sections-page-selected="handleSectionsPageSelected"
+      @update:other-link="handleUpdateOtherLink"
+      @link-target-selected="handleLinkTargetSelected"
     />
 
     <LazySectionFormErrors
@@ -221,6 +207,17 @@ export default {
         valid = false
       }
       return valid
+    },
+    handleSectionsPageSelected(val) {
+      this.locales.forEach((locale) => {
+        this.settings[0].sectionsPage[locale] = val
+      })
+    },
+    handleUpdateOtherLink(val) {
+      this.settings[0][this.selectedLang].link = val
+    },
+    handleLinkTargetSelected(val) {
+      this.settings[0].linkTarget = val
     },
   },
 }

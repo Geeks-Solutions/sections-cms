@@ -1,49 +1,13 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { shallowMount, mount } from '@vue/test-utils'
 import SimpleCTA from '../SimpleCTA.vue'
-import { createI18n } from 'vue-i18n'
-
-// Mock the components that are not defined in the test environment
-const mockComponents = {
-  'link-description': {
-    template: '<div>Link Description</div>',
-  },
-  gAutoComplete: {
-    template: '<div>AutoComplete</div>',
-    props: [
-      'mainFilter',
-      'placeholder',
-      'filterLabelProp',
-      'reduce',
-      'filterOptions',
-      'filterSearchable',
-      'closeOnSelect',
-      'filterClearable',
-      'trackBy',
-    ],
-    emits: ['itemSelected'],
-  },
-  LazySectionFormErrors: {
-    template: '<div>Form Errors</div>',
-    props: ['selectedLang', 'defaultLang', 'locales', 'errors'],
-  },
-}
-
-const i18n = createI18n({
-  legacy: false,
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: {},
-    fr: {},
-  },
-})
 
 describe('SimpleCTA', () => {
   let wrapper
 
-  const createWrapper = (props = {}) => {
-    return mount(SimpleCTA, {
+  const createWrapper = (props = {}, shallow = false) => {
+    const mountFn = shallow ? shallowMount : mount
+    return mountFn(SimpleCTA, {
       props: {
         selectedLang: 'en',
         defaultLang: 'en',
@@ -51,16 +15,17 @@ describe('SimpleCTA', () => {
         ...props,
       },
       global: {
-        components: mockComponents,
-        config: {
-          globalProperties: {
-            $t: vi.fn((key) => key),
-          },
+        stubs: {
+          LazyFormLink: true,
+          LazySectionFormErrors: true,
         },
-        plugins: [i18n],
       },
     })
   }
+
+  beforeEach(() => {
+    wrapper = createWrapper()
+  })
 
   describe('Component Initialization', () => {
     it('should render with default props', () => {
@@ -105,10 +70,13 @@ describe('SimpleCTA', () => {
 
   describe('Error Display Logic', () => {
     it('should show error border when error exists and selectedLang matches defaultLang', async () => {
-      wrapper = createWrapper({
-        selectedLang: 'en',
-        defaultLang: 'en',
-      })
+      wrapper = createWrapper(
+        {
+          selectedLang: 'en',
+          defaultLang: 'en',
+        },
+        false,
+      ) // Use full mount for DOM interaction
 
       // Set an error
       await wrapper.setData({
@@ -120,16 +88,19 @@ describe('SimpleCTA', () => {
         },
       })
 
-      const titleInput = wrapper.find('input[placeholder="Title"]')
+      const titleInput = wrapper.find('input.title')
       expect(titleInput.classes()).toContain('border-error')
       expect(titleInput.classes()).not.toContain('border-FieldGray')
     })
 
     it('should not show error border when error exists but selectedLang does not match defaultLang', async () => {
-      wrapper = createWrapper({
-        selectedLang: 'fr',
-        defaultLang: 'en',
-      })
+      wrapper = createWrapper(
+        {
+          selectedLang: 'fr',
+          defaultLang: 'en',
+        },
+        false,
+      ) // Use full mount for DOM interaction
 
       // Set an error
       await wrapper.setData({
@@ -141,27 +112,33 @@ describe('SimpleCTA', () => {
         },
       })
 
-      const titleInput = wrapper.find('input[placeholder="Title"]')
+      const titleInput = wrapper.find('input.title')
       expect(titleInput.classes()).not.toContain('border-error')
       expect(titleInput.classes()).toContain('border-FieldGray')
     })
 
     it('should show normal border when no error exists', async () => {
-      wrapper = createWrapper({
-        selectedLang: 'en',
-        defaultLang: 'en',
-      })
+      wrapper = createWrapper(
+        {
+          selectedLang: 'en',
+          defaultLang: 'en',
+        },
+        false,
+      ) // Use full mount for DOM interaction
 
-      const titleInput = wrapper.find('input[placeholder="Title"]')
+      const titleInput = wrapper.find('input.title')
       expect(titleInput.classes()).not.toContain('border-error')
       expect(titleInput.classes()).toContain('border-FieldGray')
     })
 
     it('should apply error styles to all fields when errors exist and languages match', async () => {
-      wrapper = createWrapper({
-        selectedLang: 'en',
-        defaultLang: 'en',
-      })
+      wrapper = createWrapper(
+        {
+          selectedLang: 'en',
+          defaultLang: 'en',
+        },
+        false,
+      ) // Use full mount for DOM interaction
 
       // Set errors for all fields
       await wrapper.setData({
@@ -350,7 +327,7 @@ describe('SimpleCTA', () => {
         defaultLang: 'fr',
       })
 
-      // Fill French fields (which is now the default language)
+      // Fill French fields (which is now default language)
       await wrapper.setData({
         settings: [
           {
@@ -380,24 +357,30 @@ describe('SimpleCTA', () => {
 
   describe('Input Binding', () => {
     it('should update settings when input values change', async () => {
-      wrapper = createWrapper({
-        selectedLang: 'en',
-        defaultLang: 'en',
-      })
+      wrapper = createWrapper(
+        {
+          selectedLang: 'en',
+          defaultLang: 'en',
+        },
+        false,
+      ) // Use full mount for DOM interaction
 
-      const titleInput = wrapper.find('input[placeholder="Title"]')
+      const titleInput = wrapper.find('input.title')
       await titleInput.setValue('New Title')
 
       expect(wrapper.vm.settings[0].en.title).toBe('New Title')
     })
 
     it('should update correct language settings based on selectedLang', async () => {
-      wrapper = createWrapper({
-        selectedLang: 'fr',
-        defaultLang: 'en',
-      })
+      wrapper = createWrapper(
+        {
+          selectedLang: 'fr',
+          defaultLang: 'en',
+        },
+        false,
+      ) // Use full mount for DOM interaction
 
-      const titleInput = wrapper.find('input[placeholder="Title"]')
+      const titleInput = wrapper.find('input.title')
       await titleInput.setValue('Nouveau Titre')
 
       expect(wrapper.vm.settings[0].fr.title).toBe('Nouveau Titre')

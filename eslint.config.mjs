@@ -80,5 +80,8 @@ export default [
       },
     },
   },
+  {
+    ignores: ['coverage/**', 'check-coverage.js', '.output/**', '.nuxt/**'],
+  },
   eslintConfigPrettier,
 ]

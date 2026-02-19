@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import Redirection from '../Redirection.vue'
 import { createI18n } from 'vue-i18n'
@@ -30,7 +31,7 @@ describe('Redirection', () => {
       data() {
         return defaultData
       },
-      propsData: defaultProps,
+      props: defaultProps,
     })
   })
 

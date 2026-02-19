@@ -1,21 +1,14 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import ZAQWidget from '../ZAQWidget.vue'
-
-vi.mock('#app', () => ({
-  useFetch: vi.fn(),
-}))
-
-import { useFetch } from '#app'
 import { createI18n } from 'vue-i18n'
+import zaqTranslations from '../ZAQWidget_i18n.json'
 
 const i18n = createI18n({
-  legacy: false,
+  legacy: true,
   locale: 'en',
   fallbackLocale: 'en',
-  messages: {
-    en: {},
-    fr: {},
-  },
+  messages: zaqTranslations,
 })
 
 describe('ZAQWidget', () => {
@@ -28,15 +21,19 @@ describe('ZAQWidget', () => {
       global: {
         config: {
           globalProperties: {
-            $t: vi.fn(),
+            $t: i18n.global.t,
           },
         },
         plugins: [i18n],
+        stubs: {
+          LazyMediasUploadMedia: true,
+          gAutoComplete: true,
+        },
       },
       data() {
         return defaultData
       },
-      propsData: {
+      props: {
         selectedLang: 'en',
         locales: [],
         mediaFields: [
@@ -79,7 +76,7 @@ describe('ZAQWidget', () => {
     expect(wrapper.vm.settings[0].autoStart).toBe('None')
   })
 
-  it('updates sequences and autoStart when selectedMedia changes', async () => {
+  it('updates settings when selectedMedia changes', async () => {
     wrapper.vm.selectedMediaKey = 'sequence'
     wrapper.vm.settings = [
       {
@@ -100,29 +97,87 @@ describe('ZAQWidget', () => {
       ],
       seo_tag: 'seq',
     }
-    await wrapper.vm.$options.watch.selectedMedia.call(wrapper.vm, mediaObject)
+
+    await wrapper.setProps({ selectedMedia: mediaObject })
 
     expect(wrapper.vm.settings[0].sequence.media_id).toBe('1')
     expect(wrapper.vm.settings[0].sequence.url).toBe(
       'http://example.com/sequence',
     )
     expect(wrapper.vm.settings[0].sequence.seo_tag).toBe('seq')
+    expect(wrapper.vm.settings[0].sequence.filename).toBe('seq')
     expect(wrapper.vm.settings[0].autoStart).toBe('None')
+  })
 
-    await vi.resetAllMocks()
+  it('updates settings for css when selectedMedia changes', async () => {
+    wrapper.vm.selectedMediaKey = 'css'
+    wrapper.vm.settings = [
+      {
+        websiteId: '123',
+        sequence: {},
+        css: {},
+        sendBtnMedia: {},
+        typingIconMedia: {},
+        hideBadge: false,
+        autoStart: 'None',
+      },
+    ]
 
-    const mockResponse = { data: { seq1: 'Sequence 1', seq2: 'Sequence 2' } }
-    useFetch.mockResolvedValue({
-      data: mockResponse.data,
-      pending: false,
-      error: null,
-      refresh: vi.fn(),
+    const mediaObject = {
+      id: '2',
+      files: [
+        { url: 'http://example.com/style.css', filename: 'style', headers: {} },
+      ],
+      seo_tag: 'style',
+    }
+
+    await wrapper.setProps({ selectedMedia: mediaObject })
+
+    expect(wrapper.vm.settings[0].css.media_id).toBe('2')
+    expect(wrapper.vm.settings[0].css.url).toBe('http://example.com/style.css')
+    expect(wrapper.vm.settings[0].css.seo_tag).toBe('style')
+    expect(wrapper.vm.settings[0].css.filename).toBe('style')
+  })
+
+  it('validates websiteId and returns false when empty', async () => {
+    await wrapper.setData({
+      settings: [
+        {
+          websiteId: '',
+          sequence: {},
+          css: {},
+          sendBtnMedia: {},
+          typingIconMedia: {},
+          hideBadge: false,
+          autoStart: 'None',
+        },
+      ],
     })
 
-    // Call loadSequences method
-    await wrapper.vm.loadSequences()
+    const isValid = wrapper.vm.validate()
 
-    // Check if sequences are loaded correctly
-    expect(wrapper.vm.sequences).toEqual(mockResponse.data)
+    expect(isValid).toBe(false)
+    expect(wrapper.vm.errors.websiteId).toBe(true)
+  })
+
+  it('validates websiteId and returns true when provided', async () => {
+    await wrapper.setData({
+      settings: [
+        {
+          websiteId: '123',
+          sequence: {},
+          css: {},
+          sendBtnMedia: {},
+          typingIconMedia: {},
+          hideBadge: false,
+          autoStart: 'None',
+        },
+      ],
+    })
+
+    const isValid = wrapper.vm.validate()
+
+    expect(isValid).toBe(true)
+    expect(wrapper.vm.errors.websiteId).toBe(false)
   })
 })
